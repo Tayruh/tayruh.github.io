@@ -135,10 +135,11 @@
 		
 		var text = "";
 		
-		var a, strike;
+		var a;
 		for (a in items) {
-			strike = (items[a]) ? "" : ' class="completed"';
-			text += "<li" + strike + ">" + tasks.tasks[a] + "</li>";
+			if (items[a] === "hidden") continue;
+			if (items[a] === "complete") text += '<li><span class="completed">' + tasks.tasks[a] + '</span></li>';
+			else text += "<li>" + tasks.tasks[a] + "</li>";
 		}
 		
 		var lines = [
@@ -146,10 +147,7 @@
 			"<ol>" + text + "</ol> ~:class:notebook"
 		];
 		
-		sadako.choices = [];
-		sadako.addChoice("Back ~:c:system", 'sadako.doLink("notebook.tasks")');
-		
-		sadako.overwrite(lines);
+		sadako.overwrite(lines, [["Back ~:c:system", 'sadako.doLink("notebook.tasks")']]);
 	};
 	
 	game.listTasks = function() {
@@ -172,14 +170,26 @@
 	
 	game.addTask = function(task, completed) {
 		var parts = task.split(".");
+		
+		if (!(parts[0] in game.tasks) || !(parts[1] in game.tasks[parts[0]].tasks)) {
+			console.log("Error: '" + task + "' is not a valid task.");
+			return;
+		}
+		
 		if (!(parts[0] in sadako.var.active_tasks)) sadako.var.active_tasks[parts[0]] = {};
-		sadako.var.active_tasks[parts[0]][parts[1]] = (completed === undefined) ? true : false;
+		sadako.var.active_tasks[parts[0]][parts[1]] = (completed === undefined) ? "active" : "complete";
 	};
 	
-	game.endTask = function(task) { game.addTask(task, false); };
+	game.endTask = function(task) { game.addTask(task, "complete"); };
+	
+	game.removeTask = function(task) {
+		var parts = task.split(".");
+		if (!(parts[0] in sadako.var.active_tasks)) return;
+		sadako.var.active_tasks[parts[0]][parts[1]] = "hidden";
+	};
 	
 	game.completeTask = function(task) {
-		game.addTask(task, true);
+		game.addTask(task, "active");
 	};
 	
 	game.getTaskState = function(task) {
@@ -192,7 +202,7 @@
 	};
 	
 	game.isActive = function(task) {
-		if (game.getTaskState(task) === true) return true;
+		if (game.getTaskState(task) === "active") return true;
 		return false;
 	};
 	
@@ -201,11 +211,11 @@
 			var a;
 			if (!(task in sadako.var.active_tasks)) return false;
 			for (a in game.tasks[task].tasks) {
-				if (!(a in sadako.var.active_tasks[task]) || sadako.var.active_tasks[task][a] === true) return false;
+				if (!(a in sadako.var.active_tasks[task]) || sadako.var.active_tasks[task][a] === "active") return false;
 			}
 			return true;
 		}
-		if (game.getTaskState(task) === false) return true;
+		if (game.getTaskState(task) === "complete") return true;
 		return false;
 	};
 
@@ -213,31 +223,10 @@
 		// Initializes Sadako.
 		sadako.init();
 		
-		/*
-		//eslint-disable-next-line no-unused-vars
-		sadako.doLineTag = function(text, tag) {
-			// placeholder line tag processing function to be ovewritten by user
-			console.log(tag)
-			return [text];
-		}
-		*/
-		
-		// sadako.addScene("talk_father", 
-		// 	"%.erin.talk_father",
-		// 	"%.sera.test",
-		// 	function() { game.addTask("seoyun_1.talk_father"); }
-		// );
-		
 		game.debug = false;
 		
 		// Add items array to saved variables to be used with inventory.
 		sadako.var.items = [];
-		
-		// If you were to create another place to story items, like a desk
-		// drawer, you would create an array like the one above. Then you
-		// could call game.move("items", "remote"); 
-		// and game.move("drawer", "remote"); to move the item from one to
-		// the other.
 		
 		// Not used in the demo, but 'has_item' tracks which array an item
 		// is currently in.
@@ -248,21 +237,32 @@
 		game.items.notebook = ["Notebook", "the", "notebook"];
 		game.items.master_keys = ["Master Keys", "the", "master keys"];
 		
-		sadako.var.active_tasks = {};
-		
-		sadako.var.completed_tasks = [];
-		
 		sadako.var.chars_known = {};
 		
-		// game.setCharInfo("sera", "Sera");
+		sadako.var.active_tasks = {};
+		sadako.var.completed_tasks = [];
 		
 		game.tasks = {
 			"main_1": {
 				name: "The story begins..",
 				tasks: {
-					"talk_father": "Seoyun requested that you talk to your father.",
-					"return_seoyun": "You should return to Seoyun.",
-					"clean_room": "Your father asked you to clean the room in back hallway on the 2nd floor."
+					"find_vanessa": "Vanessa can help you. You should find her."
+				}
+			},
+			"main_2": {
+				name: "Greet the tenants",
+				tasks: {
+					"find_tenants": "You should find the other tenants.",
+					"find_finola": "You should find Finola.",
+					"find_seoyun": "You should find Seoyun.",
+					"find_sera": "You should find Sera.",
+					"find_daemon": "You should find Daemon."
+				}
+			},
+			"main_3": {
+				name: "Moving in",
+				tasks: {
+					"unpack": "You should unpack your luggage in your rooms upstairs."
 				}
 			}
 		};
@@ -278,6 +278,7 @@
 		sadako.macros.useBookmark = game.useBookmark;
 		sadako.macros.closeDialog = function() { sadako.closeDialog(true); };
 		sadako.macros.addTask = game.addTask;
+		sadako.macros.removeTask = game.removeTask;
 		sadako.macros.setCharInfo = game.setCharInfo;
 		sadako.macros.endTask = game.endTask;
 		
@@ -296,7 +297,6 @@
 		// 'sadako.before.living_room'). 'ALL' is run for all pages.
 		
 		sadako.before.ALL = function() {
-			// sadako.dom("#banner-status").innerHTML = "";
 			if (sadako.isPageTop() && "room" in sadako.tags[sadako.page]) {
 				if ((sadako.var.room != sadako.page) && sadako.var.erin_following) sadako.write("Erin follows you.");
 				game.setRoom();
@@ -305,48 +305,23 @@
 		};
 		
 		sadako.after.ALL = function() {
-			if (sadako.isPageTop() && ("room" in sadako.tags[sadako.page]) && sadako.var.erin_following) {
-				sadako.write("[: %erin.following @: Erin:] is standing here beside you.");
-			}
-		};
-		
-		game.storageSize = function() {
-			// eslint-disable-next-line no-prototype-builtins
-			var x, xLen, log=[],total=0;for (x in localStorage){if(!localStorage.hasOwnProperty(x)){continue;} xLen =  ((localStorage[x].length * 2 + x.length * 2)/1024); log.push(x.substr(0,30) + " = " +  xLen.toFixed(2) + " KB"); total+= xLen} if (total > 1024){log.unshift("Total = " + (total/1024).toFixed(2)+ " MB");}else{log.unshift("Total = " + total.toFixed(2)+ " KB");} console.log(log.join("\n"));
-		};
-		
-		/*
-		sadako.after.ALL = function() {
-			
 			// sadako.tags is the object contains the tags defined for each
 			// page. Percent check is a utility function that returns true a
 			// percentage of the time (the following returns true 20% of the
 			// time).
-			if ("room" in sadako.tags[sadako.page] && sadako.percentCheck(20)) {
-				
+			if (sadako.isPageTop() && ("room" in sadako.tags[sadako.page]) && sadako.var.erin_following) {
 				// sadako.write() is how you add new lines to the output.
 				// You can either pass a single line, or an array of lines
 				// and they will all be added.
-				// 
-				// 'randomItem' returns a single item from an array chosen
-				// at random.
-				sadako.write(sadako.randomItem([
-					"Rain gently taps against the window.",
-					"The rustling of the wind can be heard outside.",
-					"Erin squees at the TV out of excitement."
-				]));
+				sadako.write("[: %erin.following @: Erin:] is standing here beside you.");
 			}
 		};
-		*/
 		
 		// Sets up the dialog window by passing it the HTML element IDs.
 		// First param is the text output, second is the title of the window
 		// (if it has one), and third is an array of all items to show/hide
 		// when showDialog() and closeDialog() are called.
 		sadako.setupDialog("#dialog-output", "#dialog-title", ["#dialog", "#overlay"]);
-		
-		// Setting title in the banner at the top of the page.
-		// sadako.dom("#banner-status").innerHTML = "~ Monster ~";
 		
 		game.clearTitle();
 		

@@ -55,7 +55,7 @@
 		>> name_chosen
 
 	- Welcome.
-	Before we start, I would like you to name your character. In this story you will be playing the role of a male in their early twenties.
+	Before we start, I would like you to name your character. In this story you will be playing the role of a man in their early twenties.
 
 	= enter_name
 	Please tell me your name.
@@ -91,10 +91,6 @@
 	Links at the bottom of the page will be either dialogue to say or actions to perform.
 	The inventory (<img title="inventory" class="inline-icon" src="icons/inventory.png">) button is at the left of the title bar located at the top of the screen. This button will display an inventory menu. Any new items you pick up during the story will get added to your inventory.
 	In this story, you already start with a notebook which keeps track of tasks and character information. As you gain and complete tasks, your task menu will be automatically updated to help you track progress. Any new information you learn about characters will be added to the character menu.
-	The back, save/load, and restart buttons are located on the right side of the title bar.
-	The back (<img title="back" class="inline-icon" src="icons/back.png">) button goes back one entry in the story history. This is effectively an undo button.
-	The save/load (<img title="save / load" class="inline-icon" src="icons/save.png">) button saves and loads the game. Due to the way that <i>Sadako</i> works, save does not work everywhere. It only saves at the last checkpoint automatically created internally. Without getting into specifics, just know that more times than not, the game will save at the start of a conversation rather than during it.
-	The restart (<img title="restart" class="inline-icon" src="icons/restart.png">) button restarts the game and deletes your autosave file.
 
 	[:%story_start @: Begin the story.:] ~:choice
 	<< END
@@ -151,7 +147,9 @@
 	"I am placing my trust in you," your father finishes, ignoring your sister's outburst. And with that, he closes the door behind him and is gone.
 	Erin's mouth is agape as she stares wide-eyed at the office door.
 
-	+ {start} [Continue];; >> #office
+	+ {start} [Continue]
+		(:addTask "main_1.find_vanessa":)
+		>> #office
 
 
 ## office ~:room:Office
@@ -249,8 +247,8 @@
 	>> go.back
 
 	= luggage
-	You brought very little with you compared to your sister. It looks like she may have packed her entire room. You may not know when you are to return, but it appears as though she is planning on taking up permanent residence.
-	At some point you'll have to get these bags to your rooms.
+	You brought very little with you compared to your sister. It looks like she may have packed her entire room in there. You may not know when you are to return, but it appears as though she is planning on taking up permanent residence.
+	At some point you'll have to get these bags to your rooms. :: !%.daemon.intro_talk
 	>> go.back
 
 
@@ -559,11 +557,50 @@
 
 ## 2F_hallway ~:room:Second Floor Hallway
 	This section of the second floor consists of only a hallway leading to each of the resident's bedrooms. The end of this hallway wraps around the corner to the back hallway, and the start leads down a set of stairs to the lobby.
-	On either side of the hallway are doors to each room. On the left is Seoyun's room and Erin's room, and the right is Sera's room and your room.
+	On either side of the hallway are doors to each room. On each door is a little sign with the person's name. On the left is Seoyun's room and [:%erins_room @: Erin's room:], and to the right is Sera's room and your room.
+	
+	+ {down} [Descend the stairs to the foyer.];; >> #foyer
+	
+	= erins_room
+	The door to Erin's room is white and plain like all of the rest. On the door hangs a sign that reads her name in neatly written letters.
+	
+	As you step up to the door, Erin asks, "Did you want to go in? You can if you want." :: $.erin_following
+	
+	+ {erin_enter} [Enter the room.] :: $.erin_following;; >> #erins_room
+	+ [Knock on the door.] :: !$.erin_following
+		You knock on the door but there isn't any answer. She must not be in her room right now.
+		>> go.back
+	+ {erin_back} [Go back.];; << RETURN
 
 
-## erins_room
+## erins_room ~:room:Erin's Room
+	Her room is a decent size. At the moment it's quite bare since the two of you have just moved in. However, it's still furnished with a [:%bed:], a [:%dresser:], a small [:%desk:], and a [:%television:] on top of the dresser. There is also a [:%window:] from which you can see the treetops of the surrounding forest.
+	
+	Erin's [:%foyer.luggage @: luggage:] is neatly collected into the center of the room. :: %.daemon.intro_talk
 
+	{erin_comment} Erin looks around the room. "Hey, this isn't too bad." :: $.erin_following && !%.erins_room.erin_comment
+	
+	+ {hw} [Enter the hallway.];; >> #2F_hallway
+	
+	= bed
+	Erin's full-sized bed is covered with neatly tucked-in pink sheets. Pink is her favorite color, of course. Were the sheets chosen for her knowing that, or was it just a coincidence?
+	>> go.back
+	
+	= dresser
+	Her dresser is squat and has four drawers. The top of the dresser is quite long and could easily be used as a tabletop.
+	>> go.back
+	
+	= desk
+	The desk is not that big and doesn't have any drawers, but it is still quite usable for any writing tasks that may need to be done.
+	>> go.back
+	
+	= television
+	Her television is a mid-sized flatscreen, which makes it about the same as the one she had back home, but it is of a higher quality brand. 
+	>> go.back
+	
+	= window
+	From the window you can see the forest surrounding the mansion. The forest seems dense and impenetrable. It makes you wonder whether the forest is secluding the mansion or defending it.
+	>> go.back
 
 /* === Items === */
 
@@ -594,7 +631,7 @@
 ## walter
 	= notebook
 	Walter $:lname is your father. He's a very gruff and demanding invidual. 
-	You've never been on the best of terms with your father, even when he was around. But then about 7 years ago, he left. There was no divorce. Neither your father nor your mother requested one. In fact, throughout the years, your mother acted as though she expected your father to return, and so you believed it as well, until you didn't. You expected to never see him again. But that all that changed with his phone call.
+	You've never been on the best of terms with your father, even when he was around. But then about seven years ago, he left. There was no divorce. Neither your father nor your mother requested one. In fact, throughout the years, your mother acted as though she expected your father to return, and so you believed it as well, until you didn't. You expected to never see him again. But that all that changed with his phone call.
 	It's a mystery to you how your father came to acquire this mansion or what business he has in another country. Or even which country that is. :: #.office
 	<> But more importantly, since when did he first learn of myths? :: %.kitchen.met_vanessa
 	<< END
@@ -737,6 +774,60 @@
 				++++ "Stop it. That's weird."
 			---	She laughs. "I'm just picking, you weirdo."
 			>> go.eoc
+	~ else if ($.room === "erins_room")
+		Erin is calmly evaluating her surroundings, since she will be living in this room for the foreseeable future.
+		~~ if (%.erin.her_room_talk && !%.daemon.intro_talk)
+			<> She seems to be lost in contemplation.
+			>> go.back
+		-- >> talk_menu
+		~~ if (!%.erin.her_room_talk)
+			{her_room_talk} "This room isn't so bad, right? It's actually a lot better than my room back home. Yours too."
+		
+			+++ "Yeah."
+				"Yeah.. This could work." 
+				>> go.eoc :: !%.daemon.intro_talk
+				<> She nods and then turns her attention to <>
+		~~ else
+			Erin looks at <>
+		-- her luggage. "I guess Vanessa really did carry this all up on her own in just the short time we were with Daemon. She's really amazing."
+		(:endTask "main_3.unpack":)
+
+		++ "What do you think about her?"
+		-- "Vanessa?" she asks. "She seems nice. Or at least pretends to be nice. She seems kind of.. off though. Like, I'm not sure if I should trust her. Or trust any of them."
+
+		++ "I also got that impression."
+			"Yeah. Do <>
+		++ "Aren't you overreacting?"
+			"Overreacting? They're immortal creatures from legend that have a history of killing people. I think my reaction is quite normal." She shakes her head. "But I wonder, do <>
+		-- you think Dad trusted them? I mean, Vanessa has been with the family for generations, I guess, so she must be at least a little trustworthy. But the others...? We're sharing a roof with monsters now, $:name. <i>Monsters</i>. How the hell did this happen?"
+
+		++ "What do you think we should do?"
+			Erin tilts her head as she thinks. "Well.. we can't leave. I mean, we could, but Dad left this place in our care. {:%.office.erin_deed::He even gave us ownership. :}We can't just abandon it..."
+		++ "We can't just leave."
+			Erin sighs. "I know. They might be monsters but I can't just abandon them like that.{:%.office.erin_deed:: Besides, we own this place now...:}"
+		-- Your sister paces around the room. "But at the same time, this is a whole new world, ya know? Myths are real? <i>All</i> of them? Werewolves? Vampires? Bigfoot? The slit-mouthed woman? Slender Man? <i>Everything</i>? Seriously, that's really scary."
+
+		++ "The last one was created on a forum."
+		-- "Does it matter? Vanessa said that she's not sure which came first. If myths are based on the urban legends instead of vice versa, that means it wouldn't matter if you can track the origin of the myth. All that matters is that it exists." She stops pacing. "Do you think it's based on how widely the legend has been spread? I wonder how it works..."
+
+		++ "It sounds like you're getting used to this."
+		-- "Yeah. Well, no. I just think it's interesting. It doesn't mean I'm not scared out of my mind at the idea of it." Then she sighs. "But I guess there's not much we can do about it. Either we abandon this place and let it go to hell, or we do what our dad asked and take care of this place while waiting for him to return, if ever."
+
+		++ "He never did say he was returning, did he."
+			"No. No, he didn't," she grumbles.
+		++ "He'll be back."
+			She scoffs. "Yeah. Just like he did seven years ago. Oh wait! He didn't at all."
+		-- Just then there is a gentle knock at the door. Erin gives you a confused look before she walks over to the door and opens it. Behind it is Vanessa.
+		"Excuse me, Mistress, Master, but I request your assistance in preparing for the new tenants."
+		Erin shrugs. "Welp. Let's go do this then," she says to you, apparently having made her decision.
+
+		++ "Okay. Let's go."
+		-- The three of you leave the room and Vanessa lets you to the back hallway. It hasn't even been a day but you've had enough surprises to last a year. What other surprises are in store for you and your sister?
+		<div style="height:2em"></div>
+		This is the end of the demo. Thank you for playing! ~:class:info notebook
+		<div style="height:2em"></div>
+		<center><h1>MONSTER</h1></center> ~:delay:3500
+		<< END
 	- She doesn't appear to have anything to say right now.
 	>> go.back
 
@@ -761,6 +852,7 @@
 		>> go.eoc
 
 	= intro_talk
+	(:endTask "main_1.find_vanessa":)
 	She bows. "Master $:name, I presume," she says in a gentle voice. She turns her attention to your sister. "And you must be Mistress Erin. Welcome. I am Vanessa, your humble servant."
 
 	+ "You know about us?"
@@ -836,6 +928,7 @@
 	+ "We should probably introduce ourselves to the other tenants now."
 	(:setCharInfo "vanessa", "Vanessa":)
 	- "I understand, Master. I must return to my cleaning as well. Please let me know if you need anything else."
+	(:addTask "main_2.find_tenants":)
 	>> go.eoc
 
 	= talk_menu
@@ -854,6 +947,7 @@
 	>> talk_menu
 
 	= intro_talk
+	
 	"Oh, hi," she says, jogging in place, "You must be the new landlords?"
 
 	+ "That's right."
@@ -861,6 +955,7 @@
 	"I'm Seoyun. Nice to meet you."
 	"Seoyun? That's a pretty name."
 	"Thank you. It's Korean," she says with a smile.
+	(:addTask "main_2.find_seoyun", "complete":)
 
 	= intro_loop_1
 	* {intro_loop_1a} "You're a myth too?"
@@ -994,6 +1089,7 @@
 	+ "Anyway, I'm $:name, and this is Erin."
 	- Giving up on being able to watch her show in peace, the girl turns around to face you. "Fionnuala. My friends call me Finola."
 	Finola holds her hand out to you.
+	(:addTask "main_2.find_finola", "complete":)
 
 	+ [Shake her hand.]
 	- You extend your hand for a shake. Your hand is practically the size of the the fairy. She firmly grasps just your index finger and gives it a good shake.
@@ -1020,6 +1116,10 @@
 	*
 		** {intro_loop_1e} "Who did I miss?"
 			"There's still {:!%.seoyun.intro_talk::Seoyun, Sera,::Sera:} and Daemon," Finola replies in a flat tone.
+			(:addTask "main_2.find_seoyun":) :: !%.seoyun.intro_talk
+			(:addTask "main_2.find_sera":)
+			(:addTask "main_2.find_daemon":)
+			(:removeTask "main_2.find_tenants":)
 			>> intro_loop_1
 		-- >> intro_loop_1_end
 	- >> intro_loop_1
@@ -1070,6 +1170,7 @@
 
 		++ "Do you live here too?"
 		-- She takes a few steps back and sits on the ground. Or at least what constitutes sitting, which is to say that she pulls her legs in close and rests her abdomen on the floor. She wipes the tears with the back of her arm, then looks at you with moist eyes and sniffles. "Yeah. I'm Sera. It's nice to meet you."
+		(:endTask "main_2.find_sera":)
 
 		++ "Hi Sera. I'm $:name."
 		-- "Hi $:name," she replies softly, She takes a moment to think. "Why are you here? Are you friends of Walter?"
@@ -1096,7 +1197,7 @@
 
 ## daemon
 	= notebook
-	Daemon is a bogeyman. He seems nice enough and is a fairly attractive man for being a supposed creature of nightmares.
+	Daemon is a bogeyman. He seems nice enough and is a fairly attractive man for being a supposed creature of nightmares. However, he says that's just a facade.
 	<< END
 	
 	= intro
@@ -1117,6 +1218,7 @@
 		Erin narrows her eyes. "... That's what people say about spiders."
 		"That they do."
 		(:setCharInfo "sera", "Sera":)
+		(:endTask "main_2.find_sera":)
 	~ else
 		++ "She seems really nice though. She asked me to apologize for her for scaring you."
 		-- "You talked with her!" She is utterly shocked. "Hooww?"
@@ -1127,6 +1229,7 @@
 	"Yeah. Why can't they be normal like Daemon here?"
 	Daemon laughs. "Girly, I'm just wearing my 'normal' face. If I showed you the real me, you wouldn't sleep for weeks. I wear this facade because even the myths here don't like looking at me."
 	"... oh... okay." She says in a meek voice.
+	(:endTask "main_2.find_daemon":)
 
 	+ "What kind of myth are you?"
 	- His face contorts into an evil grins. "I'm a bogeyman."
@@ -1139,9 +1242,10 @@
 	"Seoyun was saying that there myths aren't evil."
 	"Every villain is the hero of their own story, right? It's like that," Daemon says with a shrug.
 
-	+ "We should probably go unpack now."
+	+ "We should probably get our luggage up to our rooms now that we've met everyone."
 	- "Mmmm. Chances are that Vanessa has beaten you to it, but I'll talk to you later anyway." He gives a polite nod and tosses back a drink.
 
 	[:& $.erin_following = true:]
 	(:setCharInfo "daemon", "Daemon":)
+	(:addTask "main_3.unpack":)
 	>> go.eoc

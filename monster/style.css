@@ -330,7 +330,7 @@ a.broken, #story-output a.broken { color: red; }
 	cursor: auto;
 }
 .notebook li { text-align: left; } 
-.notebook li.completed {
+li > .completed {
 	color: #666666;
 	text-decoration: line-through;
 }
