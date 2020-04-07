@@ -282,6 +282,12 @@
 		sadako.macros.setCharInfo = game.setCharInfo;
 		sadako.macros.endTask = game.endTask;
 		
+		sadako.scripts.finola_name = function() {
+			var link = "%finola.intro";
+			if (sadako.label_seen["finola.intro_talk"]) return sadako.writeLink("Finola", link);
+			else return "a " + sadako.writeLink(((sadako.label_seen["finola.intro"]) ? "miniature girl" : "small creature"), link) + " with butterfly wings";
+		};
+		
 		// You can set how many rewinds you want to allow. Set 0 for none.
 		// sadako.history_limit = 1;
 		

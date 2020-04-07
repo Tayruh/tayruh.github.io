@@ -62,13 +62,13 @@
 
 	 <table><>
 		 <tr><>
-			<td>[:> $.name @: <b>First</b>^^:]</td><>
-			<td>[:> $.lname @: <b>Last</b>^^:]</td><>
+			<td>[:> $.name @: <b>First</b><br>:]</td><>
+			<td>[:> $.lname @: <b>Last</b><br>:]</td><>
 		 </tr><>
 	 </table>
 
 	+ [Continue]
-		~~ if (!$.name)
+		~~ if (!$.name || !$.lname)
 			Name is invalid.
 			>> enter_name
 		-- Your name is $:name $:lname. Is this correct?
@@ -394,8 +394,7 @@
 	The living room is quite large, yet has a very cozy feel about it. At the end of the room is a gigantic widescreen [:%TV:] with a large [:%sofa:] facing it. To the side is a standing [:%cooler:] with soft drinks and water bottles, and a [:%table:] full of various snacks and fruits.
 
 	~ if (%.vanessa.intro_talk)
-		>> finola.name
-		Sitting on the back of the couch is _:finola. :: %.vanessa.intro_talk
+		Sitting on the back of the couch is ^:finola_name. :: %.vanessa.intro_talk
 
 	+ {hw} [Enter the hallway.];; >> #east_hallway
 
@@ -404,16 +403,14 @@
 	<> The screen is currently displaying some sort of sci-fi show with impressive special effects. :: %.vanessa.intro_talk
 	
 	~ if (%.finola.intro)
-		>> finola.name
-		<> _:finola is watching the show intently. :: %.finola.intro
+		<> [:= sadako.cap(^.finola_name):] is watching the show intently. :: %.finola.intro
 	- >> go.back
 
 	= sofa
 	The sofa is set to face the television and looks like it could easily fit four or five people. It appears to be a similar model as the ones in the foyer.
 	
 	~ if (%.vanessa.intro_talk)
-		>> finola.name
-		[:= sadako.cap(_.finola):] is perched on the back of the sofa.
+		[:= sadako.cap(^.finola_name):] is perched on the back of the sofa.
 	- >> go.back
 
 	= cooler
@@ -1051,14 +1048,6 @@
 	= notebook
 	Finola is a fairy. She's a bit blunt, to be honest. She's cute as a button with her miniature body and beautiful blue and black butterfly wings, but she's actually quite rude. She seems to rub Erin the wrong way, but Finola doesn't seem to have a problem with you.
 	<< END
-
-	= name
-	[:&
-		var link = "%finola.intro";
-		if (%.finola.intro_talk) _.finola = sadako.writeLink("Finola", link);
-		else _.finola = "a " + sadako.writeLink(((%.finola.intro) ? "miniature girl" : "small creature"), link) + " with butterfly wings";
-	:]
-	<<
 
 	= intro
 	~ if (%.finola.intro_talk)
