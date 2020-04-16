@@ -18,9 +18,7 @@
 		
 		var html;
 		if ("color" in game.chars[char]) html = sadako.format("<span style='color:{0}'>{1}</span>", game.chars[char].color, game.chars[char].name);
-		sadako.dom("name").innerHTML = html || game.chars[char].name;
-		
-		game.name_shown = true;
+		game.name_shown = html || game.chars[char].name;
 		
 		if (!img_pos) return;
 		
@@ -44,8 +42,7 @@
 		var items = tag.split(":");
 		
 		if (items[0] === "bg") sadako.dom("bg").src = "vn_img/" + game.bgs[items[1]];
-		else if (items[0] === "mion") game.doCharacter(items);
-		else if (items[0] === "rena") game.doCharacter(items);
+		else if (items[0] in (sadako.list("mion", "rena"))) game.doCharacter(items);
 		
 		return text;
 	};
@@ -59,7 +56,7 @@
 			sadako.display_choices = [];
 		}
 		
-		game.name_shown = false;
+		game.name_shown = "";
 		
 		var delay = 0;
 		var line = sadako.display_lines.shift();
@@ -74,9 +71,12 @@
 			line.text = sadako.doLineTag(line.text, line.tags[a]);
 		}
 		
-		line.classes.push("hide");
-		if (!game.name_shown) sadako.addClass("name", "hide");
-		else if (sadako.hasClass("name", "hide")) sadako.fadeIn("name");
+		sadako.add(line.classes, "hide");
+		if (!game.name_shown.length) sadako.addClass("name", "hide");
+		else if (sadako.hasClass("name", "hide")) {
+			sadako.dom("name").innerHTML = game.name_shown;
+			sadako.fadeIn("name");
+		}
 		
 		if (!line.text.length) {
 			sadako.displayOutput(id);
@@ -110,7 +110,7 @@
 	window.onload = function() {
 		sadako.init();
 		
-		game.name_shown = false;
+		game.name_shown = "";
 		sadako.var.chars = {};
 		
 		game.bgs = {

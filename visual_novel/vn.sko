@@ -1,12 +1,12 @@
 ## start
     - ~:bg:path
-    Hi! ~:mion:default,3
+    Hi! ~:mion:default,3 
     Let's do a test.
     + [Choice]
         You made a choice. Good job! ~:mion:wink
         Hooray! I'm so proud of you! ~:rena:laugh,1
         I gotta go! ~:mion
-        Okay, bye! ~:rena ~:mion:hide
+        Okay, bye! ~:mion:hide ~:rena
         Oh. She already left.. ~:rena:sad
     + [Other Choice]
         Oh! You choose the second choice.. ~:mion:surprised
