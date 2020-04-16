@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Sadako Example</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+		<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+		<script src="sadako.js" type="text/javascript"></script>
+		<script src="story.js" type="text/javascript"></script>
+		<script src="vn.js" type="text/javascript"></script>
+			
+		<style>
+			@font-face {
+				font-family: Arvo-Regular_0;
+				src: url("fonts/Arvo-Regular_0.ttf") format('truetype');
+			}
+			
+			body {
+				background: black;
+				margin: 0;
+			}
+			
+			.choice { 
+				font-size: 0.90em;
+				line-height: 1.75;
+			}
+			.choice ul {
+				margin-top: 1em;
+			}
+			
+			.flip {
+				-webkit-transform: scaleX(-1);
+				transform: scaleX(-1);
+			}
+			
+			.hide {
+				transition: opacity 100ms ease-in;
+				opacity: 0;
+			}
+			:not(.hide) {
+				transition: opacity 200ms ease-in;
+				opacity: 1;
+			}
+			
+			#output hr {
+				border-style: dashed;
+				border-color: rgb(120, 120, 120.5);
+				margin-top: 3em;
+				width: 700px;
+			}
+			
+			a.link {
+				text-decoration:none;
+				text-align:left;
+				color: darkgray;
+				cursor: pointer;
+			}
+			a.link:not(.link-broken) { color:darkgray; }
+			a.link:hover { color: darkorange; }
+		
+			#story {
+				position: relative;
+				width: 1280px;
+				height: 720px;
+				margin: auto;
+			}
+			
+			#bg {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				max-height: 720px;
+			}
+			
+			#pos1, #pos2, #pos3 {
+				position: absolute;
+				max-height: 720px;
+				bottom: 0;
+			}
+			#pos1 { left: -30%; }
+			#pos3 { left: 30%; }
+			
+			#output, #name {
+				position: absolute;
+				background: rgba(0, 0, 0, 0.5);
+				color: white;
+				font-family: Arvo-Regular_0, serif;
+				font-size: 1.25em;
+				margin: 0.5em;
+				padding: 0.5em;
+				border-radius: 6px;
+			}
+			#output {
+				bottom: 0;
+				left: 0;
+				right: 0;
+				height: 9em;
+			}
+			
+			#output > div {
+				width: 100%;
+			}
+			
+			#name {
+				bottom: 10.5em;
+				left: 0;
+				min-width: 100px;
+				min-height: 1em;
+			}
+		</style>
+	</head>
+	
+	<body>	
+		<!-- Story Text -->
+		<div id="story" onclick="sadako.displayText()">
+			<img id="bg">
+			<img id="pos1" class="flip hide">
+			<img id="pos2" class="hide">
+			<img id="pos3" class="hide">
+			<div id="name" class="hide"></div>
+			<div id="output" class="story-text"></div>
+		</div>
+	</body>
+</html>
