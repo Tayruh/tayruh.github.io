@@ -36,9 +36,9 @@
 			if (char in game.colors) html = sadako.format("<span style='color:{0}'>{1}</span>", game.colors[char], name);
 			sadako.dom("name").innerHTML = html || name;
 			
-			if (!img_pos) return;
-			
 			game.name_shown = true;
+			
+			if (!img_pos) return;
 			
 			if (img_pos) {
 				var temp = img_pos.split(",");
