@@ -73,9 +73,9 @@
 		
 		sadako.add(line.classes, "hide");
 		if (!game.name_shown.length) sadako.addClass("name", "hide");
-		else if (sadako.hasClass("name", "hide")) {
+		else {
 			sadako.dom("name").innerHTML = game.name_shown;
-			sadako.fadeIn("name");
+			if (sadako.hasClass("name", "hide")) sadako.fadeIn("name");
 		}
 		
 		if (!line.text.length) {
