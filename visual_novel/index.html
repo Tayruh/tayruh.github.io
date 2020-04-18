@@ -42,6 +42,13 @@
 				opacity: 1;
 			}
 			
+			.unselectable {
+				-moz-user-select: none;
+				-webkit-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+			
 			#output hr {
 				border-style: dashed;
 				border-color: rgb(120, 120, 120.5);
@@ -133,8 +140,8 @@
 			<div class="char-layer"><img id="pos1" class="flip hide"></div>
 			<div class="char-layer"><img id="pos2" class="hide"></div>
 			<div class="char-layer"><img id="pos3" class="hide"></div>
-			<div id="name" class="hide"></div>
-			<div id="output" class="story-text"></div>
+			<div id="name" class="hide unselectable"></div>
+			<div id="output" class="unselectable"></div>
 		</div>
 	</body>
 </html>
