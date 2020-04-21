@@ -18,10 +18,20 @@ html, body {
 	font-size:100%;
 }
 
-.hide {
-	opacity: 0;
-	transition: opacity 200ms ease-in;
+.unselectable {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
+
+.all {
+	-moz-user-select: all;
+	-webkit-user-select: all;
+	-ms-user-select: all;
+	user-select: all;
+}
+
 .choice { 
 	font-size: 1.1em;
 	line-height: 2;
@@ -53,10 +63,6 @@ html, body {
 	width: 100%;
 	font-weight: bold;
 	text-decoration: underline;
-	
-	/* text-align: center; */
-	/* color: darkgray; */
-	/* background: #333; */
 }
 
 div:not(:first-of-type) > #room-title {
@@ -67,11 +73,6 @@ div:not(:first-of-type) > #room-title {
 	text-align: center;
 	font-size: 0.9em;
 	color: darkgray;
-}
-
-#dialog-text {
-	max-width: 30em;
-	overflow-y: auto;
 }
 
 #inventory {
@@ -88,7 +89,7 @@ div:not(:first-of-type) > #room-title {
 	color:#666666;
 	margin-left:10px;
 }
-.listed-object, .listed-object a { color: silver; }
+.listed-object, .listed-object a.link { color: silver; }
 
 #story {
     margin: 0;
@@ -103,10 +104,25 @@ div:not(:first-of-type) > #room-title {
 	text-justify: auto;
 }
 .story-text > div {
-	margin: 1em;
-	transition: opacity 400ms ease-in;
+	margin-left: 1em;
+	margin-right: 1em;
 }
-.story-text a {
+.story-text div {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.story-text .hide {
+	transition: initial;
+	opacity: 0;
+}
+
+.story-text :not(.hide) {
+	transition: opacity 400ms ease-in;
+	opacity: 1;
+}
+
+a.link {
 	text-decoration:none;
 	text-align:left;
 	color: darkgray;
@@ -125,8 +141,8 @@ div:not(:first-of-type) > #room-title {
 .story-text tr, .story-text th, .story-text td, .story-text caption {
 	padding: 3px;
 }
-.story-text a:not(.link-broken) { color:darkgray; }
-.story-text a:hover { color: darkorange; }
+a.link:not(.link-broken) { color:darkgray; }
+a.link:hover { color: darkorange; }
 .story-text hr {
 	border-color:#333333;
 	margin-top: 3em;
@@ -142,7 +158,7 @@ div:not(:first-of-type) > #room-title {
 .story-text textarea { resize: none; font-size: 12pt; height: 1.3em; width: 14em; }
 .story-text textarea.multiline { height: 6.5em; width: 30em; }
 
-a { cursor: pointer; }
+a.link { cursor: pointer; }
 a.broken, #story-output a.broken { color: red; }
 
 #banner-wrapper {
@@ -201,10 +217,21 @@ a.broken, #story-output a.broken { color: red; }
   display: inline-block;
 }
 
-#overlay {
-	background-color: #000;
+
+#dialog:not(.open), #dialog-overlay:not(.open) {
+	transition: visibility 200ms step-end, opacity 200ms ease-in;
 	visibility: hidden;
 	opacity: 0;
+}
+
+#dialog.open, #dialog-overlay.open {
+	transition: opacity 200ms ease-in;
+	visibility: visible;
+	opacity: 1;	
+}
+
+#dialog-overlay {
+	background-color: #000;
 	position: fixed;
 	top: 0; 
 	left: 0;
@@ -212,37 +239,35 @@ a.broken, #story-output a.broken { color: red; }
 	width: 100%;
 	z-index: 200;
 }
-#overlay:not(.open) {
-	transition: visibility 200ms step-end, opacity 200ms ease-in;
-}
-#overlay.open {
-	visibility: visible;
-	transition: opacity 200ms ease-in;
-	opacity: 0.8;
-}
+#dialog-overlay.open { opacity: 0.8; }
 
 #dialog {
 	position: fixed;
 	top: 5vh;;
 	left: 50%;
 	transform: translate(-50%);
-	visibility: hidden;
-	opacity: 0;
 	padding: 0;
-	z-index: 300;
+	z-index: 300;	
 }
 #dialog-output {
 	overflow-y: auto;
+	
 	max-height: 75vh;
 }
-#dialog:not(.open) {
-	transition: visibility 200ms step-end, opacity 200ms ease-in;
+#dialog-body {
+	min-width: 280px;
+	background-color: #111;
+	border: 1px solid #444;
+	text-align: left;
+	line-height: 1.5;
+	padding: 0;
+	border-radius: 0 0 6px 6px;
+    max-width: 40em;
+	min-height: 2em;
 }
-#dialog.open {
-	visibility: visible;
-	transition: opacity 200ms ease-in;
-	opacity: 1;
-	
+#dialog-text {
+	max-width: 30em;
+	overflow-y: auto;
 }
 #dialog-titlebar {
 	background-color: #444;
@@ -282,16 +307,6 @@ a.broken, #story-output a.broken { color: red; }
 	background-color: #6d3c00;
 	border-color: darkorange;
 }
-#dialog-body {
-	min-width: 280px;
-	background-color: #111;
-	border: 1px solid #444;
-	text-align: left;
-	line-height: 1.5;
-	padding: 0;
-	border-radius: 0 0 6px 6px;
-    max-width: 40em;
-}
 
 #save-slot {
     color: white;
@@ -318,7 +333,7 @@ a.broken, #story-output a.broken { color: red; }
 	margin: auto;
 	text-align:center;
 }
-.notebook a {
+.notebook a.link {
 	margin-left: 6px;
 	margin-right: 6px;
 }

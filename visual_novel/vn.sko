@@ -1,8 +1,9 @@
 ## start
     - ~:bg:path
     Hi! ~:mion:default,3 
-    This is an longer sentence than normal. Notice how it pauses automatically at periods and exclamation marks. The mouth animation also pauses in time with the text. Clicking the screen will force the text to appear in full. ~:mion
-    Text blocks not marked with a character or narration appear in full.
+    This is a longer sentence than normal. Notice how it pauses automatically at periods and exclamation marks. The mouth animation also pauses in time with the text. ~:mion
+    If you're impatient, clicking the screen before the text is finished displaying will force the text to appear in full. ~:mion
+    Text blocks not marked with a character or narration always appear in full.
     However, even narrated lines can have links and markup in them.<br>For example a link like [:+& sadako.randomItem(["this other one", "this different link"]) @: this one:]. ~:nara
     Now let's try a choice. ~:mion
     + [Choice]

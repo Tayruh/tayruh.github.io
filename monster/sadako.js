@@ -1,8 +1,7 @@
-
 (function(sadako) {
 
-	sadako.version = "0.9.9";
-	sadako.kayako_version = "0.9.6";
+	sadako.version = "0.11.2";
+	sadako.kayako_version = "0.10.1";
 
 	var localStorage;
 
@@ -50,7 +49,10 @@
 		"eval_value": "=",
 		"page_embed": "#",
 		"label_embed": "%",
-		"input_embed": ">",
+		"eval_input": ">",
+		"eval_reveal": "+",
+		"eval_dialog": "*",
+		"eval_action": "!",
 
 		// embedding
 		"script_embed": "\\^",
@@ -65,7 +67,7 @@
 
 	// global variables intended to changed
 	sadako.savename = "sadako";
-	sadako.text_delay = 150.0;
+	sadako.text_delay = 80.0;
 	sadako.output_id = "#output";
 	sadako.autosave_enabled = false;
 
@@ -78,6 +80,8 @@
 	sadako.labels = {};
 	sadako.depths = {};
 	sadako.lines = [];
+	sadako.display_lines = [];
+	sadako.display_choices = [];
 	sadako.history = [];
 	sadako.history_limit = 10;
 	sadako.state = {};
@@ -95,6 +99,7 @@
 	sadako.current_line = [];
 	sadako.script_level = 1;
 	sadako.in_dialog = false;
+	sadako.in_include = false;
 	sadako.scene_checks = {};
 
 	// global variables saved to state
@@ -113,6 +118,7 @@
 	sadako.enter_text = [];
 	sadako.scenes = {};
 
+
 	/* Utility Functions */
 
 	var dom = function(id) {
@@ -126,9 +132,10 @@
 		*/
 
 		var temp;
-
-		if ((temp = isToken(id, "#"))) return document.getElementById(temp);
-		else if ((temp = isToken(id, "\\."))) return document.getElementsByClassName(temp);
+		
+		if ((temp = isToken(id, "\\.")) !== false) return document.getElementsByClassName(temp);
+		if ((temp = isToken(id, "#")) !== false) return document.getElementById(temp);
+		return document.getElementById(id);
 	};
 
 	var copy = function(item, deep) {
@@ -362,8 +369,6 @@
 				return args[n];
 			});
 			if (!loop || old_text === str) { break; }
-
-			// console.log(a, old_text, str);
 		}
 
 		return str;
@@ -380,14 +385,6 @@
 		*/
 
 		return (list.indexOf(id) !== -1);
-
-		/*
-		var a;
-		for (a = 0; a < list.length; ++a) {
-			if (list[a] === id) return true;
-		}
-		return false;
-		*/
 	};
 
 	var add = function(list, id) {
@@ -413,17 +410,23 @@
 
 	var addClass = function(id, classname) {
 		// Adds a class to an HTML element.
+		// id can be either a string id or the element itself
+		
+		var el = (isStr(id)) ? dom(id) : id;
 
-		var classes = add(dom(id).className.split(" "), classname).join(" ");
-		dom(id).className = classes;
+		var classes = add(el.className.split(" "), classname).join(" ");
+		el.className = classes;
 		return classes;
 	};
 
 	var removeClass = function(id, classname) {
 		// Removes a class from an HTML element.
+		// id can be either a string id or the element itself
+		
+		var el = (isStr(id)) ? dom(id) : id;
 
-		var classes = remove(dom(id).className.split(" "), classname).join(" ");
-		dom(id).className = classes;
+		var classes = remove(el.className.split(" "), classname).join(" ");
+		el.className = classes;
 		return classes;
 	};
 
@@ -515,11 +518,141 @@
 		return str.replace(/(\b\w)/i, function(m) { return m.toUpperCase(); });
 	};
 
-	var scrollToTop = function() {
+	sadako.scrollToTop = function(id) {
 		// Scrolls HTML page to the top.
+		
+		if (sadako.in_include) return;
+		
+		if (id) dom(id).scrollTop = 0;
+		else if (sadako.in_dialog) dom(sadako.dialog_ids.output).scrollTop = 0;
+		else {
+			document.body.scrollTop = 0; // For Safari
+			document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+		}
+	}
+	
+	
+	/* Markup Parsing */
+	
+	var getMarkup = function(text, open, close) {
+		var firstIndex = text.indexOf(open);
+		if (firstIndex === -1) return {"before": "", "markup": "", "after": text};
+		
+		var markup;
+		var lastIndex = 0;
+		var closeIndex;
+		
+		while (closeIndex !== -1) {
+			closeIndex = text.indexOf(close, lastIndex);
+			if (closeIndex === -1) break;
+			lastIndex = closeIndex + close.length;
+			markup = text.substring(firstIndex, lastIndex);
+			if (markup.split(open).length === markup.split(close).length) break;
+		}
+		
+		if (closeIndex === -1) {
+			console.error("Script:", text);
+			throw new Error("Unmatched " + open + " and " + close + " tokens.");
+		}
+		
+		var before = text.substring(0, firstIndex);
+		var after = text.substring(closeIndex + close.length);
+		
+		return {"before": before, "markup": markup, "after": after};
+	}
+	
+	var parseMarkup = function(text, open, close, action) {
+		if (text.indexOf(open) === -1) {
+			return text;
+		}
+		
+		var before;
+		var temp = getMarkup(text, open, close);
+		
+		var result = "";
+		
+		while (temp.markup.trim().length) {
+			before = temp.before;
+			text = temp.after;
+			
+			result += before + action(temp);
 
-		document.body.scrollTop = 0; // For Safari
-		document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+			temp = getMarkup(text, open, close);
+		}
+		
+		result += temp.after;
+
+		return result;
+	}
+	
+	var getToken = function(text) {
+		var checkIndex = function(token_type, value) {
+			if (value === -1) return;
+			if (value > index) return;
+			
+			token = token_type;
+			index = value;
+		}
+		
+		var t = sadako.token;
+		
+		var index = text.length;
+		var inline_index = text.indexOf(t.inline_open);
+		var span_index = text.indexOf(t.span_open);
+		var macro_index = text.indexOf(t.macro_open);
+		var script_index = text.indexOf(t.script_open);
+		
+		var token = false;
+		checkIndex("script", script_index);
+		checkIndex("inline", inline_index);
+		checkIndex("span", span_index);
+		checkIndex("macro", macro_index);
+		
+		return {"token": token, "index": index};
+	}
+	
+	var splitMarkup = function(text, split_token) {
+		if (text.indexOf(split_token) === -1) return [text];
+		
+		var t = sadako.token;
+		
+		var tokens = {
+			"script": [t.script_open, t.script_close],
+			"inline": [t.inline_open, t.inline_close],
+			"span": [t.span_open, t.span_close],
+			"macro": [t.macro_open, t.macro_close]
+		}
+		
+		var items = [];
+		var before = "";
+		var a, split_index, temp, script;
+		
+		// 1000 loops as a safety measure. It shoult break the loop before that.
+		for (a = 0; a < 1000; ++a) {
+			temp = getToken(text);
+			
+			split_index = text.indexOf(split_token);
+			
+			if (split_index !== -1 && split_index < temp.index) {
+				items.push(before + text.substring(0, split_index))
+				before = "";
+				text = text.substring(split_index + split_token.length);
+				continue;
+			}
+			
+			if (!temp.token) {
+				before += text;
+				text = "";
+				items.push(before);
+				break;
+			}
+			
+			script = getMarkup(text, tokens[temp.token][0], tokens[temp.token][1]);
+			before += text.substring(0, temp.index + script.markup.length);
+			text = text.substring(temp.index + script.markup.length);
+		}
+
+		return items;
 	}
 
 
@@ -600,10 +733,9 @@
 			choices: copy(sadako.choices, true),
 			evals: copy(sadako.evals, true),
 			scenes: copy(sadako.scenes, true),
-			var: copy(sadako.var, true)
+			var: copy(sadako.var, true),
+			tmp: copy(sadako.tmp, true)
 		}
-
-		// console.log(sadako.current_line)
 
 		return state;
 	};
@@ -633,6 +765,7 @@
 		sadako.choices = copy(data.choices, true);
 		sadako.evals = copy(data.evals, true);
 		sadako.enter_text = copy(data.lines, true);
+		sadako.tmp = copy(data.tmp, true);
 
 		sadako.state = copy(data, true);
 
@@ -824,7 +957,9 @@
 
 		if (!no_confirm && !confirm("Load save file? Current progress will be lost.")) return;
 
-		sadako.unfreezeData();
+		if (sadako.in_dialog) sadako.closeDialog();
+		else sadako.unfreezeData();
+
 		loadData(JSON.parse(saveData));
 
 		if (!no_confirm) alert("Load succesful!" );
@@ -834,36 +969,6 @@
 		doJump(sadako.current);
 
 		return true;
-	};
-
-	var startGame = function(page) {
-		/*
-			Begins the game.
-
-			- If "page" is provided, it will start there instead of "start".
-			- If autosave is enabled, it will load the autosave.
-
-			page (string): Page to begin game on.
-		*/
-
-		if (page !== undefined) sadako.page = page;
-
-		if (sadako.defaultData === undefined || isEmpty(sadako.defaultData)) {
-			sadako.defaultData = copy(getCurrentState(), true);
-		}
-		else loadState(sadako.defaultData);
-
-		if (!sadako.autosave_enabled) {
-			if (localStorage.getItem(sadako.savename + "_savedata_auto") !== null) {
-				localStorage.removeItem(sadako.savename + "_savedata_auto");
-			}
-		}
-
-		sadako.current_line = [sadako.page, 0, 0];
-
-		if (!sadako.autosave_enabled || !sadako.loadGame("auto", true)) {
-			doLink("#" + sadako.page);
-		}
 	};
 
 	var back = function() {
@@ -911,6 +1016,9 @@
 		location.reload(true);
 	};
 
+
+	/* Dialog */
+	
 	sadako.freezeData = function(id) {
 		/*
 			"Freezes" the current state.
@@ -927,7 +1035,7 @@
 
 		sadako.freeze_data = copy(getCurrentState(), true);
 		sadako.freeze_data.history = copy(sadako.history, true);
-		sadako.freeze_data.output_id = sadako.output_id;
+		sadako.freeze_data.output_id = id || sadako.output_id;
 
 		if (id) sadako.output_id = id;
 	};
@@ -949,39 +1057,20 @@
 		sadako.output_id = sadako.freeze_data.output_id;
 	};
 
-
-	/* Dialog */
-
-	sadako.setupDialog = function(output_id, title_id, display_ids) {
-		/*
-			Assigns ids to the elements associated with the dialog.
-
-			- ids should begin with a '#' symbol.
-
-			output_id (string): The element in which the output text will be written.
-			title_id (string): The element containing the title of the dialog window.
-			display_ids (array): An array containing one or more elements
-				to show/hide in order to show/hide the dialog window (ie. the DIV containing
-				both the title and output area DIVs).
-		*/
-
-		sadako.dialog_ids.output = output_id;
-		sadako.dialog_ids.title = title_id;
-		sadako.dialog_ids.display = display_ids;
-	};
-
 	sadako.closeDialog = function(cleanup) {
 		/*
 			Closes the dialog window.
 
 			cleanup (boolean): if true, clears lines and choices arrays.
 		*/
+		
+		if (!sadako.in_dialog) return;
 
 		sadako.unfreezeData();
-
 		sadako.in_dialog = false;
 
-		if (cleanup) {
+		// if script is running, we clear previous lines and choices
+		if (cleanup || sadako.script_status === RUN) {
 			sadako.lines = [];
 			sadako.choices = [];
 		}
@@ -1004,30 +1093,44 @@
 			title (string): Text to display in title bar
 			text (string): Text to display in dialog body
 		*/
-
-		var temp;
-
-		sadako.in_dialog = true;
-
-		sadako.run();
-
-		if (sadako.dialog_ids.display && !sadako.hasClass(sadako.dialog_ids.display[0], "open")) {
-			sadako.freezeData(sadako.dialog_ids.output);
+		
+		var updateDialog = function() {
+			if (sadako.dialog_ids.title) {
+				// clear dialog title if none is assigned on opening of dialog
+				if (title !== null && title !== undefined) sadako.dom(sadako.dialog_ids.title).innerHTML = title;
+				else if (!sadako.in_dialog) sadako.dom(sadako.dialog_ids.title).innerHTML = "";
+			}
+			
+			sadako.in_dialog = true;
+			sadako.clear();
+			
+			if (text) {
+				var temp;
+				if ((temp = sadako.isToken(text, sadako.token.page_embed))) doLink("#" + temp);
+				else if ((temp = sadako.isToken(text, sadako.token.label_embed))) sadako.doLink(temp);
+				else sadako.overwrite(text);
+			}
 		}
-
-		sadako.lines = [];
-		sadako.choices = [];
-
-		if (sadako.dialog_ids.title) sadako.dom(sadako.dialog_ids.title).innerHTML = title;
-
-		if ((temp = sadako.isToken(text, sadako.token.page_embed))) doJump("#" + temp);
-		else if ((temp = sadako.isToken(text, sadako.token.label_embed))) sadako.doLink(temp);
-		else sadako.dom(sadako.dialog_ids.output).innerHTML = text;
+		
+		if (!sadako.dialog_ids.output) { 
+			console.error("Dialog is not set up properly.");
+			return false;
+		}
+		
+		if (sadako.in_dialog) {
+			updateDialog();
+			return true;
+		}
+		
+		sadako.freezeData();
+		updateDialog();
 
 		var a;
 		for (a = 0; a < sadako.dialog_ids.display.length; ++a) {
 			sadako.addClass(sadako.dialog_ids.display[a], "open");
 		}
+		
+		return true;
 	};
 
 
@@ -1040,17 +1143,23 @@
 			output (string or array): String or array of strings to added
 				to output.
 		*/
+		
+		var text;
 
 		if (isArray(output)) {
 			var a;
 			for (a = 0; a < output.length; ++a) {
-				sadako.lines.push(sadako.processScript(output[a]));
+				text = sadako.processScript(output[a]);
+				if (isStr(text) && text.trim().length) sadako.lines.push(text);
 			}
+			return;
 		}
-		else sadako.lines.push(sadako.processScript(output));
+		
+		text = sadako.processScript(output);
+		if (isStr(text) && text.trim().length) sadako.lines.push(text);
 	};
 
-	var overwrite = function(text, choices) {
+	var overwrite = function(text, choices, id) {
 		/*
 			Writes the text to the output.
 
@@ -1070,7 +1179,8 @@
 
 		sadako.lines = [];
 		sadako.write(text);
-		sadako.writeOutput();
+		writeOutput(id);
+		sadako.scrollToTop(id);
 	};
 
 	var addChoice = function(name, command, tags) {
@@ -1088,44 +1198,6 @@
 		});
 	};
 
-	var processTags = function(text, func) {
-		/*
-			Strips the tags from the end of a line and processes them.
-
-			text (string): input text
-			func (function): This function is used to process each tag
-		*/
-
-		var temp, classes;
-		var tags = text.split(sadako.token.tag);
-		text = tags.shift();
-
-		var a;
-		for (a = 0; a < tags.length; ++a) { tags[a] = tags[a].trim().toLowerCase(); }
-
-		classes = [];
-
-		var b, c;
-		for (b = 0; b < tags.length; ++b) {
-			if ((temp = sadako.isToken(tags[b], "class:"))) add(classes, temp);
-			else if ((temp = sadako.isToken(tags[b], "c:"))) add(classes, temp);
-			else if ((temp = isToken(tags[b], "delay:"))) add(classes, tags[b]);
-			else {
-				temp = func(text.trim(), tags[b]);
-				if (temp === undefined) temp = [""];
-				text = temp.shift();
-				if (temp.length) {
-					for (c = 0; c < temp.length; ++c) {
-						add(classes, temp[c]);
-					}
-				}
-			}
-		}
-		if (sadako.has(tags, "choice")) classes.push("choice");
-
-		return [text, classes];
-	};
-
 	sadako.writeLink = function(name, command, broken) {
 		/*
 			Returns an html link that executes the command on click.
@@ -1136,18 +1208,246 @@
 		*/
 
 		var temp;
-		if ((temp = isToken(command, sadako.token.page_embed))) {
+		if (isFunc(command)) {
+			command = format("eval(sadako.evals[{0}])", sadako.evals.length);
+			sadako.evals.push(command);
+		}
+		else if ((temp = isToken(command, sadako.token.page_embed))) {
 			command = 'sadako.doLink("#' + temp + '")';
 			if (!(temp in sadako.story)) broken = true;
 		}
 		else if ((temp = isToken(command, sadako.token.label_embed))) {
+			temp = localizeLabel(temp);
 			command = 'sadako.doLink("%' + temp + '")';
 			if (!(temp in sadako.labels)) broken = true;
 		}
 
-		if (broken === undefined || broken === false) return "<a onClick='" + command + "'>" + name + "</a>";
-		return "<a class='broken' title='" + command + "'>" + name + "</a>";
+		if (broken === undefined || broken === false) return "<span onclick='event.stopPropagation()'><a class='link' onClick='" + command + "'>" + name + "</a></span>";
+		return "<a class='link broken' title='" + command + "'>" + name + "</a>";
 	};
+	
+	sadako.fadeIn = function(id, delay, text) {
+		var el;
+		
+		if (!id) {
+			el = document.createElement("span");
+			el.className = "hide";
+			el.innerHTML = text;
+			
+			setTimeout(function() {
+				removeClass(el, "hide");
+			}, sadako.text_delay + delay);
+			
+			return el.outerHTML;
+		}
+		
+		el = dom(id);
+		addClass(el, "hide");
+		el.innerHTML = text || el.innerHTML;
+		setTimeout(function() {
+			removeClass(el, "hide");
+		}, sadako.text_delay + delay);
+	}
+	
+	sadako.writeReveal = function(name, script) {
+		var temp;
+		var t = sadako.token;
+		var page_cond = t.page_embed + t.cond_embed;
+		var page_value = t.page_embed + t.value_embed;
+		var label_cond = t.label_embed + t.cond_embed;
+		var label_value = t.label_embed + t.value_embed;
+		
+		var is_include = false;
+		
+		if (!name || (isStr(name) && !name.trim().length)) {
+			console.error("No name given for reveal link:\nscript: " + script);
+			return "";
+		}
+		
+		if (isToken(script, t.page_embed) || isToken(script, t.label_embed)) is_include = true;
+		
+		if (isToken(script, page_cond) || isToken(script, page_value)) is_include = false;
+		else if (isToken(script, label_cond) || isToken(script, label_value)) is_include = false;
+		
+		var id = "reveal_" + sadako.reveal_id;
+		var cid = id;
+		sadako.reveal_id += 1;
+		
+
+		if (is_include) {
+			// page reveal
+			if ((temp = isToken(script, t.page_embed + t.eval_value))) script = "#" + eval(temp);
+			else if ((temp = isToken(script, t.label_embed + t.eval_value))) {
+				temp = localizeLabel(eval(temp));
+				script = "%" + temp;
+			}
+			
+			// label reveal
+			if ((temp = isToken(script, t.page_embed)) && !(temp in sadako.story)) {
+				return sadako.writeLink(name, 'sadako.doInclude("#' + temp + '")', true);
+			}
+			
+			if ((temp = isToken(script, t.label_embed)) && !(temp in sadako.labels)) {
+				return sadako.writeLink(name, 'sadako.doInclude("%' + temp + '")', true);
+			}
+			
+			sadako.evals.push(function() {
+				sadako.lines = [];
+				sadako.choices = [];
+				sadako.doInclude(script);
+				writeOutput(id);
+			});
+		}
+		else if ((temp = isToken(script, sadako.token.eval_input))) {
+			// cycle text
+			
+			cid += "A";
+			var items;
+			
+			if (!isStr(name)) {
+				items = name;
+			}
+			else items = name.split(sadako.token.cond);
+			
+			var index;
+			var value = eval(temp);
+			
+			var a;
+			for (a = 0; a < items.length; ++a) { items[a] = items[a].trim(); }
+			
+			if (value !== undefined) {
+				value = value.trim();
+				for (a = 0; a < items.length; ++a) {
+					if (value === items[a]) break;
+				}
+				if (a === items.length) value = undefined;
+				else index = a;
+			}
+			
+			if (value === undefined) {
+				index = 0;
+				eval(format("{0} = '{1}'", temp, items[index]));
+			}
+			
+			name = items[index];
+			
+			sadako.evals.push(function() {
+				index += 1;
+				if (index > items.length - 1) index = 0;
+				eval(format("{0} = '{1}'", temp, items[index]));
+				text = items[index];
+				sadako.fadeIn(cid, 0, text);
+			});
+		}
+		else {
+			// text reveal
+			
+			var link = isToken(script, sadako.token.eval_code);
+			if (link) {
+				script = link;
+				cid += "A";
+			}
+			
+			var eval_script = isToken(script, sadako.token.eval_value);
+			var text;
+			sadako.evals.push(function() {
+				text = script;
+				if (eval_script) text = eval_script;
+				if (link || eval_script) text = eval(text);
+				sadako.fadeIn(cid, 0, text);
+			});
+		}
+		
+		return format("<span id='{0}' onclick='event.stopPropagation()'><a id='{0}A' class='link' onclick='sadako.evals[{1}]()'>{2}</a></span>", id, sadako.evals.length - 1, name);
+	};
+	
+	sadako.writeDialog = function(title, name, script) {
+		var write = function(name, command, is_broken) {
+			var id = sadako.evals.length;
+			sadako.evals.push(command);
+			if (is_broken) return (sadako.writeLink(name, command, true));
+			return sadako.writeLink(name, format("sadako.evals[{0}]()", id));
+		}
+		
+		// if script is undefined, slide each argument over by one to ignore title
+		if (script === undefined) {
+			script = name;
+			name = title;
+			title = null;
+		}
+		
+		if (!name || !name.trim().length) {
+			console.error("No name given for dialog link:\nscript: " + script);
+			return "";
+		}
+		
+		var temp, eval_script;
+		
+		// close dialog
+		if (isToken(script, sadako.token.eval_action) !== false) {
+			return write(name, function() { sadako.closeDialog() });
+		}
+
+		// everything except closing the dialog must be a link
+		if (!name) name = script;
+
+		// page
+		if ((temp = isToken(script, sadako.token.page_embed))) {
+			script = temp;
+			eval_script = isToken(temp, sadako.token.eval_value);
+			
+			if (!eval_script && !(script in sadako.story)) {
+				return write(name, format('sadako.showDialog("#{0}")', script), true);
+			}
+			
+			return write(name, function() { 
+				if (eval_script) script = eval(eval_script);
+				if ((temp = isToken(script, sadako.token.page_embed))) script = temp;
+				sadako.showDialog(title, "#" + script); 
+			});
+		}
+
+		// label
+		if ((temp = isToken(script, sadako.token.label_embed))) {
+			script = temp;
+			eval_script = isToken(temp, sadako.token.eval_value);
+
+			if (!eval_script && !(localizeLabel(script) in sadako.labels)) {
+				return write(name, format('sadako.showDialog("%{0}")', script), true);
+			}
+			
+			return write(name, function() { 
+				if (eval_script) script = eval(eval_script);
+				if ((temp = isToken(script, sadako.token.label_embed))) script = temp;
+				sadako.showDialog(title, "%" + localizeLabel(script));
+			});
+		}
+
+		// code eval
+		if ((temp = isToken(script, sadako.token.eval_code))) {
+			script = temp;
+			return write(name, function() { 
+				if (!sadako.showDialog(title)) return;
+				sadako.clear();
+				eval(script);
+			});
+		}
+
+		// text eval
+		if ((temp = isToken(script, sadako.token.eval_value))) {
+			script = temp;
+			return write(name, function() {
+				if (!sadako.showDialog(title)) return;
+				sadako.overwrite(eval(script));
+			});
+		}
+
+		// normal text
+		return write(name, function() {
+			if (!sadako.showDialog(title)) return;
+			sadako.overwrite(script);
+		});
+	}
 
 	sadako.writeInput = function(script, name) {
 		/*
@@ -1159,7 +1459,7 @@
 
 		var temp;
 		var multi = false;
-		if ((temp = isToken(script, sadako.token.input_embed)) !== false) {
+		if ((temp = isToken(script, sadako.token.eval_input)) !== false) {
 			script = temp;
 			multi = true;
 		}
@@ -1188,141 +1488,180 @@
 	//eslint-disable-next-line no-unused-vars
 	sadako.doLineTag = function(text, tag) {
 		// placeholder line tag processing function to be ovewritten by user
-
-		return [text];
+		return text;
 	};
 
 	//eslint-disable-next-line no-unused-vars
 	sadako.doChoiceTag = function(text, tag) {
 		// placeholder choice tag processing function to be ovewritten by user
-
-		return [text];
+		return text;
 	};
-
-	sadako.writeOutput = function() {
-		// Writes output to display area
-
-		var choices = [];
-		var delay = 0;
+	
+	sadako.displayOutput = function(id) {
+		var delay = 0 - sadako.text_delay;
 		var delay_adjust = 0;
 
-		var displayText = function(text, tags) {
+		var outputLine = function(line) {
 			/*
 				Writes a single line out to the display area.
-
-				text (string): Text to display
-				tags (array): Array of tag strings used for processing.
-					Currently all tags are ignored here except 'delay' that
-					adjust offsets the display time between lines.
 			*/
-
-			var classes = [];
-
+			
 			var a, temp;
-			for (a = 0; a < tags.length; ++a) {
-				if ((temp = isToken(tags[a], "delay:"))) {
+			var is_choice = has(line.tags, "choice");
+			for (a = 0; a < line.tags.length; ++a) {
+				if ((temp = isToken(line.tags[a], "delay:"))) {
 					delay_adjust = parseInt(temp);
 					continue;
 				}
-				classes.push(tags[a]);
+				if (is_choice) line.text = sadako.doChoiceTag(line.text, line.tags[a]);
+				else line.text = sadako.doLineTag(line.text, line.tags[a]);
 			}
 
-			classes.push("hide");
+			line.classes.push("hide");
 
-			if (text.length < 1) return;
-
-			var el = document.createElement('div');
-
-			el.className = classes.join(" ");
-			el.innerHTML = text;
-
-			dom(sadako.output_id).appendChild(el);
-
-			// Fade in paragraph after a short delay
-			setTimeout(function() {
-				el.className = remove(el.className.split(" "), "hide").join(" ");
-			}, delay + delay_adjust);
+			if (line.text.length < 1) return;
+			
+			sadako.displayLine(id, line, delay + delay_adjust);
 
 			delay += sadako.text_delay;
 		}
 		
-		var processLines = function() {
-			var temp, a;
-
-			for (a = 0; a < sadako.lines.length; ++a) {
-				temp = processTags(sadako.lines[a], sadako.doLineTag);
-
-				// add link to list to display as a choice instead of in main text
-				if (has(temp[1], "choice")) {
-					choices.push({"text": temp[0], "tags": remove(temp[1], "choice")});
-					continue;
-				}
-
-				displayText(temp[0], temp[1]);
-			}
-		};
-		
-		var processFakeChoices = function() {
-			var a;
-			var text = "";
-
-			for (a = 0; a < choices.length; ++a) {
-				if (choices[a].length < 1) continue;
-				text += "<li class='choice'><span class='" + choices[a].tags.join(" ") + "'>" + choices[a].text + "</span></li>";
-			}
-			return text;
-		};
-		
-		var processChoices = function() {
-			var a, temp, name
-			var text = "";
-			
-			for (a = 0; a < sadako.choices.length; ++a) {
-				temp = processTags(sadako.choices[a].text, sadako.doChoiceTag);
-
-				name = sadako.parseLink(temp[0]);
-				if (name.trim().length < 1) continue;
-
-				// Choice taken from script
-				if ("line" in sadako.choices[a]) {
-					text += sadako.format("<li class='choice'><span class='{0}'><a onclick='sadako.doChoice({1})'>{2}</a></span></li>", temp[1].join(" "), a, name);
-				}
-				// Choice added via addChoice()
-				else {
-					text += sadako.format("<li class='choice'><span class='{0}'>{1}</span></li>", temp[1].join(" "), name);
-				}
-			}
-			return text;
-		};
-
 		return function() {
-			// Indexes through each line and choice and outputs them to the display
-
-			sadako.clear();
+			var a;
+			for (a = 0; a < sadako.display_lines.length; ++a) {
+				outputLine(sadako.display_lines[a]);
+			}
 			
-			processLines();
-
-			if (choices.length || sadako.choices.length) {
-				var text = "";
-				text += processFakeChoices();
-				text += processChoices();
+			if (sadako.display_choices.length) {
+				var choices = sadako.stylizeChoices();
 				
-				if (text.length) text = "<hr><ul>" + text + "</ul>";
-
-				displayText(text, []);
+				for (a = 0; a < choices.length; ++a) {
+					outputLine(choices[a]);
+				}
 			}
 		}();
 	};
+	
+	sadako.displayLine = function(id, line, delay) {
+		var el = document.createElement('div');
+		el.className = line.classes.join(" ");
+		el.innerHTML = line.text;
+		
+		delay = delay || 0;
+		
+		if (id) sadako.dom(id).appendChild(el);
+		else if (sadako.in_dialog && sadako.dialog_ids.output) sadako.dom(sadako.dialog_ids.output).appendChild(el);
+		else sadako.dom(sadako.output_id).appendChild(el);
+		
+		// Fade in paragraph after a short delay
+		setTimeout(function() {
+			removeClass(el, "hide");
+		}, delay + sadako.text_delay);
+	};
+	
+	sadako.stylizeChoices = function() {
+		var text = "";
+		
+		var a, b, choice;
+		for (a = 0; a < sadako.display_choices.length; ++a) {
+			choice = sadako.display_choices[a];
+			for (b = 0; b < choice.tags.length; ++b) {
+				choice.text = sadako.doChoiceTag(choice.text, choice.tags[b]);
+			}
+			text += format("<li class='choice'><span class='{0}'>{1}</span></li>", choice.classes.join(" "), choice.text);
+		}
+		text = "<hr><ul>" + text + "</ul>";
+		return [{"text": text, "classes": [], "tags": ["choice"]}];
+	};
+	
+	var splitTags = function(text) {
+		var tags = [];
+		var classes = [];
+		
+		var items = text.split(sadako.token.tag);
+		text = items.shift().trim();
+		
+		var a, temp, tag;
+		for (a = 0; a < items.length; ++a) {
+			tag = items[a].trim();
+			if ((temp = isToken(tag, "class:")) || ((temp = isToken(tag, "c:")))) classes.push(temp);
+			else tags.push(tag);
+		}
+		
+		var line = {"text": text, "classes": classes, "tags": tags};
+		
+		return line;
+	}
 
-	sadako.clear = function() {
+	var writeOutput = function(id) {
+		// Writes output to display area
+
+		var choices = [];
+		
+		var processLines = function() {
+			sadako.display_lines = [];
+			
+			var line, a;
+			for (a = 0; a < sadako.lines.length; ++a) {
+				line = splitTags(sadako.lines[a]);
+				
+				// add link to list to display as a choice instead of in main text
+				if (has(line.tags, "choice")) {
+					choices.push(line);
+					continue;
+				}
+				
+				sadako.display_lines.push(line);
+			}
+		};
+		
+		var processChoices = function() {
+			var text = "";
+			
+			sadako.display_choices = choices;
+			
+			var a, line, name;
+			for (a = 0; a < sadako.choices.length; ++a) {
+				line = splitTags(sadako.choices[a].text);
+				add(line.tags, "choice");
+
+				name = sadako.parseLink(line.text);
+				if (name.trim().length < 1) continue;
+				
+				line.text = sadako.writeLink(name, "sadako.doChoice(" + a + ")");
+				sadako.display_choices.push(line);
+			}
+			
+			if (text) text = "<hr><ul>" + text + "</u>";
+			return {"text": text, "classes": [], "tags": []};
+		};
+		
+		return function() {
+			// Indexes through each line and choice and outputs them to the display
+
+			sadako.clear(id);
+			
+			processLines();
+			processChoices();
+			
+			// writing the output should always be the last step of any text processing,
+			// so we'll ensure the script is set to end
+			sadako.end();
+			
+			sadako.displayOutput(id);
+		}();
+	};
+
+	sadako.clear = function(id) {
 		/*
 			Clears display text.
 
 			- Overwrite this function if a different method of displaying text is needed.
 		*/
 
-		scrollToTop();
-		dom(sadako.output_id).innerHTML = "";
+		if (id) dom(id).innerHTML = "";
+		else if (sadako.in_dialog && sadako.dialog_ids.output) dom(sadako.dialog_ids.output).innerHTML = "";
+		else dom(sadako.output_id).innerHTML = "";
 	};
 
 	var refresh = function() {
@@ -1376,17 +1715,20 @@
 		*/
 
 		var doRename = function(text) {
-			var items = text.split(sadako.token.rename);
+			var items = splitMarkup(text, sadako.token.rename);
 
-			if (items.length < 2) return [items[0], null];
+			if (items.length < 2) return [items[0], null, null];
 
+			var title;
 			var script = items[0].trim();
 			var name = items[1].trim();
+			if (items.length > 2) title = items[2].trim();
 
-			var temp = isToken(name, sadako.token.eval_value);
-			if (temp) name = eval(temp);
-
-			return [script, name];
+			var temp;
+			if ((temp = isToken(name, sadako.token.eval_value)) !== false) name = eval(temp);
+			if (title && (temp = isToken(title, sadako.token.eval_value)) !== false) title = eval(temp);
+			
+			return [script, name, title];
 		}
 
 		var doCode = function(text) {
@@ -1395,33 +1737,44 @@
 			var items = doRename(text, sadako.token.eval_code);
 			var script = items[0];
 			var name = items[1];
-
-			if (name === null) eval(script);
+			
+			if (!name) eval(script);
 			else {
+				sadako.text += sadako.writeLink(name, 'eval(sadako.evals[' + (sadako.evals.length) + '])');
 				sadako.evals[sadako.evals.length] = script;
-				sadako.text += sadako.writeLink(name, 'eval(sadako.evals["' + (sadako.evals.length-1) + '"])');
 			}
 		}
 
 		var doValue = function(text) {
 			/* evaluates text marked with 'value' token */
 
-			eval("sadako.text += " + text);
+			eval("sadako.text += sadako.processScript(" + text + ")");
 		}
 
 		var doLabelLink = function(text) {
 			/* renders a link to a label with the value of the text */
 
-			var items = doRename(text, sadako.token.eval_code);
+			var items = doRename(text);
 			var script = items[0];
 			var name = items[1] || script;
-
+		
+			var command = "";
+			if (sadako.in_dialog) command = "sadako.closeDialog(); ";
+			
 			var temp = isToken(script, sadako.token.eval_value);
-			if (temp) script = eval(temp);
-
-			if (script.indexOf(".") === -1 || !(script in sadako.labels)) script = sadako.page + "." + script;
-			var command = 'sadako.doLink("' + script + '")';
-
+			if (temp !== false) {
+				command += format("sadako.evals[{0}]()", sadako.evals.length);
+				var temp2;
+				sadako.evals.push(function() {
+					script = eval(temp);
+					if ((temp2 = isToken(script, sadako.token.label_embed))) script = temp2;
+					sadako.doLink("%" + localizeLabel(script));
+				});
+				return sadako.writeLink(name, command);
+			}
+			
+			script = localizeLabel(script);
+			command += 'sadako.doLink("%' + script + '")';
 			return sadako.writeLink(name, command, (script in sadako.labels) ? false : true);
 		}
 
@@ -1434,12 +1787,23 @@
 
 			var temp = isToken(script, sadako.token.page_embed);
 			if (temp !== false) script = temp;
-
+			
+			var command = "";
+			if (sadako.in_dialog) command = "sadako.closeDialog(); ";
+			
 			temp = isToken(script, sadako.token.eval_value);
-			if (temp) script = eval(temp);
-
-			var command = 'sadako.doLink("#' + script + '")';
-
+			if (temp) {
+				command += format("sadako.evals[{0}]()", sadako.evals.length);
+				var temp2;
+				sadako.evals.push(function() {
+					script = eval(temp);
+					if ((temp2 = isToken(script, sadako.token.page_embed))) script = temp2;
+					sadako.doLink("#" + script);
+				});
+				return sadako.writeLink(name, command);
+			}
+			
+			command += 'sadako.doLink("#' + script + '")';
 			return sadako.writeLink(name, command, (script in sadako.story) ? false : true);
 		}
 
@@ -1451,190 +1815,210 @@
 			sadako.writeInput(script, name);
 		}
 		
+		var doReveal = function(text) {
+			var items = doRename(text);
+			var script = items[0];
+			var name = items[1] || script;
+			
+			return sadako.writeReveal(name, script);
+		}
+		
+		var doDialog = function(text) {
+			var items = doRename(text);
+			var script = items[0];
+			var name = items[1];
+			var title = items[2];
+			
+			// if no name is given for the action token, we close the dialog immediately
+			if (!name && isToken(script, sadako.token.eval_action) !== false) {
+				sadako.closeDialog();
+				return "";
+			}	
+			
+			return sadako.writeDialog(title, name, script);
+		}
+		
+		
 		return function() {
-			sadako.text = "";
+			if (text.indexOf(sadako.token.script_open) === -1) return text;
+			
+			text = parseMarkup(text, sadako.token.script_open, sadako.token.script_close, function(markup) {
+				var script;
+				var inside = markup.markup.slice(sadako.token.script_open.length, 0 - sadako.token.script_close.length);
 
-			var temp = text.split(sadako.token.script_open);
-			if (temp.length < 2) return text;
+				sadako.text = "";
 
-			var script, a;
-			for (a = 0; a < temp.length; ++a) {
-				var parts = temp[a].split(sadako.token.script_close);
-				if (parts.length < 2) sadako.text += parts[0];
-				else {
-					if ((script = isToken(parts[0], sadako.token.eval_code)) !== false) doCode(script);
-					else if ((script = isToken(parts[0], sadako.token.eval_value)) !== false) doValue(script);
-					else if ((script = isToken(parts[0], sadako.token.label_embed)) !== false) sadako.text += doLabelLink(script);
-					else if ((script = isToken(parts[0], sadako.token.input_embed)) !== false) doInput(script);
-					else sadako.text += doPageLink(parts[0]);
-					sadako.text += parts[1];
-				}
-			}
-
-			return sadako.text;
+				if ((script = isToken(inside, sadako.token.eval_code)) !== false) doCode(script);
+				else if ((script = isToken(inside, sadako.token.eval_value)) !== false) doValue(script);
+				else if ((script = isToken(inside, sadako.token.label_embed)) !== false) sadako.text += doLabelLink(script);
+				else if ((script = isToken(inside, sadako.token.eval_input)) !== false) doInput(script);
+				else if ((script = isToken(inside, sadako.token.eval_reveal)) !== false) sadako.text += doReveal(script);
+				else if ((script = isToken(inside, sadako.token.eval_dialog)) !== false) sadako.text += doDialog(script);
+				else sadako.text += doPageLink(inside);
+				
+				return sadako.text;
+			});
+			
+			return text;
 		}();
 	};
 	
 	sadako.writeSpan = function(class_name, text) {
-		return format('<span class="{0}">{1}</span>', class_name, text);
+		return format("<span class='{0}'>{1}</span>", class_name, text);
 	};
-
-	var processScript = function(line) {
-		var a, sections, script, cond;
-
-		var doReplace = function(text) {
-			var replaceVar = function(text, token, replacement) {
-				var regexp = new RegExp("(^|\\s+|[^a-zA-Z0-9]+)" + token + "([a-zA-Z0-9]+(?:[\\._]?[a-zA-Z0-9]+)*)", "g");
-				return text.replace(regexp, replacement);
-			}
-
-			var t = sadako.token;
-
-			text = replaceVar(text, t.label_embed + t.cond_embed, function(match, p1, p2) { return p1 + 'sadako.label_seen["' + p2 + '"]'; });
-			text = replaceVar(text, t.page_embed + t.cond_embed, function(match, p1, p2) { return p1 + 'sadako.page_seen["' + p2 + '"]'; });
-			
-			text = replaceVar(text, t.var_embed + t.cond_embed, function(match, p1, p2) { return p1 + "sadako.var." + p2; });
-			text = replaceVar(text, t.tmp_embed + t.cond_embed, function(match, p1, p2) { return p1 + "sadako.tmp." + p2; });
-			text = replaceVar(text, t.scene_embed + t.cond_embed, function(match, p1, p2) { return p1 + 'sadako.scenes.' + p2; });
-			
-			text = replaceVar(text, t.script_embed + t.cond_embed, function(match, p1, p2) {
-				if (isFunc(eval("sadako.scripts." + p2))) return p1 + "sadako.scripts." + p2 + "()";
-				return p1 + "sadako.scripts." + p2;
-			});
-
-			text = replaceVar(text, t.label_embed + t.value_embed, function(match, p1, p2) { return p1 + sadako.label_seen[p2]; });
-			text = replaceVar(text, t.page_embed + t.value_embed, function(match, p1, p2) { return p1 + sadako.page_seen[p2]; });
-
-			text = replaceVar(text, t.var_embed + t.value_embed, function(match, p1, p2) { return p1 + eval("sadako.var." + p2); });
-			text = replaceVar(text, t.tmp_embed + t.value_embed, function(match, p1, p2) { return p1 + eval("sadako.tmp." + p2); });
-			text = replaceVar(text, t.scene_embed + t.value_embed, function(match, p1, p2) { return p1 + eval("sadako.scenes." + p2); });
-			
-			text = replaceVar(text, t.script_embed + t.value_embed, function(match, p1, p2) {
-				var text;
-				if (isFunc(eval("sadako.scripts." + p2))) text = eval("sadako.scripts." + p2 + "()");
-				else text = eval("sadako.scripts." + p2);
-				return p1 + ((text !== undefined) ? text : "");
-			});
-
-			text = text.replace(RegExp(t.write_embed, 'g'), 'sadako.text = ');
-			text = text.replace(RegExp(t.pluswrite_embed, 'g'), 'sadako.text += ');
-
-			return text;
+	
+	var replaceVars = function(text) {
+		var doReplace = function(text, token, replacement) {
+			var regexp = new RegExp("(^|\\s+|[^a-zA-Z0-9]+)" + token + "([a-zA-Z0-9]+(?:[\\._]?[a-zA-Z0-9]+)*)", "g");
+			return text.replace(regexp, replacement);
 		}
 
-		var doInline = function(text) {
-			var parseInline = function(text) {
-				var sections = text.split(sadako.token.cond, 3);
+		var t = sadako.token;
 
-				if (sections.length < 2) return text;
-				if (sections.length < 3) sections.push("");
+		text = doReplace(text, t.label_embed + t.cond_embed, function(match, p1, p2) { return p1 + 'sadako.label_seen["' + p2 + '"]'; });
+		text = doReplace(text, t.page_embed + t.cond_embed, function(match, p1, p2) { return p1 + 'sadako.page_seen["' + p2 + '"]'; });
+		
+		text = doReplace(text, t.var_embed + t.cond_embed, function(match, p1, p2) { return p1 + "sadako.var." + p2; });
+		text = doReplace(text, t.tmp_embed + t.cond_embed, function(match, p1, p2) { return p1 + "sadako.tmp." + p2; });
+		text = doReplace(text, t.scene_embed + t.cond_embed, function(match, p1, p2) { return p1 + 'sadako.scenes.' + p2; });
+		
+		text = doReplace(text, t.script_embed + t.cond_embed, function(match, p1, p2) {
+			if (isFunc(eval("sadako.scripts." + p2))) return p1 + "sadako.scripts." + p2 + "()";
+			return p1 + "sadako.scripts." + p2;
+		});
 
-				if (eval(sections[0])) return sections[1];
-				return sections[2];
-			}
+		text = doReplace(text, t.label_embed + t.value_embed, function(match, p1, p2) { return p1 + sadako.label_seen[p2]; });
+		text = doReplace(text, t.page_embed + t.value_embed, function(match, p1, p2) { return p1 + sadako.page_seen[p2]; });
 
-			var temp = text.split(sadako.token.inline_open);
-			if (temp.length < 2) return text;
+		text = doReplace(text, t.var_embed + t.value_embed, function(match, p1, p2) { return p1 + eval("sadako.var." + p2); });
+		text = doReplace(text, t.tmp_embed + t.value_embed, function(match, p1, p2) { return p1 + eval("sadako.tmp." + p2); });
+		text = doReplace(text, t.scene_embed + t.value_embed, function(match, p1, p2) { return p1 + eval("sadako.scenes." + p2); });
+		
+		text = doReplace(text, t.script_embed + t.value_embed, function(match, p1, p2) {
+			var text;
+			if (isFunc(eval("sadako.scripts." + p2))) text = eval("sadako.scripts." + p2 + "()");
+			else text = eval("sadako.scripts." + p2);
+			return p1 + ((text !== undefined) ? text : "");
+		});
 
-			text = "";
-			var a, temp2;
-			for (a = 0; a < temp.length; ++a) {
-				temp2 = temp[a].split(sadako.token.inline_close);
-				if (temp2.length < 2) text += temp2[0];
-				else text += parseInline(temp2[0]) + temp2[1];
-			}
-			return text;
+		text = text.replace(RegExp(t.write_embed, 'g'), 'sadako.text = ');
+		text = text.replace(RegExp(t.pluswrite_embed, 'g'), 'sadako.text += ');
+
+		return text;
+	}
+
+	var processScript = function(script) {
+		var doInline = function(text) {		
+			text = text.slice(sadako.token.inline_open.length, 0 - sadako.token.inline_close.length);
+			
+			var index = text.indexOf(sadako.token.cond);
+			
+			if (index === -1) return text;
+			
+			var cond = text.substring(0, index);
+			var options = text.substring(index + sadako.token.cond.length);
+			
+			options = splitMarkup(options, sadako.token.cond);
+			
+			if (eval(cond)) return options[0];
+			return options[1];
 		}
 
 		var doSpan = function(text) {
-			var parseSpan = function(text) {
-				var sections = text.split(sadako.token.cond);
-
-				if (sections.length < 2) return text;
-				text = text.substring(sections[0].length + sadako.token.cond.length);
-
-				return sadako.writeSpan(sections[0], text);
-			}
-
-			var temp = text.split(sadako.token.span_open);
-			if (temp.length < 2) return text;
-
-			text = "";
-			var a, temp2;
-			for (a = 0; a < temp.length; ++a) {
-				temp2 = temp[a].split(sadako.token.span_close);
-				if (temp2.length < 2) text += temp2[0];
-				else text += parseSpan(temp2[0]) + temp2[1];
-			}
-			return text;
+			text = text.slice(sadako.token.span_open.length, 0 - sadako.token.span_close.length);
+		
+			var index = text.indexOf(sadako.token.cond);
+			
+			if (index === -1) return text;
+			
+			var class_name = text.substring(0, index);
+			text = text.substring(index + sadako.token.cond.length);
+			
+			return sadako.writeSpan(class_name, text);
 		}
 
 		var doMacro = function(text) {
-			var parseMacro = function(text) {
-				var type = sadako.token.eval_code;
-				var temp;
-				if ((temp = isToken(text, sadako.token.eval_value)) !== false) {
-					text = temp;
-					type = sadako.token.eval_value;
-				}
-				var pre = sadako.token.script_open + type + " ";
-				var index = text.indexOf(" ");
-				if (index === -1) return pre + "sadako.macros." + text + "()" + sadako.token.script_close;
-
-				var command = text.substring(index + 1);
-				text = text.substring(0, index);
-				return pre + "sadako.macros." + text + "(" + command + ")" + sadako.token.script_close;
+			text = text.slice(sadako.token.macro_open.length, 0 - sadako.token.macro_close.length);
+			
+			var type = sadako.token.eval_code;
+			var temp;
+			if ((temp = isToken(text, sadako.token.eval_value)) !== false) {
+				text = temp;
+				type = sadako.token.eval_value;
 			}
+			var pre = sadako.token.script_open + type + " ";
+			var index = text.indexOf(" ");
+			if (index === -1) return pre + "sadako.macros." + text + "()" + sadako.token.script_close;
 
-			var temp = text.split(sadako.token.macro_open);
-			if (temp.length < 2) return text;
-
-			text = "";
-			var a, temp2;
-			for (a = 0; a < temp.length; ++a) {
-				temp2 = temp[a].split(sadako.token.macro_close);
-				if (temp2.length < 2) text += temp2[0];
-				else text += parseMacro(temp2[0]) + temp2[1];
-			}
-			return text;
+			var command = text.substring(index + 1);
+			text = text.substring(0, index);
+			
+			return pre + "sadako.macros." + text + "(" + command + ")" + sadako.token.script_close;
 		}
-
+		
+		var processBlocks = function(text) {
+			var t = sadako.token;
+			
+			var parseBlock = function(text, open, close, func) {
+				var script = getMarkup(text, open, close);
+				text = text.substring(0, index) + func(script.markup) + text.substring(index + script.markup.length);
+				
+				return text;
+			}
+			
+			var temp, index, script;
+			var token = true;
+			var pre_text = "";
+			
+			var a = 0;
+			while (token) {
+				a += 1;
+				if (a > 10) break;
+				
+				temp = getToken(text);
+				index = temp.index;
+				token = temp.token;
+				
+				// we skip script blocks so we can execute them later
+				// this is because they may not need to be executed depending on inline conditions.
+				if (token === "script") {
+					script = getMarkup(text, t.script_open, t.script_close);
+					pre_text += text.substring(0, temp.index + script.markup.length);
+					text = text.substring(temp.index + script.markup.length);
+					continue;
+				}
+				
+				if (token === "inline") text = parseBlock(text, t.inline_open, t.inline_close, doInline);
+				else if (token === "span") text = parseBlock(text, t.span_open, t.span_close, doSpan);
+				else if (token === "macro") text = parseBlock(text, t.macro_open, t.macro_close, doMacro);
+			}
+			return pre_text + text;
+		}
+	
 		return function() {
-			line = doReplace(line);
-			line = doInline(line);
-			line = doSpan(line);
-			line = doMacro(line);
-
-			var index = line.lastIndexOf(sadako.token.cond);
-			if (index === -1) sections = [line];
-			else sections = [line.substring(0, index), line.substring(index + sadako.token.cond.length)];
-
-			script = sections[0];
-			cond = (sections.length > 1) ? cond = sections[1] : null;
+			script = replaceVars(script);
+			script = processBlocks(script);
 
 			try {
-				if (eval(cond) || cond == null) {
-					var result = doInline(script);
-					result = doEval(result);
-					if (result === null || !result.replace(/<br>/gi, '').trim().length) return "";
-					return result.trim();
-				}
+				var result = doEval(script);
+				if (result === null || !result.trim().length) return "";
+				return result.trim();
 			}
 			catch (e) {
-				console.error("index: ", a, "\nscript:", script, "\ncondition:", cond);
+				console.error("\nscript:", script);
 				throw new Error(e);
 			}
-
-			return null;
 		}();
 	};
 
 	var doChoice = function(choice) {
 		/*
-		Function called by choice hyperlinks.
+			Function called by choice hyperlinks.
 
-		choice (integer): index of choice in 'sadako.choices' array
+			choice (integer): index of choice in 'sadako.choices' array
 		*/
+		
+		if (!sadako.in_dialog && !sadako.in_include) sadako.reveal_id = 0;
 		
 		sadako.run();
 
@@ -1667,14 +2051,19 @@
 
 		doScript(line[0], line[1] + "." + line[2], 0);
 	};
+	
+	var localizeLabel = function(label, throw_error) {
+		if (label.indexOf(".") === -1 || !(label in sadako.labels)) label = sadako.page + "." + label;
+		if (throw_error && !(label in sadako.labels)) throw new Error("Can't find label '" + label + "'");
+		return label;
+	}
 
 	var getLineByLabel = function(label) {
 		if (label.charAt(0) === "#") {
 			return [label.substring(1), 0, 0];
 		}
 		else {
-			if (label.indexOf(".") === -1 || !(label in sadako.labels)) label = sadako.page + "." + label;
-			if (!(label in sadako.labels)) throw new Error("Can't find label '" + label + "'");
+			label = localizeLabel(label, true);
 
 			var line = sadako.labels[label];
 			var token = sadako.story[line[0]][line[1]][line[2]].k;
@@ -1684,26 +2073,65 @@
 			return line;
 		}
 	};
+	
+	var doInclude = function(label) {
+		var state = [];
+		
+		var saveState = function() {
+			state.push(copy(sadako.savestate_enabled, true));
+			state.push(copy(sadako.tmp, true));
+			state.push(copy(sadako.conditions, true));
+			state.push(copy(sadako.in_include, true));
+			state.push(copy(sadako.script_status, true));
+			state.push(copy(sadako.page, true));
+			state.push(copy(sadako.part, true));
+			state.push(copy(sadako.start, true));
+		}
+		
+		var restoreState = function() {
+			sadako.savestate_enabled = copy(state.shift(), true);
+			sadako.tmp = copy(state.shift(), true);
+			sadako.conditions = copy(state.shift(), true);
+			sadako.in_include = copy(state.shift(), true);
+			sadako.script_status = copy(state.shift(), true);
+			sadako.page = copy(state.shift(), true);
+			sadako.part = copy(state.shift(), true);
+			sadako.start = copy(state.shift(), true);
+		}
+		
+		if (sadako.script_status === END) sadako.run();
+		
+		var temp;
+		if ((temp = isToken(label, sadako.token.label_embed))) label = temp;
+		
+		saveState();
+		sadako.in_include = true;
+		sadako.tmp = {};
+		sadako.savestate_enabled = false;
+		doJump(label, true);
+		restoreState();
+	}
 
-	var doLink = function(label, include) {
+	var doLink = function(label) {
+		if (!sadako.in_dialog && !sadako.in_include) sadako.reveal_id = 0;
+		
 		sadako.run();
 
 		sadako.lines = [];
 		sadako.choices = [];
-		sadako.tmp = {};
 		sadako.chosen = null;
+		sadako.tmp = {};
 
 		var temp;
 		if ((temp = isToken(label, sadako.token.label_embed))) label = temp;
 
 		sadako.current = label;
-
 		sadako.current_line = getLineByLabel(label);
-
+		
 		doSaveState();
 		doSaveData();
 
-		doJump(label, include);
+		doJump(label);
 	};
 
 	var doJump = function(label, include) {
@@ -1801,14 +2229,14 @@
 			if (scene.hasEnded && !scene.isRecurring) continue;
 			if (!scene.isActive) {
 				if (sadako.isStr(check.checkStart)) {
-					if (!eval(sadako.processScript(check.checkStart))) continue;
+					if (!eval(sadako.replaceVars(check.checkStart))) continue;
 				}
 				else if (!check.checkStart()) continue;
 
 				scene.isActive = true;
 				scene.hasStarted += 1;
 				if (check.doStart !== undefined && check.doStart !== null) {
-					if (sadako.isStr(check.doStart)) eval(sadako.processScript(check.checkStart));
+					if (sadako.isStr(check.doStart)) eval(sadako.replaceVars(check.checkStart));
 					else check.doStart();
 				}
 				checkScenes();
@@ -1816,14 +2244,14 @@
 			}
 			else if (check.checkEnd !== undefined && check.checkEnd !== null) {
 				if (sadako.isStr(check.checkEnd)) {
-					if (!eval(sadako.processScript(check.checkEnd))) continue;
+					if (!eval(sadako.replaceVars(check.checkEnd))) continue;
 				}
 				else if (!check.checkEnd()) continue;
 
 				scene.isActive = false;
 				scene.hasEnded += 1;
 				if (check.doEnd !== undefined && check.doEnd !== null) {
-					if (sadako.isStr(check.doEnd)) scene.ending = eval(sadako.processScript(check.doEnd));
+					if (sadako.isStr(check.doEnd)) scene.ending = eval(processScript(check.doEnd));
 					else scene.ending = check.doEnd();
 				}
 				if (scene.ending === undefined) scene.ending = null;
@@ -1875,9 +2303,7 @@
 				if (!(label in sadako.story)) throw new Error("Can't find page '" + label + "'");
 				label = "#" + label;
 				if (include_text) {
-					var status = sadako.script_status;
-					doJump(label, true);
-					if (sadako.script_status === END) sadako.script_status = status;
+					doInclude(label);
 					return [CONTINUE];
 				}
 
@@ -1896,7 +2322,7 @@
 				var token = sadako.story[jump[0]][jump[1]][jump[2]].k;
 
 				if (include_text) {
-					doJump(label, true);
+					doInclude(label);
 					return [CONTINUE];
 				}
 
@@ -1978,6 +2404,28 @@
 				return [CONTINUE];	
 			}();
 		};
+		
+		var checkInlineCondition = function(script) {
+			var cond;
+			var cond_pass = true;
+		
+			var index = script.lastIndexOf(sadako.token.cond);
+			var inline_index = script.lastIndexOf(sadako.token.inline_close);
+			var span_index = script.lastIndexOf(sadako.token.span_close);
+			var macro_index = script.lastIndexOf(sadako.token.macro_close);
+			var script_index = script.lastIndexOf(sadako.token.script_close);
+			
+			// make sure condition token is after all blocks
+			if (index < inline_index || index < span_index || index < macro_index || index < script_index) index = -1;
+			
+			if (index !== -1) {
+				cond = script.substring(index + sadako.token.cond.length);
+				cond_pass = eval(replaceVars(cond));
+				script = script.substring(0, index);
+			}
+			if (cond_pass) return script;
+			return null;
+		}
 
 		var processLines = function(page, start, part) {
 			var a, text, temp, token, label;
@@ -1998,12 +2446,18 @@
 				token = ("k" in this_page[a]) ? this_page[a].k : null;
 				is_choice = (token === sadako.token.choice || token === sadako.token.static);
 				is_not_choice = (token !== sadako.token.choice && token !== sadako.token.static);
+				
+				// processing scripts halts at choices in includes
+				if (is_choice && sadako.in_include) return [END];
 
 				// if choices have been listed and new line is not a choice, stop the script
 				if (choice_seen === true && is_not_choice) return [END];
 
 				// check and process scenes
 				checkScenes();
+				
+				text = checkInlineCondition(this_page[a].t);
+				if (text === null) continue;
 
 				// reset condition state if we are not in a condition at the momment
 				if (token !== sadako.token.cond_block && token !== null) {
@@ -2020,7 +2474,7 @@
 				if (token === sadako.token.choice && label && (label in sadako.label_seen) && (sadako.label_seen[label])) continue;
 
 				// returns null if inline condition is false
-				text = processScript(this_page[a].t);
+				text = processScript(text);
 				if (text === null) continue;
 
 				// increase label seen count as long as this isn't a choice
@@ -2154,7 +2608,8 @@
 				if ("ALL" in sadako.after) sadako.after.ALL();
 				if (sadako.script_status === ABORT) return;
 
-				sadako.writeOutput();
+				sadako.scrollToTop();
+				writeOutput();
 			}
 		};
 		
@@ -2180,6 +2635,7 @@
 			doAfter();
 		}();
 	};
+
 
 	/* Initialization */
 
@@ -2243,10 +2699,73 @@
 
 		if (sadako.story === undefined) console.error("Sadako script not found");
 	};
+	
+	sadako.setupDialog = function(output_id, title_id, display_ids) {
+		/*
+			Assigns ids to the elements associated with the dialog.
+
+			- ids should begin with a '#' symbol.
+
+			output_id (string): The element in which the output text will be written.
+			title_id (string): The element containing the title of the dialog window.
+			display_ids (array): An array containing one or more elements
+				to show/hide in order to show/hide the dialog window (ie. the DIV containing
+				both the title and output area DIVs).
+		*/
+		
+		var a;
+		var ids = [output_id, title_id].concat(display_ids);
+		
+		var is_valid = true;
+		for (a = 0; a < ids.length; ++a) {
+			if (ids[a] === undefined) continue;
+			if (!dom(ids[a])) {
+				console.error("Dialog ID `" + ids[a] + "` is not defined.");
+				is_valid = false;
+			}
+		}
+		
+		if (!is_valid) return;
+
+		sadako.dialog_ids.output = output_id;
+		sadako.dialog_ids.title = title_id;
+		sadako.dialog_ids.display = display_ids;
+	};
+	
+	var startGame = function(page) {
+		/*
+			Begins the game.
+
+			- If "page" is provided, it will start there instead of "start".
+			- If autosave is enabled, it will load the autosave.
+
+			page (string): Page to begin game on.
+		*/
+
+		if (page !== undefined) sadako.page = page;
+
+		if (sadako.defaultData === undefined || isEmpty(sadako.defaultData)) {
+			sadako.defaultData = copy(getCurrentState(), true);
+		}
+		else loadState(sadako.defaultData);
+
+		if (!sadako.autosave_enabled) {
+			if (localStorage.getItem(sadako.savename + "_savedata_auto") !== null) {
+				localStorage.removeItem(sadako.savename + "_savedata_auto");
+			}
+		}
+
+		sadako.current_line = [sadako.page, 0, 0];
+
+		if (!sadako.autosave_enabled || !sadako.loadGame("auto", true)) {
+			doLink("#" + sadako.page);
+		}
+	};
 
 	// functions intended to be used as-is
 	sadako.doJump = doJump;
 	sadako.doLink = doLink;
+	sadako.doInclude = doInclude;
 	sadako.doReturn = doReturn;
 	sadako.back = back;
 	sadako.startGame = startGame;
@@ -2261,12 +2780,13 @@
 	sadako.overwrite = overwrite;
 	sadako.addChoice = addChoice;
 	sadako.addScene = addScene;
-
+	sadako.writeOutput = writeOutput
+	sadako.replaceVars = replaceVars;
+	
 	// functions intended to be overridden
 	// sadako.write
 	// sadako.writeLink
 	// sadako.writeSpan
-	// sadako.writeOutput
 	// sadako.doLineTag
 	// sadako.doChoiceTag
 	// sadako.saveGame
@@ -2274,12 +2794,18 @@
 	// sadako.freezeData
 	// sadako.unfreezeData
 	// sadako.clear
+	// sadako.scrollToTop
+	// sadako.fadeIn
+	// sadako.stylizeChoices
+	// sadako.displayText
 
 	// functions made available for use in overridden functions
-	sadako.processTags = processTags;
+	sadako.splitTags = splitTags
 	sadako.doChoice = doChoice;
 	sadako.processScript = processScript;
 	sadako.parseLink = parseLink;
+	sadako.getMarkup = getMarkup;
+	sadako.parseMarkup = parseMarkup;
 
 	// convenient utility functions
 	sadako.rollDice = rollDice;
@@ -2306,6 +2832,6 @@
 	sadako.arrayToString = arrayToString;
 	sadako.cap = cap;
 	sadako.dom = dom;
-	sadako.scrollToTop = scrollToTop;
+	
 
 }(window.sadako = window.sadako || {}));

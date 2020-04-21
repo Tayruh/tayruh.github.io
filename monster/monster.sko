@@ -16,8 +16,8 @@
 	>> go.inventory
 
 	= index
-	<a id="tasks" onclick='sadako.doLink("notebook.tasks")'>Tasks</a><>
-	<a id="characters" onclick='sadako.doLink("notebook.characters")'>Characters</a><>
+	<a id="tasks" class="link" onclick='sadako.doLink("notebook.tasks")'>Tasks</a><>
+	<a id="characters" class="link" onclick='sadako.doLink("notebook.characters")'>Characters</a><>
 	<hr> ~:class:notebook
 	[:&
 		setTimeout(function() {
@@ -30,20 +30,16 @@
 
 ## go
 	= return
-	[:$:room @: Go back.:] ~:choice
-	<< END
+	+ {go_return} [Go back.];; >> #$:room
 
 	= eoc
-	[:$:bookmark @: End the conversation.:] ~:choice
-	<< END
-
+	+ {go_eoc} [End the conversation.];; >> $:bookmark
+	
 	= back
-	[:$:bookmark @: Go back.:] ~:choice
-	<< END
+	+ {go_back} [Go back.];; >> $:bookmark
 
 	= inventory
-	[:inventory @: Back:] ~:choice
-	<< END
+	+ {go_inv} [Back];; >> #inventory
 
 
 ## start
