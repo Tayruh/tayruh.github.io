@@ -1,7 +1,7 @@
 (function(sadako) {
 
 	sadako.version = "0.11.4";
-	sadako.kayako_version = "0.10.2";
+	sadako.kayako_version = "0.10.3";
 
 	var localStorage;
 
@@ -2725,8 +2725,6 @@
 			}
 		}
 		
-		console.log(sadako.tags)
-
 		if (id) sadako.output_id = id;
 		else sadako.output_id = sadako.output_id || "#output";
 
