@@ -194,7 +194,7 @@
 		~~ if (%.daemon.intro_talk)
 			Most of the files in the cabinet are just legal mumbo jumbo that you're not sure how to make sense of. However, one of the pages is a deed to the mansion. It reads..
 			
-			I, Walter $:lname, of Octavia, New Haven, hereby transfer ownership of the $:lname Estate to $:fname and Erin $:lname as witnessed by Vanessa. ~:class:article
+			I, Walter $:lname, of Octavia, New Haven, hereby transfer ownership of the $:lname estate to $:fname and Erin $:lname as witnessed by Vanessa. ~:class:article
 			
 			~~~ if ($.erin_following && !%.office.erin_deed)
 				{erin_deed} Erin nearly rips the paper out of your hand to read it for herself. 
@@ -809,12 +809,13 @@
 		++ "He never did say he was returning, did he."
 			"No. No, he didn't," she grumbles.
 		++ "He'll be back."
-			She scoffs. "Yeah. Just like he did seven years ago. Oh wait! He didn't at all."
+			She scoffs. "Yeah. He'll return just like he did seven years ago. Oh wait! He didn't at all."
 		-- Just then there is a gentle knock at the door. Erin gives you a confused look before she walks over to the door and opens it. Behind it is Vanessa.
 		"Excuse me, Mistress, Master, but I request your assistance in preparing for the new tenants."
 		Erin shrugs. "Welp. Let's go do this then," she says to you, apparently having made her decision.
 
 		++ "Okay. Let's go."
+		(:clearTitle:)
 		-- The three of you leave the room and Vanessa leads you to the back hallway. It hasn't even been a day but you've had enough surprises to last a year. What other surprises are in store for you and your sister?
 		<div style="height:2em"></div>
 		This is the end of the demo. Thank you for playing! ~:class:info notebook
@@ -1224,7 +1225,7 @@
 	"You watch too many cartoons."
 	She frowns.
 	"The media only shows the nicest of the four fairy factions. Finola aligns with the second darkest. So she's not outright evil, but I'd still watch your back."
-	"Seoyun was saying that there myths aren't evil."
+	"Seoyun was saying that myths aren't evil."
 	"Every villain is the hero of their own story, right? It's like that," Daemon says with a shrug.
 
 	+ "We should probably get our luggage up to our rooms now that we've met everyone."

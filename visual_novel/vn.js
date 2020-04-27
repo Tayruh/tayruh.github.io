@@ -38,6 +38,7 @@
 		if (sadako.hasClass("pos" + pos, "hide")) sadako.fadeIn("pos" + pos);
 	}
 	
+	
 	sadako.doLineTag = function(text, tag) {
 		var items = tag.split(":");
 		
@@ -53,8 +54,14 @@
 		
 		if (!game.allow_click || !sadako.display_lines.length) return;
 		game.allow_click = false;
+		
+		if (!id) {
+			if (sadako.in_dialog && sadako.dialog_ids.output) id = sadako.dialog_ids.output;
+			else id = sadako.output_id;
+		}
 								
 		if (sadako.display_choices.length) {
+			if (!sadako.display_lines.length) sadako.clear(id);
 			sadako.display_lines = sadako.display_lines.concat(sadako.stylizeChoices());
 			sadako.display_choices = [];
 		}
@@ -76,6 +83,7 @@
 		}
 		
 		sadako.add(line.classes, "hide");
+		
 		if (!game.name_shown.length) sadako.addClass("name", "hide");
 		else {
 			var html;
@@ -108,6 +116,7 @@
 			game.allow_click = true;
 		}
 	};
+	
 	
 	game.typeLine = function(id, line, line_delay, delay) {
 		var el = document.createElement('div');
@@ -211,7 +220,6 @@
 				else match += 1;
 			}
 			if (match === 0) break;
-			continue;
 		}
 		
 		return text.substring(firstIndex - 1, closeIndex + 1);
