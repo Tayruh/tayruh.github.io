@@ -1,7 +1,7 @@
 (function(sadako) {
 
-	sadako.version = "0.13.0";
-	sadako.kayako_version = "0.10.5";
+	sadako.version = "0.13.5";
+	sadako.kayako_version = "0.10.7";
 
 	var localStorage;
 
@@ -2438,7 +2438,7 @@
 					doJump(sadako.current);
 					return [END];
 				}
-				if (temp === "back") {
+				if (temp === BACK) {
 					back();
 					return [NEXT];
 				}
@@ -2879,6 +2879,7 @@
 
 			sadako.tags = {};
 			sadako.labels = {};
+			sadako.page_seen = {};
 			sadako.label_seen = {};
 
 			for (a in sadako.story) {
@@ -2980,7 +2981,7 @@
 
 		if (page !== undefined) sadako.page = page;
 
-		if (sadako.default_data === undefined || isEmpty(sadako.default_data)) sadako.default_data = getCurrentState();
+		if (sadako.default_data === undefined || isEmpty(sadako.default_data)) sadako.default_data = copy(getCurrentState(), true);
 		else loadState(sadako.default_data);
 
 		if (!sadako.autosave_enabled) {
