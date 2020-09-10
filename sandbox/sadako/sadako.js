@@ -74,7 +74,7 @@
 		"process_close": "}}"
 	};
 
-	var initializeValues = function() {	
+	var initializeValues = function() {
 		// global variables intended to changed
 		sadako.savename = "sadako";
 		sadako.text_delay = 80.0;
@@ -84,7 +84,7 @@
 		// global variables not saved to storage
 		sadako.tmp = {};
 		sadako.evals = [];
-		sadako.defaultData = {};
+		sadako.default_data = {};
 		// sadako.story = {};
 		sadako.tags = {};
 		sadako.labels = {};
@@ -559,7 +559,7 @@
 
 			- Performs tag matching, so it will only return the markup of the
 			  outer most block.
-			- Only looksk for first instance of open tag, so 'after' text may 
+			- Only looksk for first instance of open tag, so 'after' text may
 			  contain more markup.
 
 			text (string): Text to be parsed.
@@ -905,7 +905,7 @@
 			if (scenes && a in scenes) sadako.scenes[a] = scenes[a];
 		}
 
-		sadako.var = copy(sadako.defaultData.var, true);
+		sadako.var = copy(sadako.default_data.var, true);
 		if (data) {
 			for (a in data) {
 				sadako.var[a] = data[a];
@@ -2450,7 +2450,7 @@
 			var processPageJump = function(label, include_text) {
 				if (!(label in sadako.story)) throw new Error("Can't find page '" + label + "'");
 				label = sadako.token.page_embed + label;
-				
+
 				if (include_text) {
 					doInclude(label);
 					return [NEXT];
@@ -2870,6 +2870,7 @@
 
 	sadako.init = function(story, id) {
 		var initializeData = function() {
+			sadako.depths = sadako.story.story_data.depths;
 
 			// remove story data from story object to avoid possible conflicts
 			delete sadako.story.story_data;
@@ -2922,10 +2923,7 @@
 		if (id) sadako.output_id = id;
 		else sadako.output_id = sadako.output_id || "#output";
 
-		if (sadako.story !== undefined) {
-			sadako.depths = sadako.story.story_data.depths;
-			checkVersion();
-		}
+		if (sadako.story !== undefined) checkVersion();
 		else {
 			if (isStr(story) && story.charAt(0) === "#") story = dom(story).value;
 			else if (dom("#source")) story = dom("#source").value;
@@ -2970,11 +2968,6 @@
 		sadako.dialog_ids.display = display_ids;
 	};
 
-
-	var setDefaultData = function() {
-		sadako.defaultData = copy(getCurrentState(), true);		
-	}
-
 	var startGame = function(page) {
 		/*
 			Begins the game.
@@ -2987,8 +2980,8 @@
 
 		if (page !== undefined) sadako.page = page;
 
-		if (sadako.defaultData === undefined || isEmpty(sadako.defaultData)) setDefaultData();
-		else loadState(sadako.defaultData);
+		if (sadako.default_data === undefined || isEmpty(sadako.default_data)) sadako.default_data = getCurrentState();
+		else loadState(sadako.default_data);
 
 		if (!sadako.autosave_enabled) {
 			if (localStorage.getItem(sadako.savename + "_savedata_auto") !== null) {
@@ -3053,7 +3046,6 @@
 	sadako.getMarkup = getMarkup;
 	sadako.parseMarkup = parseMarkup;
 	sadako.loadData = loadData;
-	sadako.setDefaultData = setDefaultData;
 
 	// convenient utility functions
 	sadako.rollDice = rollDice;

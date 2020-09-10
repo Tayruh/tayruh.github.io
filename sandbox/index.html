@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="script/style.css">
         <style type="text/css">
-            #input, #js-input {
+            #source, #js-source {
                width:100%;
                margin-top: 2em;
                height: 240px;
@@ -30,7 +30,7 @@
         <script src="sadako/sadako.js" type="text/javascript"></script>
         <script src="sadako/kayako.js" type="text/javascript"></script>
     </head>
-     
+
     <body>
         <!-- Banner -->
         <div id="banner-wrapper">
@@ -39,7 +39,7 @@
                 <div id="toggles">
                     <span id="ss" class="banner-button disabled link" onclick="toggle('ss')">[SS]</span>
                     <span id="js" class="banner-button disabled link" onclick="toggle('js')">[JS]</span>
-                    <span class="banner-button link" onclick="refresh()">[Refresh]</span>
+                    <span class="banner-button link" onclick="window.refresh()">[Refresh]</span>
                 </div>
                 <div id="banner-button-group">
                     <span id="back-button" class="banner-button">
@@ -57,24 +57,24 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Story Text -->
         <div id="story">
             <div id="output" class="story-text"></div>
-            
+
             <!-- Sadako Script Source -->
             <div class="story-text" style='text-align: center'>
 
 
 
-<textarea name="Sadako Script" id="input">
+<textarea name="Sadako Script" id="source">
 // Sadako Script
 
 ## start
     Welcome.
     Would you like to start fresh, or would like to seem some examples?
 
-    + [Start fresh.];; [:& beginFresh():]
+    + [Start fresh.];; [:& startFresh():]
     + {index} [See examples.]
         Please take a look at the buttons to the top your screen. Their functions perform as follows:
         <ul> \
@@ -98,14 +98,16 @@
         [:loops @: Loops:] ~:choice
         [:nested_blocks @: Nested Blocks:] ~:choice
         [:reveal_text @: Reveal Text:] ~:choice
+        [:dialog_box @: Dialog Box:] ~:choice
         << END
 
     = menu
     + [See examples.];; >> listing
 
+
+
 ## value_embedding
     This is a test space for embedding variable values into text. $:show_script
-
     <hr>
 
     [:&
@@ -115,7 +117,7 @@
         $.player_location = "w_world";
     :]
 
-    An embedded value can be treated like a normal javascript object up until it doesn't make sense anymore (in this case, the ending esclation mark): ~:c:docs
+    An embedded value can be treated like a normal javascript object up until it doesn't make sense anymore (in this case, the ending exclamation mark): ~:c:docs
     Hi. Welcome to $:locations[$.player_location].name.toUpperCase()! I hope you enjoy your stay!
 
     [:&
@@ -132,7 +134,16 @@
     [:& $.foo += 1; ~~="Foo: actual: " + $.foo + ", embedded: $:foo" :]
     [:= "Bleh: actual: " + (_.bleh = 1) + ", embedded: _:bleh":]
 
+    Abusing script blocks embedded in string values: ~:c:docs
+    [:&
+        $.foo = 0;
+        $.add = "[:= 'math: ' + ($.foo += 1):]";
+    :]
+    $:add, $:add, $:add
+
     >> start.menu
+
+
 
 ## loops ~:test:bleh ~:meh:multiple words ~:foo:3
     This area covers for loops and while loops. $:show_script
@@ -165,19 +176,12 @@
     ~ for (_.a = 0, _.b = 10; _.a < 5; _.a++)
         a: _:a, b: _:b
     -
-    
-    Abusing script blocks embedded in string values: ~:c:docs
-    [:&
-        $.foo = 0;
-        $.add = "[:= 'math: ' + ($.foo += 1):]";
-    :]
-    $:add, $:add, $:add
-    
+
     Looping through page tags: ~:c:docs
     ~ for (_.k in sadako.tags[sadako.page])
         Value of _:k tag is [:= sadako.tags[sadako.page][_.k]:].
     -
-    
+
     Exiting a <:code::while:> loop using <:code::break:>: ~:c:docs
     [:& _.x = 0:]
     ~ while (true)
@@ -186,7 +190,7 @@
             Breaking the while loop early.
             << BREAK
     -
-    
+
     Exhausting an array using a <:code::while:> loop: ~:c:docs
     [:& _.list = ["blargh", "foo", "bleh"]:]
     ~ while (_.list.length)
@@ -202,7 +206,7 @@
         --
         >> jump_test
     -
-    
+
     Loops inside of loops: ~:c:docs
     ~ for (_.a = 0; _.a < 3; ++_.a)
         A loop: _:a, B loop:
@@ -211,27 +215,29 @@
     -
 
     >> start.menu
-    
+
     = jump_test
     Entering the jump test. Value of a is _:a.
     <<
+
+
 
 ## nested_blocks
     This is an example of how you can nest blocks within blocks at multiple levels. $:show_script
     <hr>
 
     Using the <:code::process:> token to assign sadako script as values and then render them: ~:c:docs
-    before|[:& 
+    before|[:&
         _.a = "middle [:& _.c = '[:& _.d = 1 :]':]";
         console.log("a:", _.a);
-        
+
         _.b = {{_.a}};
         console.log("b:", _.b);
         console.log("c:", _.c);
-        
+
         {{_.c}};
         console.log("d:", _.d);
-        
+
         ~~+{{
             function() {
                 return "<:test::" + _.b + _.d + ":>";
@@ -252,6 +258,8 @@
 
     >> start.menu
 
+
+
 ## reveal_text
     These are examples of revealing links and revealing pages. $:show_script
     <hr>
@@ -260,21 +268,21 @@
 
     This is a test of a non-disappearing link.<br><>
     Sometimes I really just need [:+& sadako.randomItem(_.things) @: something:] to get me through the day.
-    
+
     Cycling Text: <br><>
-    
+
     Your favorite color is [:+> $.test @: red::blue::green::purple::pink::black:].<br>
     Check color [:*= "Value is: " + $.test @: value:].<br>
-    
+
     [:& $.test2 = ["First Item", "Second Item", "Third Item"]:]
     Predefined Cycle: [:+> _.test2 @:= $.test2:]
 
     Disappearing link test:<br><>
     Test an eval replacement: 1 + 1 is [:+= 1 + 1 @: what?:]<br><>
     Straight text replacement: Hello my [:+ darlin' @: baby:].
-    
+
     <hr>
-    
+
     This is an included page reveal: [:+ #page2 @: Reveal page.:]
     This is a included label reveal: [:+ %page2.label_test @: Reveal label.:]
 
@@ -282,19 +290,19 @@
 
 ## page2
     This is page 2.
-    
+
     Choices don't display on included pages. :: sadako.in_include
-    
-    [:& 
+
+    [:&
         if (sadako.in_include) _.type = "include";
         else if (sadako.in_dialog) _.type = "dialog";
         else _.type = "normal page";
     :]
-    
+
     Replacement text in _:type. [:+ Yes, it works. @: Does it work?:]
-        
+
     >> jump_test
-    
+
     This is text following the jump.
 
     <hr> :: sadako.in_include
@@ -305,12 +313,12 @@
     -
     + [Back to Page 1];; >> #start
 
-        
+
     = label_test
     The label has been included. Success.
     << END
-    
-    
+
+
     = jump_test
     ~ if (sadako.in_include)
         Jumps within includes also work.
@@ -318,21 +326,64 @@
         We're not in an include, but the jump still works. So.. yay?
     - <<
 
+## page3
+    Lookie! It's a new page!
+    + [Go to Page 2];; >> #page2
+
+
+
+## dialog_box
+    This example is for presenting the different ways you can open and close a dialog box. $:show_script
+    <hr>
+
+    [:& _.things = ["money", "love", "video games", "food", "television", "time alone"]:]
+
+	Open dialog [:* Test @: without a title:].
+	Say something with a [:* Hello world! @: dialog @: Plain Text Test:].
+	Open dialog with [:* @: empty text @: Empty Test:].
+	Display a [:* #page2 @: page @: Page Test:] in a dialog.
+	Display a [:* %page2.label_test @: label @: Label Test:] in a dialog.
+	Display a dialog using a [:*= "I sure could go for some " + sadako.randomItem(_.things) + "." @: script evalulation @: Script Test:].
+	Display a dialog using a [:*& sadako.doLink("#page2") @: function @: Function Test:].
+	Test [:* #dialog_test @: opening and closing @: Dialog Test:] dialogs.
+
+    >> start.menu
+
+## dialog_test
+    Test the various ways of navigating in a dialog.
+
+    [: %close @: Close dialog window with a link.:]
+    [:* #page2 @: Keep window open with a link and clear title. @::]
+    [:*! @: Close dialog window without redirect.:]
+    [: %close @: Close dialog window with a link choice.:] ~:choice
+
+    + [Close dialog with a normal choice.]
+        [:*!:]
+        By closing the dialog with a choice, we can add some additional text to the start of the next page.
+        >> close
+
+    + [Keep window open with a choice.];; >> #page2
+
+    = close
+    The dialog has been closed.
+    + [Go to Page 1];; >> #dialog_box
+
 </textarea><br>
 
 
 
-<textarea name="JavaScript" id="js-input">
+<textarea name="JavaScript" id="js-source">
 // JavaScript
 
 sadako.var.spacer = "<div style='height:0.5em; padding:0; margin:0'></div>";
+
 sadako.var.show_script = "Click [:& window.toggle('ss', true) @: here:] to view this script.";
 </textarea>
 
 
             </div>
         </div>
-        
+
         <!-- Dialog -->
         <div id="dialog-overlay" onclick="sadako.closeDialog()"></div>
         <div id="dialog">
@@ -346,7 +397,7 @@ sadako.var.show_script = "Click [:& window.toggle('ss', true) @: here:] to view 
                 <div id="dialog-output" class="story-text"></div>
             </div>
         </div>
-        
+
         <!-- Save/Load Menu -->
         <div id="save-menu" class="disabled">
             <div>
@@ -371,54 +422,57 @@ sadako.var.show_script = "Click [:& window.toggle('ss', true) @: here:] to view 
     </body>
     <script type="text/javascript">
         (function(sadako) {
-
             window.refresh = function() {
-                var data = sadako.copy(sadako.save_data);
+                var save_data = sadako.copy(sadako.save_data);
+                var default_data = sadako.copy(sadako.default_data)
 
                 window.game = {};
                 delete sadako.story;
 
-                sadako.init("#input");
-                
-                eval(sadako.dom("js-input").value);
+                sadako.init();
 
-                sadako.setDefaultData();
-                sadako.loadData(data);
-                sadako.run();
-                sadako.doJump(sadako.current);
-
-                sadako.scrollToTop(sadako.output_id);
-            }
-
-            window.compile = function() {
-                window.game = {};
-                delete sadako.story;
-
-                sadako.init("#input");
-                
-                eval(sadako.dom("js-input").value);
+                eval(sadako.dom("js-source").value);
 
                 sadako.setupDialog("#dialog-output", "#dialog-title", ["#dialog", "#dialog-overlay"]);
                 sadako.dom("#banner-status").innerHTML = "";
 
-                sadako.startGame("start");
+                sadako.default_data = default_data;
+                sadako.loadData(save_data);
+
+                sadako.run();
+                sadako.doJump(sadako.current);
+                sadako.scrollToTop();
+            }
+
+            window.compile = function(keep_data) {
+                window.game = {};
+                delete sadako.story;
+
+                sadako.init();
+
+                eval(sadako.dom("js-source").value);
+
+                sadako.setupDialog("#dialog-output", "#dialog-title", ["#dialog", "#dialog-overlay"]);
+                sadako.dom("#banner-status").innerHTML = "";
+
+                sadako.startGame();
             };
 
-            window.beginFresh = function() {
-                sadako.dom("input").value = "// Sadako Script\n\n## start\n    Begin here.";
-                sadako.dom("js-input").value = "// JavaScript\n\n";
+            window.startFresh = function() {
+                sadako.dom("source").value = "// Sadako Script\n\n## start\n    Begin here.";
+                sadako.dom("js-source").value = "// JavaScript\n\n";
                 window.compile();
                 sadako.removeClass("ss", "disabled");
                 sadako.removeClass("js", "disabled");
-                sadako.dom("input").style.display = "block";
-                sadako.dom("js-input").style.display = "block";
+                sadako.dom("source").style.display = "block";
+                sadako.dom("js-source").style.display = "block";
             };
 
             window.toggle = function(item, value) {
                 var button = document.getElementById(item);
                 var enabled = (value !== undefined) ? !value : !sadako.hasClass(item, "disabled");
-                var script = document.getElementById((item === "ss") ? "input" : "js-input");
-                
+                var script = document.getElementById((item === "ss") ? "source" : "js-source");
+
                 if (enabled) sadako.addClass(button, "disabled");
                 else sadako.removeClass(button, "disabled")
                 script.style.display = (enabled) ? "none" : "block";
@@ -427,7 +481,7 @@ sadako.var.show_script = "Click [:& window.toggle('ss', true) @: here:] to view 
             }
 
             window.jumpToScript = function() {
-                var script = sadako.dom("input");
+                var script = sadako.dom("source");
                 var current = sadako.save_data.current;
                 if (current.charAt(0) === sadako.token.page_embed) {
                     var current = script.value.match(new RegExp("##[\\t\\ ]*" + current.substr(1)));
@@ -435,7 +489,7 @@ sadako.var.show_script = "Click [:& window.toggle('ss', true) @: here:] to view 
                 }
                 else {
                     var parts = current.split(".");
-                    
+
                     var temp = sadako.labels[current];
                     var line = sadako.story[temp[0]][temp[1]][temp[2]];
                     var token = line.k || "";

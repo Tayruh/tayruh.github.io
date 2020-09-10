@@ -3,7 +3,7 @@
 (function(sadako) {
 
 	var story_depths = {};
-	
+
 	var checkConflicts = function(text, token) {
 		var t = sadako.token;
 		var conflicts = [t.tag, t.choice_format_open, t.script_open, t.comment_open, t.inline_open, t.span_open, t.comment_close, (t.scene_embed + t.value_embed)];
@@ -16,11 +16,11 @@
 		}
 		return true;
 	}
-	
+
 	var parseData = function(lines) {
 		var t = sadako.token;
 		var tokens = [t.choice, t.static, t.depth, t.label, t.cond_block];
-		
+
 		var countStartToken = function(text, token) {
 			var match = text.match(RegExp("^((?:\\s*)" + token + ")+", "g"));
 			var count = (match) ? match[0].replace(/\s/g, "").length : 0;
@@ -28,11 +28,11 @@
 			if (!match) return null;
 			return [token, count, (match) ? text.substring(match[0].length) : text];
 		}
-		
+
 		var assignTokens = function(lines) {
 			var a, b, match;
 			var depth = 1;
-			
+
 			var items = [];
 			for (a = 0; a < lines.length; ++a) {
 
@@ -64,10 +64,10 @@
 					if (match[0] === sadako.token.choice || match[0] === sadako.token.static || match[0] === sadako.token.cond_block) depth += 1;
 				}
 			}
-			
+
 			return items;
 		}
-		
+
 		var setIndexDepth = function(text, depth) {
 			var parts = text.split(".");
 			var a;
@@ -79,7 +79,7 @@
 
 			return text;
 		}
-		
+
 		var assignDepths = function(items) {
 			var data = {};
 			var idxstr = "0";
@@ -111,10 +111,10 @@
 
 				lastdepth = depth;
 			}
-			
+
 			return data;
 		}
-		
+
 		return function() {
 			var items = [];
 
@@ -125,7 +125,7 @@
 			return data;
 		}();
 	}
-		
+
 	var parseLines = function(lines, page) {
 		var a, b;
 		var data = {};
@@ -135,7 +135,7 @@
 		var text, label, full_label, temp, temp2;
 
 		var depth_seen, choice_seen;
-		
+
 		var setDepths = function(choices, depth) {
 			var a;
 			for (a = 0; a < choices.length; ++a) {
@@ -173,11 +173,11 @@
 					text = temp.substring(label.length + 1);
 					label = label.trim();
 				}
-				
+
 				line = {"t": text.trim() };
-				
+
 				if (lines[a][b][2] !== null) line.k = lines[a][b][2];
-				
+
 				if (line.k === sadako.token.label) {
 					if (text.length < 1) continue;
 					if (!depth_seen) {
@@ -186,7 +186,7 @@
 						choices = [];
 						choice_seen = false;
 					}
-					
+
 					label =  line.t.trim();
 				}
 				else if (line.k === sadako.token.choice || line.k === sadako.token.static) {
@@ -209,7 +209,7 @@
 					temp = text.match(RegExp("^(?:\\s*)(\\S+)", "g"))[0].toLowerCase();
 					text = text.substring(temp.length).trim();
 					temp = temp.trim();
-					
+
 					if (temp === "else" && text.length) {
 						temp2 = text.match(RegExp("^(?:\\s*)(\\S+)", "g"))[0].toLowerCase();
 						if (temp2.trim() === "if") {
@@ -222,7 +222,7 @@
 						console.error(sadako.format("Condition block must begin with: if, else, else if, for, or while.\n[{0}] [{1}] [{2}]: {3}", page, a, b, lines[a][b][3].trim()));
 					}
 					line.t = temp + " " + text;
-					
+
 					if (sadako.isToken(text, "if") !== false) {
 						setDepths(choices, [page, a, b]);
 						choices = [];
@@ -265,72 +265,72 @@
 				Splits lines by line breaks and line tokens while maintaining
 				line breaks and line tokens inside script blocks
 			*/
-			
+
 			var lines = [""];
-						
+
 			var doSplit = function(text) {
 				var token = new RegExp(sadako.token.line, 'g');
 				text = text.replace(token, "\n");
 				return text.split("\n");
 			}
-			
+
 			var trimMarkup = function(text) {
 				// trimes the markup lines to save space in JSON
-				
+
 				var temp = text.split("\n");
 				var trimmed_lines = [];
 				for (a = 0; a < temp.length; ++a) {
 					if (!temp[a].length) continue;
 					trimmed_lines.push(temp[a].trim());
 				}
-				
+
 				return trimmed_lines.join("\n");
 			}
-			
+
 			var concatLines = function(lines) {
 				// adds lines together that end with the escape token
-				
+
 				var a, last_line;
 				var temp = [lines.shift().trim()];
-				
+
 				for (a = 0; a < lines.length; ++a) {
 					last_line = temp[temp.length - 1];
-					
+
 					if (last_line.charAt(last_line.length - 1) === sadako.token.escape) {
 						last_line = last_line.slice(0, -1).trimStart() + lines[a].trim();
 						temp[temp.length - 1] = last_line
 						continue;
 					}
-					
+
 					temp.push(lines[a].trim())
 				}
-				
+
 				return temp;
 			}
-			
+
 			var temp = sadako.getMarkup(text, sadako.token.script_open, sadako.token.script_close);
 			var current;
-			
+
 			var a;
 			while (temp.markup.trim().length) {
 				current = doSplit(temp.before);
-				
+
 				lines[lines.length - 1] += current.shift();
 				lines = lines.concat(current);
 				lines[lines.length - 1] += trimMarkup(temp.markup);
-			
+
 				temp = sadako.getMarkup(temp.after, sadako.token.script_open, sadako.token.script_close);
 			}
-			
+
 			current = doSplit(temp.after);
 			lines[lines.length - 1] += current.shift();
 			lines = lines.concat(current);
 
 			lines = concatLines(lines);
-			
+
 			return lines;
 		}
-		
+
 		var getPageTags = function(title) {
 			var temp, a, index;
 			temp = title.split(sadako.token.tag);
@@ -372,7 +372,7 @@
 				data = parseData(lines);
 				data = parseLines(data, title);
 				if (tags.length) data.tags = tags.shift();
-				
+
 				if (title in story_data) console.error("Duplicate page '" + title + "' found!'");
 				else story_data[title] = data;
 				// sadako.page_seen[title] = 0;
@@ -383,14 +383,14 @@
 
 		var removeComments = function(text) {
 			var before, after;
-			
+
 			// remove comment blocks
 			text = sadako.parseMarkup(text, sadako.token.comment_open, sadako.token.comment_close, function() { return ""; })
-			
+
 			var a, line;
 			before = text.split("\n");
 			after = [];
-			
+
 			// remove inline comments
 			for (a = 0; a < before.length; ++a) {
 				line = before[a].split(sadako.token.comment, 1)[0];
@@ -406,16 +406,16 @@
 			text = text.replace("  ", " ");
 			text = removeComments(text);
 			var data = parsePages(text);
-			
+
 			data["story_data"] = {
 				"depths": story_depths,
 				"version": sadako.kayako_version
 			};
-			
+
 			return data;
 		}();
 	}
-	
+
 	sadako.parseStory = parseStory;
 
 }(window.sadako = window.sadako || {}));
