@@ -133,6 +133,7 @@
 		sadako.setupDialog("#dialog-output", "#dialog-title", ["#dialog", "#dialog-overlay"]);
 			
 		game.clearTitle();
+		sadako.enableKeyboard();
 		
 		sadako.startGame();
 	};
