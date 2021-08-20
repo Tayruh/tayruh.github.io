@@ -339,7 +339,7 @@
     Nesting multiple <:code::inline text conditionals:> inside of each other: ~:c:docs
 
     [:&
-        _.name_check = "[:= '<:character::' + $.name + ':>':]";
+        _.name_check = '[:= "<:character::" + $.name + ":>":]';
         $.age = 30;
         $.gender = "male";
         $.name = "Bob";
@@ -477,6 +477,8 @@ sadako.var.show_script = "Click [:& window.toggle('ss', true) @: here:] to view 
     <script type="text/javascript">
         (function(sadako) {
             window.refresh = function() {
+                console.log("test")
+
                 var save_data = sadako.copy(sadako.save_data);
                 var default_data = sadako.copy(sadako.default_data)
 
@@ -493,8 +495,7 @@ sadako.var.show_script = "Click [:& window.toggle('ss', true) @: here:] to view 
                 sadako.default_data = default_data;
                 sadako.loadData(save_data);
 
-                sadako.run();
-                sadako.doJump(sadako.current);
+                sadako.doLink(sadako.current);
                 sadako.scrollToTop();
             }
 
