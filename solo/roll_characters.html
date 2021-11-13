@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script>
+		    // game definitions
+		    var games = {
+		        "Fighting Fantasy": {
+		            Skill: "1d6+6",
+		            Stamina: "2d6+12",
+		            Luck: "1d6+6"
+		        },
+		        "Lone Wolf": {
+		            // Lone Wolf is zero based so we subtract 1
+		            "Combat Skill": "1d10+10-1",
+		            Endurance: "1d10+10-1",
+					// don't include gold in stat sum
+		            Gold: "!1d10-1",
+		            Weapon: [
+		                "Dagger", "Spear", "Mace",
+		                "Short Sword", "Warhammer",
+		                "Sword", "Axe", "Sword", 
+		                "Quarterstaff", "Broadsword"
+		            ]
+		        },
+		        "Isle of Doctor Moreau": {
+		            Prowess: "2d6+6",
+		            Ballistics: "2d6+6",
+		            Vitality: "2d6+12",
+		            "Ranged Defense": "2d6+6",
+		            Fate: "2d6+6"
+		        },
+		        "Entram": {
+		            Body: "1d6+2",
+		            Mind: "1d6+2",
+		            Heart: "1d6+2",
+		            Spirit: "1d6+5"
+		        }
+		    };
+		    
+		    // output settings
+		    var options = {
+		        total_rolls: 50,
+		    
+		        stat_names_first: true,
+		        ascending: false,
+		        show_max: true,
+		        pad_places: 2,
+		        
+		        only_allow_average: true,
+		        average_tolerance: 1
+		    };
+		    
+		    
+		    // -------------------------------------
+		    
+		    var rollCharacter = function(game, opts) {
+		        /*
+		        game: an object with each member being a stat
+		              name in the format of "2d6+1"
+		        
+		        opts:
+		            total_rolls: number of characters to roll
+		            stat_names_first: whether to show stat names before or after values
+		            ascending: whether to list characters in ascending or descending or
+		                according to total values
+		            show_max: output the values twice; one for current score and one for max score
+		            pad_places: number of places to pad out spaces before values for proper alignment
+		            only_allow_average: will only display characters whose totals
+		                are within the tolerance of the average 
+		            average_tolerance: the tolerance plus or minus within the rounded value
+		                of the average
+		        */
+		        
+	            // get random number
+		        var random = function(min, max) {
+		            min = Math.ceil(min);
+		            max = Math.floor(max);
+		            return Math.floor(Math.random() * (max - min + 1)) + min;
+	            };
+		        
+		        // get dice results from string
+		        var rollDice = function(die) {
+		            var dice = die.toUpperCase().split("D");
+
+		            var minus = dice[1].split("-");
+		            if (minus.length > 1) {
+		                dice[1] = minus[0];
+		                minus = parseInt(minus[1]);
+		            }
+		            else minus = 0;
+
+					var plus = dice[1].split("+");
+		            if (plus.length > 1) {
+			            dice[1] = plus[0];
+			            plus = parseInt(plus[1]);
+		            }
+		            else plus = 0;
+
+					dice[0] = parseInt(dice[0]);
+		            dice[1] = parseInt(dice[1]);
+		        
+		            var total = 0;
+		            var a;
+		            for (a = 0; a < dice[0]; ++a) {
+			            total += random(1, dice[1]);
+		            }
+		            total += plus - minus;
+		            return total;
+		        };
+		        
+		        // sanatize option settings
+		        var sanatizeOptions = function(vars) {
+		            // keep number within sane values
+		            var sanatizeNumber = function(num, min, max) {
+			            var isString = function(val) {
+				            return (typeof val === 'string' || val instanceof String);
+			            };
+			            
+			            var sanatize = function(val, lowest) {
+				            if (!val || isString(val) || val < lowest) return lowest;
+				            return Math.floor(val);
+			            }
+			            
+			            min = sanatize(min, 0);
+			            num = sanatize(num, min);
+			            if (max === undefined) return num;
+			            
+			            max = sanatize(max, min);
+			            if (num > max) num = max;
+			            return num;
+		            };
+		            
+		            if (!vars.opts) vars.opts = {};
+		            vars.opts.total_rolls = sanatizeNumber(vars.opts.total_rolls, 1);
+		            vars.opts.stat_names_first = !!vars.opts.stat_names_first;
+		            vars.opts.show_max = !!vars.opts.show_max;
+		            vars.opts.pad_places = sanatizeNumber(vars.opts.pad_places, 1);
+		            vars.opts.ascending = !!vars.opts.ascending;
+		            vars.opts.only_allow_average = !!vars.opts.only_allow_average;
+		            vars.opts.average_tolerance = sanatizeNumber(vars.opts.average_tolerance);
+		        }
+		        
+		        // roll total number of characters
+		        var rollCharacters = function(vars) {
+					// get longest stat name for text padding
+					var getLongest = function() {
+						var longest = 0;
+
+						if (opts.stat_names_first) {
+							for (let [name, v] of Object.entries(game)) {
+								if (name.length > longest) longest = name.length;
+							}
+						}
+						else {
+							for (let [name, v] of Object.entries(game)) {
+								if (v instanceof Array || Array.isArray(v)) {
+									for (let [name, v] of Object.entries(game)) {
+										if (name.length > longest) longest = name.length;
+									}
+								}
+							}
+						}
+						return longest;
+					}
+		            
+		            // roll each character
+		            vars.characters = [];
+		            var grand_total = 0;
+		            for (let a = 0; a < opts.total_rolls; ++a) {
+			            let sum = 0;
+			            let rolls = [];
+			            for (let [k, v] of Object.entries(game)) {
+			                let roll;
+			                let is_array = (v instanceof Array || Array.isArray(v));
+			                
+			                if (is_array) roll = v[random(0, v.length - 1)];
+			                else if (/^\s*!/.test(v)) {
+								v = v.replace(/^\s*!/, "");
+								roll = rollDice(v);
+							}
+							else {
+				                roll = rollDice(v);
+				                sum += roll;
+			                }
+			                roll = roll.toString().padStart(vars.opts.pad_places, " ");
+
+			                
+			                if (opts.stat_names_first) {
+								if (vars.opts.show_max) {
+									if (is_array) rolls.push(k.padEnd(getLongest() + 2) + " ".repeat(vars.opts.pad_places) + ": " + roll);
+									else rolls.push(k.padEnd(getLongest() + 2) + roll + ": " + roll);
+								}
+								else rolls.push(k.padEnd(getLongest() + 1) + ": " + roll);
+			                }
+							else {
+								if (vars.opts.show_max) {
+									if (is_array) rolls.push(roll.padStart(getLongest()) + " :  " + " ".repeat(vars.opts.pad_places) + k);
+									else rolls.push(roll.padStart(getLongest()) + " :" + roll + "  " + k);
+								}
+								else rolls.push(roll.padStart(getLongest()) + " :" + k);
+							}
+			            }
+			            grand_total += sum;
+			            
+			            vars.characters.push({sum: sum, rolls: rolls});
+		            }
+		            vars.average = grand_total/vars.opts.total_rolls;
+		        }
+		        
+		        // sort in order
+		        var sort = function(vars) {
+		            vars.totals = [];
+		            for (let character of vars.characters) {
+			            let match = false;
+			            if (vars.totals.length) {
+				            for (let a = 0; a < vars.totals.length; ++a) {
+					            if (
+						            (opts.ascending && character.sum < vars.totals[a].sum) ||
+						            (!opts.ascending && character.sum > vars.totals[a].sum)
+					            ) {
+						            match = true;
+						            vars.totals.splice(a, 0, character);
+						            break;
+					            }
+				            }
+			            } 
+			            if (!match) vars.totals.push(character);
+		            }
+		        }
+		        
+		        // keep items within tolerance of average
+		        var pruneExtremes = function(vars) {
+		            let rounded = Math.round(vars.average);
+		            let average_characters = [];
+		            
+		            for (let character of vars.totals) {
+			            if (
+				            (character.sum >= (rounded - vars.opts.average_tolerance)) &&
+				            (character.sum <= (rounded + vars.opts.average_tolerance))
+			            ) {
+				            average_characters.push(character);
+			            }
+		            }
+		            vars.totals = average_characters;
+		        }
+		        
+		        return function(game, opts) {
+		            // convert results to text
+		            var getResults = function(vars) {
+			            var chars = [];
+			            for (let character of vars.totals) {
+				            chars.push(character.rolls.join("\n") + "\n = " + character.sum);
+			            }
+			            
+			            let text = chars.join("\n\n");
+			            if (vars.opts.only_allow_average) text = "average = " + vars.average + "\n\n" + text;
+			            
+			            return text;
+		            }
+		            
+		            var vars = {game: game, opts: opts};
+		            sanatizeOptions(vars);
+		            rollCharacters(vars);
+		            sort(vars);
+		            if (vars.opts.only_allow_average) pruneExtremes(vars);
+			            
+		            return getResults(vars);
+		        }(game, opts);
+		    };
+		    
+		    var current_game;
+		    
+		    var chooseGame = function(game) {
+				if (game === current_game) return;
+				
+		        current_game = game;
+		        var el = document.getElementById("game");
+		        el.innerHTML = current_game;
+
+				getResults();
+		    };
+		    
+		    var getResults = function() {
+		        var el = document.getElementById("results");
+                el.innerHTML = rollCharacter(games[current_game], options);
+		    };
+		    
+		    window.onload = function() {
+		        var el = document.getElementById("game-list");
+		        
+		        for (let [name, v] of Object.entries(games)) {
+		            if (current_game === undefined) chooseGame(name);
+		            
+		            let link = "javascript:chooseGame('" +  name + "')";
+		            link = '<li><a href="' + link + '">' + name + '</a></li>';
+		            el.innerHTML += link;
+		        }
+		   };
+		</script>
+
+		<style>
+			html, body {
+				background-color: #222222;
+				color: #ffffff;
+				font-family:Arial, Helvetica, sans-serif;
+				margin: 0;
+			}
+
+			a { 
+				color: #B7A48D;
+				font-weight: bold;
+				text-decoration: none;
+			}
+
+			a:hover { color: #FF8C00; }
+
+			pre { margin: 0; }
+
+			ul { margin: 0; }
+
+			li { line-height: 1.5em; }
+
+			#results { font-size: 1.1em; }
+
+			#game { font-size: 1.3em; }
+
+			#display {
+				padding: 0;
+				margin: 0;
+				margin-left: auto;
+				margin-right: auto;
+				min-width: 600px;
+			}
+
+			#display td { vertical-align: top; }
+			
+			#display td > div {
+				margin: 1em;
+				border-radius: 6px;
+				background-color: #111111;
+				padding: 1em;
+			}
+
+			#display td:first-of-type > div {
+				min-width: 150px;
+			}
+
+			#display td:last-of-type > div { margin-left: 0; }
+			
+			@media screen and (max-width: 600px) {
+				body { font-size: 80%; }
+				
+				#display { min-width: 400px; }
+				
+				#display td > div {
+					margin: 0.5em;
+					padding: 0.5em;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<table id="display">
+			<tr>
+				<td>
+					<div>
+						<div id="game"></div>
+						
+						<p><a href="javascript:getResults()">Re-roll Characters</a></p>
+
+						<ul id="game-list"></ul>
+					</div>
+				</td><td>
+					<div>
+						<pre><code id="results"></code></pre>
+					</div>
+				</td>
+			</tr>
+		</table>
+    </body>
+</html>
