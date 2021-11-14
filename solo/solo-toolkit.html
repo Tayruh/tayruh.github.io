@@ -1183,7 +1183,7 @@
 						64: "Subject Negative",
 						72: "Subject Positive",
 						78: "Connection, NPC to NPC",
-						86: "Conenction, NPC to Subject",
+						86: "Connection, NPC to Subject",
 						100: "Complete, or New Thread"
 					}
 				};
@@ -3598,18 +3598,18 @@
 				};
 
 				var showPlotPoint = function() {
-					var a;
-
-					var result = "";
+					var a, result;
+					var results = [];
+					var copy_text = [];
 
 					for (a = 0; a < 5; ++a) {
-						result += getPlotPoint();
-						if (a < 4) result += "<br>";
+						result = getPlotPoint();
+						results.push(result);
+						copy_text.push(result.replace(/.+<b>(.+)<\/b>.+/gm, "$1"));
 					}
 
 					var copy = (navigator && navigator.clipboard) ? "<br><hr>" + getCopyButton("copy-text") : "";
-
-					display("<div id='copy-text'>" + result + "</div>" + copy);
+					display(results.join("<br>") + "<pre id='copy-text' class='hidden'>" + copy_text.join("\n") + "</pre>" + copy);
 				};
 
 
@@ -4578,7 +4578,7 @@
 					<li><i>Ursa Minor</i> by Thomas Davis</li>
 				</ul>
 
-				<p>version: 2021.11.13 tayruh</p>
+				<p>version: 2021.11.13b tayruh</p>
 			</div>
 		</div>
 	</body>
