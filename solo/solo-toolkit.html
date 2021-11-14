@@ -4028,27 +4028,55 @@
 						"<p><a href=\"javascript:solo.showMeaning('Verb')\">Verb</a></p>" +
 						"<p><a href=\"javascript:solo.showMeaning('Noun')\">Noun</a></p>" +
 						"<p><a href=\"javascript:solo.showMeaning('Action')\">Action</a></p>" +
+						"<p><a href=\"javascript:solo.showQuestions('General')\">Questions</a></p>" +
 						"<hr><p><a href=\"javascript:solo.showMeaning('Vocal')\">Vocal</a></p>" +
 						"<p><a href=\"javascript:solo.showMeaning('Character')\">Character</a></p>" +
 						"<p><a href=\"javascript:solo.showMeaning('Animal')\">Animal</a></p>"
 					);
 				};
 
+                var getThemedMeaning = function(theme, modifier, type) {
+                    var first = randomItem(themed_meanings[theme][modifier]);
+					var second = randomItem(themed_meanings[theme][type]);
+					
+                    return upperCase(first) + " " + upperCase(second);
+                };
 
 				var showThemedMeaning = function(theme, modifier, type, name) {
-					var name = name || type;
-					var first = randomItem(themed_meanings[theme][modifier]);
-					var second = randomItem(themed_meanings[theme][type]);
-
-					display("<p><b>" + name + ":</b> " + upperCase(first) + " " + upperCase(second) + "</p>");
+					display("<p><b>" + (name || type) + ":</b> " + getThemedMeaning(theme, modifier, type) + "</p>");
 				}
+				
+				var showQuestions = function(theme) {
+				    var text = "<div id='copy-text'>";
+				    if (theme === "General") {
+				        text += "<p><b>Who?</b> " + getMeaning("Noun") + "</p>" +
+    				        "<p><b>What?</b> " + getMeaning("Noun") + "</p>" +
+    				        "<p><b>Where?</b> " + getMeaning("Noun") + "</p>" +
+    				        "<p><b>When?</b> " + getMeaning("Noun") + "</p>" +
+    				        "<p><b>Why?</b> " + getMeaning("Action") + "</p>" +
+    				        "<p><b>How?</b> " + getMeaning("Action") + "</p>";
+				    }
+				    else {
+				        text += "<p><b>Who?</b> " + getThemedMeaning(theme, "Adjective", "Noun") + "</p>" +
+    				        "<p><b>What?</b> " + getThemedMeaning(theme, "Adjective", "Noun") + "</p>" +
+    				        "<p><b>Where?</b> " + getThemedMeaning(theme, "Adjective", "Noun") + "</p>" +
+    				        "<p><b>When?</b> " + getThemedMeaning(theme, "Adjective", "Noun") + "</p>" +
+    				        "<p><b>Why?</b> " + getThemedMeaning(theme, "Verb", "Noun") + "</p>" +
+    				        "<p><b>How?</b> " + getThemedMeaning(theme, "Verb", "Noun") + "</p>";
+				    }
+				    text += "</div>";
+				    
+				    if (navigator && navigator.clipboard) text += "<br><hr>" + getCopyButton("copy-text");
+				    display(text);
+				};
 
 				var showThemedMeaningsList = function(theme) {
 					display(
 						"<p><a href=\"javascript:solo.showThemedMeaning('" + theme + "', 'Adverb', 'Adjective')\">Adjective</a></p>" +
 						"<p><a href=\"javascript:solo.showThemedMeaning('" + theme + "', 'Adverb', 'Verb')\">Verb</a></p>" +
 						"<p><a href=\"javascript:solo.showThemedMeaning('" + theme + "', 'Adjective', 'Noun')\">Noun</a></p>" +
-						"<p><a href=\"javascript:solo.showThemedMeaning('" + theme + "', 'Verb', 'Noun', 'Action')\">Action</a></p>"
+						"<p><a href=\"javascript:solo.showThemedMeaning('" + theme + "', 'Verb', 'Noun', 'Action')\">Action</a></p>" +
+						"<p><a href=\"javascript:solo.showQuestions('" + theme + "')\">Questions</a></p>"
 					);
 				};
 
@@ -4193,6 +4221,7 @@
 				
 				// meanings
 				solo.showDetail = showDetail;
+				solo.showQuestions = showQuestions;
 				solo.showMeaningThemesList = showMeaningThemesList;
 				solo.showMeaningList = showMeaningList;
 				solo.showThemedMeaning = showThemedMeaning;
@@ -4578,7 +4607,7 @@
 					<li><i>Ursa Minor</i> by Thomas Davis</li>
 				</ul>
 
-				<p>version: 2021.11.13b tayruh</p>
+				<p>version: 2021.11.14 tayruh</p>
 			</div>
 		</div>
 	</body>
