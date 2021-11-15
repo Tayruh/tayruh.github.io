@@ -51,7 +51,7 @@
 
 						gen_dice[die] = gen_dice[die] || 0;
 						gen_dice[die] += amount;
-					}
+					};
 
 					var getGenesys = function(die) {
 						var roll = random(1, genesys[die].length - 1);
@@ -77,14 +77,30 @@
 						return result;
 					};
 
-					if (!/^([0-9]+)?D(G[ABCDFPS](\+([0-9]+)?[FSAT])*|([0-9]+|F)([+-][0-9]+)*)$/i.test(die)) return null;
+					var getVampire = function(die) {
+						var roll = random(1, 10);
 
-					var dice = die.toUpperCase().match(/^([0-9]+)?D([0-9]+|F|G[A-Z])(.*)$/i);
+						if (roll === 1 && die === "VH") result = "BF";
+						else if (roll < 6) result = "F";
+						else if (roll < 10) result = "S";
+						else if (die === "VH") result = "MC";
+						else result = "C";
+
+						vamp_dice[result] = vamp_dice[result] || 0;
+						vamp_dice[result] += 1;
+
+						return result;
+					}
+
+					if (!/^([0-9]+)?D(VH?|(?:G[ABCDFPS](\+([0-9]+)?[FSAT])*|([0-9]+|F)([+-][0-9]+)*))$/i.test(die)) return null;
+
+					var dice = die.toUpperCase().match(/^([0-9]+)?D([0-9]+|F|VH?|G[A-Z])(.*)$/i);
 					var number = parseInt(dice[1] || 1);
 					var size = dice[2];
 					var mods = dice[3];
 
 					var gen_dice = {};
+					var vamp_dice = {};
 
 					var genesys = {
 						"GB": ["B", "B", "S", "SA", "AA", "A"],
@@ -134,6 +150,7 @@
 					for (a = 0; a < number; ++a) {
 						add_total = true;
 						if (size === "F") roll = random(-1, 1);
+						else if (size === "V" || size === "VH") roll = getVampire(size);
 						else if (/G[ABCDFPS]/.test(size)) { roll = getGenesys(size); add_total = false; }
 						else roll = random(1, size);
 						if (add_total) total += roll;
@@ -142,7 +159,7 @@
 
 					if (Object.keys(gen_dice).length) combineGenMods(gen_dice);
 
-					return {size: size, rolls: rolls, mod: mod, total: total + mod, genesys: gen_dice};
+					return {size: size, rolls: rolls, mod: mod, total: total + mod, genesys: gen_dice, vampire: vamp_dice};
 				};
 
 				var rollDice = function(die) {
@@ -2748,7 +2765,12 @@
 					var genesys = {
 						"GB": "Boost", "GS": "Setback", "GA": "Ability", "GF": "Force",
 						"GD": "Difficulty", "GP": "Proficiency", "GC": "Challenge"
-					}
+					} 
+
+					var vampire = {
+						"S": "Success","F": "Failure", "BF": "Bestial Failure", 
+						"C": "Critical", "MC": "Messy Critical"
+					};
 
 					var a, roll, result, die_length;
 					for (a = 0; a < rolls.length; ++a) {
@@ -2761,9 +2783,13 @@
 							continue;
 						}
 
-						if (result.size in genesys) {
+						if (/G[ABCDFPS]/.test(result.size)) {
 							result.name = genesys[result.size];
 							result.html = genesys[result.size];
+						}
+						else if (/VH?/.test(result.size)) {
+							result.name = (/H/.test(result.size) ? "Hunger" : "Vampire");
+							result.html = (/H/.test(result.size) ? "Hunger" : "Vampire");
 						}
 						else {
 							result.name =  "D" + result.size;
@@ -2776,29 +2802,33 @@
 					}
 
 					var b;
-					var mod;
+					var mod = "";
 					var total = 0;
 					var output = [];
 					var gen_total = {};
-					var is_genesys, pad_length;
+					var vamp_total = {};
+					var is_genesys, is_vampire, pad_length;
 					var has_num = false;
 					for (a = 0; a < results.length; ++a) {
 						is_genesys = /G[ABCDFPS]/.test(results[a].size);
-						has_num = has_num || !is_genesys;
+						is_vampire = /VH?/.test(results[a].size);
+						has_num = has_num || !(is_genesys || is_vampire);
+						mod = "";
 
 						if (results[a].length === 1) {
 							output.push(results[a]);
 							continue;
 						}
 
+						// get mods
 						if (is_genesys && results[a].mod.length) mod = " + " + results[a].mod;
-						else {
+						else if (has_num) {
 							total += parseInt(results[a].total);
 							if (results[a].mod > 0) mod = " + " + results[a].mod;
 							else if (results[a].mod < 0) mod = " - " + Math.abs(results[a].mod);
-							else mod = "";
 						}
 
+						// collect results for each roll
 						if (is_genesys) {
 							if (Object.keys(results[a].genesys).length) {
 								roll = [];
@@ -2806,6 +2836,18 @@
 									roll.push("<b>" + results[a].genesys[b] + "</b> " + b);
 									if (b in gen_total) gen_total[b] += results[a].genesys[b];
 									else gen_total[b] = results[a].genesys[b];
+								}
+								roll = roll.join(", ");
+							}
+							else roll = "None";
+						}
+						else if (is_vampire) {
+							if (Object.keys(results[a].vampire).length) {
+								roll = [];
+								for (b in results[a].vampire) {
+									roll.push("<b>" + results[a].vampire[b] + "</b> " + vampire[b]);
+									if (b in vamp_total) vamp_total[b] += results[a].vampire[b];
+									else vamp_total[b] = results[a].vampire[b];
 								}
 								roll = roll.join(", ");
 							}
@@ -2819,7 +2861,12 @@
 					}
 
 					var totals = [];
+					var types = [];
+					var padding = 0;
+					
+					// combine genesys totals
 					if (Object.keys(gen_total).length) {
+						totals = [];
 						var success = (gen_total["Success"] || 0) - (gen_total["Failure"] || 0);
 						var advantage = (gen_total["Advantage"] || 0) - (gen_total["Threat"] || 0);
 
@@ -2835,13 +2882,44 @@
 							if (gen_total[a] === 0) continue;
 							totals.push("<b>" + gen_total[a] + "</b> " + a);
 						}
+						types.push("Genesys: " + totals.join("<br>         "));
+						padding = 2;
 					}
+					
+					// combined vampire totals
+					if (Object.keys(vamp_total).length) {
+						totals = [];
+						var failure = 0;
+						var success = 0;
+						var critical = 0;
+						var bestial = 0;
+						var messy = 0;
+						for (a in vamp_total) {
+							if (/F/.test(a)) failure += vamp_total[a];
+							if (/S/.test(a)) success += vamp_total[a];
+							if (/C/.test(a)) critical += vamp_total[a];
+							if (/B/.test(a)) bestial += vamp_total[a];
+							if (/M/.test(a)) messy += vamp_total[a];
+						}
 
-					if (total !== 0 || has_num) totals.unshift("<b>" + total + "</b>");
-					else if (!totals.length) totals.unshift("<b>None</b>");
+						success = (Math.floor(critical/2) * 4) + (critical % 2) + success;
+
+						if (!success) totals.push("Total Failure");
+						else totals.push("<b>" + success + "</b> Success");
+						
+						if (bestial) totals.push("Bestial Failure");
+						else if (critical > 1 && messy) totals.push("Messy Critical");
+						else if (critical > 1) totals.push("Critical");
+
+						types.push("Vampire: " + totals.join("<br>         "));
+						padding = 2;
+					}
+					
+					if (total !== 0 || has_num) types.unshift(" ".repeat(padding) + "Total: <b>" + total + "</b>");
+					else if (!types.length) types.unshift("Total: <b>None</b>");
 
 					$("#dice-rolls").innerHTML =
-						"<pre><code>" + output.join("<br>") + "<br><br>Total: " + totals.join("<br>       ") + "</code></pre>";
+						"<pre><code><p>" + output.join("<br>") + "</p><hr><p>" + types.join("</p><p>"); + "</p></code></pre>";
 				};
 
 				var showDiceRoller = function() {
@@ -4046,27 +4124,50 @@
 					display("<p><b>" + (name || type) + ":</b> " + getThemedMeaning(theme, modifier, type) + "</p>");
 				}
 				
+
+				var answers = {};
+
+				var showAnswer = function(id, question) {
+					var answer = document.querySelector("#answer-" + id + " .spoiler").innerHTML;
+					answers[id] = question + " " + answer;
+					$("#answer-" + id).innerHTML = answer;
+					$("#copy-text").innerHTML = Object.values(answers).join("\n");
+				};
+
 				var showQuestions = function(theme) {
-				    var text = "<div id='copy-text'>";
+					var addQuestion = function(question, answer) {
+						var question = "<tr><td><b>" + question + "</b></td><td id='answer-" + id + "'><span class='spoiler' " +
+							"onclick='solo.showAnswer(" + id + ", \"" + question + "\")'>" +
+							answer + "</span></td></tr>";
+
+						id += 1;
+						return question;
+					};
+
+					answers = {};
+
+					var id = 0;
+
+				    var text = "<table>";
 				    if (theme === "General") {
-				        text += "<p><b>Who?</b> " + getMeaning("Noun") + "</p>" +
-    				        "<p><b>What?</b> " + getMeaning("Noun") + "</p>" +
-    				        "<p><b>Where?</b> " + getMeaning("Noun") + "</p>" +
-    				        "<p><b>When?</b> " + getMeaning("Noun") + "</p>" +
-    				        "<p><b>Why?</b> " + getMeaning("Action") + "</p>" +
-    				        "<p><b>How?</b> " + getMeaning("Action") + "</p>";
+				        text += addQuestion("Who?", getMeaning("Noun")) +
+    				        addQuestion("What?", getMeaning("Noun")) +
+    				        addQuestion("Where?", getMeaning("Noun")) +
+    				        addQuestion("When?", getMeaning("Noun")) +
+    				        addQuestion("Why?", getMeaning("Action")) +
+    				        addQuestion("How?", getMeaning("Action"));
 				    }
 				    else {
-				        text += "<p><b>Who?</b> " + getThemedMeaning(theme, "Adjective", "Noun") + "</p>" +
-    				        "<p><b>What?</b> " + getThemedMeaning(theme, "Adjective", "Noun") + "</p>" +
-    				        "<p><b>Where?</b> " + getThemedMeaning(theme, "Adjective", "Noun") + "</p>" +
-    				        "<p><b>When?</b> " + getThemedMeaning(theme, "Adjective", "Noun") + "</p>" +
-    				        "<p><b>Why?</b> " + getThemedMeaning(theme, "Verb", "Noun") + "</p>" +
-    				        "<p><b>How?</b> " + getThemedMeaning(theme, "Verb", "Noun") + "</p>";
+				        text += addQuestion("Who?", getThemedMeaning(theme, "Adjective", "Noun")) +
+							addQuestion("What?", getThemedMeaning(theme, "Adjective", "Noun")) +
+							addQuestion("Where?", getThemedMeaning(theme, "Adjective", "Noun")) +
+    				        addQuestion("When?", getThemedMeaning(theme, "Adjective", "Noun")) +
+    				        addQuestion("Why?", getThemedMeaning(theme, "Verb", "Noun")) +
+    				        addQuestion("How?", getThemedMeaning(theme, "Verb", "Noun"));
 				    }
-				    text += "</div>";
+				    text += "</table>";
 				    
-				    if (navigator && navigator.clipboard) text += "<br><hr>" + getCopyButton("copy-text");
+				    if (navigator && navigator.clipboard) text += "<br><hr><div id='copy-text' class='hidden'></div>" + getCopyButton("copy-text");
 				    display(text);
 				};
 
@@ -4221,6 +4322,7 @@
 				
 				// meanings
 				solo.showDetail = showDetail;
+				solo.showAnswer = showAnswer;
 				solo.showQuestions = showQuestions;
 				solo.showMeaningThemesList = showMeaningThemesList;
 				solo.showMeaningList = showMeaningList;
@@ -4294,11 +4396,21 @@
 				width: 20em;
 			}
 
+			td { 
+				padding: 0.5em;
+			}
+
 			.hidden { display: none; }
 
 			.no { color: #f44336; }
 			.yes { color: #66bb6a; }
 			.exceptional { text-decoration: underline; }
+
+			.spoiler {
+				color: #333333;
+				background: #333333;
+			}
+			.spoiler:hover { cursor: pointer; }
 
 			#display p:first-child { margin-top: 0; }
 
@@ -4456,29 +4568,39 @@
 
 				<div id="dice-rolls">
 					<p>Example: <code>2D6-5+1,4DF+2,D10</code></p>
-					<p>
-						Standard: <code>1D6</code><br>
-						Fate/Fudge: <code>1DF</code><br>
+					<hr>
+					<p>Standard: <code>1D6</code></p>
+					<p>Fate/Fudge: <code>1DF</code></p>
 
-						<details><summary>Genesys/Star Wars</summary>
-						<p>Example: <code>3DGA+2T+S,DGP</code></p>
+					<details><summary>Vampire: The Masquerade</summary>
+						<p>Example: <code>4DV,2DVH</code></p>
 						<ul>
-							<li>Ability: <code>1DGA</code>
-							<li>Boost: <code>1DGB</code>
-							<li>Challenge: <code>1DGC</code>
-							<li>Difficulty: <code>1DGD</code>
-							<li>Proficiency: <code>1DGP</code>
-							<li>Setback: <code>1DGS</code>
-							<li>Force: <code>1DGF</code>
+							<li>Standard: <code>1DV</code>
+							<li>Hunger: <code>1DVH</code>
 						</ul>
-						<p>Modifiers:</p>
-						<ul>
-							<li>Success: <code>+1S</code></li>
-							<li>Failure: <code>+1F</code></li>
-							<li>Advantage: <code>+1A</code></li>
-							<li>Threat: <code>+1T</code></li>
-						</ul>
-						</details>
+						<p>No modifiers allowed.</p>
+					</details>
+					<br>
+
+					<details><summary>Genesys/Star Wars</summary>
+					<p>Example: <code>3DGA+2T+S,DGP</code></p>
+					<ul>
+						<li>Ability: <code>1DGA</code>
+						<li>Boost: <code>1DGB</code>
+						<li>Challenge: <code>1DGC</code>
+						<li>Difficulty: <code>1DGD</code>
+						<li>Proficiency: <code>1DGP</code>
+						<li>Setback: <code>1DGS</code>
+						<li>Force: <code>1DGF</code>
+					</ul>
+					<p>Modifiers:</p>
+					<ul>
+						<li>Success: <code>+1S</code></li>
+						<li>Failure: <code>+1F</code></li>
+						<li>Advantage: <code>+1A</code></li>
+						<li>Threat: <code>+1T</code></li>
+					</ul>
+					</details>
 				</div>
 			</div>
 
@@ -4607,7 +4729,7 @@
 					<li><i>Ursa Minor</i> by Thomas Davis</li>
 				</ul>
 
-				<p>version: 2021.11.14 tayruh</p>
+				<p>version: 2021.11.15 tayruh</p>
 			</div>
 		</div>
 	</body>
