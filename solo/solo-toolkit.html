@@ -231,10 +231,10 @@
 							function() { $("#copy-button").outerHTML = "<span id='copy-button'><b>Failed to copy!</b></span>"; }
 						);
 
-					setTimeout(function() { 
+					setTimeout(function() {
 						if ($("#copy-button") === null) return;
 
-						$("#copy-button").outerHTML = text; 
+						$("#copy-button").outerHTML = text;
 					}, 2000);
 				};
 
@@ -2765,10 +2765,10 @@
 					var genesys = {
 						"GB": "Boost", "GS": "Setback", "GA": "Ability", "GF": "Force",
 						"GD": "Difficulty", "GP": "Proficiency", "GC": "Challenge"
-					} 
+					}
 
 					var vampire = {
-						"S": "Success","F": "Failure", "BF": "Bestial Failure", 
+						"S": "Success","F": "Failure", "BF": "Bestial Failure",
 						"C": "Critical", "MC": "Messy Critical"
 					};
 
@@ -2863,7 +2863,7 @@
 					var totals = [];
 					var types = [];
 					var padding = 0;
-					
+
 					// combine genesys totals
 					if (Object.keys(gen_total).length) {
 						totals = [];
@@ -2885,7 +2885,7 @@
 						types.push("Genesys: " + totals.join("<br>         "));
 						padding = 2;
 					}
-					
+
 					// combined vampire totals
 					if (Object.keys(vamp_total).length) {
 						totals = [];
@@ -2906,7 +2906,7 @@
 
 						if (!success) totals.push("Total Failure");
 						else totals.push("<b>" + success + "</b> Success");
-						
+
 						if (bestial) totals.push("Bestial Failure");
 						else if (critical > 1 && messy) totals.push("Messy Critical");
 						else if (critical > 1) totals.push("Critical");
@@ -2914,7 +2914,7 @@
 						types.push("Vampire: " + totals.join("<br>         "));
 						padding = 2;
 					}
-					
+
 					if (total !== 0 || has_num) types.unshift(" ".repeat(padding) + "Total: <b>" + total + "</b>");
 					else if (!types.length) types.unshift("Total: <b>None</b>");
 
@@ -2940,7 +2940,7 @@
 				var cutupText = function(text, length) {
 					var line, index;
 					var cutup = [];
-					
+
 					var line_length = length || 25;
 
 					while (/\n/.test(text)) {
@@ -2959,14 +2959,14 @@
 
 					var first = text.substring(0, index);
 					var second = text.substring(index);
-					
+
 					// look for end of first word in second line
 					index = second.search(/[^a-zA-Z0-9'’_-]/);
 					if (index !== -1) {
 						first += second.substring(0, index);
 						second = second.substring(index);
 					}
-					
+
 					// if second line ends in a non-word character, add a space when combining
 					if (/([^a-zA-Z0-9'’_\- "“(\[{]|[^\s]["“])$/.test(second)) second += " ";
 
@@ -3007,17 +3007,17 @@
 					var count = "prompt" + (cutups.length > 1 ? "s" : "");
 					$("#cutup-button").innerHTML = "<p><b>Generated! (" + cutups.length + " " + count + ")</b></p>";
 
-					setTimeout(function() { 
+					setTimeout(function() {
 						if ($("#cutup-button") === null) return;
-							
-						$("#cutup-button").innerHTML = copy; 
+
+						$("#cutup-button").innerHTML = copy;
 					}, 2000);
 				};
 
 				var showCutupInput = function() {
 					display(
-						"<p><textarea id='cutup' spellcheck='false'>" + cutup_text + "</textarea></p>" + 
-						"<p>Prompt Length&nbsp;&nbsp;" + getOptions(null, "line-length", [15, 20, 25, 30, 35, 45], 25) + "</p>" + 
+						"<p><textarea id='cutup' spellcheck='false'>" + cutup_text + "</textarea></p>" +
+						"<p>Prompt Length&nbsp;&nbsp;" + getOptions(null, "line-length", [15, 20, 25, 30, 35, 45], 25) + "</p>" +
 						"<div id='cutup-button'><p><a href=\"javascript:solo.generateCutup()\">Generate</a></p></div>"
 					)
 				};
@@ -3089,12 +3089,12 @@
 					if (!count) $("#search-button").style.display = "none";
 					else $("#search-count").innerHTML = count;
 				};
-				
+
 				var showCutupSearchResult = function() {
 					var showError = function(error) {
 						var button = $("#search-button").innerHTML;
 						$("#search-button").innerHTML = error;
-						setTimeout(function() { 
+						setTimeout(function() {
 							if ($("#search-button") === null) return;
 							$("#search-button").innerHTML = button;
 						}, 2000);
@@ -3110,7 +3110,7 @@
 
 					current_prompts = [];
 					prompt_results = [];
-					
+
 					var a;
 					var regexp = new RegExp(text, "i");
 					for (a = 0; a < cutups.length; ++a) {
@@ -3123,13 +3123,13 @@
 					}
 
 					display(
-						"<div id='search-results'></div>" + 
+						"<div id='search-results'></div>" +
 						"<div id='search-button'><br><hr><p><a href=\"javascript:solo.showCutupSearchLine()\">Next Result (<span id='search-count'></span> remaining)</a></p></div>"
 					);
 
 					showCutupSearchLine();
 				}
-				
+
 				var showCutupSearch = function() {
 					current_prompts = [];
 
@@ -3140,7 +3140,7 @@
 					});
 					$("#search").focus();
 				};
-				
+
 				var showCutup = function() {
 					if (cutups.length < 2) {
 						display("<p><a href=\"javascript:solo.showCutupInput()\">Generate Cut Ups</a></p>");
@@ -3272,13 +3272,13 @@
 					var values = [-3,-2,-1,0,1,2,3];
 
 					display(
-						"<p>" + getOptions("First Flavor", "flavor-one-mod", values, 0) + "&nbsp;&nbsp;" + 
+						"<p>" + getOptions("First Flavor", "flavor-one-mod", values, 0) + "&nbsp;&nbsp;" +
 							getOptions(null, "flavor-one", engines["character"]["general"], "Answer") + "</p>" +
 
-						"<p>" + getOptions("Second Flavor", "flavor-two-mod", values, 0) + "&nbsp;&nbsp;" + 
+						"<p>" + getOptions("Second Flavor", "flavor-two-mod", values, 0) + "&nbsp;&nbsp;" +
 							getOptions(null, "flavor-two", engines["character"]["general"], "Motivation") + "</p>" +
 
-						"<p>" + getOptions("Third Flavor", "flavor-three-mod", values, 0) + "&nbsp;&nbsp;" + 
+						"<p>" + getOptions("Third Flavor", "flavor-three-mod", values, 0) + "&nbsp;&nbsp;" +
 							getOptions(null, "flavor-three", engines["character"]["general"], "Directness") + "</p>" +
 						"<p><a href='javascript:solo.showCharacterEngine()'>Check</a></p>"
 					);
@@ -3308,16 +3308,16 @@
 					var values = [-3,-2,-1,0,1,2,3];
 
 					display(
-						"<p>" + getOptions("Answer", "answer-mod", values, 0) + "&nbsp;&nbsp;" + 
+						"<p>" + getOptions("Answer", "answer-mod", values, 0) + "&nbsp;&nbsp;" +
 							getOptions(null, "answer", engines["story"]["answer"]) + "</p>" +
 
-						"<p>" + getOptions("Degree", "degree-mod", values, 0) + "&nbsp;&nbsp;" + 
+						"<p>" + getOptions("Degree", "degree-mod", values, 0) + "&nbsp;&nbsp;" +
 							getOptions(null, "degree", engines["story"]["degree"]) + "</p>" +
 
 						"<p>" + getOptions("Flavor", "flavor-mod", values, 0) + "&nbsp;&nbsp;" +
 							getOptions(null, "flavor", engines["story"]["flavor"]) + "</p>" +
 
-						"<p><a href='javascript:solo.showStoryEngine()'>Check</a></p>" 
+						"<p><a href='javascript:solo.showStoryEngine()'>Check</a></p>"
 					);
 				}
 
@@ -3361,7 +3361,7 @@
 					var roll1 = rollDice("1D6");
 					var roll2 = rollDice("1D6");
 					var roll3 = rollDice("1D6");
-					
+
 					var doubles = roll1 + "" + roll2;
 
 					roll1 += parseInt($("#straight-mod").value);
@@ -3383,7 +3383,7 @@
 					var values = [-3,-2,-1,0,1,2,3];
 
 					display(
-						"<p>" + getOptions("Straight Answer", "straight-mod", values, 0) + "&nbsp;&nbsp;" + 
+						"<p>" + getOptions("Straight Answer", "straight-mod", values, 0) + "&nbsp;&nbsp;" +
 							getOptions(null, "straight", engines["world"]["straight"]) + "</p>" +
 
 						"<p>" + getOptions("Depth", "depth-mod", values, 0) + "&nbsp;&nbsp;" + "</p>" +
@@ -3539,14 +3539,14 @@
 							"<p><a href='javascript:solo.showMysteryEngine(\"Clues\")'>Clues</a></p>";
 					}
 					else if (type === "Direction") {
-						result = 
+						result =
 							"<p>" + getOptions("Trail", "trail-mod", values, 0) + "</p>" +
 							"<p>" + getOptions("Time", "time-mod", values, 0) + "</p>" +
 							"<p>" + getOptions("Favorability", "favor-mod", values, 0) + "</p>" +
 							"<p><a href='javascript:solo.showMysteryEngine(\"Direction\")'>Check</a></p>";
 					}
 					else if (type === "Clue") {
-						result = 
+						result =
 							"<p>" + getOptions("Evidence", "evidence-mod", values, 0) + "</p>" +
 							"<p>" + getOptions("Utility", "utility-mod", values, 0) + "</p>" +
 							"<p>" + getOptions("Leads", "leads-mod", values, 0) + "</p>" +
@@ -3873,7 +3873,7 @@
 					);
 				};
 
-				
+
 				///////////////////////////////////////////////////////////////////
 
 				var showBackstory = function() {
@@ -4113,62 +4113,52 @@
 					);
 				};
 
-                var getThemedMeaning = function(theme, modifier, type) {
-                    var first = randomItem(themed_meanings[theme][modifier]);
+				var getThemedMeaning = function(theme, modifier, type) {
+					var first = randomItem(themed_meanings[theme][modifier]);
 					var second = randomItem(themed_meanings[theme][type]);
-					
-                    return upperCase(first) + " " + upperCase(second);
-                };
+
+					return upperCase(first) + " " + upperCase(second);
+				};
 
 				var showThemedMeaning = function(theme, modifier, type, name) {
 					display("<p><b>" + (name || type) + ":</b> " + getThemedMeaning(theme, modifier, type) + "</p>");
 				}
-				
+
 
 				var answers = {};
 
-				var showAnswer = function(id, question) {
-					var answer = document.querySelector("#answer-" + id + " .spoiler").innerHTML;
+				var getAnswer = function(theme, question) {
+					if (theme === "General") {
+						if (question in list("Who?", "What?", "Where?", "When?")) return getMeaning("Noun");
+						else return getMeaning("Action");
+					}
+					else {
+						if (question in list("Who?", "What?", "Where?", "When?")) return getThemedMeaning(theme, "Adjective", "Noun");
+						else return getThemedMeaning(theme, "Verb", "Noun");
+					}
+				}
+
+				var showAnswer = function(id, theme, question) {
+					var answer = getAnswer(theme, question);
 					answers[id] = question + " " + answer;
-					$("#answer-" + id).innerHTML = answer;
+					$("#answer-" + id).innerHTML = "<span class='answer'>" + answer + "</span>";
 					$("#copy-text").innerHTML = Object.values(answers).join("\n");
 				};
 
 				var showQuestions = function(theme) {
-					var addQuestion = function(question, answer) {
-						var question = "<tr><td><b>" + question + "</b></td><td id='answer-" + id + "'><span class='spoiler' " +
-							"onclick='solo.showAnswer(" + id + ", \"" + question + "\")'>" +
-							answer + "</span></td></tr>";
+					var a = 0;
+					var questions = ["Who?", "What?", "Where?", "When?", "Why?", "How?"];
 
-						id += 1;
-						return question;
-					};
+					var text = "<table>";
+					for (a = 0; a < questions.length; ++a) {
+						text += "<tr><td><b>" + questions[a] + "</b></td>" +
+							"<td id='answer-" + a + "' onclick='solo.showAnswer(" + a + ", \"" + theme + "\", \"" + questions[a] + "\")'>" +
+							"<span class='spoiler answer'>click to reveal</span></td></tr>";
+					}
+					text += "</table>";
 
-					answers = {};
-
-					var id = 0;
-
-				    var text = "<table>";
-				    if (theme === "General") {
-				        text += addQuestion("Who?", getMeaning("Noun")) +
-    				        addQuestion("What?", getMeaning("Noun")) +
-    				        addQuestion("Where?", getMeaning("Noun")) +
-    				        addQuestion("When?", getMeaning("Noun")) +
-    				        addQuestion("Why?", getMeaning("Action")) +
-    				        addQuestion("How?", getMeaning("Action"));
-				    }
-				    else {
-				        text += addQuestion("Who?", getThemedMeaning(theme, "Adjective", "Noun")) +
-							addQuestion("What?", getThemedMeaning(theme, "Adjective", "Noun")) +
-							addQuestion("Where?", getThemedMeaning(theme, "Adjective", "Noun")) +
-    				        addQuestion("When?", getThemedMeaning(theme, "Adjective", "Noun")) +
-    				        addQuestion("Why?", getThemedMeaning(theme, "Verb", "Noun")) +
-    				        addQuestion("How?", getThemedMeaning(theme, "Verb", "Noun"));
-				    }
-				    text += "</table>";
-				    
-				    if (navigator && navigator.clipboard) text += "<br><hr><div id='copy-text' class='hidden'></div>" + getCopyButton("copy-text");
-				    display(text);
+					if (navigator && navigator.clipboard) text += "<br><hr><div id='copy-text' class='hidden'></div>" + getCopyButton("copy-text");
+					display(text);
 				};
 
 				var showThemedMeaningsList = function(theme) {
@@ -4272,7 +4262,7 @@
 				solo.showCutupSearch = showCutupSearch;
 				solo.showCutup = showCutup;
 
-				
+
 				// engines
 				solo.showActionEngine = showActionEngine;
 				solo.showActionEngineList = showActionEngineList;
@@ -4288,7 +4278,7 @@
 				solo.showMysteryEngine = showMysteryEngine;
 				solo.showMysteryEngineSetting = showMysteryEngineSetting;
 				solo.showMysteryEngineList = showMysteryEngineList;
-				
+
 				// events
 				solo.showEvent = showEvent;
 				solo.showAdventureItem = showAdventureItem;
@@ -4302,7 +4292,7 @@
 				solo.showDisposition = showDisposition;
 				solo.showBehaviorAction = showBehaviorAction;
 				solo.showBehavior = showBehavior;
-				
+
 				// npc elementss
 				solo.showNPC = showNPC;
 				solo.showSpecialTrait = showSpecialTrait;
@@ -4311,7 +4301,7 @@
 				solo.showStatisticList = showStatisticList;
 				solo.showStatistic = showStatistic;
 				solo.showBackstory = showBackstory;
-				
+
 				// locations
 				solo.showLocationElement = showLocationElement;
 				solo.showWeather = showWeather;
@@ -4319,7 +4309,7 @@
 				solo.showMysteryElement = showMysteryElement;
 				solo.showMysteryElementList = showMysteryElementList;
 				solo.showMeaning = showMeaning;
-				
+
 				// meanings
 				solo.showDetail = showDetail;
 				solo.showAnswer = showAnswer;
@@ -4396,7 +4386,7 @@
 				width: 20em;
 			}
 
-			td { 
+			td {
 				padding: 0.5em;
 			}
 
@@ -4410,7 +4400,7 @@
 				color: #333333;
 				background: #333333;
 			}
-			.spoiler:hover { cursor: pointer; }
+			.answer:hover { cursor: pointer; }
 
 			#display p:first-child { margin-top: 0; }
 
@@ -4551,7 +4541,7 @@
 								<p title="Querent"><a href="javascript:solo.showTarotList()">Tarot Reading</a></p>
 								</details>
 								<hr>
-								
+
 								<a href="javascript:solo.showCredits()">Credits</a>
 							</div>
 						</td><td>
@@ -4615,7 +4605,7 @@
 					<p>Search terms are also case insensitive, and leading and trailing spaces are stripped.</p>
 				</details>
 			</div>
-			
+
 			<div id="alice">
 				Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice
 				she had peeped into the book her sister was
@@ -4700,7 +4690,7 @@
 			</div>
 
 			<div id="credits">
-				<p>This toolkit is designed to ease the act of rolling against oracles in popular solo roleplaying engines. It is 
+				<p>This toolkit is designed to ease the act of rolling against oracles in popular solo roleplaying engines. It is
 					not designed to replace those engines, and as such absolutely no instruction on how to use these engines is provided.
 					Purchasing the accompanying book is required to make full use of these oracles.</p>
 
@@ -4729,7 +4719,7 @@
 					<li><i>Ursa Minor</i> by Thomas Davis</li>
 				</ul>
 
-				<p>version: 2021.11.15 tayruh</p>
+				<p>version: 2021.11.16 tayruh</p>
 			</div>
 		</div>
 	</body>
