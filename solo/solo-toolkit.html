@@ -797,6 +797,88 @@
 					}
 				}
 
+
+				var PE_tags = {
+					"Agenda": {
+						"True Face": "Loves secrets and dramatic reveals; good or bad, himself or someone else.",
+						"Inept": "Chaotic, bored, and not paying attention. Will try to assassinate anyone who might have good loot or for laughs.",
+						"Flashback": "All about backstory and character development, but focused on her own character and pet NPCs.",
+						"Ignoble": "Cares about keeping his character intact and about amassing something of value – name it.",
+						"Weak": "Craves new experiences, escapism. Not chaotic but doesn’t think about her allies before acting on temptation.",
+						"Focused": "Wants to play the game he signed up for, do what’s on his character sheet, and avoid too much of any one game aspect.",
+						"Skilled": "Plays skilled or flexible characters; wants to show that off. Moo: “if all you’ve got is a hammer, everything looks like a nail”.",
+						"Noble": "Wants to do the right thing and sacrifice herself for the greater good, preferably while being recognized and suffering for it.",
+						"On Point": "Brings his best game. Always pushes the story and adventure towards a dramatic and satisfying conclusion"
+					},
+					"Focus": [
+						"Fame", "Wealth", "Knowledge", "Magic", "Do Good", "Mayhem", "Backstory", "Romance", "Sex", "Explore", "Conflict", 
+						"Prove Self", "Rivalry", "Item", "Dominate", "Crush Foe", "Uplift Ally", "Infamy"
+					],
+					"Personality": [
+						"Chatty", "Ruthless", "Casual", "Cheerful", "Indecisive", "Assertive", "Asocial", "Blunt", "Timid", "Rigid", "Invested", "Argumentative", 
+						"Gambler", "Greedy", "Turtle", "Methodical", "Whimsical", "Mercurial", "Needy", "Asexual", "Curious", "Bully", "Lecherous", "Peacemaker", 
+						"Smart", "Clumsy", "Flaky", "Restless", "Flamboyant", "Charismatic", "Creative", "Dramatic", "Thespian", "Trouble", "Leader", "Forgetful",
+						"Demanding", "Stubborn", "Dedicated", "Vengeful", "Democratic", "Competitive", "Kind", "Romantic", "Puns", "Determined", "Arrogant", "Hidebound", 
+						"Sensible", "Free", "Flighty", "Callous", "Avaricious", "Conventional", "Hoarder", "Spendthri", "Fighter", "Depressed", "Manic", "Quixotic", 
+						"Attentive", "Precise", "Inattentive", "Eidetic", "Careless", "Careful", "Empathetic", "Chummy", "Louche", "Daredevil", "Sensitive", "Amoral"
+					],
+					"Seed A": ["Seek", "Fight", "Question", "Help", "Hinder", "Destroy", "Change", "Stop", "Pursue"],
+					"Seed B": ["Key", "Danger", "Darkness", "Emotion", "Reward", "Passion", "History", "Person", "Goal"],
+					"Conflict": ["combat", "argument", "mutiny", "theft", "challenge", "social"],
+					"Cause": ["methods", "resentment", "romance", "wealth", "principle", "mistake"],
+					"Stake": ["score", "points", "first blood", "humiliation", "submission", "domination", "death or worse"],
+					"Encounter": [
+						"bandits; they look worried", "a noble, humbled, asks for aid", "a lost child amid wolves", "huddled, grieving refugees", "a light, just up ahead", "an unexpected note",
+						"something is missing", "the sky looks strange", "temptation out of the blue", "hunger encircles you", "a hunter, at loose ends", "a royal in disguise, ambushed"
+					],
+					"Reaction": {
+						"Hostile": ["sass", "threats", "belligerence", "fear", "disgust", "rage"],
+						"Neutral": ["expectation", "interest", "disdain", "inquisitive", "calculating", "confusion"],
+						"Friendly": ["fascination", "peaceful", "curious", "admiration", "glee"]
+					},
+					"Tone": ["cold", "hot", "brooding", "aggressive", "cautious", "bold", "sad", "joyful", "serious", "jolly", "dark", "light", "grim", "manic", "caustic", "genuine", "deceitful", "true"],
+					"Action": ["exclude", "resist", "demand", "hide", "pursue", "challenge", "obsess", "endure", "attack", "face", "veil", "betray", "deny", "deceive", "reveal", "enjoy", "flee", "crush"],
+					"Theme": ["strange", "brutal", "whimsical", "sorrowful", "double-edged", "hostile"],
+					"Danger": ["violence", "cessation", "surrender", "loss", "emotion", "end"],
+					"Key Theme": [
+						"capture", "revenge", "water", "want", "envy", "self-interest", "ice", "hatred", "jealousy", "love", "hope", "despair", "rage", "fire", 
+						"fear", "time", "history", "dominance", "attack", "defense", "magic", "resist", "pain", "malice", "scheme", "honor", "duty", "betrayal", 
+						"mistake", "obsession", "debt", "vice", "future", "power", "desire", "machinery"
+					],
+					"Event": ["justice", "ambush", "trap", "betrayal", "pride", "challenge", "speech", "brawl", "declare", "bathe", "respite", "trade", "meal", "battle", "accident", "choice", "puzzle", "call out"],
+					"Actor": ["healer", "assassin", "peasant", "noble", "bandit", "guard", "trader", "crafter", "wizard", "soldier", "leader", "outsider"],
+					"Target": ["PC", "party", "ally", "gear", "asset", "ideal"],
+					"Metaphor": ["vampire", "werewolf", "dragon", "phoenix", "fae", "horde"],
+					"GM Move": ["expose a weakness", "reveal a danger", "attempt a reaction", "introduce npc", "take it away", "inflict hard"],
+					"Player Move": {
+						2: ["True Face", "PC acts out of character in a negative way; a secret revealed."],
+						3: ["Inept", "Draw a new Seed and interpret it negatively as the PC’s action."],
+						4: ["Flashback", "Something from the PC’s backstory negatively influences their action."],
+						5: ["Ignoble", "PC indulges or expresses a vice or ignoble facet of their character."],
+						6: ["Weak", "PC takes the easiest and safest possible option for them."],
+						7: ["Focused", "PC acts in accordance with their current desire or to preserve their well-being."],
+						8: ["Skilled", "PC uses an aspect they’re comfortable with (a skill, profession, tactic, or similar)."],
+						9: ["Noble", "PC expresses a noble facet of their character."],
+						10: ["Flashback", "Something from the PC’s backstory positively influences their action."],
+						11: ["On Point", "Draw a new Seed. Play any Seed; interpret it positively as the PC’s action."],
+						12: ["True Face", "PC acts out of character in a positive way; a secret revealed."]
+					},
+					"Meta": {
+						"Phone": "if the Move dice match, the result is “Inept”",
+						"Long Day": "minor penalty (-1) to all rolls",
+						"Tired": "-1 to all Move and Oracle rolls",
+						"Grumpy": "adjust all Move rolls one step lower",
+						"Unlucky": "-1 to all Oracle rolls that affect her directly",
+						"Vendetta": "if Move dice match, a minor Intraparty Conflict, two 1s, major.",
+						"Engaged": "adjust all Move rolls one step higher",
+						"Invested": "if the Move dice match, you pick the result",
+						"Late": "under direct GM control until any two dice on a roll match",
+						"Lucky": "+1 to all Oracle rolls that affect him directly",
+						"Synced": "pick another Player; move rolls towards that Player’s Agenda",
+						"In Zone": "if Move dice match, the result is “On Point”"
+					}
+				};
+
 				var action_cards = {
 					"event": [
 						"R: When your action fails, the action instead succeeds with this action.",
@@ -3567,6 +3649,147 @@
 					);
 				};
 
+				///////////////////////////////////////////////////////////////////
+
+				var getEmulatorMeaning = function(type, show_roll) {
+					var result, roll, orig_roll, keys;
+
+					if (type === "Oracle") {
+						roll = rollDice("2D6") + parseInt($("#emu-mod").value);
+
+						if (roll < 7) result = "You don’t get what you want.";
+						else result = "You get what you want.";
+						if (roll < 10) result += "</p><p>Trigger a minor Intraparty Conflict; determine two or more potential Player actions and interpret them in opposition.";
+						return (show_roll ? "(" + roll + ") " : "") + result;
+					}
+
+					if (type === "Player Move") {
+						roll = rollDice("2D6") + parseInt($("#emu-mod").value);
+						result = getRolledItem(roll, PE_tags["Player Move"]);
+						return (show_roll ? "(" + roll + ") " : "") + result[0] + "</p><p>" + result[1];
+					}
+
+					if (type === "Seed") return randomItem(PE_tags["Seed A"]) + " " + randomItem(PE_tags["Seed B"]);
+
+					if (type === "Agenda") {
+						keys = Object.keys(PE_tags["Agenda"]);
+						orig_roll = random(0, keys.length - 1) + parseInt($("#emu-mod").value);
+						roll = Math.min(Math.max(orig_roll, 0), keys.length - 1);
+						return (show_roll ? "(" + orig_roll + ") " : "") + [keys[roll]] + "</p><p>" + PE_tags["Agenda"][keys[roll]];
+					}
+					
+					if (type === "Meta") {
+						keys = Object.keys(PE_tags["Meta"]);
+						orig_roll = random(0, keys.length - 1) + parseInt($("#emu-mod").value);
+						roll = Math.min(Math.max(orig_roll, 0), keys.length - 1);
+						return (show_roll ? "(" + orig_roll + ") " : "") + [keys[roll]] + "</p><p>" + PE_tags["Meta"][keys[roll]];
+					}
+					
+					if (/Reaction/.test(type)) {
+						type = type.replace(/Reaction: (.+)/, "$1");
+						roll = rollDice("1D6") + parseInt($("#emu-mod").value);
+						if (type === "Random") type = getRolledItem(roll, {1: "Hostile", 5: "Neutral", 6: "Friendly"});
+						return (show_roll ? "(" + roll + ") " : "") + randomItem(PE_tags["Reaction"][type]);
+					}
+
+					return randomItem(PE_tags[type]);
+				};
+
+				var showEmulatorMeaning = function(type) {
+					var getMulitple = function(type, count) {
+						var keys = [];
+						var item;
+						
+						do {
+							item = getEmulatorMeaning(type);
+							if (keys.indexOf(item) !== -1) continue;
+							keys.push(item);
+						}
+						while (keys.length < count);
+
+						return keys;
+					}
+
+					var output, theme;
+
+					if (type === "Move List") {
+						display($("#player-moves").innerHTML);
+						return;
+					}
+
+					if (type === "Check") type = "Oracle";
+
+					if (type === "Player/NPC") {
+						temp = 
+						output = "<div id='copy-text'><p><b>Agenda:</b> " + getEmulatorMeaning("Agenda") + "</p>";
+						output += "<p><b>Personality:</b> " + getMulitple("Personality", random(1, 3)).join(", ") + "</p>";
+						output += "<p><b>Focus:</b> " + getMulitple("Focus", 2).join(", ") + "</p>";
+						output += "<p><b>Seeds:</b> " + getMulitple("Seed", 3).join(", ") + "</p></div>";
+						if (navigator && navigator.clipboard) output += "<br><hr>" + getCopyButton("copy-text");
+						display(output);
+						return;
+					}
+					else if (type === "Job") {
+						output = getEmulatorMeaning("Personality");
+						output += " " + getEmulatorMeaning("Actor");
+						output += " " + getEmulatorMeaning("Action");
+						output += " against a " + getEmulatorMeaning("Personality");
+						output += " " + getEmulatorMeaning("Actor");
+					}
+					else if (type === "Attitude") {
+						output = getEmulatorMeaning("Tone");
+						output += " " + getEmulatorMeaning("Reaction: Random");
+						output += " " + getEmulatorMeaning("Actor");
+					}
+					else if (type === "Major Intraparty Conflict") {
+						output = "<p><b>Conflict:</b> " + getEmulatorMeaning("Conflict") + "</p>";
+						output += "<p><b>Cause:</b> " + getEmulatorMeaning("Cause") + "</p>";
+						output += "<p><b>Stakes:</b> " + getEmulatorMeaning("Stake") + "</p>";
+						display(output);
+						return;
+					}
+					else if (type === "Set Scene") {
+						output = getEmulatorMeaning("Conflict");
+						output += " or " + getEmulatorMeaning("Event");
+						output += ": " + getMulitple("Key Theme", 3).join(", ");
+					}
+					else if (type === "Get Encounter") {
+						output = getEmulatorMeaning("Encounter");
+						output += ": " + getEmulatorMeaning("Theme");
+						output += " " + getEmulatorMeaning("Danger");
+					}
+					else output = getEmulatorMeaning(type, true);
+
+					if (/Reaction/.test(type)) type = "Reaction";
+
+					display("<p><b>" + type + ":</b> " + output + "</p>");
+				}
+
+				var showEmulatorList = function(type) {
+					var writeLink = function(link) {
+						return "<p title='Player Emulator with Tags'><a href=\"javascript:solo.showEmulatorMeaning('" + link + "')\">" + link + "</a></p>";
+					};
+
+					var a, list;
+					var values = [-3,-2,-1,0,1,2,3];
+					var output = "";
+
+					if (type === "Player") {
+						list = ["Focus", "Personality", "Player Move", "Seed", "Meta", "Reaction: Random", "Reaction: Hostile", "Reaction: Neutral", "Reaction: Friendly", "Tone"];
+					}
+					else if (type === "Story") list = ["Conflict", "Cause", "Stake", "Encounter", "Action", "Theme", "Danger", "Key Theme", "Event", "Actor", "Target", "Metaphor", "GM Move"];
+					else if (type === "Recipe") list = ["Player/NPC", "Job", "Attitude", "Major Intraparty Conflict", "Set Scene", "Get Encounter"];
+					else if (type === "Oracle") list = ["Check"];
+					
+					if (type !== "Story") output = "<p>Modifier&nbsp;&nbsp;" + getOptions(null, "emu-mod", values, 0) + "</p>";
+
+					for (a = 0; a < list.length; ++a) {
+						output += writeLink(list[a]);
+					}
+
+					display(output);
+				};
+
 
 				///////////////////////////////////////////////////////////////////
 
@@ -4264,7 +4487,6 @@
 				solo.showCutupSearch = showCutupSearch;
 				solo.showCutup = showCutup;
 
-
 				// engines
 				solo.showActionEngine = showActionEngine;
 				solo.showActionEngineList = showActionEngineList;
@@ -4280,6 +4502,10 @@
 				solo.showMysteryEngine = showMysteryEngine;
 				solo.showMysteryEngineSetting = showMysteryEngineSetting;
 				solo.showMysteryEngineList = showMysteryEngineList;
+
+				// emulator
+				solo.showEmulatorMeaning = showEmulatorMeaning;
+				solo.showEmulatorList = showEmulatorList;
 
 				// events
 				solo.showEvent = showEvent;
@@ -4494,6 +4720,15 @@
 								</details>
 								<hr>
 
+								<details><summary><b>Emulator</b></summary>
+								<p title="Player Emulator (with Tags)"><a href="javascript:solo.showEmulatorList('Oracle')">Oracle</a></p>
+								<p title="Player Emulator (with Tags)"><a href="javascript:solo.showEmulatorList('Player')">Player</a></p>
+								<p title="Player Emulator (with Tags)"><a href="javascript:solo.showEmulatorList('Story')">Story</a></p>
+								<p title="Player Emulator (with Tags)"><a href="javascript:solo.showEmulatorList('Recipe')">Recipe</a></p>
+								<p title="Player Emulator (with Tags)"><a href="javascript:solo.showEmulatorMeaning('Move List')">Move List</a></p>
+								</details>
+								<hr>
+
 								<details><summary><b>NPC Actions</b></summary>
 								<p title="Mythic Magazine"><a href="javascript:solo.showDisposition()">NPC Disposition</a></p>
 								<p title="Mythic Magazine"><a href="javascript:solo.showBehavior()">Behavior Check</a></p>
@@ -4564,16 +4799,6 @@
 					<p>Standard: <code>1D6</code></p>
 					<p>Fate/Fudge: <code>1DF</code></p>
 
-					<details><summary>Vampire: The Masquerade</summary>
-						<p>Example: <code>4DV,2DVH</code></p>
-						<ul>
-							<li>Standard: <code>1DV</code>
-							<li>Hunger: <code>1DVH</code>
-						</ul>
-						<p>No modifiers allowed.</p>
-					</details>
-					<br>
-
 					<details><summary>Genesys/Star Wars</summary>
 					<p>Example: <code>3DGA+2T+S,DGP</code></p>
 					<ul>
@@ -4593,6 +4818,16 @@
 						<li>Threat: <code>+1T</code></li>
 					</ul>
 					</details>
+					<br>
+
+					<details><summary>Vampire: The Masquerade</summary>
+						<p>Example: <code>4DV,2DVH</code></p>
+						<ul>
+							<li>Standard: <code>1DV</code>
+							<li>Hunger: <code>1DVH</code>
+						</ul>
+						<p>No modifiers allowed.</p>
+					</details>
 				</div>
 			</div>
 
@@ -4606,6 +4841,20 @@
 					<ul><li><i>Who?</i> becomes <code>Who\?</code></li><li><i>$20.00</i> becomes <code>\$20\.00</code><li><i>Bill+Ted</i> becomes <code>Bill\+Ted</code></li></ul>
 					<p>Search terms are also case insensitive, and leading and trailing spaces are stripped.</p>
 				</details>
+			</div>
+
+			<div id="player-moves">
+				<details><summary>2: <b>True Face</b></summary><p>PC acts out of character in a negative way; a secret revealed.</p></details><br>
+				<details><summary>3: <b>Inept</b></summary><p>Draw a new Seed and interpret it negatively as the PC’s action.</p></details><br>
+				<details><summary>4: <b>Flashback</b></summary><p>Something from the PC’s backstory negatively influences their action.</p></details><br>
+				<details><summary>5: <b>Ignoble</b></summary><p>PC indulges or expresses a vice or ignoble facet of their character.</p></details><br>
+				<details><summary>6: <b>Weak</b></summary><p>PC takes the easiest and safest possible option for them.</p></details><br>
+				<details><summary>7: <b>Focused</b></summary><p>PC acts in accordance with their current desire or to preserve their well-being.</p></details><br>
+				<details><summary>8: <b>Skilled</b></summary><p>PC uses an aspect they’re comfortable with (a skill, profession, tactic, or similar).</p></details><br>
+				<details><summary>9: <b>Noble</b></summary><p>PC expresses a noble facet of their character.</p></details><br>
+				<details><summary>10: <b>Flashback</b></summary><p>Something from the PC’s backstory positively influences their action.</p></details><br>
+				<details><summary>11: <b>On Point</b></summary><p>Draw a new Seed. Play any Seed; interpret it positively as the PC’s action.</p></details><br>
+				<details><summary>12: <b>True Face</b></summary><p>PC acts out of character in a positive way; a secret revealed.</p></details>
 			</div>
 
 			<div id="alice">
@@ -4704,6 +4953,7 @@
 					<li><i>Motif Story Engine</i> by Thought Police</li>
 					<li><i>Motif World Engine</i> by Thought Police</li>
 					<li><i>Mythic Game Master Emulator</i> by WordMill Games</li>
+					<li><i>Player Emulator (with Tags) by katamoiran rpgs</i></li>
 					<li><i>Mythic Variations</i> by WordMill Games</li>
 					<li><i>Mythic Variations 2</i> by WordMill Games</li>
 					<li><i>Adventure Crafter</i> by WordMill Games</li>
@@ -4721,7 +4971,7 @@
 					<li><i>Ursa Minor</i> by Thomas Davis</li>
 				</ul>
 
-				<p>version: 2021.11.16 tayruh</p>
+				<p>version: 2021.11.19 tayruh</p>
 			</div>
 		</div>
 	</body>
