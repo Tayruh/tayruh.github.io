@@ -3004,6 +3004,13 @@
 						"<pre><code><p>" + output.join("<br>") + "</p><hr><p>" + types.join("</p><p>"); + "</p></code></pre>";
 				};
 
+				var addDice = function(dice) {
+					var text = $("#dice").value.trimEnd();
+
+					if (text.trim().length) text += ",";
+					$("#dice").value = text + dice;
+				};
+				
 				var showDiceRoller = function() {
 					display($("#dice-roller").innerHTML);
 
@@ -4475,6 +4482,7 @@
 				solo.showDivinationResult = showDivinationResult;
 				solo.showDivination = showDivination;
 				solo.showDice = showDice;
+				solo.addDice = addDice;
 				solo.showDiceRoller = showDiceRoller;
 				solo.showCard = showCard;
 				solo.generateCutup = generateCutup;
@@ -4796,8 +4804,10 @@
 				<div id="dice-rolls">
 					<p>Example: <code>2D6-5+1,4DF+2,D10</code></p>
 					<hr>
-					<p>Standard: <code>1D6</code></p>
-					<p>Fate/Fudge: <code>1DF</code></p>
+					<p><a href="javascript:solo.addDice('D6')">D6</a> • <a href="javascript:solo.addDice('2D6')">2D6</a> • <a href="javascript:solo.addDice('3D6')">3D6</a></p>
+					<p><a href="javascript:solo.addDice('D8')">D8</a> • <a href="javascript:solo.addDice('D10')">D10</a> • <a href="javascript:solo.addDice('D20')">D20</a> • <a href="javascript:solo.addDice('D100')">D100</a></p>
+					<p><a href="javascript:solo.addDice('D10,D10,D6')">Ironsworn</a> • <a href="javascript:solo.addDice('4DF')">FATE</a></p>
+					<br>
 
 					<details><summary>Genesys/Star Wars</summary>
 					<p>Example: <code>3DGA+2T+S,DGP</code></p>
@@ -4971,7 +4981,7 @@
 					<li><i>Ursa Minor</i> by Thomas Davis</li>
 				</ul>
 
-				<p>version: 2021.11.19 tayruh</p>
+				<p>version: 2021.11.19b tayruh</p>
 			</div>
 		</div>
 	</body>
