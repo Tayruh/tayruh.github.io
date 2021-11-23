@@ -238,6 +238,54 @@
 					}, 2000);
 				};
 
+				var fadeIn = function(id, delay, text) {
+					var getElement = function(id) {
+						return (typeof id === 'string' || id instanceof String) ? document.getElementById(id.replace(/^\s*#?\s*([a-zA-Z_-]+)\s*$/, "$1")) : id;
+					};
+
+					var addClass = function(id, classname) {
+						var el = getElement(id);
+
+						var classes = el.className.split(" ");
+						if (classes.indexOf(classname) === -1) classes.push(classname);
+
+						el.className = classes.join(" ").trim();
+					};
+
+					var removeClass = function(id, classname) {
+						var el = getElement(id);
+
+						var classes = el.className.split(" ");
+						var index = classes.indexOf(classname);
+						
+						if (index !== -1) classes.splice(index, 1);
+						
+						el.className = classes.join(" ").trim();
+					};
+
+					var el;
+					var default_delay = 20.0;
+
+					if (!id) {
+						el = document.createElement("span");
+						el.className = "hide";
+						el.innerHTML = text;
+
+						setTimeout(function() {
+							removeClass(el, "hide");
+						}, default_delay + delay);
+
+						return el.outerHTML;
+					}
+
+					el = getElement(id);
+
+					addClass(el, "hide");
+					el.innerHTML = (text === undefined) ? el.innerHTML : text;
+					setTimeout(function() {
+						removeClass(el, "hide");
+					}, default_delay + delay);
+				};
 
 				///////////////////////////////////////////////////////////////////
 
@@ -3000,8 +3048,8 @@
 					if (total !== 0 || has_num) types.unshift(" ".repeat(padding) + "Total: <b>" + total + "</b>");
 					else if (!types.length) types.unshift("Total: <b>None</b>");
 
-					$("#dice-rolls").innerHTML =
-						"<pre><code><p>" + output.join("<br>") + "</p><hr><p>" + types.join("</p><p>"); + "</p></code></pre>";
+					$("#dice-rolls").innerHTML = "";
+					fadeIn("#dice-rolls", 0, "<pre><code><p>" + output.join("<br>") + "</p><hr><p>" + types.join("</p><p>") + "</p></code></pre>");
 				};
 
 				var addDice = function(dice) {
@@ -3009,6 +3057,8 @@
 
 					if (text.trim().length) text += ",";
 					$("#dice").value = text + dice;
+
+					$("#dice").focus();
 				};
 				
 				var showDiceRoller = function() {
@@ -4664,6 +4714,16 @@
 
 			#display td:last-of-type > div { margin-left: 0; }
 
+			#display .hide {
+				transition: opacity initial;
+				opacity: 0;
+			}
+
+			#display :not(.hide) {
+				transition: opacity 300ms ease-in;
+				opacity: 1;
+			}
+
 			@media screen and (max-width: 600px) {
 				body { font-size: 80%; }
 
@@ -4675,8 +4735,6 @@
 					margin: 0.5em;
 					padding: 0.5em;
 				}
-
-
 			}
 		</style>
 	</head>
@@ -4981,7 +5039,7 @@
 					<li><i>Ursa Minor</i> by Thomas Davis</li>
 				</ul>
 
-				<p>version: 2021.11.19b tayruh</p>
+				<p>version: 2021.11.22 tayruh</p>
 			</div>
 		</div>
 	</body>
