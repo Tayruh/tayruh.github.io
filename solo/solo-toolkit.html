@@ -257,9 +257,9 @@
 
 						var classes = el.className.split(" ");
 						var index = classes.indexOf(classname);
-						
+
 						if (index !== -1) classes.splice(index, 1);
-						
+
 						el.className = classes.join(" ").trim();
 					};
 
@@ -286,6 +286,7 @@
 						removeClass(el, "hide");
 					}, default_delay + delay);
 				};
+
 
 				///////////////////////////////////////////////////////////////////
 
@@ -859,15 +860,15 @@
 						"On Point": "Brings his best game. Always pushes the story and adventure towards a dramatic and satisfying conclusion"
 					},
 					"Focus": [
-						"Fame", "Wealth", "Knowledge", "Magic", "Do Good", "Mayhem", "Backstory", "Romance", "Sex", "Explore", "Conflict", 
+						"Fame", "Wealth", "Knowledge", "Magic", "Do Good", "Mayhem", "Backstory", "Romance", "Sex", "Explore", "Conflict",
 						"Prove Self", "Rivalry", "Item", "Dominate", "Crush Foe", "Uplift Ally", "Infamy"
 					],
 					"Personality": [
-						"Chatty", "Ruthless", "Casual", "Cheerful", "Indecisive", "Assertive", "Asocial", "Blunt", "Timid", "Rigid", "Invested", "Argumentative", 
-						"Gambler", "Greedy", "Turtle", "Methodical", "Whimsical", "Mercurial", "Needy", "Asexual", "Curious", "Bully", "Lecherous", "Peacemaker", 
+						"Chatty", "Ruthless", "Casual", "Cheerful", "Indecisive", "Assertive", "Asocial", "Blunt", "Timid", "Rigid", "Invested", "Argumentative",
+						"Gambler", "Greedy", "Turtle", "Methodical", "Whimsical", "Mercurial", "Needy", "Asexual", "Curious", "Bully", "Lecherous", "Peacemaker",
 						"Smart", "Clumsy", "Flaky", "Restless", "Flamboyant", "Charismatic", "Creative", "Dramatic", "Thespian", "Trouble", "Leader", "Forgetful",
-						"Demanding", "Stubborn", "Dedicated", "Vengeful", "Democratic", "Competitive", "Kind", "Romantic", "Puns", "Determined", "Arrogant", "Hidebound", 
-						"Sensible", "Free", "Flighty", "Callous", "Avaricious", "Conventional", "Hoarder", "Spendthri", "Fighter", "Depressed", "Manic", "Quixotic", 
+						"Demanding", "Stubborn", "Dedicated", "Vengeful", "Democratic", "Competitive", "Kind", "Romantic", "Puns", "Determined", "Arrogant", "Hidebound",
+						"Sensible", "Free", "Flighty", "Callous", "Avaricious", "Conventional", "Hoarder", "Spendthri", "Fighter", "Depressed", "Manic", "Quixotic",
 						"Attentive", "Precise", "Inattentive", "Eidetic", "Careless", "Careful", "Empathetic", "Chummy", "Louche", "Daredevil", "Sensitive", "Amoral"
 					],
 					"Seed A": ["Seek", "Fight", "Question", "Help", "Hinder", "Destroy", "Change", "Stop", "Pursue"],
@@ -889,8 +890,8 @@
 					"Theme": ["strange", "brutal", "whimsical", "sorrowful", "double-edged", "hostile"],
 					"Danger": ["violence", "cessation", "surrender", "loss", "emotion", "end"],
 					"Key Theme": [
-						"capture", "revenge", "water", "want", "envy", "self-interest", "ice", "hatred", "jealousy", "love", "hope", "despair", "rage", "fire", 
-						"fear", "time", "history", "dominance", "attack", "defense", "magic", "resist", "pain", "malice", "scheme", "honor", "duty", "betrayal", 
+						"capture", "revenge", "water", "want", "envy", "self-interest", "ice", "hatred", "jealousy", "love", "hope", "despair", "rage", "fire",
+						"fear", "time", "history", "dominance", "attack", "defense", "magic", "resist", "pain", "malice", "scheme", "honor", "duty", "betrayal",
 						"mistake", "obsession", "debt", "vice", "future", "power", "desire", "machinery"
 					],
 					"Event": ["justice", "ambush", "trap", "betrayal", "pride", "challenge", "speech", "brawl", "declare", "bathe", "respite", "trade", "meal", "battle", "accident", "choice", "puzzle", "call out"],
@@ -3000,18 +3001,19 @@
 						var success = (gen_total["Success"] || 0) - (gen_total["Failure"] || 0);
 						var advantage = (gen_total["Advantage"] || 0) - (gen_total["Threat"] || 0);
 
-						if (success > 0) { gen_total["Success"] = success; delete gen_total["Failure"]; }
-						else if (success < 0) { delete gen_total["Success"]; gen_total["Failure"] = 0 - success; }
-						else { delete gen_total["Success"]; delete gen_total["Failure"]; }
+						if ("Light Side" in gen_total) totals.push("<b>" + gen_total["Light Side"] + "</b> Light Side");
+						if ("Dark Side" in gen_total) totals.push("<b>" + gen_total["Dark Side"] + "</b> Dark Side");
 
-						if (advantage > 0) { gen_total["Advantage"] = advantage; delete gen_total["Threat"]; }
-						else if (advantage < 0) { delete gen_total["Advantage"]; gen_total["Threat"] = 0 - advantage; }
-						else { delete gen_total["Advantage"]; delete gen_total["Threat"]; }
-
-						for (a in gen_total) {
-							if (gen_total[a] === 0) continue;
-							totals.push("<b>" + gen_total[a] + "</b> " + a);
+						if (success !== 0) {
+							if (success > 0) totals.push("<b>" + success + "</b> Success");
+							else totals.push("<b>" + (0 - success) + "</b> Failure");
 						}
+
+						if (advantage !== 0) {
+							if (advantage > 0) totals.push("<b>" + advantage + "</b> Advantage");
+							else totals.push("<b>" + (0 - advantage) + "</b> Threat");
+						}
+
 						types.push("Genesys: " + totals.join("<br>         "));
 						padding = 2;
 					}
@@ -3055,12 +3057,12 @@
 				var addDice = function(dice) {
 					var text = $("#dice").value.trimEnd();
 
-					if (text.trim().length) text += ",";
+					if (text.trim().length && /^[^+-]/.test(dice)) text += ",";
 					$("#dice").value = text + dice;
 
 					$("#dice").focus();
 				};
-				
+
 				var showDiceRoller = function() {
 					display($("#dice-roller").innerHTML);
 
@@ -3706,6 +3708,7 @@
 					);
 				};
 
+
 				///////////////////////////////////////////////////////////////////
 
 				var getEmulatorMeaning = function(type, show_roll) {
@@ -3734,14 +3737,14 @@
 						roll = Math.min(Math.max(orig_roll, 0), keys.length - 1);
 						return (show_roll ? "(" + orig_roll + ") " : "") + [keys[roll]] + "</p><p>" + PE_tags["Agenda"][keys[roll]];
 					}
-					
+
 					if (type === "Meta") {
 						keys = Object.keys(PE_tags["Meta"]);
 						orig_roll = random(0, keys.length - 1) + parseInt($("#emu-mod").value);
 						roll = Math.min(Math.max(orig_roll, 0), keys.length - 1);
 						return (show_roll ? "(" + orig_roll + ") " : "") + [keys[roll]] + "</p><p>" + PE_tags["Meta"][keys[roll]];
 					}
-					
+
 					if (/Reaction/.test(type)) {
 						type = type.replace(/Reaction: (.+)/, "$1");
 						roll = rollDice("1D6") + parseInt($("#emu-mod").value);
@@ -3756,7 +3759,7 @@
 					var getMulitple = function(type, count) {
 						var keys = [];
 						var item;
-						
+
 						do {
 							item = getEmulatorMeaning(type);
 							if (keys.indexOf(item) !== -1) continue;
@@ -3777,7 +3780,7 @@
 					if (type === "Check") type = "Oracle";
 
 					if (type === "Player/NPC") {
-						temp = 
+						temp =
 						output = "<div id='copy-text'><p><b>Agenda:</b> " + getEmulatorMeaning("Agenda") + "</p>";
 						output += "<p><b>Personality:</b> " + getMulitple("Personality", random(1, 3)).join(", ") + "</p>";
 						output += "<p><b>Focus:</b> " + getMulitple("Focus", 2).join(", ") + "</p>";
@@ -3837,7 +3840,7 @@
 					else if (type === "Story") list = ["Conflict", "Cause", "Stake", "Encounter", "Action", "Theme", "Danger", "Key Theme", "Event", "Actor", "Target", "Metaphor", "GM Move"];
 					else if (type === "Recipe") list = ["Player/NPC", "Job", "Attitude", "Major Intraparty Conflict", "Set Scene", "Get Encounter"];
 					else if (type === "Oracle") list = ["Check"];
-					
+
 					if (type !== "Story") output = "<p>Modifier&nbsp;&nbsp;" + getOptions(null, "emu-mod", values, 0) + "</p>";
 
 					for (a = 0; a < list.length; ++a) {
@@ -4402,7 +4405,7 @@
 
 				var showThemedMeaning = function(theme, modifier, type, name) {
 					display("<p><b>" + (name || type) + ":</b> " + getThemedMeaning(theme, modifier, type) + "</p>");
-				}
+				};
 
 
 				var answers = {};
@@ -4416,7 +4419,7 @@
 						if (question in list("Who?", "What?", "Where?", "When?")) return getThemedMeaning(theme, "Adjective", "Noun");
 						else return getThemedMeaning(theme, "Verb", "Noun");
 					}
-				}
+				};
 
 				var showAnswer = function(id, theme, question) {
 					var answer = getAnswer(theme, question);
@@ -4427,7 +4430,7 @@
 
 				var showQuestions = function(theme) {
 					answers = {};
-					
+
 					var a = 0;
 					var questions = ["Who?", "What?", "Where?", "When?", "Why?", "How?"];
 
@@ -4710,6 +4713,12 @@
 				padding: 1em;
 			}
 
+			#dice-rolls tr.odd { background-color: #222222; }
+
+			#dice-rolls td { padding: 0; }
+
+			#dice-rolls td:first-child { padding-right: 1em; }
+
 			#display td:first-of-type > div { min-width: 150px; }
 
 			#display td:last-of-type > div { margin-left: 0; }
@@ -4860,40 +4869,52 @@
 				<br>
 
 				<div id="dice-rolls">
-					<p>Example: <code>2D6-5+1,4DF+2,D10</code></p>
+					<p><b>Example:</b> <code>2D6-5+1,4DF+2,D10</code></p>
 					<hr>
-					<p><a href="javascript:solo.addDice('D6')">D6</a> • <a href="javascript:solo.addDice('2D6')">2D6</a> • <a href="javascript:solo.addDice('3D6')">3D6</a></p>
-					<p><a href="javascript:solo.addDice('D8')">D8</a> • <a href="javascript:solo.addDice('D10')">D10</a> • <a href="javascript:solo.addDice('D20')">D20</a> • <a href="javascript:solo.addDice('D100')">D100</a></p>
-					<p><a href="javascript:solo.addDice('D10,D10,D6')">Ironsworn</a> • <a href="javascript:solo.addDice('4DF')">FATE</a></p>
+					<p>
+						<a href="javascript:solo.addDice('D4')">D4</a> • <a href="javascript:solo.addDice('D6')">D6</a> • <a href="javascript:solo.addDice('D8')">D8</a> • <a href="javascript:solo.addDice('D10')">D10</a><br>
+						<a href="javascript:solo.addDice('D12')">D12</a> • <a href="javascript:solo.addDice('D20')">D20</a> • <a href="javascript:solo.addDice('D100')">D100</a>
+					</p>
+					<p>
+						<a href="javascript:solo.addDice('2D6')">2D6</a> • <a href="javascript:solo.addDice('3D6')">3D6</a> • <a href="javascript:solo.addDice('D2')">D2</a> • <a href="javascript:solo.addDice('D3')">D3</a><br>
+						<a href="javascript:solo.addDice('D10,D10,D6')">Ironsworn</a> • <a href="javascript:solo.addDice('4DF')">FATE</a>
+					</p>
 					<br>
 
 					<details><summary>Genesys/Star Wars</summary>
-					<p>Example: <code>3DGA+2T+S,DGP</code></p>
-					<ul>
-						<li>Ability: <code>1DGA</code>
-						<li>Boost: <code>1DGB</code>
-						<li>Challenge: <code>1DGC</code>
-						<li>Difficulty: <code>1DGD</code>
-						<li>Proficiency: <code>1DGP</code>
-						<li>Setback: <code>1DGS</code>
-						<li>Force: <code>1DGF</code>
-					</ul>
-					<p>Modifiers:</p>
-					<ul>
-						<li>Success: <code>+1S</code></li>
-						<li>Failure: <code>+1F</code></li>
-						<li>Advantage: <code>+1A</code></li>
-						<li>Threat: <code>+1T</code></li>
-					</ul>
+					<p><b>Example:</b> <code>3DGA+2T+S,DGP</code></p>
+
+					<table>
+						<tr class='odd'><td><a href="javascript:solo.addDice('DGA')">Ability</a></td><td><code>1DGA</code></td></tr>
+						<tr class='odd'><td><a href="javascript:solo.addDice('DGD')">Difficulty</a></td><td><code>1DGD</code></td></tr>
+
+						<tr><td><a href="javascript:solo.addDice('DGB')">Boost</a></td><td><code>1DGB</code></td></tr>
+						<tr><td><a href="javascript:solo.addDice('DGS')">Setback</a></td><td><code>1DGS</code></td></tr>
+
+						<tr class='odd'><td><a href="javascript:solo.addDice('DGC')">Challenge</a></td><td><code>1DGC</code></td></tr>
+						<tr class='odd'><td><a href="javascript:solo.addDice('DGP')">Proficiency</a></td><td><code>1DGP</code></td></tr>
+
+						<tr><td><a href="javascript:solo.addDice('DGF')">Force</a></td><td><code>1DGF</code></td></tr>
+					</table>
+					<p><b>Modifiers:</b></p>
+
+					<table>
+						<tr><td><a href="javascript:solo.addDice('+S')">Success</a></td><td><code>+1S</code></td></tr>
+						<tr><td><a href="javascript:solo.addDice('+F')">Failure</a></td><td><code>+1F</code></td></tr>
+						<tr><td><a href="javascript:solo.addDice('+A')">Advantage</a></td><td><code>+1A</code></td></tr>
+						<tr><td><a href="javascript:solo.addDice('+T')">Threat</a></td><td><code>+1T</code></td></tr>
+					</table>
 					</details>
 					<br>
 
 					<details><summary>Vampire: The Masquerade</summary>
-						<p>Example: <code>4DV,2DVH</code></p>
-						<ul>
-							<li>Standard: <code>1DV</code>
-							<li>Hunger: <code>1DVH</code>
-						</ul>
+						<p><b>Example:</b> <code>4DV,2DVH</code></p>
+
+						<table>
+							<tr><td><a href="javascript:solo.addDice('DV')">Standard</a></td><td><code>1DV</code></td></tr>
+							<tr><td><a href="javascript:solo.addDice('DVH')">Hunger</a></td><td><code>1DVH</code></td></tr>
+						</table>
+
 						<p>No modifiers allowed.</p>
 					</details>
 				</div>
@@ -5039,7 +5060,7 @@
 					<li><i>Ursa Minor</i> by Thomas Davis</li>
 				</ul>
 
-				<p>version: 2021.11.22 tayruh</p>
+				<p>version: 2021.11.27 tayruh</p>
 			</div>
 		</div>
 	</body>
