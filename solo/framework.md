@@ -75,7 +75,7 @@ The following is an example of my summary file.
 > ## Character List
 > - 1-2
 > 	- **1-4:** Vincent
-> 	- **5-6: **Katherine
+> 	- **5-6:** Katherine
 > 	- **7-10:** Charlotte
 > - 2-4
 > 	- **1-2:** Corinna
