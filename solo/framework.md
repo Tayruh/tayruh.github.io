@@ -119,8 +119,8 @@ For clarity, I like to format it like the following:
 	2. *Catalyst:* Adjective Noun / Noun of Noun
 	3. *Twist:* Adjective Noun / Noun of Noun
 	4. *Rise:* Verb Noun / Noun of Noun
-	5. *Revelation:*Adjective Noun / Noun of Noun
-	6. *Fall:*Adjective Noun / Noun of Noun
+	5. *Revelation:* Adjective Noun / Noun of Noun
+	6. *Fall:* Adjective Noun / Noun of Noun
 	7. *Refocus:* Verb Noun / Noun of Noun
 	8. *Showdown:* Adverb Adjective / Adjective Noun
 	9. *Resolution:* Adjective Noun / Noun of Noun
