@@ -6,16 +6,16 @@
 
 ### Emulator
 These are what I use for answering questions.
-- Oracle from **Motif Story Engine** for questions about the story (GM targeted questions).
-- Oracle from **Motif Character Engine** for questions about character actions (player targeted questions).
-- **Commonsense** for picking an item from a list of possible outcomes using a combination of logic and chance.
-- Meaning tables from **Mythic Magazine Vol.18** as a muse for answering open questions and describing scenes. Any word table will do, as long as it has Adverbs, Adjectives, Verbs, and Nouns. MM Vol.18 just has a lot of useful tables all in one spot.	
+- Oracle from **[Motif Story Engine](https://www.drivethrurpg.com/product/316073)** for questions about the story (GM targeted questions).
+- Oracle from **[Motif Character Engine](https://www.drivethrurpg.com/product/328769)** for questions about character actions (player targeted questions).
+- **[Commonsense](https://www.drivethrurpg.com/product/359829)** for picking an item from a list of possible outcomes using a combination of logic and chance.
+- Meaning tables from **[Mythic Magazine Vol.18](https://www.drivethrurpg.com/product/398423) ** as a muse for answering open questions and describing scenes. Any word table will do, as long as it has Adverbs, Adjectives, Verbs, and Nouns. MM Vol.18 just has a lot of useful tables all in one spot.	
 
 ### Rules & Tools
 These are the tools that I use alongside the emulator to run my adventure.
-- **The 9 Q's** for forcing a story structure on scenes and threads.
-- Randomized Location Crafter from **Mythic Magazine Vol.2** for exploring areas in a roguelike manner.
-- **Cortex Prime** as a generic rule system. It can be as simple as representing a character with a single die or can scale up to be a deep and intricate system customized to suit the theme of the world and flavor or your game.
+- **[The 9Qs](https://battreps.blogspot.com/2014/05/9q-solo-rpg-engine-2013-edition-reposted.html)** for forcing a story structure on scenes and threads.
+- Randomized Location Crafter from **[Mythic Magazine Vol.2](https://www.drivethrurpg.com/product/345652)** for exploring areas in a roguelike manner.
+- **[Cortex Prime](https://www.cortexrpg.com)** as a generic rule system. It can be as simple as representing a character with a single die or can scale up to be a deep and intricate system customized to suit the theme of the world and flavor or your game.
 
 
 ## Running the Adventure
@@ -55,7 +55,7 @@ For clarity, I like to format it like the following:
 - I use word tables to answer open-ended questions. I generally stick with the Meaning tables from **Mythic Magazine Vol.18**, although I occasionally use tables from other sources.
 - The following are some additional uses of word tables:
 	- Descriptions from Mythic can be broken down into Adverb and Adjective. Actions from Mythic can be broken down into Verb and Noun. 
-	- The 9 Q's: 
+	- The 9Qs: 
 		- *Conflict, Rise, Refocus:* Verb Noun / Noun of Noun
 		- *Catalyst, Twist, Revelation, Fall, Resolution:* Adjective Noun / Noun of Noun
 		- *Showdown:* Adverb Adjective / Adjective Noun
@@ -102,7 +102,7 @@ For clarity, I like to format it like the following:
 	- *Descriptor:* Who they are at a glance. This is their defining character trait. Assign 1 or 2 Adjectives.
 	- *Traits:* These are more traits, but they're subtle and used to add depth to the character. Assign 3 Adjectives.
 	- *Goals:* These are the goals which the character would like to accomplish. They're not necessarily written in stone, but they're what the character is generally aiming for, even if it's not something that they may expect to see to the end. Their decisions will be directly affected by these. Assign 3 Verb Noun combinations.
-- Like open-ended questions, generally any word table will do. However, the ones provided in **Mythic Magazine Vol.18** or **UNE** (Universal NPC Emulator) work very well. Additionally, some systems like **Ironsworn** provide more explicit character motivations that you can mix in with the word table generated ones.
+- Like open-ended questions, generally any word table will do. However, the ones provided in **Mythic Magazine Vol.18** or **[UNE (Universal NPC Emulator)](https://www.drivethrurpg.com/product/134163)** work very well. Additionally, some systems like **[Ironsworn](https://www.drivethrurpg.com/product/238369)** provide more explicit character motivations that you can mix in with the word table generated ones.
 
 > - **Charlotte** (Vincent's sire)
 > 	- *Identity:* Killer
@@ -111,8 +111,8 @@ For clarity, I like to format it like the following:
 > 	- *Goals:* Take Wealthy; Persecute Success; Distress Servitude
 
 ### Story Structure
-- The questions in **The 9 Q's** are the basic framework for the standard three-act story structure condensed into story steps. I've labeled the story steps as: *Conflict*, *Catalyst*, *Twist*, *Rise*, *Revelation*, *Fall*, *Refocus*, *Showdown*, and *Resolution*. I turn these story steps into random events that I trigger in order to keep the story flowing. 
-- Because stories are fractal, the 9 Q's can help shape a scene, an event, an arc, or an entire campaign using the same structure and methods. 
+- The questions in **The 9Qs** are the basic framework for the standard three-act story structure condensed into story steps. I've labeled the story steps as: *Conflict*, *Catalyst*, *Twist*, *Rise*, *Revelation*, *Fall*, *Refocus*, *Showdown*, and *Resolution*. I turn these story steps into random events that I trigger in order to keep the story flowing. 
+- Because stories are fractal, the 9Qs can help shape a scene, an event, an arc, or an entire campaign using the same structure and methods. 
 - Generally when I play, I don't strictly adhere to the structure step by step as I go. Instead, when the story lulls, I look back over my story so far and determine which story questions have already been answered. I then check the word table to create an event for the next one in line. 
 - The story steps can be answered using the word table like this:
 	1. *Conflict:* Verb Noun / Noun of Noun, 
@@ -134,8 +134,8 @@ This is how I lay out my story summary page.
 - **Summary:** The initial story summary, which is about a paragraph.
 - **Anticipations:** A list for tracking concepts or events that you want to see manifest in the game/story and is the primary reason that you are playing. This list should always have at least one incomplete item that you are working toward. I cross them out as they get fulfilled.
 - **Notes:** A list of notes to yourself about the game, like questions or potential problems that you need to figure out, or reminders to do things. I cross them out rather than deleting them once they no longer matter.
-- **Threads:** A nested list of storylines currently happening in the game, described by important events and labeled by their associated 9 Q's story sections to help form a narrative arc.
-- **Character List** and **Thread List:** Lists as described in *Mythic GME* for randomly selecting the story elements of your game when needed, but using the Adventure List version from *Mythic 2e* as described in *Mythic Magazine Vol.17*. 
+- **Threads:** A nested list of storylines currently happening in the game, described by important events and labeled by their associated 9Qs story sections to help form a narrative arc.
+- **Character List** and **Thread List:** Lists as described in *[Mythic GME](https://www.drivethrurpg.com/product/20798)* for randomly selecting the story elements of your game when needed, but using the Adventure List version from *Mythic 2e* as described in *[Mythic Magazine Vol.17](https://www.drivethrurpg.com/product/395373)*. 
 - **Characters:** The character sheets and summaries of PCs and NPCs. This section is sometimes extracted into a separate file if it gets too large.   
 	After generating a PC or NPC using the method described in the Meaning table section, I then write a short interpreted summary of that character (only a few sentences). The character's character sheet follows that.
 
