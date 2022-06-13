@@ -35,7 +35,7 @@ For clarity, I like to format it like the following:
 - I answer Yes or No questions using the oracle from **Motif Story Engine**. This simulates asking the GM a question. 
 - The extra Flavor of the roll helps answer a second related question at the same time, or put the answer in a context using the result of the Flavor question. This helps avoid the problem with most binary oracles where the Yes or No result leaves you hanging on what that actually means to the story.
 
-> **Q:** Did Charlotte ever tell Vincent the story of Corinna? (Yes/And+2, Straight, Sympathy)
+> **Q:** Did Charlotte ever tell Vincent the story of Corinna? (Yes/And+2, Straight, Sympathy)  
 > **Story:** \[5, 2, 3] She did, but she only gave the vaguest of details, so Vincent has a difficult time understanding what Charlotte is thinking.
 
 
@@ -43,12 +43,12 @@ For clarity, I like to format it like the following:
 - I answer questions regarding character interaction using the oracle from **Motif Character Engine**. This simulates asking a player a question.
 - While it can give you a Yes or No, the answer is more about how the character responds to something, so it should be interpreted more like Agree or Disagree than Yes or No, and often results in a Maybe. This coupled with using two different Flavors gives you a complex answer to a question.
 
-> **Q:** Is Katherine accepting all of this? (Answer, Curiosity, Cooperation)
+> **Q:** Is Katherine accepting all of this? (Answer, Curiosity, Cooperation)  
 > **Character:** \[6, 2, 1] She is okay with going along with what they're suggesting since she basically has nothing else now, but she also doesn't have any personal interest in what Charlotte wants and doesn't intend to be proactive at all.
 
 - You can also replace the Answer die with another Flavor so that the answer only describes their mood rather than whether they're in agreement.
 
-> **Q:** How does Katherine feel towards Vincent? (Curiosity, Aggressiveness, Cooperation)
+> **Q:** How does Katherine feel towards Vincent? (Curiosity, Aggressiveness, Cooperation)  
 > **Character:** \[2, 4, 4] She doesn't really care that he's a vampire. She's fairly cooperative but she also snaps back whenever she feels insulted or threatened. 
 
 ### Open-Ended Questions
@@ -70,12 +70,12 @@ For clarity, I like to format it like the following:
 		- *Descriptor, Trait:* Adjective
 		- *Goal:* Verb Noun
 
-> **Q:** Why are they alone?
+> **Q:** Why are they alone?  
 > **Why:** \[Connected Bureaucracy] The other members voted her out, basically.
 
 - Sometimes I need more than one oracle result to zero in on an answer. I combine them together for the meaning.
 
-> **Q:** Where is the vampire coven? 
+> **Q:** Where is the vampire coven?   
 > **What:** \[Secretively Evasive; Festively Cruel] It tends to move around, but it's currently based under a holiday themed shop. It's nearly Christmas so that's the current theme.
 
 ### Multiple Choice
@@ -136,7 +136,7 @@ This is how I lay out my story summary page.
 - **Notes:** A list of notes to yourself about the game, like questions or potential problems that you need to figure out, or reminders to do things. I cross them out rather than deleting them once they no longer matter.
 - **Threads:** A nested list of storylines currently happening in the game, described by important events and labeled by their associated 9 Q's story sections to help form a narrative arc.
 - **Character List** and **Thread List:** Lists as described in *Mythic GME* for randomly selecting the story elements of your game when needed, but using the Adventure List version from *Mythic 2e* as described in *Mythic Magazine Vol.17*. 
-- **Characters:** The character sheets and summaries of PCs and NPCs. This section is sometimes extracted into a separate file if it gets too large. 
+- **Characters:** The character sheets and summaries of PCs and NPCs. This section is sometimes extracted into a separate file if it gets too large.   
 	After generating a PC or NPC using the method described in the Meaning table section, I then write a short interpreted summary of that character (only a few sentences). The character's character sheet follows that.
 
 ### Example
