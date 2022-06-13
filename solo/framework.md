@@ -9,7 +9,7 @@ These are what I use for answering questions.
 - Oracle from **[Motif Story Engine](https://www.drivethrurpg.com/product/316073)** for questions about the story (GM targeted questions).
 - Oracle from **[Motif Character Engine](https://www.drivethrurpg.com/product/328769)** for questions about character actions (player targeted questions).
 - **[Commonsense](https://www.drivethrurpg.com/product/359829)** for picking an item from a list of possible outcomes using a combination of logic and chance.
-- Meaning tables from **[Mythic Magazine Vol.18](https://www.drivethrurpg.com/product/398423) ** as a muse for answering open questions and describing scenes. Any word table will do, as long as it has Adverbs, Adjectives, Verbs, and Nouns. MM Vol.18 just has a lot of useful tables all in one spot.	
+- Meaning tables from **[Mythic Magazine Vol.18](https://www.drivethrurpg.com/product/398423)** as a muse for answering open questions and describing scenes. Any word table will do, as long as it has Adverbs, Adjectives, Verbs, and Nouns. MM Vol.18 just has a lot of useful tables all in one spot.	
 
 ### Rules & Tools
 These are the tools that I use alongside the emulator to run my adventure.
