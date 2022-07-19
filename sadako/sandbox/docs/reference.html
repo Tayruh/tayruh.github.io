@@ -1,0 +1,1622 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>no title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    .markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}pre{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;padding:1em;margin:.5em 0;overflow:auto;line-height:1.5;tab-size:4;hyphens:none;color:#c5c8c6;background-color:#27292c !important;border:#43484c;border-radius:3px}pre[class*="language-"]{padding:1em}code[class*="language-"] .token.comment,pre[class*="language-"] .token.comment,code[class*="language-"] .token.prolog,pre[class*="language-"] .token.prolog,code[class*="language-"] .token.doctype,pre[class*="language-"] .token.doctype,code[class*="language-"] .token.cdata,pre[class*="language-"] .token.cdata{color:#7C7C7C}code[class*="language-"] .token.punctuation,pre[class*="language-"] .token.punctuation{color:#96CBFE}code[class*="language-"] .namespace,pre[class*="language-"] .namespace{opacity:.7}code[class*="language-"] .token.constant,pre[class*="language-"] .token.constant{color:#99CC99}code[class*="language-"] .token.boolean,pre[class*="language-"] .token.boolean,code[class*="language-"] .token.number,pre[class*="language-"] .token.number,code[class*="language-"] .token.function-name,pre[class*="language-"] .token.function-name{color:#FF73FD}code[class*="language-"] .token.tag,pre[class*="language-"] .token.tag{color:#96CBFE}code[class*="language-"] .token.selector,pre[class*="language-"] .token.selector{color:#96CBFE}code[class*="language-"] .token.attr-name,pre[class*="language-"] .token.attr-name{color:#C6C5FE}code[class*="language-"] .token.string,pre[class*="language-"] .token.string{color:#A8FF60}code[class*="language-"] .token.char,pre[class*="language-"] .token.char{color:#FF8000}code[class*="language-"] .token.entity,pre[class*="language-"] .token.entity{color:#FFD2A7}code[class*="language-"] .token.url,pre[class*="language-"] .token.url{color:#7C7C7C}code[class*="language-"] .token.operator,pre[class*="language-"] .token.operator{color:#EDEDED}code[class*="language-"] .token.atrule,pre[class*="language-"] .token.atrule,code[class*="language-"] .token.attr-value,pre[class*="language-"] .token.attr-value,code[class*="language-"] .token.keyword,pre[class*="language-"] .token.keyword{color:#CFCB90}code[class*="language-"] .token.function,pre[class*="language-"] .token.function{color:#FFD2A7}code[class*="language-"] .token.class-name,pre[class*="language-"] .token.class-name{color:#FFD2A7}code[class*="language-"] .token.variable,pre[class*="language-"] .token.variable{color:#C6C5FE}code[class*="language-"] .token.regex,pre[class*="language-"] .token.regex,code[class*="language-"] .token.important,pre[class*="language-"] .token.important{color:#E9C062}code[class*="language-"] .token.important,pre[class*="language-"] .token.important,code[class*="language-"] .token.bold,pre[class*="language-"] .token.bold{font-weight:bold}code[class*="language-"] .token.italic,pre[class*="language-"] .token.italic{font-style:italic}code[class*="language-"] .token.entity,pre[class*="language-"] .token.entity{cursor:help}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:rgba(153,122,102,0.08);background:linear-gradient(to right, rgba(153,122,102,0.1) 70%, rgba(153,122,102,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:rgba(153,122,102,0.4);color:#f5f2f0;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px white}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}.emoji {
+  height: 0.8em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#ccc;background-color:#141414;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#fff}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#a3a3a3}html body strong{color:#fff}html body del{color:#a3a3a3}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#a3a3a3;background-color:#282828;border-left:4px solid #3d3d3d}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#3d3d3d;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#fff}html body table td,html body table th{border:1px solid #3d3d3d;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#fff;background-color:#282828;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#3d3d3d;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#fff;border:1px solid #3d3d3d;border-bottom:2px solid #2e2e2e;padding:2px 4px;background-color:#282828;border-radius:3px}@media print{html body{background-color:#141414}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#fff;page-break-after:avoid}html body blockquote{color:#a3a3a3}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}
+    /* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+    </style>
+    
+  </head>
+  <body for="html-export">
+    <div class="mume markdown-preview">
+    <html><head></head><body><div><h2 class="mume-header" id="sadako-script-reference" ebook-toc-level-2 heading="Sadako Script Reference">Sadako Script Reference</h2>
+
+<h4 class="mume-header" id="table-of-contents" ebook-toc-level-4 heading="Table of Contents">Table of Contents</h4>
+
+<ul>
+<li>
+<p><a href="#comments">Comments</a></p>
+<ul>
+<li><a href="#comment-block">Comment Block</a> <code>/* */</code></li>
+<li><a href="#line-comment">Line Comment</a> <code>//</code></li>
+<li><a href="#escape">Escape</a> <code>\</code></li>
+<li><a href="#line-concatenation">Line Concatenation</a> <code>\</code></li>
+</ul>
+</li>
+<li>
+<p><a href="#story-sections">Story Sections</a></p>
+<ul>
+<li><a href="#pages">Pages</a> <code>##</code>
+<ul>
+<li><a href="#tags">Tags</a> <code>~:</code></li>
+</ul>
+</li>
+<li><a href="#inline-labels">Inline Labels</a> <code>{ }</code></li>
+<li><a href="#jumps">Jumps</a> <code>&gt;&gt;</code></li>
+<li><a href="#returns">Returns</a> <code>&lt;&lt;</code>
+<ul>
+<li><a href="#includes">Includes</a> <code>&gt;&gt;=</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><a href="#text-formatting">Text Formatting</a></p>
+<ul>
+<li><a href="#line-ending">Line Ending</a> <code>;;</code></li>
+<li><a href="#text-attachment">Text Attachment</a> <code>&lt;&gt;</code></li>
+<li><a href="#span-markup">Span Markup</a> <code>&lt;: :&gt;</code></li>
+<li><a href="#tags-1">Tags</a> <code>~:</code>
+<ul>
+<li><a href="#class">Class</a></li>
+<li><a href="#choice">Choice</a></li>
+<li><a href="#delay">Delay</a></li>
+<li><a href="#user-defined">User Defined</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><a href="#variables-and-conditionals">Variables and Conditionals</a></p>
+<ul>
+<li><a href="#variable-embedding">Variable Embedding</a>
+<ul>
+<li><a href="#for-use-in-story-script">For use in Story Script</a> <code>:</code></li>
+<li><a href="#for-use-in-script-blocks">For use in Script Blocks</a> <code>.</code></li>
+<li><a href="#var-tmp">var, tmp</a> <code>$.</code> <code>$:</code> <code>_.</code> <code>_:</code></li>
+<li><a href="#page_seen-label_seen">page_seen, label_seen</a> <code>#.</code> <code>#:</code> <code>%.</code> <code>%:</code></li>
+<li><a href="#text">text</a> <code>~~=</code> <code>~~+</code></li>
+<li><a href="#scripts">scripts</a> <code>^.</code> <code>^:</code></li>
+<li><a href="#scenes">scenes</a> <code>*.</code> <code>*:</code></li>
+<li><a href="#processscript">processScript()</a> <code>{{ }}</code></li>
+</ul>
+</li>
+<li><a href="#conditional-display">Conditional Display</a> <code>::</code></li>
+<li><a href="#inline-text-options">Inline Text Options</a> <code>{: :}</code></li>
+</ul>
+</li>
+<li>
+<p><a href="#script-blocks">Script Blocks</a></p>
+<ul>
+<li><a href="#redirects">Redirects</a> <code>[: :]</code> <code>[:# :]</code> <code>[:% :]</code></li>
+<li><a href="#javascript">JavaScript</a> <code>[:&amp; :]</code> <code>[:= :]</code>
+<ul>
+<li><a href="#internal-script-blocks">Internal Script Blocks</a></li>
+</ul>
+</li>
+<li><a href="#input-boxes">Input Boxes</a> <code>[:&gt; :]</code> <code>[:&gt;&gt; :]</code></li>
+<li><a href="#reveal-links">Reveal Links</a> <code>[:+ :]</code> <code>[:+# :]</code> <code>[:+% :]</code> <code>[:+&amp; :]</code> <code>[:+= :]</code> <code>[:+&gt; :]</code></li>
+<li><a href="#dialog-links">Dialog Links</a> <code>[:* :]</code> <code>[:*! :]</code> <code>[:*# :]</code> <code>[:*% :]</code> <code>[:*&amp; :]</code> <code>[:*= :]</code></li>
+</ul>
+</li>
+<li>
+<p><a href="#macros">Macros</a> <code>(: :)</code></p>
+</li>
+<li>
+<p><a href="#choices">Choices</a></p>
+<ul>
+<li><a href="#choice-formatting">Choice Formatting</a> <code>[ ]</code></li>
+<li><a href="#choice-links">Choice Links</a> <code>&lt;&lt; &gt;&gt;</code></li>
+<li><a href="#static-choice">Static Choice</a> <code>+</code></li>
+<li><a href="#labels">Labels</a> <code>{ }</code></li>
+<li><a href="#limited-choice">Limited Choice</a> <code>*</code></li>
+<li><a href="#fallback-choice">Fallback Choice</a></li>
+</ul>
+</li>
+<li>
+<p><a href="#depths">Depths</a></p>
+<ul>
+<li><a href="#depth-token">Depth Token</a> <code>-</code></li>
+<li><a href="#depth-labels">Depth Labels</a> <code>=</code></li>
+</ul>
+</li>
+<li>
+<p><a href="#condition-block">Condition Block</a></p>
+<ul>
+<li><a href="#branches">Branches</a> <code>~ if</code> <code>~ else if</code> <code>~ else</code></li>
+<li><a href="#loops">Loops</a> <code>~ for</code> <code>~ while</code></li>
+</ul>
+</li>
+<li>
+<p><a href="#scenes-1">Scenes</a> <code>*.</code> <code>*:</code></p>
+<ul>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#defining">Defining</a></li>
+</ul>
+</li>
+<li>
+<p><a href="#saving-checkpoints">Saving Checkpoints</a></p>
+</li>
+</ul>
+<h2 class="mume-header" id="comments" ebook-toc-level-2 heading="Comments">Comments</h2>
+
+<h3 class="mume-header" id="comment-block" ebook-toc-level-3 heading="Comment Block">Comment Block</h3>
+
+<p><code>/*</code> <code>*/</code></p>
+<p>Anything within the these tokens is removed from the story script before it&apos;s even parsed. Because of this, it will also ignore line breaks.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>/*
+None of this will matter.
+So write whatever you want.
+*/
+</code></pre><h3 class="mume-header" id="line-comment" ebook-toc-level-3 heading="Line Comment">Line Comment</h3>
+
+<p><code>//</code></p>
+<p>When a line begins with this token, the entire line will be ignored by <strong>Sadako</strong>. This only affects this one line.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>// This text will not display.
+This text will also display.
+This URL will also display correctly: http://www.bleh.com/
+</code></pre><p>If you need to comment in the middle of a line, you should use the <code>/* */</code> block comments.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>This text will display. /* This text will not display. */
+</code></pre><h3 class="mume-header" id="escape" ebook-toc-level-3 heading="Escape">Escape</h3>
+
+<p><code>\</code></p>
+<p>An escape token is used to prevent <strong>Sadako</strong> from recognizing depth tokens such as <code>+</code>, <code>*</code>, <code>-</code>, and <code>~</code>. These tokens and their functions will be explained in depth later.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>*** You win! ***
+
+// outputs (a choice, which is not what we want)
+&lt;You win! ***&gt;
+</code></pre><pre data-role="codeBlock" data-info class="language-"><code>\*** You win! ***
+
+// outputs (desired output)
+*** You win! ***
+</code></pre><p>The collecting of these tokens by Sadako happens during compilation, and so this token is only looked for during compilation. Attempting to escape any tokens other than depth tokens will not work.</p>
+<h3 class="mume-header" id="line-concatenation" ebook-toc-level-3 heading="Line Concatenation">Line Concatenation</h3>
+
+<p><code>\</code></p>
+<p>When the <code>\</code> escape token ends a line, it will join that line and following line together.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>## page1 \
+    ~:tag1 \
+    ~:tag2
+
+// is read by the compiler as:
+## page1 ~:tag1 ~:tag2
+</code></pre><p>Later on you will read about the <code>&lt;&gt;</code> attach token which appears to do something similar. The difference between this token and that token is that is this one is used during the compiling. By the time your game starts, these lines will have already been formed into a single line.</p>
+<h2 class="mume-header" id="story-sections" ebook-toc-level-2 heading="Story Sections">Story Sections</h2>
+
+<h3 class="mume-header" id="pages" ebook-toc-level-3 heading="Pages">Pages</h3>
+
+<p><code>##</code></p>
+<p><strong>Sadako</strong>&apos;s story script is divided by pages. The name for each page is defined like so.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>## Page1
+    This is the first page.
+
+## Page2
+    This is the second page.
+</code></pre><p>When you redirect to a page, <strong>Sadako</strong> will proceed line by line through the script within that page. When it reaches the end, it will stop. A page can be written simply and only display a full screen of text, or it can be complex and full of links, choices, and jumps. The only way out of a page is through a jump of some sort, which will be explained shortly.</p>
+<p>Every time you&apos;re redirected to a page, the <em>seen</em> counter increases by 1. This is stored in <code>sadako.page_seen[&quot;Page1&quot;]</code> (using &quot;Page1&quot; as an example). This value can be used to check whether a page has been visited and how many times.</p>
+<p>Because of the way that pages are handled by <strong>Sadako</strong>, it is recommended that you only include alphanumeric characters and underscores in their naming.</p>
+<h4 class="mume-header" id="tags" ebook-toc-level-4 heading="Tags">Tags</h4>
+
+<p>Pages may also have tags using the <code>~:</code> tag token after the page name.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>## Page1 ~:test
+</code></pre><p>In this example, the page is assigned a tag called <code>test</code>. Unless a value is assigned, a tag is always assigned the value of <code>true</code>. If you wish to assign a value, place a <code>:</code> between the tag name and its value.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>## Page1 ~:blah:some text ~:test:20
+</code></pre><p>In the example above, <code>Page1</code> is given a <code>blah</code> tag with the value of <code>some text</code> and a <code>test</code> tag with the value of <code>20</code>. Spaces are allowed in a tag value, as you can see.</p>
+<p>On their own, tags don&apos;t do anything. However, you can check for them and their value in <code>sadako.tags[&lt;page_name&gt;]</code>. For example:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>// sadako script
+## Page1 ~:blah:some text
+
+// javascript
+if (&quot;blah&quot; in sadako.tags.Page1) console.log(sadako.tags.Page1.blah);
+
+// outputs to javascript console
+some text
+</code></pre><h3 class="mume-header" id="inline-labels" ebook-toc-level-3 heading="Inline Labels">Inline Labels</h3>
+
+<p><code>{</code> <code>}</code></p>
+<p>A label marks a line of the script so that you can redirect the script to it whenever you wish. If you are familiar with programming <code>gosub</code> and <code>return</code> concepts, this is the label for use with that.</p>
+<p>The actual use of the <code>{ }</code> label will be described in the <code>&gt;&gt;</code> jump token and <code>&lt;&lt;</code> return token sections.</p>
+<p>Whenever the script processes a line with the <code>{ }</code> label tokens, the <em>seen</em> counter for that label is increased by 1. This is stored in <code>sadako.label_seen[&quot;foo&quot;]</code> (using &quot;foo&quot; as an example), which is abbreviated to <code>%.foo</code> in sadako script. This value can be used to check whether a label has been seen and how many times.</p>
+<p>An important thing to note is that the label seen count is increased <em>after</em> the script line is processed. Also, a choice with a label only increases the seen count if it is selected or jumped to, not when it is displayed.</p>
+<p>Inline labels are not allowed on condition blocks and will be stripped during compiling.</p>
+<p>Because of the way that labels are handled by <strong>Sadako</strong>, it is recommended that you only include alphanumeric characters and underscores in their naming.</p>
+<h3 class="mume-header" id="jumps" ebook-toc-level-3 heading="Jumps">Jumps</h3>
+
+<p><code>&gt;&gt;</code></p>
+<p>The jump token is used to redirect the story script to a defined label or page. Jumping to a page or label increases its <em>seen</em> count stored in <code>sadako.page_seen[&quot;page_name&quot;]</code> and <code>sadako.label_seen[&quot;label_name&quot;]</code> respectively.</p>
+<p><strong>Sadako</strong> assumes that a label that does not include the page is local. In order to jump outside that page, include the page in the jump command. The following is an example of label jumping.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>## Page1
+    This is page 1.
+
+    // jumps to local &quot;foo&quot; label
+    &gt;&gt; foo
+
+    This line won&apos;t print because the script jumps over it.
+
+    {foo}
+    This is still page 1.
+
+    // jumps to &quot;bleh&quot; in &quot;Page3&quot;
+    &gt;&gt; Page3.bleh
+
+## Page2
+    {asdf}
+    This is page 2.
+
+## Page3
+    {bleh}
+    This is page 3.
+
+    // jumps to &quot;Page2&quot;
+    &gt;&gt; Page2.asdf
+
+
+// outputs
+This is page 1.
+This is still page 1.
+This is page 3.
+This is page 2.
+</code></pre><p>Page jumps must include the <code>#</code> page token before its name.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>## Page1
+    Some display text.
+    &gt;&gt; #Page2
+## Page2
+    Hello!
+
+// outputs
+Some display text.
+Hello!
+</code></pre><h3 class="mume-header" id="returns" ebook-toc-level-3 heading="Returns">Returns</h3>
+
+<p><code>&lt;&lt;</code></p>
+<p>The return token is designed to leave the current story block. On its own, the <code>&lt;&lt;</code> return token returns the script back to the last activated <code>&gt;&gt;</code> jump token. This has the effect of creating functions in the story script. The caveat to this is that if the jump were to a page instead of a label, the <code>&lt;&lt;</code> token (excluding <code>&lt;&lt; RETURN</code>) will end the script processing instead of returning.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Print it once:
+&gt;&gt; multiuse_text
+Print it again:
+&gt;&gt; multiuse_text
+&lt;&lt; END
+
+// the script does not fall through to this line because of &lt;&lt; END.
+{multiuse_text}
+This is text that you can print in many places if you like.
+&lt;&lt;
+
+
+// outputs
+Print it once:
+This is text that you can print in many places if you like.
+Print it again:
+This is text that you can print in many places if you like.
+</code></pre><p>Jumps are pushed onto a stack, so you can do multiple levels of jumps.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Line 1.
+&gt;&gt; jump1
+The End.
+&lt;&lt; END
+
+{jump1}
+Line 2.
+&gt;&gt; jump2
+&lt;&lt;
+
+{jump2}
+Line 3.
+&lt;&lt;
+
+
+// outputs
+Line 1.
+Line 2.
+Line 3.
+The End.
+</code></pre><p>It has a few different functions when followed by keywords. They are case sensitive.</p>
+<ul>
+<li>
+<p><code>&lt;&lt; RETURN</code></p>
+<p>Returns the script to the top line of this page.</p>
+</li>
+<li>
+<p><code>&lt;&lt; END</code></p>
+<p>Stops the current block of story script from proceeding past this line. Useful for including labels below main script and using them like functions as in the example above.</p>
+</li>
+<li>
+<p><code>&lt;&lt; ABORT</code></p>
+<p>Same as <code>&lt;&lt; END</code> but more aggressive. It quits the current script and does not display any text. All script blocks and jumps before this command will still be executed but no output will be displayed. The <code>ABORT</code> call is useful helping avoid some pitfalls that arise when calling <code>sadako.doLink()</code> and <code>sadako.closeDialog()</code> from within a <code>[: :]</code> script block.</p>
+</li>
+</ul>
+<h4 class="mume-header" id="includes" ebook-toc-level-4 heading="Includes">Includes</h4>
+
+<p><code>&gt;&gt;=</code></p>
+<p>If you include the <code>=</code> value token before the page or label to jump to, <strong>Sadako</strong> will jump to that page or label, but instead of ending output when it reaches the end of the script, it will jump back to where it was.</p>
+<p>An example without the <code>&gt;&gt;=</code> include token:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>This ends early.
+&gt;&gt; test
+You won&apos;t see this.
+&lt;&lt; END
+
+= test
+Something to print.
+&lt;&lt; END
+
+
+// outputs
+This ends early.
+Something to print.
+</code></pre><p>An example using the <code>&gt;&gt;=</code> include token:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>This won&apos;t exit early.
+&gt;&gt;= test
+You&apos;ll be able to see this now.
+&lt;&lt; END
+
+= test
+Something to print.
+&lt;&lt; END
+
+
+// outputs
+This ends early.
+Something to print.
+You&apos;ll be able to see this now.
+</code></pre><p>By using the <code>&gt;&gt;=</code> include token, it won&apos;t stop processing the script when it sees <code>&lt;&lt; END</code>. Similarly, using it in conjunction with page jumps, it will include that page&apos;s contents in with the current page. This is similar to using the <code>&lt;&lt;</code> return token with label jumps.</p>
+<p>An example without the <code>&gt;&gt;=</code> include token:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>## Page1
+    Some example text.
+    &gt;&gt; #Page2
+    This won&apos;t be displayed.
+
+## Page2
+    Hello!
+
+// outputs
+Some example text.
+Hello!
+</code></pre><p>An example using the <code>&gt;&gt;=</code> include token:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>## Page1
+    Some example text.
+    &gt;&gt;= #Page2
+    This text can be seen now.
+
+## Page2
+    Hello!
+
+// outputs
+Some example text.
+Hello!
+This text can be seen now.
+</code></pre><p>Includes do not process <code>+</code> static choices or <code>*</code> limited choices Once the include script sees a choice, it will return to the the script that included without adding the choice. To include choices in your <code>&gt;&gt;=</code> include, you must precede it with the <code>+</code> static choice token (adjusting for the correct depth level), like so:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>+ &gt;&gt;= some_page.choice_list 
+</code></pre><p>Further information can be found in the <a href="#choice-includes">choice includes</a> section.</p>
+<h2 class="mume-header" id="text-formatting" ebook-toc-level-2 heading="Text Formatting">Text Formatting</h2>
+
+<h3 class="mume-header" id="line-ending" ebook-toc-level-3 heading="Line Ending">Line Ending</h3>
+
+<p><code>;;</code></p>
+<p>Separates lines of the script. <strong>Sadako</strong> uses carriage returns to separate lines, so this token is only necessary if you would like to include multiple statements on the same line for convenience.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Hello world!;; This is the second line
+</code></pre><p>This is the same as</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Hello world!
+This is the second line
+</code></pre><h3 class="mume-header" id="text-attachment" ebook-toc-level-3 heading="Text Attachment">Text Attachment</h3>
+
+<p><code>&lt;&gt;</code></p>
+<p>Attaches two lines of text together. <code>&lt;&gt;</code> can begin or end a line. If it begins the line, it&apos;ll be attached to the previous line. If it ends the line, the next one will be attached to this one.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>This line &lt;&gt;
+will become whole.
+
+So will
+&lt;&gt; this one.
+
+You can
+&lt;&gt; do both &lt;&gt;
+at once.
+
+
+// outputs:
+This line will become whole.
+So will this one.
+You can do both at once.
+</code></pre><h3 class="mume-header" id="span-markup" ebook-toc-level-3 heading="Span Markup">Span Markup</h3>
+
+<p><code>&lt;:</code> <code>:&gt;</code></p>
+<p>Span token. This is used to easily attach a CSS class to a block of text. You separate the CSS class from the text using <code>::</code>. It doesn&apos;t save a ton of typing, but it makes the story script a bit more readable.</p>
+<pre class="language-text">&lt;:test::This will use the &quot;test&quot; class.:&gt;
+
+// outputs
+&lt;span class=&quot;test&quot;&gt;This will use the &quot;test&quot; class.&lt;/span&gt;
+</pre>
+<h3 class="mume-header" id="tags-1" ebook-toc-level-3 heading="Tags">Tags</h3>
+
+<p><code>~:</code></p>
+<p>Tags are used to alter the output or display of a line. Any number of tags can be added to a line.</p>
+<p>There are also three hardcoded tags in <strong>Sadako</strong> in addition to any user defined tags: <code>class</code>, <code>choice</code>, and <code>delay</code>.</p>
+<h4 class="mume-header" id="class" ebook-toc-level-4 heading="Class">Class</h4>
+
+<p><code>class:&lt;classname&gt;</code> (alias <code>c:&lt;classname&gt;</code>): Adds a CSS class to the line.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>This will be displayed using the &quot;test&quot; class. ~:class:test
+
+// outputs
+&lt;div class=&quot;test&quot;&gt;This will be displayed using the &quot;test&quot; class.&lt;/div&gt;
+</code></pre><h4 class="mume-header" id="choice" ebook-toc-level-4 heading="Choice">Choice</h4>
+
+<p><code>choice</code> (no value): Displays the current line as though it were a choice. Useful for links that run javascript.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:&amp; alert(&quot;Boo!&quot;) @: Fake Choice.:] ~:choice
+
+// outputs (output is simplified for example purposes)
+&lt;ul&gt;&lt;li class=&quot;choice&quot;&gt;&lt;a onclick=&apos;alert(&quot;Boo!&quot;)&apos;&gt;Fake Choice&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+</code></pre><h4 class="mume-header" id="delay" ebook-toc-level-4 heading="Delay">Delay</h4>
+
+<p><code>delay:&lt;XXXX.X&gt;</code>: Amount of time in milliseconds (1000.0 = 1 second) to delay the display of this line and all lines following it.</p>
+<p>The <code>delay</code> tag can be tricky. Basically, as each line is printed, it&apos;s set to delay for the amount of this delay plus <code>sadako.text_delay</code>.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Normal text.
+This will take 5 seconds to display. ~:delay:5000
+This will take 3 seconds to display. ~:delay:3000
+This will also take 3 seconds.
+
+// the choice will take 6 seconds to display
+- ~:delay:6000
++ [Some Choice]
+</code></pre><p>In the above example, the second line of text will actually take longer to display than the third line of text.</p>
+<p>Also, notice how it uses an empty <code>-</code> depth token to set the delay for the choice. Unlike <code>class</code> tags, <code>delay</code> will not work on choices because of the way they are displayed. Therefore, you should set it before displaying the choice. This trick also works with doing things like jumps which also don&apos;t allow tags. To remove the additional delay, just use the <code>delay</code> tag with a value of <code>0</code>.</p>
+<h4 class="mume-header" id="user-defined" ebook-toc-level-4 heading="User Defined">User Defined</h4>
+
+<p><strong>Sadako</strong> provides two functions intended to be overwritten by the user. These are <code>sadako.doLineTag()</code> and <code>sadako.doChoiceTag()</code>. The return value is an array containing the text to display as the first element and classes to be added to the line as the remaining elements. Classes do not have to be provided, and if nothing is returned from the function, no text will be printed.</p>
+<p>By default, each function looks like this:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>sadako.doLineTag = function(text, tag) { return [text]; }
+sadako.doChoiceTag = function(text, tag) { return [text]; }
+</code></pre><p>Obviously this does nothing as it is. However, here&apos;s an example of how you can make use of the functions.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>sadako.doLineTag = function(text, tag) {
+    if (tag === &quot;erin&quot;) return [&apos;Erin says, &quot;&apos; + text + &apos;&quot;&apos;, &quot;test1&quot;, &quot;test2&quot;];
+    return [text];
+}
+
+// in story script
+Hi! ~:erin
+
+
+// outputs
+&lt;div class=&quot;test1 test2&quot;&gt;Erin says, &quot;Hi!&quot;&lt;/div&gt;
+</code></pre><p>This function is called once per tag with the current text and tag (converted to lowercase) as the arguments. Text you return from one function call will be sent as the argument for the function call of the next tag for this line. This is so you can keep modifying the text with each new tag if desired.</p>
+<p>Tags must come before a <code>::</code> conditional token since it&apos;s considered part of the line. Conditionals will be explained in a little bit.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Write it just like this. ~:test1 ~:test2 :: $.blah == 1
+</code></pre><h2 class="mume-header" id="variables-and-conditionals" ebook-toc-level-2 heading="Variables and Conditionals">Variables and Conditionals</h2>
+
+<h3 class="mume-header" id="variable-embedding" ebook-toc-level-3 heading="Variable Embedding">Variable Embedding</h3>
+
+<p>For convenience sake, there are tokens that allow easy embedding of <strong>Sadako</strong> variables. They are as follows. (<em>foo</em> will be used as an example variable/text and does not actually exist.)</p>
+<h4 class="mume-header" id="for-use-in-story-script" ebook-toc-level-4 heading="For use in Story Script">For use in Story Script</h4>
+
+<ul>
+<li><code>$:foo</code> becomes the value of <code>sadako.var.foo</code></li>
+<li><code>_:foo</code> becomes the value of <code>sadako.tmp.foo</code></li>
+<li><code>*:foo</code> becomes the value of <code>sadako.scenes.foo</code></li>
+<li><code>#:foo</code> becomes the value of <code>sadako.page_seen[&quot;foo&quot;]</code></li>
+<li><code>%:foo</code> becomes the value of <code>sadako.label_seen[&quot;foo&quot;]</code></li>
+<li><code>^:foo</code> becomes the value of <code>sadako.scripts.foo</code> or (<code>sadako.scripts.foo()</code> if a function)</li>
+</ul>
+<pre data-role="codeBlock" data-info class="language-"><code>The color of the gem was a bright $:color.
+
+// outputs (assuming sadako.var.color is &quot;green&quot;)
+The color of the gem was a bright green.
+</code></pre><pre data-role="codeBlock" data-info class="language-"><code>// javascript
+sadako.scripts.foo = function() {
+    if (sadako.var.test) return &quot;Success&quot;;
+    return &quot;Fail&quot;;
+}
+
+// sadako script
+Test result: ^:foo
+
+// outputs (assuming sadako.var.test is true)
+Test result: Success
+</code></pre><p>Script blocks will be described soon, but just know that the script inside the <code>[: :]</code> script block in this example is being executed, not displayed.</p>
+<h4 class="mume-header" id="for-use-in-script-blocks" ebook-toc-level-4 heading="For use in Script Blocks">For use in Script Blocks</h4>
+
+<ul>
+<li><code>$.foo</code> becomes <code>sadako.var.foo</code></li>
+<li><code>_.foo</code> becomes <code>sadako.tmp.foo</code></li>
+<li><code>*.foo</code> becomes <code>sadako.scenes.foo</code></li>
+<li><code>#.foo</code> becomes <code>sadako.page_seen[&quot;foo&quot;]</code></li>
+<li><code>%.foo</code> becomes <code>sadako.label_seen[&quot;foo&quot;]</code></li>
+<li><code>^.foo</code> becomes <code>sadako.scripts.foo</code> (or <code>sadako.scripts.foo()</code> if a function)</li>
+<li><code>~~=foo</code> becomes <code>sadako.text = foo</code></li>
+<li><code>~~+&apos;foo&apos;</code> becomes <code>sadako.text += &apos;foo&apos;</code></li>
+<li><code>{{foo}}</code> becomes <code>sadako.processScript(foo)</code></li>
+</ul>
+<p>To make sense of this, a few things should be explained briefly.</p>
+<h4 class="mume-header" id="var-tmp" ebook-toc-level-4 heading="var, tmp">var, tmp</h4>
+
+<p><code>sadako.var</code> is an object variable that contains user defined variables. These variables are automatically saved to disk when you save the game.</p>
+<p><code>sadako.tmp</code> is also an object variable that contains user defined variables. However, these variables are cleared every time <code>sadako.doLink()</code> and <code>sadako.doChoice()</code> are called. That is to say, any time you click a link or call a function that progresses the story script.</p>
+<p>It&apos;s very important to know that includes maintain their own set of temporary variables. These rules apply to anything that does includes, which are primarily the <code>&gt;&gt;=</code> token, the <code>[:+# :]</code> and <code>[:+% :]</code> reveal tokens, and the <code>sadako.doInclude()</code> function.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>## page1
+    [:&amp; _.test = &quot;first&quot;:]
+    This is page 1.
+    Value of test: _:test
+    &gt;&gt;= #page2
+    Page 1 again.
+    Value of test: _:test
+
+## page2
+    = test
+    This is page 2.
+    Value of test: _:test
+
+    [:&amp; _.test = &quot;second&quot;:]
+    Value to set to: _:test
+    &lt;&lt;
+
+// outputs
+This is page 1.
+Value of test: first
+This is page 2.
+Value of test: undefined
+Value to set to: second
+Page 1 again.
+Value of test: first
+</code></pre><p>Notice how the temporary variables were cleared upon entering <code>page2</code>, but then restored to <code>page1</code>&apos;s values after leaving.</p>
+<p>Look at the result if we changed the <code>&gt;&gt;=</code> include to a normal <code>&gt;&gt;</code> jump to the <code>page2.test</code> label. (Jumping to a page does not allow a return jump like a label does.)</p>
+<pre data-role="codeBlock" data-info class="language-"><code>This is page 1.
+Value of test: first
+This is page 2.
+Value of test: first
+Value to set to: second
+Page 1 again.
+Value of test: second
+</code></pre><p>The temporary variables aren&apos;t cleared with jumps.</p>
+<p>It&apos;s also important to note that unlike all other embedded variables, the <code>$:</code> and <code>_:</code> tokens use a much more complex method of text replacement. These will actually allow javascript right in your story script, but only for this one variable.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:&amp;
+    $.bleh = {blargh: &quot;meh&quot;, test: &quot;See?&quot;};
+    _.foo = &quot;ABCDEF&quot;;
+:]
+
+The value of blargh in bleh is $:bleh.blargh.
+The first letter of foo is _:foo.charAt(0)!
+Values inside of quotes are safe. &quot;$:bleh[&quot;test&quot;]&quot;
+
+
+// outputs
+The value of blargh in bleh is meh.
+The first letter of foo is A!
+Values inside of quotes are safe. &quot;See?&quot;
+</code></pre><h4 class="mume-header" id="page_seen-label_seen" ebook-toc-level-4 heading="page_seen, label_seen">page_seen, label_seen</h4>
+
+<p>The <code>sadako_page_seen</code> and <code>sadako.label_seen</code> arrays track how many times a page or label has been seen. Every time you  transition to a new page, progress past a label in the script, or select a choice that is preceded by a label, the counter for that page or label is increased by 1. This is convenient for checking whether you&apos;ve seen a part of the script and how many times.</p>
+<p>If you select on a choice with a label, the count is also increased by one. The label count is not increased for a choice just by displaying it; only if it&apos;s chosen.</p>
+<h4 class="mume-header" id="text" ebook-toc-level-4 heading="text">text</h4>
+
+<p><code>sadako.text</code> is the variable that holds the text being processed for the current line. Just returning text from a function will not work unless you use the <code>=</code> value token inside the <code>[: :]</code> script block (which hopefully explains how the story script text replacements work). If you are inside a function and want to replace or add to the text output for the current line, <code>sadako.text</code> is the variable to use.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>You found a bright [:&amp; ~~=sadako.var.color:] gem.
+You found a bright [:&amp; ~~+.sadako.var.color:] gem.
+
+
+// outputs (assuming sadako.var.color is &quot;green&quot;)
+green gem.
+You found a bright green gem.
+</code></pre><p>Notice how the first section of text is missing in the first line of the example output. This is because <code>~~=</code> replaces the text up to that point. <code>~~+</code> appends onto the text.</p>
+<p>In most situations you can stack replacement tokens, so the above can be written like so and will have the same result.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>You found a bright [:&amp; ~~+$.color:] gem.
+</code></pre><h4 class="mume-header" id="scripts" ebook-toc-level-4 heading="scripts">scripts</h4>
+
+<p><code>sadako.scripts</code> is an object variable that is a list of sadako script strings or functions that return text. The functions never accept arguments. <code>sadako.scripts</code> entries should be defined in your javascript initialization, not in sadako script itself, because they will not be saved to along with your game data.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>// javascript
+sadako.var.x = 0;
+sadako.scripts.nth = function() {
+    sadako.var.x += 1;
+    if (sadako.var.x == 1) return &quot;first&quot;;
+    if (sadako.var.x == 2) return &quot;second&quot;;
+}
+sadako.scripts.count = &quot;$:x&quot;;
+
+// sadako script
+This is the ^:nth time you&apos;ve called this.
+This is the ^:nth time you&apos;ve called this.
+The total times called was: ^:count
+
+
+// outputs
+This is the first time you&apos;ve called this.
+This is the second time you&apos;ve called this.
+The total times called was: 2
+
+</code></pre><h4 class="mume-header" id="scenes" ebook-toc-level-4 heading="scenes">scenes</h4>
+
+<p><code>sadako.scenes</code> will be described later on in <a href="#scenes-1">this section</a>. It&apos;s too in depth to describe here.</p>
+<h4 class="mume-header" id="processscript" ebook-toc-level-4 heading="processScript()">processScript()</h4>
+
+<p>The <code>{{ }}</code> process token is an abbreviation for <code>sadako.processScripts()</code>. This is a really useful function. It basically processes the script passed to it as if it were a <code>[:= :]</code> code eval script block. All the same rules that apply to a script block apply to this as well.</p>
+<p>Since the functionality of this token hinges entirely on the understanding of script blocks, it will be described a bit below in <a href="#javascript">this section</a>.</p>
+<h3 class="mume-header" id="conditional-display" ebook-toc-level-3 heading="Conditional Display">Conditional Display</h3>
+
+<p><code>::</code></p>
+<p>The statement preceding the <code>::</code> conditional token will only be displayed and scripts executed if the statement following it equates to <code>true</code>.</p>
+<p>In the following example, the line will only be displayed if <em>money</em> is less than 100.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>You don&apos;t have enough money. :: $.money &lt; 100
+</code></pre><p>Conditional display checks come before rendering anything in a line. If the condition check is false, everything on that line is ignored. Therefore, any code inside a script block will not be executed unless the condition returns true.</p>
+<h3 class="mume-header" id="inline-text-options" ebook-toc-level-3 heading="Inline Text Options">Inline Text Options</h3>
+
+<p><code>{:</code> <code>:}</code></p>
+<p>The inline conditional block is for easy selecting between between two different text options.</p>
+<p>The sections of the statement are separated by <code>::</code> a conditional token. The first section is the condition check, the second section displays if the condition is true, and the third section (if provided) displays if the condition is false.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>You check your wallet{:$.money &lt; 50::, but it seems that you don&apos;t:: and it appears that you:} have enough money to buy it.
+
+
+// outputs
+// if less than 50:
+You check you wallet, but it seems that don&apos;t have enough money to buy it.
+
+// otherwise:
+You check your wallet and it appears that you have enough money to buy it.
+</code></pre><p>You can also exclude the second option and it&apos;ll only print the first one if it&apos;s true and nothing if it&apos;s false.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>You carefully pick up the {:$.vase_damaged::cracked :}vase and put it back on the shelf.
+
+
+// outputs
+// if vase is damaged:
+You carefully pick up the cracked vase and put it back on the shelf.
+
+// if not:
+You carefully pick up the vase and put it back on the shelf.
+</code></pre><h2 class="mume-header" id="script-blocks" ebook-toc-level-2 heading="Script Blocks">Script Blocks</h2>
+
+<h4 class="mume-header" id="redirects" ebook-toc-level-4 heading="Redirects">Redirects</h4>
+
+<p><code>[:</code> <code>:]</code></p>
+<p>A standard script block inserts a link to a page.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:blargh:]
+
+// outputs
+&lt;a onclick=&apos;sadako.doLink(&quot;#blargh&quot;)&apos;&gt;blargh&lt;/a&gt;
+</code></pre><p>If you follow the page name with the <code>@:</code> rename token, you can rename the link.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:some_annoying_title @: the next room:]
+
+// outputs
+&lt;a onclick=&apos;sadako.doLink(&quot;#some_annoying_title&quot;)&apos;&gt;the next room&lt;/a&gt;
+</code></pre><p>You can lead the script block with a token and it will do things besides linking to a page.</p>
+<ul>
+<li><code>#</code> Links to a page. Same result as no token.</li>
+<li><code>%</code> Links to a label.</li>
+<li><code>&amp;</code> Executes javascript. Does not print result.</li>
+<li><code>=</code> Evaluates a variable or javascript and prints the text.</li>
+<li><code>&gt;</code> Creates a single line input box for storing text into a variable.</li>
+<li><code>&gt;&gt;</code> Creates a multiline input box for storing text into variables.</li>
+<li><code>+</code> Creates a reveal link which will change the text once clicked.</li>
+<li><code>*</code> Creates a dialog link that displays the dialog window once clicked.</li>
+</ul>
+<p><strong>Sadako</strong> assumes that a label is local unless otherwise stated. If you want to access a label that is not local, you must include the page with the label, like <code>some_page.some_label</code>.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>## Page1
+    // local label
+    [:% bleh:]
+
+    // nonlocal label
+    [:% Page2.foo:]
+
+
+// outputs
+&lt;a onclick=&apos;sadako.doLink(&quot;Page1.bleh&quot;)&apos;&gt;bleh&lt;/a&gt;
+&lt;a onclick=&apos;sadako.doLink(&quot;Page2.foo&quot;)&apos;&gt;bleh&lt;/a&gt;
+</code></pre><h4 class="mume-header" id="javascript" ebook-toc-level-4 heading="JavaScript">JavaScript</h4>
+
+<p>As an example of executable javascript, the following opens the javascript alert box with the &quot;Hello world!&quot; message.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:&amp; alert(&quot;Hello world!&quot;):]
+</code></pre><p>For <code>#</code>, <code>%</code>, and even the <code>@:</code> token used for renaming, you can follow it with a <code>=</code> value token and it will evaluate the value and use that.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:#= &quot;Page &quot; + (2 - 1) @:= (1==1) ? &quot;bleh&quot; : &quot;meh&quot;:]
+
+// outputs
+&lt;a onclick=&apos;sadako.doLink(&quot;#Page1&quot;)&apos;&gt;bleh&lt;/a&gt;
+</code></pre><p>It&apos;s also important to note that the <code>[: :]</code> script block is the only block to ignore line breaks. This is so that you can include properly formatted javascript. The space between <code>[:</code> and the leading tokens are also ignored. Because of that, script like this won&apos;t break, even though it&apos;s an exercise in poor formatting.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:
+    #
+=
+    (function() {
+        if (1 == 1) {
+            return &quot;Page &quot;;
+        }
+    }())
+
+    + (2 - 1)
+
+ @:
+    = (1==0) ?
+    &quot;bleh&quot; : &quot;meh&quot;
+:]
+
+
+// outputs
+&lt;a onclick&quot;sadako.doLink(&quot;Page1&quot;)&gt;meh&lt;/a&gt;
+</code></pre><p>Another important note is that while the contents of a script block have its variable names replaced, any tokens blocks inside this block will not be rendered. This applies not only to <code>[: :]</code> script blocks, but also <code>&lt;: :&gt;</code> spans, <code>{: :}</code> inline text options, and <code>(: :)</code> macros.</p>
+<p>For example:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:&amp;
+    $.foo = 1;
+    $.add = &quot;[:= &apos;math: &apos; + (1 + 1):]&quot;;
+    console.log(&quot;foo:&quot;, &quot;$.foo)
+    console.log(&quot;add:&quot;, $.add)
+:]
+
+$:foo
+$:add
+
+
+// outputs:
+1
+math: 2
+
+// console output:
+foo: 1
+add: [:= &apos;math: &apos; + (1 + 1):]
+</code></pre><p>As you can see, <code>$.add</code> is set to <code>[:= &apos;math: &apos; + (1 + 1):]</code> not <code>math: 2</code>. However, when you print its value on a normal line, it&apos;ll be rendered correctly. This is helpful if you want the value to keep changing due to updated variables. For example:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:&amp;
+    $.foo = 0;
+    $.add = &quot;[:= &apos;math: &apos; + ($.foo += 1):]&quot;;    
+:]
+$:add, $:add, $:add
+
+// outputs
+math: 1, math: 2, math: 3
+</code></pre><p>Finally, be aware that embedded values of variables using the <code>$:</code>, <code>_:</code>, and other such tokens is using the value it held when this line was reached. That&apos;s fine is most instances, but it&apos;s you&apos;re updating a value inside a script, it&apos;s not going to render correctly.</p>
+<p>Here&apos;s an example of it failing to do what you may want.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:&amp; $.foo = 1:]
+[:&amp; $.foo += 1; ~~=&quot;Foo: actual: &quot; + $.foo + &quot;, embedded: $:foo&quot;:]
+[:= &quot;Bleh: actual: &quot; + (_.bleh = 1) + &quot;, embedded: _:bleh&quot;:]
+
+// outputs:
+Foo: actual: 2, embedded: 1
+Bleh: actual: 1, embedded: undefined
+</code></pre><p>As you can see, you can still use the embedded version of the variable to access its data using <code>$.</code> and <code>_.</code> and the like.</p>
+<h5 class="mume-header" id="internal-script-blocks" ebook-toc-level-5 heading="Internal Script Blocks">Internal Script Blocks</h5>
+
+<p>As described earlier, the <code>{{ }}</code> process token functions like a <code>[:= :]</code> eval code token. The reason for using a process token instead of the script token is becomes of the rules described just above this.</p>
+<p>To reiterate, <code>[:&amp; foo = &quot;[:= &apos;bleh&apos;:]&quot;:]</code> does not set <code>foo</code> to <code>&quot;bleh&quot;</code> like you may think. A script block prevents script blocks from rendering inside them, therefore you can never set a variable in this way. The <code>{{ }}</code> process token is the workaround for this. Additionally, it&apos;s allowed to be multi-lined just like a script block.</p>
+<p>This is an unnecessarily complex example, but it should help show why this is feature is useful.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>before|[:&amp; 
+    _.a = &quot;middle [:&amp; _.c = &apos;[:&amp; _.d = 1 :]&apos;:]&quot;;
+    console.log(&quot;a:&quot;, _.a);
+    
+    _.b = {{_.a}};
+    console.log(&quot;b:&quot;, _.b);
+    console.log(&quot;c:&quot;, _.c);
+    
+    {{_.c}};
+    console.log(&quot;d:&quot;, _.d);
+    
+    ~~+{{
+        (function() {
+            return &quot;&lt;:test::&quot; + _.b + _.d + &quot;:&gt;&quot;;
+        }())
+    }};
+:]|after
+
+// outputs:
+before|middle 1|after
+
+// console output:
+a: middle [:&amp; sadako.tmp.c = &apos;[:&amp; sadako.tmp.d = 1 :]&apos;:]
+b: middle 
+c: [:&amp; sadako.tmp.d = 1 :]
+d: 1
+</code></pre><p>This is a bit confusing so I placed console output into the example. Let&apos;s go over it step by step.</p>
+<ol>
+<li>If you look at each line spit out by the console, you&apos;ll see that <code>_.a</code> was set to <code>&quot;middle [:&amp; sadako.tmp.c = &apos;[:&amp; sadako.tmp.d = 1 :]&apos;:]&quot;</code>.</li>
+<li>When <code>_.b</code> is set to <code>{{_.a}}</code>, it renders the script and gives the output to <code>_.b</code>. Because the <code>[:&amp; :]</code> token does not produce any text, <code>_.b</code> is only set to <code>&quot;middle &quot;</code>. The markdown doesn&apos;t show the trailing space, but it&apos;s there.</li>
+<li>Even though the script block inside <code>_.a</code> wasn&apos;t displayed, it <em>was</em> rendered. Because of that, <code>_.c</code> was created.</li>
+<li>Processing <code>_.c</code> with <code>{{_.c}}</code> created <code>_.d</code>. Its output is not assign to anything, but it would be <code>1</code> if it were.</li>
+<li>And finally, we use the <code>{{ }}</code> token to send its content directly to the output using the <code>~~+</code> text token.</li>
+</ol>
+<p>Step 5 could also be effectively accomplished using a line like so:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>~~+&apos;[:= function() { return &quot;&lt;:test::&quot; + _.b + _.d + &quot;:&gt;&quot;; }():]&apos;
+</code></pre><p>However, the difference is that in this version, it&apos;s writing the script block to the output of current line, and then the engine is rendering the script block once it&apos;s part of the line. To the end user it would look identical, but internally it&apos;s very different. The <code>{{ }}</code> process token is rendering the content down to its value <em>before</em> it gets assigned.</p>
+<h4 class="mume-header" id="input-boxes" ebook-toc-level-4 heading="Input Boxes">Input Boxes</h4>
+
+<p>The input boxes can be a bit tricky. They go like this.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>What is your name? [:&gt; $.player_name:]
+
+// outputs (brackets represent the input box)
+What is your name? [                       ]
+</code></pre><p>The variable defined in script block (<code>$.player_name</code> in the example) will be set to whatever the input text is. <strong>Sadako</strong> sets the variable whenever the input box loses focus. If the variable is <code>undefined</code>, the input box will be displayed with an empty box like the above example. If the variable already has a value assigned, that value will be displayed in the input box when it is displayed.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:&amp; $.foo = &quot;test&quot;:]
+[:&gt; $.foo:]
+
+// outputs
+[test                   ]
+</code></pre><p>Instead of displaying the input description using standard text, you can use the HTML <code>label</code> tag by using the <code>@:</code> rename label and following it with the text to display.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:&gt; $.player_name @: What is your name?:]
+
+// outputs
+What is your name? [                       ]
+</code></pre><p>Visually this looks the same, but under the hood it works differently, especially for those with screen readers. Feel free to check out <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label">this information</a> to get an idea on why labels are helpful.</p>
+<p>Finally, if you begin the script block with two <code>&gt;</code> input tokens instead of one, it becomes a multiline input box. A single input box will allow a single line of text. A multiline text box will allow many lines and will scroll as needed. Also, the CSS class <code>multiline</code> will automatically be assigned to a multiline box so that you may resize it in CSS without having to affect single line input boxes.</p>
+<p>Here&apos;s an example.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>// CSS
+textarea.multiline { height: 5em; width: 20em; }
+
+// in story script=
+[:&gt;&gt; $.test_val @: Please type something.^^:]
+
+
+// outputs
+Please type something.
+[                                   ]
+[                                   ]
+[                                   ]
+[                                   ]
+[                                   ]
+[                                   ]
+</code></pre><h4 class="mume-header" id="reveal-links" ebook-toc-level-4 heading="Reveal Links">Reveal Links</h4>
+
+<p>The <code>+</code> token inside a script block creates a reveal link, with the <code>@:</code> name token separating the name of the link as per usual. Once a reveal link is clicked, it will replace the link with the new text.</p>
+<p>There are six ways to use the <code>+</code> reveal token:</p>
+<ol>
+<li>
+<p>Alone. It will replace the link with solid text and that&apos;ll be it. It&apos;s a time time deal.<br><br>
+<code>[:+ Replacment text @: Link name:]</code></p>
+</li>
+<li>
+<p>With an <code>=</code> eval token. This will replace the text once with the evaluated script.<br><br>
+<code>[:+= &quot;The sum of 1 + 1 = &quot; + (1 + 1) @: Let&apos;s do some math:]</code></p>
+</li>
+<li>
+<p>With a <code>&amp;</code> code token. Instead of a one-time replacement, this will repeatedly call the script every click and replace the link name with the output.<br>
+The following example replaces the link name with a random item every click.<br><br>
+<code>[:+&amp; sadako.randomItem([&quot;apple&quot;, &quot;orange&quot;, &quot;banana&quot;]) @: Link name:]</code></p>
+</li>
+<li>
+<p>With an <code>&gt;</code> input token you can create a cycling text link that will cycle through a list and store the current item into a variable.<br><br>
+To the left of the <code>@:</code> name token is the variable to store the value and to the right is a list separated by <code>::</code> tokens.<br><br>
+<code>[:+&gt; $.color @: blue::red::purple::green:]</code><br><br>
+You can also use an <code>=</code> eval token to get the list from an evaluated script. The script must evaluate to an array. Either of the following examples work.</p>
+<ul>
+<li><code>[:&amp; _.colors = [&quot;blue&quot;, &quot;red&quot;, &quot;purple&quot;, &quot;green&quot;] :]</code><br><br>
+<code>[:+&gt; $.colors @: _.colors:]</code></li>
+<li><code>[:+&gt; $.color @:= [&quot;blue&quot;, &quot;red&quot;, &quot;purple&quot;, &quot;green&quot;] :]</code></li>
+</ul>
+</li>
+<li>
+<p>With a <code>#</code> page token. It will replace the link with the output of an included page. This acts exactly like including with the <code>&gt;&gt;=</code> include token, except it doesn&apos;t display until you click the link.<br><br>
+<code>[:+# some_page @: link name:]</code></p>
+</li>
+<li>
+<p>With a <code>%</code> label token. It will replace the link with the output of an included label. This acts exactly like including with the <code>&gt;&gt;=</code> include token, except it doesn&apos;t display until you click the link.<br><br>
+<code>[:+% some_label @: link name:]</code></p>
+</li>
+</ol>
+<p>With both included pages and included labels, the inclusion will stop once it sees a choice and will not include any choices.</p>
+<p>Page and label names can also be derived from script evaulation using an <code>=</code> eval token. For example, the following will include the page named <code>page3</code>:<br><br>
+<code>[:+#= &quot;page&quot; + (1 + 2) @: Link name:]</code></p>
+<h4 class="mume-header" id="dialog-links" ebook-toc-level-4 heading="Dialog Links">Dialog Links</h4>
+
+<p>The <code>*</code> dialog token is used to display a popup when the link is clicked. Like usual, the link name is taken from the text following the <code>@:</code> name token.</p>
+<p>By default, the dialog title is blank. However, if you follow the link name with a second <code>@:</code> name token, that will be used as the title of the dialog window. <strong>Sadako</strong> will continue to use that text for the title until it is defined again or until the dialog is closed. To force the title to be cleared, using the <code>@:</code> token without a value.</p>
+<p>You can use the <code>*</code> dialog token in six ways:</p>
+<ol>
+<li>
+<p>With an <code>!</code> action token. This closes the dialog window. If a name is given, it will close after clicking the link. If none is given, it will close immediately. Any text following the <code>!</code> action token will be discarded.<br><br>
+Close immediately: <code>[:*!:]</code><br><br>
+Close with link: <code>[:*! @: Link name:]</code></p>
+</li>
+<li>
+<p>Just output straight text to a dialog window.<br><br>
+<code>[:* Some text @: Link name @: Dialog Title:]</code></p>
+</li>
+<li>
+<p>With an <code>=</code> eval token. The script is evaluated before being displayed in the dialog window.<br><br>
+<code>[:*= &quot;Here&apos;s some math: &quot; + (1 + 2) @: Link name:]</code></p>
+</li>
+<li>
+<p>With a <code>&amp;</code> code token. Instead of displaying the text directly in a dialog window, the dialog will be displayed empty and the script will be evaluated. However, The output target of functions like <code>sadako.doLink()</code>, <code>sadako.overwrite()</code>, <code>sadako.writeOutput()</code>, and such will be redirected to the dialog window.<br>
+The following will write <code>Bleh</code> to the dialog window after it displays.<br><br>
+<code>[:*&amp; sadako.overwrite(&quot;Bleh&quot;) @: Link name:]</code></p>
+</li>
+<li>
+<p>With a <code>#</code> page token. The dialog will be shown with the included page.<br><br>
+<code>[:*# some_page @: link name:]</code></p>
+</li>
+<li>
+<p>With a <code>%</code> label token. The dialog will be shown with the included label.<br><br>
+<code>[:*% some_label @ label_name:]</code></p>
+</li>
+</ol>
+<p>As with the <code>+</code> reveal token, you can add an <code>=</code> eval token to the page and label tokens to evaluate the name of the page or label to display in the dialog. For example, the following will display the page named <code>page3</code> in a dialog window:<br><br>
+<code>[:*#= &quot;page&quot; + (1 + 2) @: Link name:]</code></p>
+<p>There isn&apos;t a standard dialog window defined in <strong>Sadako</strong>. The user must define one themselves in HTML. The &quot;<a href="file:///C:\sadako\docs\getting-started.md">getting started</a>&quot; guide has an example on how to get this up and running.</p>
+<h2 class="mume-header" id="macros" ebook-toc-level-2 heading="Macros">Macros</h2>
+
+<p><code>(:</code> <code>:)</code></p>
+<p>Macros are simply shortcuts for javascript functions. Their only real benefit is clarity of code and slightly less typing for constantly used functions.</p>
+<p>To create a macro, create a new function member of <code>sadako.macros</code>, like this:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>sadako.macros.say = function(who, what) {
+    sadako.text += who + &apos; says, &quot;&apos; + what + &apos;&quot;&apos;;
+}
+
+sadako.macros.blargh = function() { sadako.text += &quot;bleh&quot;; }
+
+sadako.macros.doMath = function(x, y) { return x + y; }
+</code></pre><p>Then to use them, you do this:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>(:say &quot;Ayren&quot;, &quot;Hi!&quot;:)
+(:blargh:)
+(:= doMath 1, 2:)
+
+// outputs
+Ayren says, &quot;Hi!&quot;
+bleh
+3
+</code></pre><p>If you look at the <code>doMath</code> macro, you&apos;ll see that it begins with the <code>=</code> value token as in a <code>[: :]</code> script block. This is treated in the same manner and adds the result to the output. Without the <code>=</code> value token, the macro would execute and display nothing. Like always, the other option is to use the <code>sadako.text</code> variable for output. The choice is yours. If you don&apos;t always require output, I&apos;d suggest the <code>=</code> value method.</p>
+<p>Basically a macro is just a text replacement for a <code>[: :]</code> script block call to a <code>sadako.macros</code> function.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>// this
+(:say &quot;Ayren&quot;, &quot;Hi!&quot;:)
+
+// is the same as
+[:&amp; sadako.macros.say(&quot;Ayren&quot;, &quot;Hi!&quot;):]
+</code></pre><p>Please be aware that <code>sadako.macros</code> is not saved when you save your game. Therefore, always define your macros in your javascript before you call <code>sadako.startGame()</code>.</p>
+<h2 class="mume-header" id="choices" ebook-toc-level-2 heading="Choices">Choices</h2>
+
+<h3 class="mume-header" id="choice-formatting" ebook-toc-level-3 heading="Choice Formatting">Choice Formatting</h3>
+
+<p><code>[</code> <code>]</code></p>
+<p>This set of tokens is reserved for choices and formats it in a specific way. These tokens are not taken into account for any non-choice script.</p>
+<p>When displaying the choice, the text before and inside the tokens will be displayed. When the choice is selected, the text before and after the tokens will be added to the new display.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>+ You search the office[.], but you find nothing of use.
+
+(choice text): You search the office.
+(new text): You search the office, but you find nothing of use.
+</code></pre><p>A handy trick is to put <code>[ ]</code> around all of the choice text. Doing so will prevent the choice text from displaying at all on the newly rendered page. This trick is used for most examples on this guide to make the example output easier to read.</p>
+<h3 class="mume-header" id="choice-links" ebook-toc-level-3 heading="Choice Links">Choice Links</h3>
+
+<p><code>&lt;&lt;</code> <code>&gt;&gt;</code></p>
+<p>Normally the link of a choice spans the entirety of the choice text. However, that isn&apos;t always ideal. For example, it&apos;s nice to have only the page number in a choice like <code>Turn to page 26.</code> be the link instead of the text surrounding it. That can be accomplished with the <code>&lt;&lt; &gt;&gt;</code> choice link tokens.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>+ Turn to page &lt;&lt;26&gt;&gt;.
+
+// outputs (the &lt;&gt; brackets represent the link):
+Turn to page &lt;26&gt;.
+</code></pre><p>In the above example, only the number <code>26</code> is a clickable link. The rest of the choice is just normal text.</p>
+<p>The way that it works is that anything before <code>&lt;&lt;</code> and after <code>&gt;&gt;</code> is normal text. Everything else is a link.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>+ Example 1. Everything is a link.
++ Example 2. Only &lt;&lt;this part&gt;&gt; is a link.
++ Example 2. &lt;&lt;This is a link.
++ Example 3.&gt;&gt; This is normal text.
+
+// outputs:
+&lt;Example 1. Everything is a link.&gt;
+Example 2. Only &lt;this part&gt; is a link.
+Example 3. &lt;This is a link.&gt;
+&lt;Example 4.&gt; This is normal text.
+</code></pre><p>The <code>&lt;&lt;</code> and <code>&gt;&gt;</code> choice link tokens are also removed when displaying the formatted choice text on the next page. You can use them in combination with the <code>[]</code> choice formatting tokens.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>+ You open the &lt;&lt;door[&gt;&gt;.], but there was no one there.
+
+(choice text): You open the &lt;door&gt;.
+(new text): You open the door, but there was no one there.
+</code></pre><h3 class="mume-header" id="static-choice" ebook-toc-level-3 heading="Static Choice">Static Choice</h3>
+
+<p><code>+</code></p>
+<p>A static choice differs from a <code>*</code> limited choice in the fact that it is reusable. Limited choices will be explained in a little bit.</p>
+<p>To understand how choices are implemented, you must understand how depth levels work. All example code before this has been with a depth level of 1. That is to say it&apos;s at the shallowest level.</p>
+<p>When the script is processed, it goes line by line through a depth level until it reaches the end.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Hello world!
++ [Finish]
+    You have selected &quot;finish&quot;.
+    The End.
+
+// outputs (choice is shown in &lt;&gt; brackets)
+Hello world!
+&lt;Finish&gt;
+
+
+// when &quot;Finish&quot; is selected
+You have selected &quot;finish&quot;.
+The End.
+</code></pre><p>When you select a choice, the script increases its depth by 1. Since &quot;Finish&quot; is level 1, it becomes level 2. The depth level for the choice is not chosen based on indentation, but is instead determined by the amount of tokens preceding the text. &quot;Finish&quot; is level 1 because there is only one <code>+</code> at the start of the line.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Hello world!
+++ [Finish]
+    The End.
+
+
+// outputs
+Hello world!
+</code></pre><p>In the above example, &quot;Hello world&quot; is level 1 but &quot;Finish&quot; is level 2. Because of this, the choice doesn&apos;t display. The script processes the first line, doesn&apos;t see any other level 1 lines, and completes. In fact, the script will output an error to the javascript console that looks like this.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Line depth difference is greater than 1:
+++ [Finish]
+</code></pre><p>Regardless of indentation, script between a choice and the next depth transition will remain with that depth. For example, the following code may not work the way you may expect.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Hello world!
++ [Finish]
+    You have selected &quot;finish&quot;.
+The End.
+
+
+// outputs (choice is shown in &lt;&gt; brackets)
+Hello world!
+&lt;Finish&gt;
+
+// when &quot;Finish&quot; is selected
+You have selected &quot;finish&quot;.
+The End.
+</code></pre><p>&quot;The End&quot; is still level 2, so it falls under &quot;Finish&quot; still, even though it&apos;s indented to a level 1 depth.</p>
+<p>The script will display all choices within that depth level until it reaches a line within that depth that is not a choice (usually a <code>-</code> depth token that will be explained a bit later).</p>
+<pre data-role="codeBlock" data-info class="language-"><code>+ [Choice One]
+    This was the first choice.
++ [Choice Two]
+    This was the second choice.
+-
++ [Choice Three]
+    This choice is not shown in the example.
+
+
+// outputs
+&lt;Choice One&gt;
+&lt;Choice Two&gt;
+
+// when &quot;Choice One&quot; is selected
+This was choice one.
+&lt;Choice Three&gt;
+
+// when &quot;Choice Two&quot; is selected
+This was choice two.
+&lt;Choice Three&gt;
+</code></pre><p>You can place any number of choices inside each other as long you use the correct depth levels.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>+ [Choice 1]
+    Next choice.
+    ++ [Choice 1.1]
+        Another choice.
+    ++ [Choice 1.2]
+        One more.
++ [Choice 2]
+    Foo
+
+
+// outputs
+&lt;Choice 1&gt;
+&lt;Choice 2&gt;
+
+// when &quot;Choice 1&quot; is selected
+Next choice.
+&lt;Choice 1.1&gt;
+&lt;Choice 1.2&gt;
+
+// when &quot;Choice 1.2&quot; is selected
+One more.
+</code></pre><h3 class="mume-header" id="labels" ebook-toc-level-3 heading="Labels">Labels</h3>
+
+<p>Unlike a script line with a label, simply displaying the choice does not increase its <em>seen</em> count. Instead, the label seen count is increased if you jump to the label or select the choice.</p>
+<p>Jumping to a choice that has been assigned a label is the equivalent of selecting that choice. In other words, jumping to the label actually jumps <em>inside</em> the choice block, not to the line with the label.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>## Page1
+    Begin test.
+    &gt;&gt; test
+
+    This text will not be seen.
+
+    + {test} Choice name will not display
+        Hello!
+        Times choice 1 has been seen: %:Page1.test
+    + {test2} Second choice
+        Bleh
+
+    - Times choice 2 has been seen: %Page1.test2
+
+
+// outputs
+Begin test.
+Hello!
+Times choice 1 has been seen: 1
+Times choice 2 has been seen: 0
+</code></pre><p>Normally the game does not save progress in a choice tree. It only saves progress when you click a link that leads to a label or page (using <code>sadako.doLink()</code>). However, if you assign a label to a choice, the game will allow you to save progress after that choice has been selected.</p>
+<h3 class="mume-header" id="limited-choice" ebook-toc-level-3 heading="Limited Choice">Limited Choice</h3>
+
+<p><code>*</code></p>
+<p>Choices using a <code>*</code> limited choice token (as opposed to a <code>+</code> static choice token) that have an associated label will disappear after being chosen once. Jumping to a label associated with a <code>*</code> limited choice will also make the choice disappear.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>{loop}
+* {c1} [Choice 1]
+* {c2} [Choice 2]
+* {c3} [Choice 3]
+    The End
+    &lt;&lt; END
+- &gt;&gt; loop
+
+
+// outputs
+&lt;Choice 1&gt;
+&lt;Choice 2&gt;
+&lt;Choice 3&gt;
+
+// if &quot;Choice 1&quot; is selected
+&lt;Choice 2&gt;
+&lt;Choice 3&gt;
+
+// if &quot;Choice 2&quot; is selected
+&lt;Choice 3&gt;
+
+// if &quot;Choice 3&quot; is selected
+The End
+</code></pre><p>If you have a <code>*</code> limited choice and do not assign it a label, it will throw an error during compile. The error will look something like this:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Choice found without associated label.
+[init] [0] [1]: &quot;Sure!&quot;
+</code></pre><p>Fallback choices do not throw this error even if they do not have a label.</p>
+<h3 class="mume-header" id="fallback-choice" ebook-toc-level-3 heading="Fallback Choice">Fallback Choice</h3>
+
+<p>Choices also come with a method for a default fallback when all other options have been chosen. All you need to do is have a choice without a text description. Once all visible choices have been exhausted, Sadako will then select the first unnamed choice that it sees. You can use this to safely exit a loop.</p>
+<p>Regardless of whether this is a <code>*</code> choice, <code>+</code> static, or has an <code>{ }</code>inline label, this choice will never disappear.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>{loop}
+* {c1} [Choice 1]
+* {c2} [Choice 2]
+* {c3} [Choice 3]
++ [Choice 4] :: 1 == 0
+*
+    Exiting loop.
+    &gt;&gt; finish
+- &gt;&gt; loop
+
+{finish} All done.
+
+
+// outputs
+&lt;Choice 1&gt;
+&lt;Choice 2&gt;
+&lt;Choice 3&gt;
+
+// if &quot;Choice 1&quot; is selected
+&lt;Choice 2&gt;
+&lt;Choice 3&gt;
+
+// if &quot;Choice 2&quot; is selected
+&lt;Choice 3&gt;
+
+// if &quot;Choice 3&quot; is selected
+Exiting loop.
+All done.
+</code></pre><p>Notice that <code>Choice 4</code> is never displayed because of its inline condition. Because it&apos;s not available, the loop will safely enter the fallback.</p>
+<p>Another thing to note is that the fallback is triggered when choices above it not available. That is to say, if you were to move the fallback choice to between <code>Choice 2</code> and <code>Choice 3</code>, the fallback will trigger once <code>Choice 1</code> and <code>Choice 2</code> are removed, even if <code>Choice 3</code> is still available.</p>
+<h3 class="mume-header" id="choice-includes" ebook-toc-level-3 heading="Choice Includes">Choice Includes</h3>
+
+<p>As mentioned before, once a choice is seen by the script, the script will stop processing after seeing the next non-choice depth token or a choice that is a lower depth level than current. The drawback to this logic is that it&apos;s not possible to include a list of choices once a choice is seen.</p>
+<p>For example, this works just fine because it jumps before seeing any choices:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Example text.
+&gt;&gt; choices
+- &lt;&lt; END
+
+= choices
++ Choice 1
++ Choice 2
+
+// outputs:
+Example text.
+&lt;Choice 1&gt;
+&lt;Choice 2&gt;
+</code></pre><p>However, this does not work to include a list of choices because the script stops once it sees the <code>-</code> depth token:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Example text.
++ Choice 1
+- &gt;&gt; choices
+&lt;&lt; END
+
+= choices
++ Choice 2
++ Choice 3
+
+// outputs:
+Example text.
+&lt;Choice 1&gt;
+</code></pre><p>The fix for this is the <code>&gt;&gt;=</code> include token in conjunction with the <code>+</code> static choice token (this does not work with a <code>*</code> limited choice token). The <code>+ &gt;&gt;=</code> choice include token will include a page or label just like normal include (see the <a href="#includes">includes</a> section for more informtion). Unlike a normal include that stops at choices, a choice include does not have that limitation. Therefore this example works as you would expect.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Example text.
++ Choice 1
++ &gt;&gt;= choices
++ Choice 4
+- &lt;&lt; END
+
+= choices
++ Choice 2
++ Choice 3
+
+// outputs:
+Example text.
+&lt;Choice 1&gt;
+&lt;Choice 2&gt;
+&lt;Choice 3&gt;
+&lt;Choice 4&gt;
+</code></pre><p>Be aware that a <code>+ &gt;&gt;=</code> choice include still includes a block of script, not only choices. Notice how the following adds the script in the included section to text ouput that is displayed before the choices.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Example text.
++ Choice 1
++ &gt;&gt;= choices
+- &lt;&lt; END
+
+= choices
+Second choice.
++ Choice 2
+
+// outputs:
+Example text.
+Second choice.
+&lt;Choice 1&gt;
+&lt;Choice 2&gt;
+</code></pre><p>Also note that <code>{ }</code> inline labels are not allowed to be used with <code>+ &gt;&gt;=</code> choice includes and they will be stripped during compile time.</p>
+<h2 class="mume-header" id="depths" ebook-toc-level-2 heading="Depths">Depths</h2>
+
+<h3 class="mume-header" id="depth-token" ebook-toc-level-3 heading="Depth Token">Depth Token</h3>
+
+<p><code>-</code></p>
+<p>The depth token realigns the depth. Say that you are three levels deep in choices and you want to get back to a depth of 1. The <code>-</code> depth token is the most convenient way to do it.</p>
+<p>The depth can also changed using <code>+</code> static choice tokens, <code>*</code> limited choice tokens, <code>=</code> label tokens, and <code>~</code> conditional tokens. The difference is that the <code>-</code> depth token only sets the depth and does not perform any extra functions.</p>
+<p>The flow of story script goes like this:</p>
+<ol>
+<li>All non-choice story script lines are processed.</li>
+<li>If the script sees <code>&lt;&lt; END</code> or <code>&lt;&lt; ABORT</code> or the end of the page, it stops processing any further lines of script.</li>
+<li>If the script runs out of content in that depth, it looks for a depth changing token (listed above) in the next line and sets the depth to that, as long as the depth is not greater than the current depth.</li>
+<li>If the script sees any choices, it will process all choices until it sees a non-choice depth token.</li>
+<li>After a choice is selected, the script will jump to the story block within that choice and start again at step 1.</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>This is level 1.
++ [Choice 1]
+    Choice 1, level 2.
+    ++ [Choice 1.1]
+        Choice 1.1, level 3.
+    ++ [Choice 1.2]
+        Choice 1.1, level 3.
+    -- Level 2 again.
+    Still level 2.
++ [Choice 2]
+    Choice 2, level 2.
+- Level 1 again.
+
+
+// outputs
+This is level 1.
+&lt;Choice 1&gt;
+&lt;Choice 2&gt;
+
+// if &quot;Choice 1&quot; is selected
+Choice 1, level 2.
+&lt;Choice 1.1&gt;
+&lt;Choice 1.2&gt;
+
+// if &quot;Choice 1.1&quot; is selected
+Choice 1.1, level 3.
+Level 2 again.
+Still level 2.
+Level 1 again.
+</code></pre><p>You may be thinking that it should have jumped to <code>Choice 2</code> instead of the <code>-</code> depth token, however <code>Choice 1</code> and <code>Choice 2</code> are two parts of a group of choices. When you exit a choice, it jumps past the rest of the options in that choice group, which is why <code>Choice 2</code> is ignored even though it&apos;s the next depth token in the script.</p>
+<p>Notice that if you comment out or remove the <code>-- Level 2 again.</code> line, it will not set the depth to level 2. <code>Still level 2.</code> will be set as level 3 and the next depth level token will be <code>- Level 1 again.</code>, so the script will jump to that. The level of depth is indicated by the number of <code>-</code> tokens, just like it is with choices.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>// if &quot;Choice 1.1&quot; is selected
+Choice 1.1, level 3.
+Level 1 again.
+</code></pre><p>One convenient use of the <code>-</code> depth token is forcing a separation between multiple sets of choices, even if the line is blank.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>+ [Choice 1]
++ [Choice 2]
+-
++ [Choice 3]
+
+
+// outputs
+&lt;Choice 1&gt;
+&lt;Choice 2&gt;
+
+// if &quot;Choice 1&quot; is selected
+&lt;Choice 3&gt;
+</code></pre><h3 class="mume-header" id="depth-labels" ebook-toc-level-3 heading="Depth Labels">Depth Labels</h3>
+
+<p><code>=</code></p>
+<p>A depth label is basically a combination of a <code>-</code> depth token and a <code>{ }</code> label. It both sets the depth level and also sets a label you can jump to for that line.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>// this
+=== test
+
+// is the equivalent of this
+--- {test}
+</code></pre><p>The benefit of a <code>{ }</code> label block is that it can be followed by text or be set on a choice. This is not possible with a <code>=</code> depth label. The benefit of a depth label is clarity of code.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>-- {test} This is kind of messy.
+Some other stuff to write.
+&lt;&lt;
+
+== test
+This is easier to read.
+Some stuff to write
+&lt;&lt;
+</code></pre><p>Because of the way that labels are handled by <strong>Sadako</strong>, it is recommended that you only include alphanumeric characters and underscores in their naming.</p>
+<h2 class="mume-header" id="condition-block" ebook-toc-level-2 heading="Condition Block">Condition Block</h2>
+
+<p><code>~</code></p>
+<p>The condition block allows you to display or not display blocks of story script based on conditions. It&apos;s basically <code>if</code>/<code>else if</code>/<code>else</code>/<code>for</code>/<code>while</code> from javascript, except it runs story script.</p>
+<p>It&apos;s important to note that the <code>~</code> condition token acts the same as a <code>+</code> choice token in that the levels of depth are based on the number of leading tokens, and the script inside the block increases by one depth.</p>
+<p>Be aware <code>{ }</code> inline labels are not allowed with condition blocks and will be stripped during compiling.</p>
+<h3 class="mume-header" id="branches" ebook-toc-level-3 heading="Branches">Branches</h3>
+
+<p>Like in every programming language, a condition branch determines whether to run or not run a block of script depending on a condition check.</p>
+<p><code>if</code> is the initial condition check. <code>else if</code> will be checked only if the preceding condition checks fail. You can have as many <code>else if</code> statements in a row that you want. And finally, the script in the <code>else</code> block will be executed if all of previous condition checks fail.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>~ if ($.money &gt; 100)
+    You can buy the following items.
+    ++ [A pack of gum.]
+        You bought some gum.
+    ++ [Some milk.]
+        You bought some milk.
+~ else if ($.money &gt; 50)
+    You almost have enough to buy something. Why is everything so expensive?
+~ else
+    You don&apos;t have enough money to buy anything.
+- You should probably leave the store now.
+
+
+// outputs
+// if money less than 100
+You don&apos;t have enough money to buy anything.
+You should probably leave the store now.
+
+// if money is less than 100 but greater than 50
+You almost have enough to buy something. Why is everything so expensive?
+You should probably leave the store now.
+
+// if money is greater than 100
+You can buy the following items.
+&lt;A pack of gum.&gt;
+&lt;Some milk.&gt;
+
+// if &quot;A pack of gum.&quot; is selected
+You bought some gum.
+You should probably leave the store now.
+</code></pre><p>Notice that the depth level increased inside the conditional block, so the choices begin with two <code>+</code> choice tokens instead of one. If you only had one, the choice would be outside of the conditional block even though it was indented correctly.</p>
+<p>The following is an example of erroneous code.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>Beginning test.
+~ if (1 == 0)
+    This text will not be seen.
+    + [This choice is not inside the block]
+        Test
+
+// outputs
+Beginning text.
+&lt;This choice is not inside the block&gt;
+</code></pre><p>Also be sure not to interrupt the flow of the conditional blocks. There should not be any <code>*</code> or <code>+</code> choices, <code>=</code> labels, or <code>-</code> depth tokens of the same depth between <code>if</code>, <code>else if</code>, and <code>else</code> blocks or else the script will fail. Errors will be printed to the javascript console.</p>
+<p>The following is an example of erroneous code.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>## Page1
+    ~ if (1 == 1)
+        Write something.
+        -- This is within the condition block and is okay.
+    - This line makes it fail.
+    ~ else if (1 == 1)
+        Bleh.
+</code></pre><p>This gives the following error.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>&apos;else if&apos; found without &apos;if&apos; statement.
+story: [Page1] [0] [2]
+eval: (1 == 1)
+</code></pre><h3 class="mume-header" id="loops" ebook-toc-level-3 heading="Loops">Loops</h3>
+
+<p>Condition loops let you execute the same script over and over until a specific condition is met. When done correctly, this can save a lot of typing. One important use of loops is to iterate over an array of items.</p>
+<p><code>for</code> loop blocks work exactly like they do in javascript. For those unaccustomed to them, it goes like this:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>~ for (_.a = 0; _.a &lt; 5; _.a++)
+    value: _:a
+    
+// outputs
+value: 0
+value: 1
+value: 2
+value: 3
+value: 4
+</code></pre><p>The breakdown of this is that values passed to <code>for</code> are divided into subsections by the <code>;</code> operator. Here is how they work:</p>
+<ol>
+<li>The first value is an expression or variable declartion to be executed before the loop begins. This is only run once and is typically used to set an iterative variable to its initial value, as is done in the example.</li>
+<li>The second value is the condition in which to break the loop (stop looping and continue with the rest of the script). In the example, it breaks once <code>_.a</code> is equal to <code>5</code>.</li>
+<li>The third and final value is the code to run at the end of every loop. Usually this code is used to increase an iterator value as is done in the example. This is run at the very end of the loop before the condition in the second value is checked. Therefore in the example, <code>_.a</code> will never equal <code>5</code> inside the loop. This is because after the value is increased, the condition check sees that it&apos;s <code>5</code>, and so it immediately exits the loop.</li>
+</ol>
+<p>It&apos;s recommended to use temporary variables for loops because you won&apos;t want throwaway variables like <code>a</code> being saved to your save files with <code>$.a</code> or having having it clogging up the browser window object (<code>a = 1</code> is actually <code>window.a = 1</code> for those unaware. This is a quirk of javascript).</p>
+<p>Since this is normal sadako story script, most of the usual things work, like jumps and conditions. You can also do loops inside of loops as long as you increase the depth, just like placing an <code>if</code> statement inside of an <code>if</code> statement.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>~ for (_.a = 0; _.a &lt; 3; ++_.a)
+    A loop: _:a, B loop:
+    ~~ for (_.b = 0; _.b &lt; 3; ++_.b)
+        &lt;&gt; _:b
+        
+// outputs
+A loop: 0, B loop: 0 1 2
+A loop: 1, B loop: 0 1 2
+A loop: 2, B loop: 0 1 2
+</code></pre><p>There is another use of the <code>for</code> loop that&apos;s used for looping over a list of object members. For example:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:&amp; $.foo = {bleh: &quot;asdf&quot;, blargh: 2, meh: true}:]
+~ for (_.k in $.foo)
+    The value of _:k is $:foo[_.k].
+    
+// outputs
+The value of bleh is asdf.
+The value of blargh is 2.
+The value of meh is true.
+</code></pre><p><code>while</code> loops are also just like their javascript counterparts. Unlike a <code>for</code> loop, <code>while</code> loops will loop forever as long as the condition check continues to return true.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:&amp; _.list = [&quot;blargh&quot;, &quot;foo&quot;, &quot;bleh&quot;]:]
+~ while (_.list.length)
+    [:= _.list.pop():]
+    
+// outputs
+blargh
+foor
+bleh
+</code></pre><p>This will loop until <code>_.list</code> is empty. We remove an item each loop, so it&apos;ll eventually be empty and the loop will end.</p>
+<p>But what if we want to leave the loop early? This is where <code>&lt;&lt; BREAK</code> comes in. The <code>&lt;&lt; BREAK</code> command forces the loop to end immediately without processing the remainder of the lines in the loop. Unlike <code>&lt;&lt; END</code> or <code>&lt;&lt; ABORT</code> which stops the script entirely, <code>&lt;&lt; BREAK</code> allows the script to resume running after exiting the loop.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:&amp; _.list = [&quot;blargh&quot;, &quot;foo&quot;, &quot;bleh&quot;]:]
+~ while (_.list.length)
+    [:&amp; _.value = _.list.pop():]
+    _:value
+    ~~ if (_.value == &quot;foo&quot;)
+        &lt;&lt; BREAK
+-
+All done.
+
+
+// outputs:
+blargh
+foo
+All done.
+</code></pre><p><code>&lt;&lt; BREAK</code> is reserved for use in loops and will not work correctly elsewhere.</p>
+<p>One last command that is reserved for loop use is <code>&lt;&lt; CONTINUE</code>. This is similar to <code>&lt;&lt; BREAK</code> except that instead of leaving the loop, it starts the next iteration.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>~ for (_.a = 1; _.a &lt;= 3; ++_.a)
+    ~~ if (_.a == 2)
+        Let&apos;s skip this one.
+        &lt;&lt; CONTINUE
+    --
+    Loop: _:a
+    
+// outputs:
+Loop: 1
+Let&apos;s skip this one.
+Loop: 3
+</code></pre><p>Calling <code>&lt;&lt; BREAK</code> or <code>&lt;&lt; CONTINUE</code> outside of a loop is the equivelent of calling <code>&lt;&lt; END</code>.</p>
+<p>Loops do have a couple restrictions to the script being run:</p>
+<ol>
+<li>
+<p>Jumping to a label inside a loop from outside of the loop will not loop when it hits the end, but will instead continue on with the rest of the script.</p>
+</li>
+<li>
+<p>Choices will not work inside of a loop and the script will begin its next loop as soon as it sees a choice. If you need to use a loop in combination with choices, you can accomplish this by creating a loop via jumps and labels.</p>
+</li>
+</ol>
+<p>The following is an example of creating a loop with jumps and labels:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>[:&amp; $.x = 0:]
+= loop
+Please select a choice.
++ Choice One
+    There you go.
+    &gt;&gt; loop_end
++ Choice Two
+    Not that one.
++ Choice Three
+    Not that one.
+- [:&amp; $.x += 1:]
+~ if ($.x == 3)
+    Sorry. Too many tries.
+    &gt;&gt; loop_end
+- &gt;&gt; loop
+
+= loop_end
+The end.
+[:&amp; delete $.x:]
+</code></pre><p>This will loop forever until you select <code>Choice One</code> or <code>$.x</code> equals <code>3</code>, which will then jump outside of the loop. Simple but effective.</p>
+<p>Temporary variables are cleared once you select a choice, so we use a saved variable instead since it will carry from choice to choice. Of course, we don&apos;t actually want this variable saved when saving your game, so we delete it in the last line. <code>delete</code> is a javascript command that deletes a variable, including a member of an object.</p>
+<h2 class="mume-header" id="scenes-1" ebook-toc-level-2 heading="Scenes">Scenes</h2>
+
+<p>Scenes are a way of expressing an event that is taking place or has taken place. Scenes can happen one after another, or many scenes at once. Whether they are running or not is based on conditions that are checked as every story script line is processed.</p>
+<h3 class="mume-header" id="examples" ebook-toc-level-3 heading="Examples">Examples</h3>
+
+<p>To make it clear what role a scene performs, first we should look at some script without scenes.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>## example
+    Your friend turns to you and asks &quot;Would you like to go to the movies?&quot;
+    + &quot;Sure!&quot;
+        &quot;Sweet!&quot; They pause. &quot;You can buy your own ticket, right?&quot;
+        ++ &quot;Yeah, no problem.&quot;
+            &quot;Great! Let&apos;s go!&quot;
+            You and your friend go to the movies and have a great time.
+        ++ {no_money} &quot;Sorry, no.&quot;
+            &quot;Ugh. I can&apos;t believe you. I&apos;ll have to go alone then.&quot; They wander away.
+    + {no} &quot;Nah.&quot;
+        &quot;Seriously? Well, whatever. I&apos;m going without you.&quot;
+
+    ~ if (%.example.no || %.example.no_money)
+        You spend the day by yourself.
+
+    + [Go Home]
+        &gt;&gt; #home
+
+## home
+    You&apos;re at your home. {:(!%.example.no &amp;&amp; !%.example.no_money) || %.home.called::Your friend is here with you.:}
+
+    ~ if (%.home.called)
+        Your friend looks happy but reserved. &quot;That movie was pretty good. I wish you could have seen it.&quot;
+
+    ~ else if (!%.example.no &amp;&amp; !%.example.no_money)
+        Your friend is happy. &quot;That movie was great!&quot;
+
+    ~ else
+        ++ [Call Friend]
+            You decide to call your friend.
+            &quot;The movie is over now. I&apos;ll be right over.&quot;
+            +++ {called} [Back]
+                &lt;&lt; RETURN
+</code></pre><p>Pretty messy. There are a lot of conditionals based on whether you&apos;ve seen labels or not and it&apos;s somewhat confusing looking even though the labels are still within sight. It&apos;d only get worse as the conditions are moved further from their origin and replicated in other locations of the script. Scenes can alleviate this issue.</p>
+<p>First we add the scene in javascript. This should be always be defined in your initialization script so that it&apos;s run whether you start a fresh game or load a save.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>sadako.addScene(&quot;alone&quot;, &quot;%.example.no || %.example.no_money&quot;, &quot;%.home.called&quot;);
+</code></pre><p>And now we rewrite it using scenes for the condition checks.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>## example
+    Your friend turns to you and asks &quot;Would you like to go to the movies?&quot;
+    + &quot;Sure!&quot;
+        &quot;Sweet!&quot; They pause. &quot;You can buy your own ticket, right?&quot;
+        ++ &quot;Yeah, no problem.&quot;
+            &quot;Great! Let&apos;s go!&quot;
+            You and your friend go to the movies and have a great time.
+        ++ {no_money} &quot;Sorry, no.&quot;
+            &quot;Ugh. I can&apos;t believe you. I&apos;ll have to go alone then.&quot; They wander away.
+    + {no} &quot;Nah.&quot;
+        &quot;Seriously? Well, whatever. I&apos;m going without you.&quot;
+
+    ~ if (*.alone.isActive)
+        You spend the day by yourself.
+
+    + [Go Home]
+        &gt;&gt; #home
+
+## home
+    You&apos;re at your home. {:!*.alone.isActive::Your friend is here with you.:}
+
+    ~ if (*.alone.hasEnded)
+        Your friend looks happy but reserved. &quot;That movie was pretty good. I wish you could have seen it.&quot;
+
+    ~ else if (!*.alone.hasStarted)
+        Your friend is happy. &quot;That movie was great!&quot;
+
+    ~ else
+        ++ [Call Friend]
+            You decide to call your friend.
+            &quot;The movie is over now. I&apos;ll be right over.&quot;
+            +++ {called} [Back]
+                &lt;&lt; RETURN
+</code></pre><p>That&apos;s much easier to read. Also as mentioned in the variable embedding section, the <code>*.</code> token is the shortcut for the <code>sadako.scenes</code> variable, and <code>*:</code> is the shortcut to its value.</p>
+<p>Other than just clarity of code, scenes are useful for when you have conditions that are difficult to check, or that you want checked constantly. For example, imagine that you had an inventory array and wanted to check if it ever held an item. Once you removed that item from the array, how would you know that it was ever there? Scenes are perfect for this.</p>
+<p>Scene conditions are checked every line and the <code>isActive</code> state is set to <code>true</code> once the  <code>checkStart</code> condition is met. After <code>isActive</code> is set, it will only be set to <code>false</code> if the <code>checkEnd</code> condition (if provided) is met.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>// javascript
+sadako.var.inventory = {};
+sadako.addScene(&quot;held_gun&quot;, &quot;&apos;gun&apos; in $.inventory&quot;);
+
+// sadako script
+Held gun: *:held_gun.isActive
+[:&amp; $.inventory.gun = true :]
+Gun: $:inventory.gun
+[:&amp; delete $.inventory.gun :]
+Gun: $:inventory.gun
+Held gun: *:held_gun.isActive
+
+
+// outputs
+Held gun: false
+Gun: true
+Gun: undefined
+Held gun: true
+</code></pre><p>Even more appropriate may be using <code>*.held_gun.hasStarted</code>, which is a count of how many times the scene has started. This will never return to 0 even when a scene ends, so you can always use it to check if the scene has started at least once.</p>
+<h3 class="mume-header" id="defining" ebook-toc-level-3 heading="Defining">Defining</h3>
+
+<p>A scene comes with four members you can access for its state. These are set automatically based on the condition checks.</p>
+<ul>
+<li><code>isActive</code>: Whether we are currently in the scene. This is initially set to <code>false</code>. It is set to <code>true</code> when the <code>startCheck</code> conditions have passed, and then set to <code>false</code> again once <code>endCheck</code> has passed.</li>
+<li><code>hasStarted</code>: A count of how many times scene has started. Incremented every time <code>checkStart</code> passes.</li>
+<li><code>hasEnded</code>: A count of how many times scene has ended. Incremented every time <code>checkEnd</code> passes.</li>
+<li><code>ending</code>: Any value returned from <code>doEnd()</code> is stored in <code>ending</code>. This can be useful to determine which way a scene has ended if it has multiple ways of ending the scene.</li>
+<li><code>isRecurring</code> is <code>false</code> by default. If set to <code>true</code>, a scene can be started again after it has ended.</li>
+</ul>
+<p>That&apos;s not all scenes can do though. To understand its use, the arguments of the <code>sadako.addScene</code> function must first be explained.</p>
+<p><code>sadako.addScene(id, checkStart, checkEnd, doStart, doEnd, doBefore, doAfter, isRecurring)</code></p>
+<ul>
+<li><code>id</code>: The name of the scene to be defined.</li>
+<li><code>checkStart</code>: The condition to check for the start of the scene. String or function.</li>
+<li><code>checkEnd</code>: The condition to check for the end of the scene. String or function.</li>
+<li><code>doStart</code>: The script to be run when <code>checkStart</code> evaluates to <code>true</code>. String or function.</li>
+<li><code>doEnd</code>: The script to be run when <code>checkEnd</code> evaluates to <code>true</code>. String or function.</li>
+<li><code>doBefore</code>: The script to run before every page renders while the scene is active. String or function.</li>
+<li><code>doAfter</code>: The script to run after every page renders while the scene is active. String or function.</li>
+<li><code>isRecurring</code>: Whether the scene should be run again if the start conditions are met after the scene has ended. Boolean.</li>
+</ul>
+<p><code>id</code> and <code>checkStart</code> are the only required arguments. The others can be skipped over with a value of <code>undefined</code> or <code>null</code>.</p>
+<p><code>checkStart</code> and <code>checkEnd</code> can be either a string or a function. If the argument is a string, it will be evaluated to determine if the conditions are true. The string may contain sadako script like in the example. Strings are good for simple comparisons or when you want to take advantage of sadako script.</p>
+<p>If the argument is a function, you must place your condition checks inside the function and return <code>true</code> if the conditions are met. This is useful for more complex condition checks. The following is an example.</p>
+<p><code>sadako.addScene(&quot;test&quot;, function(){ if (sadako.page_seen[&quot;page2&quot;]) return true; })</code></p>
+<p>Be aware that the <code>sadako.scenes</code> object is not saved along with game data, so all entries in the object should be defined in your javascript initialization and not in sadako script.</p>
+<h2 class="mume-header" id="saving-checkpoints" ebook-toc-level-2 heading="Saving Checkpoints">Saving Checkpoints</h2>
+
+<p>The way that <strong>Sadako</strong> manages saves is that whenever you reach a &quot;checkpoint&quot;, it stores the current state (all of <strong>Sadako</strong>&apos;s necessary variables along with whatever you store inside <code>sadako.var</code>) into a data object variable. When you decide to save your game, it writes the contents of that data to the disk. It only saves whatever the values of the data was at the time of last checkpoint, so it&apos;s entirely possible to progress through multiple choices without it saving your progress.</p>
+<p>To manage this correctly, you must pay attention to what triggers a checkpoint. There are three things that do this.</p>
+<ul>
+<li>Clicking a link that navigates to a new label using <code>sadako.doLink()</code>. (Example:<br>
+<code>[:% some_label:]</code>)</li>
+<li>Clicking a link that navigates to a new page using <code>sadako.doLink()</code>. (Example: <code>[: some_page:]</code>)</li>
+<li>Clicking a choice that has an associated <code>{ }</code> inline label. (Example: <code>* {cp} Some Choice</code>)</li>
+</ul>
+<p><code>&gt;&gt;</code> jumps in the story script will not trigger a checkpoint. You can however trigger this manually with <code>sadako.doLink()</code> which will act exactly like clicking a link. That is to say, no text leading up to this call will be displayed and it will not process any lines following this story block since it is an immediate redirect to that label or page.</p>
+<p>The <code>sadako.doLink()</code> function accepts an argument in the same format as a <code>&gt;&gt;</code> jump token.</p>
+<pre data-role="codeBlock" data-info class="language-"><code>// jumps to a label
+[:&amp; sadako.doLink(&quot;some_label&quot;):]
+
+// jumps to a page
+[:&amp; sadako.doLink(&quot;#some_page&quot;):]
+</code></pre></div></body></html>
+    </div>
+  </body>
+</html>
