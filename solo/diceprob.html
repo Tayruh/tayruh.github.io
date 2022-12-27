@@ -406,7 +406,7 @@ function run() {
 	var output = document.getElementById("output");
 	
 	setTimeout(function() {
-		output.innerHTML = "Calculating...";
+		output.innerHTML = "<div class='success'>Calculating...</div>";
 	}, 0);
 	
 	setTimeout(function() {
@@ -498,7 +498,7 @@ window.onload = function() { help(); };
 	<div id="output"></div>
 
 	<div id="help" style='display:none'><div style='font-size:.8em; font-family:serif'>
-		<p><b>Player</b> is the player roll. <b>Opposed</b> is the opposed roll or target number used evaluating success and is optional. Each box takes a list of arguments separated by a space. The arguments are case-insensitive.</p>
+		<p><b>Player</b> is the player roll. <b>Opposed</b> is the opposed roll or target number used for evaluating success; this value is optional. Each box takes a list of arguments separated by a space. The arguments are case-insensitive.</p>
 		
 		<p>The following are the list of arguments available. </p>
 		
