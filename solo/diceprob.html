@@ -1,0 +1,550 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+function random(min, max) {
+    var getRandom = function() {
+        if (window.crypto === undefined) return Math.random();
+
+        var byte_array = new Uint32Array(10);
+        window.crypto.getRandomValues(byte_array);
+        
+        return byte_array[0]/(0xffffffff + 1);
+    };
+
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(getRandom() * (max - min + 1)) + min;
+};
+
+function rollDice(dice, keep, drop, ignore, explode, reroll, counts) {
+    var a, b, roll;
+    var die = [];
+
+    die[0] = 0;
+    
+    for (a = 0; a < dice.length; ++a) {
+        if (/^f/i.test(dice[a])) {
+            roll = random(-1, 1);
+            die.unshift(roll);
+            continue;
+        }
+
+        roll = random(1, dice[a]);
+        
+        if (reroll.indexOf(roll) !== -1 || (roll === dice[a] && reroll.indexOf("H") !== -1)) {
+        	a -= 1;
+        	continue;
+        }
+
+        if (ignore.indexOf(roll) !== -1) continue;
+        
+        if (explode.indexOf(roll) !== -1 || (roll === dice[a] && explode.indexOf("H") !== -1)) {
+        	a -= 1;
+        }
+        
+        for (b = 0; b < die.length; ++b) {
+            if (roll > die[b]) {
+                die.splice(b, 0, roll);
+                break;
+            }
+        }
+    }
+
+    die.pop(); // remove 0 entry
+
+    if (drop !== null) {
+        if (drop[0] === "H") die.splice(0, drop[1]);
+        else if (drop[0] === "L") die.splice(0 - drop[1], drop[1]);
+    }
+
+    if (keep !== null) {
+        if (keep[0] === "H") die.splice(keep[1]);
+        else if (keep[0] === "L") die.splice(0, keep[1]);
+    }
+
+    var total = 0;
+    for (a = 0; a < die.length; ++a) {
+        if (!counts.length) total += die[a];
+        else if (counts.indexOf(die[a]) !== -1) total += 1;
+    }
+
+    return total;
+};
+
+function probabilities(dice1, dice2) {
+    var dupeDice = function(dice) {
+        if (dice === undefined) return [];
+
+        var a, b, count, match;
+        var duped = [];
+
+        for (a = 0; a < dice.length; ++a) {
+            if (dice[a] === undefined || !dice[a].length)  continue;
+            if ((match = dice[a].match(/^([0-9]+)?d(f|[0-9]+)/i)) === null) {
+            	if (/^[0-9]+$/.test(dice[a])) duped.push(parseInt(dice[a]));
+                else duped.push(dice[a]);
+                continue
+            }
+            
+            count = parseInt(match[1]) || 1;
+
+            for (b = 0; b < count; ++b) {
+                if (/^f/i.test(match[2])) duped.push("F");
+                else duped.push(parseInt(match[2]));
+            }
+        }
+
+        return duped;
+    };
+
+    var getCompare = function(dice) {
+        if (!dice.length) return ">";
+
+        var a, val, match;
+        for (a = 0; a < dice.length; ++a) {
+            val = dice[a].toString();
+            
+            if ((match = val.match(/^([><!=]+)/)) === null) continue;
+            dice.splice(a, 1);
+            if (/^!?=$/.test(match[1])) return match[1] + "=";
+            if (match[1] === "!=") return "!==";
+            
+            return match[1];
+        }
+
+        return ">";
+    };
+
+    var getKeep = function(dice) {
+        if (!dice.length) return null;
+
+        var a, val, match;
+        for (a = 0; a < dice.length; ++a) {
+            val = dice[a].toString();
+            
+            if ((match = val.match(/^k([hl])([0-9]*)/i)) === null) continue;
+            dice.splice(a, 1);
+            return [match[1].toUpperCase(), match[2] || 1];
+        }
+
+        return null;
+    };
+
+    var getDrop = function(dice) {
+        if (!dice.length) return null;
+
+        var a, val, match;
+        for (a = 0; a < dice.length; ++a) {
+            val = dice[a].toString();
+            if ((match = val.match(/^d([hl])([0-9]*)/i)) === null) continue;
+            dice.splice(a, 1);
+            return [match[1].toUpperCase(), match[2] || 1];
+        }
+
+        return null;
+    };
+
+    var getIgnore = function(dice) {
+        if (!dice.length) return [];
+
+        var val, match;
+        var a = 0;
+        var ignores = [];
+
+        do {
+            val = dice[a].toString();
+            
+            match = val.match(/^i([0-9]+)/i);
+            if (match !== null) {
+                dice.splice(a, 1);
+                ignores.push(parseInt(match[1]));
+            }
+            else a += 1;
+        }
+        while (a < dice.length);
+
+        return ignores;
+    };
+
+    var getMod = function(dice) {
+        if (!dice.length) return null;
+
+        var val, match;
+        var a = 0;
+        var mod = 0;
+
+        do {
+            val = dice[a].toString();
+            
+            match = val.match(/^([+-][0-9]+)/i);
+            if (match !== null) {
+                dice.splice(a, 1);
+                mod += parseInt(match[1]);
+            }
+            else a += 1;
+        }
+        while (a < dice.length);
+
+        return mod;
+    };
+
+    var getCount = function(dice) {
+        if (!dice.length) return [];
+
+        var a, val, match, low, high;
+        var counts = [];
+        for (a = 0; a < dice.length; ++a) {
+            val = dice[a].toString();
+            
+            if ((match = val.match(/^c([0-9]+)(?:-([0-9]+))?/i)) === null) continue;
+            dice.splice(a, 1);
+            low = parseInt(match[1]);
+            high = (parseInt(match[2]) || low);
+            
+            for (; low <= high; ++low) {
+                counts.push(low);
+            }
+            break;
+        }
+
+        return counts;
+    };
+
+    var getProb = function(dice) {
+        if (!dice.length) return null;
+
+        var a, val, match;
+        for (a = 0; a < dice.length; ++a) {
+            val = dice[a].toString();
+            
+            if ((match = val.match(/^(at(?:least|most))/i)) === null) continue;
+            dice.splice(a, 1);
+            return match[1].toLowerCase();
+        }
+
+        return null;
+    };
+    
+    var getExplode = function(dice) {
+    	if (!dice.length) return [];
+
+        var a, val, match, low, high;
+        var explodes = [];
+        for (a = 0; a < dice.length; ++a) {
+            val = dice[a].toString();
+            if ((match = val.match(/^x(h|[0-9]+)/i)) === null) continue;
+            dice.splice(a, 1);
+            if (/h/i.test(match[1])) return ["H"];
+            
+            low = parseInt(match[1]);
+            high = (parseInt(match[2]) || low);
+            
+            for (; low <= high; ++low) {
+                explodes.push(low);
+            }
+            break;
+        }
+
+        return explodes;
+    };
+    
+    var getReroll = function(dice) {
+        if (!dice.length) return [];
+
+        var a, val, match, low, high;
+        var rerolls = [];
+        for (a = 0; a < dice.length; ++a) {
+            val = dice[a].toString();
+            
+            if ((match = val.match(/^r(h|[0-9]+)(?:-([0-9]+))?/i)) === null) continue;
+            dice.splice(a, 1);
+            if (/h/i.test(match[1])) return ["H"];
+            
+            low = parseInt(match[1]);
+            high = (parseInt(match[2]) || low);
+            
+            for (; low <= high; ++low) {
+                rerolls.push(low);
+            }
+            break;
+        }
+
+        return rerolls;
+    };
+
+    var sortList = function(list) {
+        var a, key;
+        var sorted = [];
+
+        for (key in list) {
+            for (a = 0; a < sorted.length; ++a) {
+                if (!sorted.length || parseInt(key) < sorted[a][0]) break;
+            }
+            sorted.splice(a, 0, [key, list[key]]);
+        }
+
+        return sorted;
+    };
+    
+    var count = 50000;
+    //var count = 10;
+    
+    var a, result, result2;
+    var output = "";
+    var success = 0;
+
+    dice1 = dupeDice(dice1);
+    dice2 = dupeDice(dice2);
+    
+    var compare = getCompare(dice2);
+    var keep = getKeep(dice1);
+    var keep2 = getKeep(dice2);
+    var drop = getDrop(dice1);
+    var drop2 = getDrop(dice2);
+    var ignore = getIgnore(dice1);
+    var ignore2 = getIgnore(dice2);
+    var mod = getMod(dice1);
+    var mod2 = getMod(dice2);
+    var counts = getCount(dice1);
+    var counts2 = getCount(dice2);
+    var probs = getProb(dice1);
+    var probs2 = getProb(dice2);
+    var explode = getExplode(dice1);
+    var explode2 = getExplode(dice2);
+    var reroll = getReroll(dice1);
+    var reroll2 = getReroll(dice2);
+
+    var tallies = {};
+    var tallies2 = {};
+    var total = 0;
+    var total2 = 0;
+
+    for (a = 0; a < count; ++a) {
+        if (!dice1.length) result = mod;
+        else {
+            result = rollDice(dice1, keep, drop, ignore, explode, reroll, counts) + (mod || 0);
+            if (!(result in tallies)) tallies[result] = 1;
+            else tallies[result] += 1;
+            total += result;
+        }
+
+        // compare
+        if (!dice2.length) result2 = mod2;
+        else {
+            result2 = rollDice(dice2, keep2, drop2, ignore2, explode2, reroll2, counts2) + (mod2 || 0);
+            if (!(result2 in tallies2)) tallies2[result2] = 1;
+            else tallies2[result2] += 1;
+            total2 += result2;
+        }
+
+        if (eval(result + compare + result2)) success += 1;
+    }
+    
+    if (dice2.length || mod2 !== null) output += "<div class='success'>Success: " + (success / count * 100).toFixed(2) + "</div>";
+
+    tallies = sortList(tallies);
+    
+    var prob, display;
+    var prob_inc = 0;
+    if (dice1.length) {
+        output += "<table>";
+        output += "<tr><td colspan='3' class='average'>Average: " + (total / count).toFixed(2) + "</td></tr>";
+        for (a = 0; a < tallies.length; ++a) {
+            prob = tallies[a][1] / count * 100;
+            if (probs === "atmost") {
+                prob_inc += prob;
+                display = prob_inc;
+            }
+            else if (probs === "atleast") {
+                display = 100 - prob_inc;
+                prob_inc += prob;
+            }
+            else display = prob;
+            output +=
+            	"<tr><td>" + tallies[a][0].padStart(3) + "</td><td>" + display.toFixed(2).padStart(6) + "</td>" +
+            	"<td><div style='width:" + (display * 2) + "px'></div></td></tr>";
+        }
+        output += "</table>";
+    }
+
+    // compare results
+    if (dice2.length) {
+        prob_inc = 0;
+        tallies2 = sortList(tallies2);
+		output += "<table>";
+        output += "<tr><td colspan='3' class='average'>Average: " + (total2 / count).toFixed(2) + "</td></tr>";
+		for (a = 0; a < tallies2.length; ++a) {
+            prob = tallies2[a][1] / count * 100;
+            if (probs2 === "atmost") {
+                prob_inc += prob;
+                display = prob_inc;
+            }
+            else if (probs2 === "atleast") {
+                display = 100 - prob_inc;
+                prob_inc += prob;
+            }
+            else display = prob;
+            output +=
+            	"<tr><td>" + tallies2[a][0].padStart(3) + "</td><td>" + display.toFixed(2).padStart(6) + "</td>" +
+            	"<td><div style='width:" + (display * 2) + "px'></div></td></tr>";
+        }
+        output += "</table>";
+    }
+
+	return output;
+};
+
+function help() {
+	document.getElementById("output").innerHTML = document.getElementById("help").innerHTML;
+}
+
+function run() {
+	var input = document.getElementById("input").value;
+	var input2 = document.getElementById("input2").value;
+	if (!input.trim().length) return;
+	
+	var output = document.getElementById("output");
+	
+	setTimeout(function() {
+		output.innerHTML = "Calculating...";
+	}, 0);
+	
+	setTimeout(function() {
+		output.innerHTML = probabilities(input.split(" "), input2.split(" "));
+	}, 500);
+}
+
+window.onload = function() { help(); };
+
+
+</script>
+
+<style>
+	html, body {
+		background-color: #222222;
+		color: #ffffff;
+		font-family:Arial, Helvetica, sans-serif;
+		margin: 0;
+		line-height: 1.25em;
+		margin: 5px;
+	}
+	
+	.label {
+		width: 70px;
+		text-align: right;
+		display: inline-block;
+	}
+	
+	button { margin-left: 10px; }
+	
+	#output { font-family: monospace; }
+	
+	.success {
+		margin-bottom: 1em;
+		min-width: 125px;
+	}
+	
+	table:nth-of-type(2) {
+		margin-top: 1em;
+	}
+	
+	td { padding: 0 3px; }
+	
+	tr > td:nth-of-type(1),
+	tr > td:nth-of-type(2), 
+	.success {
+		border: 1px dashed #404040;
+		width: 25px;
+		text-align: right;
+	}
+	
+	tr > td.average, .success {
+		text-align: left;
+		height: 1.5em;
+		padding-left: 10px;
+	}
+	
+	tr > td:nth-of-type(2) { width: 55px; }
+	
+	td > div {
+		background: #ff0000;
+		height:1.5em;  
+	}
+	
+	b { color: #ffbb55; }
+	i { 
+		color: #ffff88;
+		background-color: #00000080;
+	}
+	code { 
+		color: #bbbbbb;
+		background-color: #333333;
+		padding: 1px;
+	}
+</style>
+
+<body>
+	<p>
+		<div class='label'>Player</div>
+		<input id="input">
+		<button onclick="run()">run</button>
+	</p>
+	<p>
+		<span class='label'>Opposed</span>
+		<input id="input2">
+		<button onclick="help()">help</button>
+	</p>
+	
+	<div id="output"></div>
+
+	<div id="help" style='display:none'><div style='font-size:.8em; font-family:serif'>
+		<p><b>Player</b> is the player roll. <b>Opposed</b> is the opposed roll or target number used evaluating success and is optional. Each box takes a list of arguments separated by a space. The arguments are case-insensitive.</p>
+		
+		<p>The following are the list of arguments available. </p>
+		
+		<ul>
+			<li><p><b><i>X</i></b> or <b>d<i>X</i></b>: where <i>X</i> represents the size of dice to roll. <b>F</b> can be used for Fate or Fudge dice.</p></li>
+			<li><p><b><i>N</i>d</b><i>X</i>: where <i>N</i> represents the number of dice to roll and <i>X</i> represents the size of the die.</p></li>
+			<li><p><b>+<i>X</i></b> or <b>-<i>X</i></b>: where <i>X</i> represents the value to add/subtract from the total after it's rolled. can also be used to represent a static target number if used without dice.</p></li>			
+			<li><p><b>kh</b> or <b>kl</b> or <b>kh<i>X</i></b> or <b>kl<i>X</i></b>: keep highest or lowest roll. if provided, <i>X</i> represents the number of rolls to keep.</p></li>
+			<li><p><b>dh</b> or <b>dl</b> or <b>dh<i>X</i></b> or <b>dl<i>X</i></b>: drop highest or lowest roll. if provided, <i>X</i> represents the number of rolls to drop.</p></li>
+			<li><p><b>i<i>X</i></b>: any rolls matching <i>X</i> will be ignored and not added to the total. this can be specified multiple times.</p></li>
+			<li><p><b>r<i>X</i></b> or <b>r<i>X</i>-<i>Y</i></b>: discard any rolls equal to <i>X</i> to <i>X</i> through <i>Y</i> and roll again. subsequent matches will also be rerolled.</p></li>
+			<li><p><b>rh</b>: Same as <b>r<i>X</i></b> but automatically sets <i>X</i> to the highest value of each die.</p></li>
+			<li><p><b>x<i>X</i></b> or <b>x<i>X</i>-<i>Y</i></b>: rerolls any roll equal to <i>X</i> to <i>X</i> through <i>Y</i> while adding its value to the total. subsequent matches will also be rerolled.</p></li>
+			<li><p><b>xh</b>: Same as <b>x<i>X</i></b> but automatically sets <i>X</i> to the highest value of each die.</p></li>
+			<li><p><b>c<i>X</i></b> or <b>c<i>X</i>-<i>Y</i></b>: counts rolls equal to <i>X</i> or <i>X</i> through <i>Y</i>.</p></li>
+			<li><p><b>&gt;</b> or <b>&lt;</b> or <b>&gt;=</b> or <b>&lt;=</b> or <b>!=</b>: determines how the <b>Player</b> and <b>Opposed</b> results are compared. this setting is only allowed in the <b>Opposed</b> box. default is <b>></b>.</p></li>
+			<li><p><b>atleast</b>: shows chance of rolling at least the result</p></li>
+			<li><p><b>atmost</b>: shows chance of rolling at most the result</p></li>
+		</ul>
+		
+		<p>The following are examples of use:</p>
+		
+		<ul>
+			<li><p><b>Fate</b><br>
+				Player: <code>4dF +2</code>,
+				Opposed: <code>>= 4dF</code></p></li>
+				
+			<li><p><b>Cortex Prime</b><br>
+				Player: <code>6 6 8 10 12 kh2 i1</code>,
+				Opposed: <code>3d6 kh2 i1</code></p></li>
+				
+			<li><p><b>Savage Worlds</b><br>
+				Player: <code>6 8 xh kh</code>, Opposed: <code>>= +4</code></p></li>
+				
+			<li><p><b>Chronicles of Darkness</b><br>
+				Player: <code>5d10 c7-10 x10</code>, 
+				Opposed: <code>+3</code></p></li>
+				
+			<li><p><b>Powered by the Atom</b><br>
+				Player: <code>2d6 atleast</code></p></li>
+				
+			<li><p><b>Ironsworn</b><br>
+				Player: <code>d6 +1</code>, 
+				Opposed (weak hit): <code>2d10 kl</code>, 
+				Opposed (strong hit): <code>2d10 kh</code></p></li>
+		</ul>
+	</div></div>
+</body>
+</html>
