@@ -277,6 +277,11 @@
 	function getElement(id) {
 		return (typeof id === 'string' || id instanceof String) ? document.getElementById(id.replace(/^\s*#?\s*([a-zA-Z_-]+)\s*$/, "$1")) : id;
 	}
+	
+	function inIframe () {
+		try { return window.self !== window.top;} 
+		catch (e) { return true; }
+	}
 
 	function display(text) {
 		removeClass("display", "full-width");
@@ -646,6 +651,12 @@
 
 		var a;
 		for (a in muse.motif.impacts) { muse.motif.answers[a] = muse.motif.impacts[a]; }
+		
+		console.log($("body"))
+		
+		//if (window.location !== window.parent.location) 
+		if (inIframe()) addClass($("body")[0], "iframe"); //.style.padding = "0 0 10em 0";
+		//$("html")[0].style.margin = "0";
 	
 		shuffleCards();
 		showPage();
@@ -1797,15 +1808,18 @@
 </script>
 
 <style>
-	html, body {
+	html {
 		font-family: Arial, Helvetica, sans-serif !important;
 		font-size: 15px;
 		color:#ffffff;
 		width: 100%;
 		line-height: 1.5em !important;
 		background-color:#1e1e1e !important;
-		margin: 0 0 2em 0;
-		padding: 0;
+	}
+	
+	body {
+		margin: 0;
+		padding: 1em;
 	}
 
 	blockquote {
@@ -1922,6 +1936,10 @@
 	select {
 		background-color: #333333;
 		color: #cccccc;
+	}
+	
+	.iframe {
+		padding: 0 0 3em 0;
 	}
 	
 	.hidden { display: none; }
