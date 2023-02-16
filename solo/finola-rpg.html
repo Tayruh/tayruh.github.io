@@ -3,7 +3,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
 <script>
 (function(solo) {
-	var version = "2023.02.15";
+  /*
+   + reorganize meaning elements
+  */
+  
+	var version = "2023.02.16";
 
 	var current_page;
 	var current_section;
@@ -458,7 +462,8 @@
 		if (isArray(arguments[0][0])) arguments = arguments[0];
 		for (a = 0; a < arguments.length; ++a) {
 			quote = (arguments[a].length < 3) ? quote = undefined : arguments[a][2];
-			output += "<li>" + getLink(arguments[a][0], arguments[a][1], quote) + "</li>";
+			if (arguments[a][0] === "<spacer>") output += "</ul><div style='height:2em'></div><ul class='link-list'>";
+			else output += "<li>" + getLink(arguments[a][0], arguments[a][1], quote) + "</li>";
 		}
 
 		return output + "</ul>";
@@ -546,17 +551,19 @@
 					["First Scene 4W", "mythic:4w"]
 				]],
 				["Meaning", [
-					["Descriptor", "mythic:descriptor"],
 					["Action", "mythic:action"],
-					["Characters", "mythic:characters"],
+					["Descriptions", "mythic:descriptions"],
+					["Elements", "mythic:elements"],
+					["<spacer>"],
+					["Adventures", "mythic:adventure"],
+					["Ambience", "mythic:ambience"],
 					["Animals &amp; Creatures", "mythic:animals and creatures"],
+					["Characters", "mythic:characters"],
 					["Entities", "mythic:entities"],
 					["Locations", "mythic:locations"],
-					["Objects", "mythic:objects"],
-					["Ambience", "mythic:ambience"],
-					["Spells &amp; Powers", "mythic:spells and powers"],
 					["Mysteries", "mythic:mysteries"],
-					["Adventures", "mythic:adventure"]
+					["Objects", "mythic:objects"],
+					["Spells &amp; Powers", "mythic:spells and powers"]
 				]]
 			]
 		};
@@ -576,7 +583,8 @@
 			id = links[a][0].toLowerCase().replace(" ", "-") + "-id";
 			output += "<tr><td style='vertical-align:top' id='" + id + "'>" + links[a][0] + "</td><td>";
 			for (b = 0; b < links[a][1].length; ++b) {
-				list.push([links[a][1][b][0], "solo.showPage('" + links[a][1][b][1] + "', '#" + id + "')"]);
+				if (links[a][1][b].length === 1) list.push(links[a][1][b]);
+				else list.push([links[a][1][b][0], "solo.showPage('" + links[a][1][b][1] + "', '#" + id + "')"]);
 			}
 			output += getLinksList(list) + "</td></tr>";
 		}
@@ -652,12 +660,8 @@
 		var a;
 		for (a in muse.motif.impacts) { muse.motif.answers[a] = muse.motif.impacts[a]; }
 		
-		console.log($("body"))
-		
-		//if (window.location !== window.parent.location) 
 		if (inIframe()) addClass($("body")[0], "iframe"); //.style.padding = "0 0 10em 0";
-		//$("html")[0].style.margin = "0";
-	
+		
 		shuffleCards();
 		showPage();
 	};
@@ -1205,7 +1209,7 @@
 			return getMeaning("muse", temp[randomItem(story[topic])]);
 		}
 		else if (source === "mythic") {
-			if (topic === "descriptor") return checkMeaning(muse.mythic.meaning.descriptor1, muse.mythic.meaning.descriptor2);
+			if (topic === "descriptions") return checkMeaning(muse.mythic.meaning.descriptor1, muse.mythic.meaning.descriptor2);
 			else if (topic === "action") return checkMeaning(muse.mythic.meaning.action1, muse.mythic.meaning.action2);
 			else if (topic === "who") return getMeaning("mythic", "characters");
 			else if (topic === "what") return getMeaning("mythic", "action");
@@ -1689,30 +1693,31 @@
 	}
 
 	function showMythicList(type) {
-		if (type === "descriptor") return showMeaning("Descriptor", "mythic", type) + getBackLink(true);
-		else if (type === "action") return showMeaning("Action", "mythic", type) + getBackLink(true);
-		
+		if (type === "action") return showMeaning("Action", "mythic", type) + getBackLink(true);
+		if (type === "descriptions") return showMeaning("Description", "mythic", type) + getBackLink(true);
 		if (type === "4w") return display(showQuestionsTable("mythic") + getBackLink());
 		
 		var list;
-		if (type === "characters") {
-			return display(
-				"<div class='data-header'>" +
-				getLinksList(
-					["General Actions", "solo.showPage('mythic-table:Action:character actions, general')"],
-					["Combat Actions", "solo.showPage('mythic-table:Action:character actions, combat')"],
-					["Conversation", "solo.showPage('mythic-table:Conversation:character conversations')"]
-				) + "<div style='height:2em'></div>"  +
-				getLinksList(
-					["Descriptor", "solo.showPage('mythic-table:Descriptor:character descriptors')"],
-					["Appearance", "solo.showPage('mythic-table:Appearance:character appearance')"],
-					["Identity", "solo.showPage('mythic-table:Identity:character identity')"],
-					["Personality", "solo.showPage('mythic-table:Personality:character personality')"],
-					["Trait / Flaw", "solo.showPage('mythic-table:Trait / Flaw:character traits & flaws')"],
-					["Motivation", "solo.showPage('mythic-table:Motivation:character motivations')"],
-					["Background", "solo.showPage('mythic-table:Background:character background')"]
-				) + "</div>" + getBackLink()
-			);
+		if (type === "elements") {
+			list = [
+				["Character", "solo.showPage('mythic-table:Character:characters')"],
+				["Location", "solo.showPage('mythic-table:Location:location descriptors, general')"],
+				["Object", "solo.showPage('mythic-table:Object:objects')"]
+			];
+		}
+		else if (type === "adventure") {
+			list = [
+				["Tone", "solo.showPage('mythic-table:Tone:adventure tone')"],
+				["Plot Twist", "solo.showPage('mythic-table:Plot Twist:plot twists')"],
+				["Legend", "solo.showPage('mythic-table:Legend:legends')"],
+				["Journey Event", "solo.showPage('mythic-table:Event:journey events')"]
+			];
+		}
+		else if (type === "ambience") {
+			list = [
+				["Sound", "solo.showPage('mythic-table:Sound:sounds')"],
+				["Smell", "solo.showPage('mythic-table:Smell:smells')"]
+			];
 		}
 		else if (type === "animals and creatures") {
 			list = [
@@ -1721,6 +1726,21 @@
 				["Creature Ability", "solo.showPage('mythic-table:Ability:creature abilities')"],
 				["Alien Species", "solo.showPage('mythic-table:Species:alien species descriptors')"],
 				["Undead", "solo.showPage('mythic-table:Undead:undead descriptors')"],
+			];
+		}
+		else if (type === "characters") {
+			list = [
+				["Description", "solo.showPage('mythic-table:Character:character descriptors')"],
+				["Appearance", "solo.showPage('mythic-table:Appearance:character appearance')"],
+				["Identity", "solo.showPage('mythic-table:Identity:character identity')"],
+				["Personality", "solo.showPage('mythic-table:Personality:character personality')"],
+				["Traits & Flaws", "solo.showPage('mythic-table:Trait / Flaw:character traits & flaws')"],
+				["Motivation", "solo.showPage('mythic-table:Motivation:character motivations')"],
+				["Background", "solo.showPage('mythic-table:Background:character background')"],
+				["<spacer>"],
+				["General Action", "solo.showPage('mythic-table:Action:character actions, general')"],
+				["Combat Action", "solo.showPage('mythic-table:Action:character actions, combat')"],
+				["Conversation", "solo.showPage('mythic-table:Conversation:character conversations')"]
 			];
 		}
 		else if (type == "entities") {
@@ -1732,7 +1752,6 @@
 		}
 		else if (type === "locations") {
 			list = [
-				["General", "solo.showPage('mythic-table:Location:location descriptors, general')"],
 				["Cavern", "solo.showPage('mythic-table:Cavern:cavern descriptors')"],
 				["City", "solo.showPage('mythic-table:City:city descriptors')"],
 				["Dungeon", "solo.showPage('mythic-table:Dungeon:dungeon descriptors')"],
@@ -1741,30 +1760,6 @@
 				["Starship", "solo.showPage('mythic-table:Starship:starship descriptors')"],
 				["Domicile", "solo.showPage('mythic-table:Domicile:domicile descriptors')"],
 				["Noble House", "solo.showPage('mythic-table:House:noble house')"]
-			];
-		}
-		else if (type === "objects") {
-			list = [
-				["Object", "solo.showPage('mythic-table:Object:objects')"],
-				["General Object", "solo.showPage('mythic-table:Object:object descriptors, general')"],
-				["Small Object", "solo.showPage('mythic-table:Object:object descriptors, small items')"],
-				["Dungeon Trap", "solo.showPage('mythic-table:Trap:dungeon traps')"],
-				["Scavenging Results", "solo.showPage('mythic-table:Scavenged:scavenging results')"]
-			];
-		}
-		else if (type === "ambience") {
-			list = [
-				["Sound", "solo.showPage('mythic-table:Sound:sounds')"],
-				["Smell", "solo.showPage('mythic-table:Smell:smells')"]
-			];
-		}
-		else if (type === "spells and powers") {
-			list = [
-				["Magic Item", "solo.showPage('mythic-table:Magic Item:magic item descriptors')"],
-				["Power", "solo.showPage('mythic-table:Power:powers')"],
-				["Mutation", "solo.showPage('mythic-table:Mutation:mutation descriptors')"],
-				["Spell Effect", "solo.showPage('mythic-table:Spell Effect:spell effects')"],
-				["Curse", "solo.showPage('mythic-table:Curse:curses')"]
 			];
 		}
 		else if (type === "mysteries") {
@@ -1778,12 +1773,21 @@
 				["Puzzle Consequence", "solo.showPage('mythic-table:Consequence:puzzle consequence')"]
 			];
 		}
-		else if (type === "adventure") {
+		else if (type === "objects") {
 			list = [
-				["Tone", "solo.showPage('mythic-table:Tone:adventure tone')"],
-				["Plot Twist", "solo.showPage('mythic-table:Plot Twist:plot twists')"],
-				["Legend", "solo.showPage('mythic-table:Legend:legends')"],
-				["Journey Event", "solo.showPage('mythic-table:Event:journey events')"]
+				["General Object", "solo.showPage('mythic-table:Object:object descriptors, general')"],
+				["Small Object", "solo.showPage('mythic-table:Object:object descriptors, small items')"],
+				["Dungeon Trap", "solo.showPage('mythic-table:Trap:dungeon traps')"],
+				["Scavenging Results", "solo.showPage('mythic-table:Scavenged:scavenging results')"]
+			];
+		}
+		else if (type === "spells and powers") {
+			list = [
+				["Magic Item", "solo.showPage('mythic-table:Magic Item:magic item descriptors')"],
+				["Power", "solo.showPage('mythic-table:Power:powers')"],
+				["Mutation", "solo.showPage('mythic-table:Mutation:mutation descriptors')"],
+				["Spell Effect", "solo.showPage('mythic-table:Spell Effect:spell effects')"],
+				["Curse", "solo.showPage('mythic-table:Curse:curses')"]
 			];
 		}
 
