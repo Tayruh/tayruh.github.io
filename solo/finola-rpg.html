@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
 <script>
 (function(solo) {
-	var version = "2023.02.14";
+	var version = "2023.02.15";
 
 	var current_page;
 	var current_section;
@@ -1315,8 +1315,6 @@
 			[degree, roll2, getRolledItem(roll2, muse.motif.answers[degree])],
 			[flavor, roll3, getRolledItem(roll3, muse.motif.answers[flavor])]
 		);
-		
-		turn = 1
 		
 		if (turn) {
 			doubles = ["<b>Turn:</b> " + muse.motif.turns[turn]];
