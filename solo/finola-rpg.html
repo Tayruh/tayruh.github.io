@@ -3,10 +3,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
 <script>
 (function(solo) {
-  /*
-   + reorganize meaning elements
-  */
-  
 	var version = "2023.02.18";
 
 	var current_page;
@@ -31,7 +27,7 @@
 					[[20, 99, 200], [20, 99, 200], [20, 99, 200], [19, 95, 100], [18, 90, 99], [17, 85, 98], [15, 75, 96], [13, 65, 94], [10, 50, 91]]
 				],
 				focus: { 
-					"random event": { 5: "Remote Event", 10: "Ambiguous Event", 20: "New PC", 40: "NPC Action", 45: "NPC Negative", 50: "NPC Positive", 55: "Move Toward A Thread", 65: "Move Away From A Thread", 70: "Close A Thread", 80: "PC Negative", 85: "PC Positive", 100: "Current Context" },
+					"random event": { 5: "Remote Event", 10: "Ambiguous Event", 20: "New NPC", 40: "NPC Action", 45: "NPC Negative", 50: "NPC Positive", 55: "Move Toward A Thread", 65: "Move Away From A Thread", 70: "Close A Thread", 80: "PC Negative", 85: "PC Positive", 100: "Current Context" },
 					"prepared adventure": { 20: "Adventure Feature", 40: "NPC Action", 50: "NPC Negative", 55: "NPC Positive", 70: "PC Negative", 80: "PC Positive", 100: "Current Context" },
 					"adventure": { 16: "Action!",24: "Remote Event", 44: "NPC Action", 52: "New NPC", 56: "Move Toward a Thread", 64: "Move Away From a Thread" },
 					"epic": { 12: "Thread Escalates", 16: "Remote Event", 30: "NPC Action", 42: "New NPC", 46: "Move Toward a Thread", 58: "Move Away From a Thread", 72: "PC Negative", 80: "PC Positive", 84: "Ambiguous Event", 92: "NPC Negative", 100: "NPC Positive" },
@@ -554,7 +550,7 @@
 					["Spells &amp; Powers", "mythic:spells and powers"]
 				]]
 			],
-			mine: [
+			misc: [
 				["Tools", [
 					["Motif", "motif"],
 					["Scene", "scene"],
@@ -607,14 +603,14 @@
 		
 		if (current_menu === "mythic") {
 			output = getDataHeader(
-				"Chaos Rank&nbsp;&nbsp;" + getOptions(null, "chaos", [1,2,3,4,5,6,7,8,9], chaos),
-				"Focus&nbsp;&nbsp;" + getOptions(null, "focus", Object.keys(muse.mythic.fate.focus), focus)
+				"Chaos Factor&nbsp;&nbsp;" + getOptions(null, "chaos", [1,2,3,4,5,6,7,8,9], chaos),
+				"Event Focus&nbsp;&nbsp;" + getOptions(null, "focus", Object.keys(muse.mythic.fate.focus), focus)
 			) + output;
 	 	}
 		
 		display(
 			output + "</table><div id='footer'>" +
-			getOptions(null, "menu-options", ["mythic", "mine"], current_menu) +
+			getOptions(null, "menu-options", ["mythic", "misc"], current_menu) +
 			"<pre>version: " + version + "</pre></div>"
 		);
 		if (current_section) $(current_section).scrollIntoView(true);
@@ -1408,19 +1404,20 @@
 			return;
 		};
 
-		var focus_type;
+		var scene_type;
 		var scene = [];
 		var adjustment = "";
 		var roll = random(1, 10);
 		
 		if (roll > chaos) scene = ["Scene", "Expected Scene"];
 		else { 
-			focus_type = (roll % 2) ? "Altered" : "Interrupt";
+			scene_type = (roll % 2) ? "Altered" : "Interrupt";
 			scene.push(
-				["Scene", roll, focus_type + " - " + getRolledItem(random(1, 100), muse.mythic.fate.focus[focus])],
+				["Scene", roll, scene_type + " Scene"],
+				["Focus", "", getRolledItem(random(1, 100), muse.mythic.fate.focus[focus])],
 				["Event", "", getCyclingMeaning("mythic", "action")]
 			);
-			if (focus_type === "Altered") adjustment = getDataFooter("<a id='scene-adjust' onclick='solo.showPage(\"mythic-scene:adjust\")'>Adjust Scene</a>");
+			if (scene_type === "Altered") adjustment = getDataFooter("<a id='scene-adjust' onclick='solo.showPage(\"mythic-scene:adjust\")'>Adjust Scene</a>");
 		}
 
 		display(getDataTable(scene) + adjustment + getBackLink());
@@ -1476,7 +1473,7 @@
 	
 	function showMythicEvent() {
 		display(getDataTable(
-			["Scene", getRolledItem(random(1, 100), muse.mythic.fate.focus[focus])],
+			["Focus", getRolledItem(random(1, 100), muse.mythic.fate.focus[focus])],
 			["Event", getCyclingMeaning("mythic", "action")]
 		) + getBackLink(true));
 	}
@@ -1584,7 +1581,7 @@
 	}
 
 
-	/* mine */
+	/* misc */
 
 	function showMotif(selected) {
 		if (!selected) {
