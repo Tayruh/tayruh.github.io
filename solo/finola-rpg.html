@@ -1790,7 +1790,7 @@
 			if (demeanor === "Random") demeanor = randomItem(["Scheming", "Insane", "Friendly", "Hostile", "Inquisitive", "Knowing", "Mysterious", "Prejudiced"]);
 			
 			var bearing = upperCase(randomItem(muse.une.bearing[demeanor]));
-			var focus = upperCase(getRolledItem(random(1, 100), muse.une.focus));
+			var focus = getRolledItem(random(1, 100), muse.une.focus);
 			
 			return display(getDataTable(["Discussion", "The <i>" + demeanor + "</i> NPC speaks of <i>" + bearing + "</i> regarding the PC's <i>" + focus + "</i>."]) + getBackLink(true));
 		}
