@@ -505,7 +505,7 @@
 		// mine
 		else if (/^motif/.test(page)) return showMotif(/:roll$/.test(page));
 		else if (page === "scene") return showScene();
-		else if (page === "npc") return showNPC();
+		else if (page === "character") return showCharacter();
 		else if (/^muse:/.test(page)) {
 			page = page.replace(/^muse:(.+)/, "$1");
 			return showMeaning(upperCase(page), "muse", page);
@@ -555,11 +555,11 @@
 					["Motif", "motif"],
 					["Scene", "scene"],
 					["Twist", "muse:twist"],
-					["NPC", "npc"]
+					["Character", "character"]
 				]],
 				["Muse", [
-					["Descriptor", "muse:descriptor"],
 					["Action", "muse:action"],
+					["Description", "muse:description"],
 					["Event", "muse:event"],
 					["Thing", "muse:thing"],
 					["Topic", "muse:topic"],
@@ -1202,7 +1202,7 @@
 		
 		if (source === "muse") {
 			if (topic === "twist") return randomItem(muse.twists);
-			else if (topic === "descriptor") return checkMeaning(muse.meanings.adverb, muse.meanings.adjective, true);
+			else if (topic === "description") return checkMeaning(muse.meanings.adverb, muse.meanings.adjective, true);
 			else if (topic === "action") return checkMeaning(muse.meanings.adverb, muse.meanings.verb, true);
 			else if (topic === "thing") return checkMeaning(muse.meanings.adjective, muse.meanings.noun, true);
 			else if (topic === "event") return checkMeaning(muse.meanings.verb, muse.meanings.noun, true);
@@ -1212,7 +1212,7 @@
 
 		else if (source === "muse-story") {
 			//      0              1        2        3        4        5
-			temp = ["descriptor", "action", "event", "thing", "topic", "twist"];
+			temp = ["description", "action", "event", "thing", "topic", "twist"];
 			story = {
 				who: [3, 0], what: [3, 4], where: [3, 0], when: [3, 4], why: [3, 4], how: [1, 4],
 				conflict: [1, 3, 0], catalyst: [5, 0, 4], antagonist: [3, 0, 4], revelation: [5, 3, 4],
@@ -1658,7 +1658,7 @@
 		display(getDataTable(["Scene", result]) + getBackLink());
 	}
 
-	function showNPC() {
+	function showCharacter() {
 		var getTraits = function() {
 			var a, trait;
 			var results = "";
@@ -1710,7 +1710,7 @@
 		if (random(1, 100) < 22) text += " / " + upperCase(randomItem(muse.character.descriptors));
 		
 		npc = npc.concat([
-			["Descriptor", text],
+			["Description", text],
 			["Traits", getTraits()],
 			["Goals", getGoals()]
 		]);
