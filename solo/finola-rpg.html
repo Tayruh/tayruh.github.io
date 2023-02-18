@@ -7,7 +7,7 @@
    + reorganize meaning elements
   */
   
-	var version = "2023.02.16";
+	var version = "2023.02.18";
 
 	var current_page;
 	var current_section;
@@ -472,6 +472,11 @@
 		}
 
 		return output + "</ul>";
+	}
+
+	function getDataLinksList() {
+		if (isArray(arguments[0][0])) arguments = arguments[0];
+		return getDataHeader(getLinksList(arguments));
 	}
 	
 	function getBackLink(retry, page) {
@@ -1296,7 +1301,7 @@
 				list.push([chance, "solo.showPage('fate-chart:" + a + "')"]);
 			}
 	
-			return display(getLinksList(list) + spacer + getBackLink());
+			return display(getDataLinksList(list) + getBackLink());
 		}
 		
 		var roll = random(1, 100);
@@ -1575,7 +1580,7 @@
 			];
 		}
 
-		display(getDataHeader(getLinksList(list)) + getBackLink());
+		display(getDataLinksList(list) + getBackLink());
 	}
 
 
@@ -1726,27 +1731,27 @@
 				list.push([links[a], "solo.showPage('muse-story:" + links[a].toLowerCase() + "')"]);
 			}
 
-			display(getLinksList(list) + spacer + getBackLink());
+			display(getDataLinksList(list) + getBackLink());
 		};
 
-		if (type === "animate") return display(getLinksList(
+		if (type === "animate") return display(getDataLinksList(
 			["Vocal", "solo.showPage('muse:vocal')"],
 			["Character", "solo.showPage('muse:character')"],
-			["Animal", "solo.showPage('muse:animal')"]) + spacer + getBackLink()
+			["Animal", "solo.showPage('muse:animal')"]) + getBackLink()
 		);
 
-		if (type === "questions") return display(getLinksList(
+		if (type === "questions") return display(getDataLinksList(
 			["Who", "solo.showPage('muse-story:who')"],
 			["What", "solo.showPage('muse-story:what')"],
 			["Where", "solo.showPage('muse-story:where')"],
 			["When", "solo.showPage('muse-story:when')"],
 			["Why", "solo.showPage('muse-story:why')"],
-			["How", "solo.showPage('muse-story:how')"]) + spacer + getBackLink()
+			["How", "solo.showPage('muse-story:how')"]) + getBackLink()
 		);
 		
 		if (type === "story") return showStory();
 
-		if (type === "opening") return display("<p style='margin-left:auto'><b>Opening:</b></p>" + showQuestionsTable("muse-story") + getBackLink());
+		if (type === "opening") return display("<p><b>Opening:</b></p>" + showQuestionsTable("muse-story") + getBackLink());
 	}
  
 	function showUneMood(mood) {
@@ -1767,7 +1772,7 @@
 		}
 
 		display(
-			getLinksList(
+			getDataLinksList(
 				["Loved", "solo.showPage('une:mood:Loved')"],
 				["Friendly", "solo.showPage('une:mood:Friendly')"],
 				["Peaceful", "solo.showPage('une:mood:Peaceful')"],
@@ -1776,7 +1781,7 @@
 				["Hostile", "solo.showPage('une:mood:Hostile')"],
 				["Hated", "solo.showPage('une:mood:Hated')"],
 				["Random", "solo.showPage('une:mood:Random')"]
-			) + spacer + getBackLink()
+			) + getBackLink()
 		);
 	}
 
@@ -1791,7 +1796,7 @@
 		}
 
 		display(
-			getLinksList(
+			getDataLinksList(
 				["Scheming", "solo.showPage('une:discussion:Scheming')"],
 				["Insane", "solo.showPage('une:discussion:Insane')"],
 				["Friendly", "solo.showPage('une:discussion:Friendly')"],
@@ -1801,7 +1806,7 @@
 				["Mysterious", "solo.showPage('une:discussion:Mysterious')"],
 				["Prejudiced", "solo.showPage('une:discussion:Prejudiced')"],
 				["Random", "solo.showPage('une:discussion:Random')"]
-			) + spacer + getBackLink()
+			) + getBackLink()
 		);
 	}
 
