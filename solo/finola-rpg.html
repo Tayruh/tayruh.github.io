@@ -3,12 +3,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
 <script>
 (function(solo) {
-	var version = "2023.02.18";
+	var version = "2023.02.19";
 
-	var current_page;
-	var current_section;
-	var current_menu = "mythic";
+	var current_page, current_section, current_menu;
 	var spacer = "<div class='spacer'></div>";
+	var soloData = {};
 	
 	var muse = {
 		mythic: {
@@ -226,18 +225,13 @@
 	var quick_rolls_text = "";
 	var quick_rolls = [];
 	var showing_quick_rolls = false;
-	var playing_cards;
-	var drawn_card = "";
+	var playing_cards, drawn_card;
 	
 	// mythic
-	var focus = "random event";
-	var progress = 0;
-	var chaos = 5;
-	var acting_rank = "Average";
-	var difficulty_rank = "Average";
-	
+	var chaos, focus, progress, acting_rank, difficulty_rank;
+
 	// mine
-	var twist_counter = 0;
+	var twist_counter;
 
 	
 	/* system */
@@ -276,6 +270,50 @@
 		setTimeout(function() {
 			removeClass(el, "hide");
 		}, default_delay + delay);
+	}
+
+	function checkLocalStorage() {
+		try {
+			if (window.localStorage !== undefined && window.localStorage !== null) {
+				localStorage = window.localStorage;
+				return;
+			}
+			console.log("window.localStorage not available. Attempting emulation via cookies.");
+		}
+		catch (exception){ console.log("window.localStorage not available. Attempting emulation via cookies."); }
+
+		localStorage = {
+			getItem: function (sKey) {
+				if (!sKey || !this.hasOwnProperty(sKey)) return null;
+				return unescape(document.cookie.replace(new RegExp("(?:^|.*;\\s*)" + escape(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*((?:[^;](?!;))*[^;]?).*"), "$1"));
+			},
+			key: function (nKeyId) { return unescape(document.cookie.replace(/\s*\=(?:.(?!;))*$/, "").split(/\s*\=(?:[^;](?!;))*[^;]?;\s*/)[nKeyId]); },
+			setItem: function (sKey, sValue) {
+				if (!sKey) return;
+				document.cookie = escape(sKey) + "=" + escape(sValue) + "; expires=Tue, 19 Jan 2038 03:14:07 GMT; path=/";
+				if (document.cookie.length < 1) return console.error("Cookie did not save correctly. Try clearing cookies for this domain.");
+				this.length = document.cookie.match(/\=/g).length;
+			},
+			length: 0,
+			removeItem: function (sKey) {
+				if (!sKey || !this.hasOwnProperty(sKey)) return;
+				document.cookie = escape(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+				this.length -= 1;
+			},
+			hasOwnProperty: function (sKey) { return (new RegExp("(?:^|;\\s*)" + escape(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie); }
+		};
+		localStorage.length = (document.cookie.match(/\=/g) || localStorage).length;
+	}
+
+	function saveSettings() {
+		var settingsData = JSON.stringify(soloData);
+		localStorage.setItem("finola_rpg_settings", settingsData);
+	}
+
+	function loadSettings() {
+		var settingsData = localStorage.getItem("finola_rpg_settings");
+		soloData = JSON.parse(settingsData) || {};
+		return soloData;
 	}
 
 	function getElement(id) {
@@ -377,7 +415,7 @@
 		var a;
 		for (a = 0; a < list.length; ++a) {
 			options += "<option value='" + list[a] + "'";
-			if (selected === list[a]) options += " selected";
+			if (selected == list[a]) options += " selected";
 			options += ">" + list[a] + "</option>";
 		}
 
@@ -521,7 +559,6 @@
 			if (page[1] === "discussion") return showUneDiscussion(page[2]);
 		}
 		else if (/^calypso:/.test(page)) return showMeaning("Motif", "calypso", page.replace(/^calypso:(.+)/, "$1"));
-		
 
 		var links = {
 			mythic: [
@@ -616,15 +653,22 @@
 		if (current_section) $(current_section).scrollIntoView(true);
 		
 		if (current_menu === "mythic") {
-			$("#chaos").addEventListener("change", function() { chaos = parseInt(this.value); });
-			$("#focus").addEventListener("change", function() { focus = this.value; });
+			$("#chaos").addEventListener("change", function() { 
+				chaos = parseInt(this.value); 
+				saveSettings(soloData.chaos = chaos);
+			});
+			$("#focus").addEventListener("change", function() {
+				focus = this.value;
+				saveSettings(soloData.focus = focus);
+			});
 		}
 		
 		$("#menu-options").addEventListener("change", function() { 
 			current_menu = this.value;
 			current_page = "";
 			current_section = "";
-			showPage(); 
+			saveSettings(soloData.current_menu = current_menu);
+			showPage();
 		});
 	}
 
@@ -668,13 +712,26 @@
 		};
 
 		// findUniques(muse.meanings.character, 20000)
+		
+		checkLocalStorage();
+		loadSettings();
+		chaos = (soloData.chaos || 5);
+		focus = (soloData.focus || "random event");
+		progress = (soloData.progress || 0);
+		current_menu = (soloData.current_menu || "mythic");
+		drawn_card = (soloData.drawn_card || []);
+		playing_cards = (soloData.playing_cards || shuffleCards());
+		twist_counter = (soloData.twist_counter || 0);
+		acting_rank = (soloData.acting_rank || "Average");
+		difficulty_rank = (soloData.difficulty_rank || "Average");
+		quick_rolls_text = (soloData.quick_rolls_text || "");
+		quick_rolls = (soloData.quick_rolls || []);
 
 		var a;
 		for (a in muse.motif.impacts) { muse.motif.answers[a] = muse.motif.impacts[a]; }
 		
-		if (inIframe()) addClass($("body")[0], "iframe"); //.style.padding = "0 0 10em 0";
-		
-		shuffleCards();
+		if (inIframe()) addClass($("body")[0], "iframe");
+
 		showPage();
 	};
 
@@ -1108,6 +1165,10 @@
 			temp = lines[a].split(":");
 			quick_rolls.push("<a onclick='solo.showDice(\"" + (temp.length < 2 ? temp[0].trim() : lines[a].substring(temp[0].length + 1).trim()) + "\", true)'>" + temp[0].trim() + "</a>");
 		}
+		
+		soloData.quick_rolls_text = quick_rolls_text;
+		soloData.quick_rolls = quick_rolls;
+		saveSettings();
 
 		showDiceRoller();
 	}
@@ -1115,7 +1176,9 @@
 	function showQuickRolls() {
 		display(
 			"<p><textarea id='quick-rolls' spellcheck='false'>" + quick_rolls_text + "</textarea></p>" +
-			"<p><div id='save-button'>" + getLink("Save", "solo.saveQuickRolls()") + "</div></p>" +
+			"<div id='dice-buttons'><p><div id='save-button'>" + 
+				"<a onclick='solo.saveQuickRolls()'>Save</a>" + 
+				"<a onclick='solo.showPage(\"dice\")'>Back</a></div></p></div>" +
 			"<p>Each new line is a new quick roll.<br>Labels are separated with a colon.</p>" +
 			"<p><b>Example:</b><br><code>2d10,d6<br>Sword Attack: 4dF+4<br>Cortex: d6,2d8,d10</code></p>"
 		);
@@ -1147,12 +1210,21 @@
 			["", "<span class='red-suit'>Joker</span>"],
 			["", "<span class='black-suit'>Joker</span>"]
 		]);
+		
+		soloData.playing_cards = playing_cards;
+		soloData.drawn_card = [];
+		saveSettings();
+		
+		return playing_cards;
 	}
 
 	function drawCard() {
 		var index = random(0, playing_cards.length - 1);
 		drawn_card = playing_cards[index];
 		playing_cards.splice(index, 1);
+		soloData.playing_cards = playing_cards;
+		soloData.drawn_card = drawn_card;
+		saveSettings();
 		showCard();
 	}
 
@@ -1163,14 +1235,14 @@
 		var draw_link = "<a onclick='solo.drawCard()'>Draw</a>";
 		var shuffle_link = "<a onclick='solo.shuffleCards(); solo.showPage(\"cards\")'>Shuffle</a>";
 
-		if (!drawn_card) {
+		if (drawn_card.length) {
+			output = ["Card", drawn_card[0], drawn_card[1]];
+			links = (playing_cards.length ? draw_link : "");
+		}
+		else {
 			output = ["Card", "", "draw a card"];
 			links = draw_link;
 		}
-		else {
-			output = ["Card", drawn_card[0], drawn_card[1]];
-			links = (playing_cards.length ? draw_link : "");
-		};
 		
 		display(
 			getDataTable(output) + getDataFooter(remain) +
@@ -1322,12 +1394,14 @@
 	
 	function showResistedRank(compare) {
 		if (!compare) {
-			return display(
-				getDataHeader(
+			display(getDataHeader(
 					getOptions("Acting Rank", "acting", muse.mythic.fate.rank, acting_rank),
 					getOptions("Difficulty Rank", "difficulty", muse.mythic.fate.rank, difficulty_rank)
-				) + "<hr><p id='dice-buttons'><a onclick='solo.showPage(\"resisted-rank:true\")'>Check</a><a onclick='solo.showPage()'>Back</a></p>"
-			);
+			) + "<hr><p id='dice-buttons'><a onclick='solo.showPage(\"resisted-rank:true\")'>Check</a><a onclick='solo.showPage()'>Back</a></p>");
+			
+			$("#acting").addEventListener("change", function() { saveSettings(soloData.acting_rank = this.value); });
+			$("#difficulty").addEventListener("change", function() { saveSettings(soloData.difficulty_rank = this.value); });
+			return;
 		}
 		
 		var mods = [-5, -4, -2, -1, 0, 1, 2, 4, 5];
@@ -1434,25 +1508,21 @@
 	}
 
 	function showDiscoveryCheck(type) {
+		var saveProgress = function(mod) {
+			if (mod >= 26) progress = "26+";
+			else progress = mod;
+			saveSettings(soloData.progress = progress);
+		};
+		
 		if (type) {
-			progress = $("#progress").value;
 			var die = random(1, 10);
-			var roll = die + progress;
-			
-			if (progress !== "26+") {
-				progress = parseInt(progress);
-				roll += progress;
-			}
-			else roll += 26;
-			
-			var result = getRolledItem(roll, muse.mythic.fate.tracks[type]);
+			var mod = parseInt(progress);
+			var result = getRolledItem((die + mod), muse.mythic.fate.tracks[type]);
+			saveProgress(mod + parseInt(result.match(/(\d+)/)[1]));
 
-			display(getDataTable(
-				["Discovery", die + "+" + progress, result]
+			return display(getDataTable(
+				["Discovery", die + "+" + mod, result]
 			) + getBackLink());
-			
-			progress += parseInt(result.match(/(\d+)/)[1]);
-			return;
 		}
 
 		var opts = [
@@ -1468,7 +1538,7 @@
 			) + "</div>" + getBackLink()
 		);
 		
-		$("#progress").addEventListener("change", function() { progress = parseInt(this.value); });
+		$("#progress").addEventListener("change", function() { saveProgress(this.value); });
 	}
 	
 	function showMythicEvent() {
@@ -1587,7 +1657,7 @@
 		if (!selected) {
 			var values = ["+3", "+2", "+1", "0", "-1", "-2", "-3"];
 
-			return display(
+			display(
 				getDataHeader(
 					getOptions("Answer", "answer-mod", values, "0") + "&nbsp;&nbsp;" +
 						getOptions(null, "answer", muse.motif.answers),
@@ -1605,6 +1675,9 @@
 					["Character", "Aggressive, Cooperative, Curious, Direct, Impulsive, Mischievous, Motivated, Sympathetic, Tactical"]
 				)
 			);
+			
+			$("#twist-counter").addEventListener("change", function() { saveSettings(soloData.twist_counter = parseInt(this.value)); });
+			return;
 		}
 
 		var result, doubles, roll4, roll5;
@@ -1642,6 +1715,7 @@
 				else doubles.push("<b>Twist:</b> " + getRolledItem((roll4 + roll5), muse.motif.twists));
 			}
 			result += getDataFooter(doubles);
+			saveSettings(soloData.twist_counter = twist_counter);
 		}
 		
 		display(result + getBackLink());
