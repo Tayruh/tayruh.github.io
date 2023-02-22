@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
 <script>
 (function(solo) {
-	var version = "2023.02.19";
+	var version = "2023.02.22";
 
 	var current_page, current_section, current_menu;
 	var spacer = "<div class='spacer'></div>";
@@ -905,9 +905,12 @@
 		
 		var match, leading, count, size, mod;
 		var text = $("#dice").value.trim().toUpperCase();
-
+		text = text.replace(/\s+/,"");
+		
+		// add die size to count
+		if (/(^|,)\s*\d+$/.test(text)) return setDice(text + dice);
 		// add additional die
-		if (/^D(\d|[FGV])/.test(dice) && (match = text.match(/(.+,)?(\d+)?D(\d+|F|G[ABCDFPS]|VH?)([-+]\d+|(?:[-+]\d+[SFAT])+)?$/)) !== null) {
+		else if (/^D(\d|[FGV])/.test(dice) && (match = text.match(/(.+,)?(\d+)?D(\d+|F|G[ABCDFPS]|VH?)([-+]\d+|(?:[-+]\d+[SFAT])+)?$/)) !== null) {
 			dice = dice.substr(1);
 			leading = match[1] || "";
 			count = parseInt(match[2] || 1) + 1;
@@ -2184,7 +2187,7 @@
 			<br>
 			<table>
 				<tr><td><a onclick="solo.addDice('2D6')">2D6</a></td><td><a onclick="solo.addDice('3D6')">3D6</a></td><td><a onclick="solo.addDice('D2')">D2</a></td><td><a onclick="solo.addDice('D3')">D3</a></td></tr>
-				<tr><td><a onclick="solo.addDice('4DF')">Fate</a></td><td colspan=2><a onclick="solo.addDice('D10,D10,D6')">Ironsworn</a></td></tr>
+				<tr><td><a onclick="solo.addDice('4DF')">4DF</a></td><td><a onclick="solo.addDice('8DF')">8DF</a></td><td colspan=2><a onclick="solo.addDice('D10,D10,D6')">Ironsworn</a></td></tr>
 			</table>
 			<br>
 
