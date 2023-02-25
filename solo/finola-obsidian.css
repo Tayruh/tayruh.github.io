@@ -148,7 +148,7 @@ div.view-content
 
 .markdown-preview-section del, .cm-strikethrough, del { opacity: 0.5  !important; }
 
-.markdown-preview-section { text-align: justify; }
+/* .markdown-preview-section { text-align: justify; } */
 .markdown-preview-section blockquote, .markdown-preview-section ul { text-align: left; }
 
 .markdown-preview-section details, details {
