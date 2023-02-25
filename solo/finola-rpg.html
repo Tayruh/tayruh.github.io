@@ -5,7 +5,7 @@
 (function(solo) {
 	var version = "2023.02.25";
 
-	var current_page, current_section, current_menu;
+	var current_page, current_section, current_menu, color_theme;
 	var spacer = "<div class='spacer'></div>";
 	var soloData = {};
 	
@@ -519,6 +519,13 @@
 		return link + "<a onclick='solo.showPage()'>Back</a></p></div>";
 	}
 
+	function setColorTheme(theme) {
+		removeClass($("html")[0], color_theme);
+		addClass($("html")[0], theme);
+		color_theme = theme;
+		saveSettings(soloData.color_theme = color_theme);
+	}
+
 	function showPage(page, section) {
 		if (section) current_section = section;
 		if (page) current_page = page;
@@ -625,7 +632,7 @@
 		].concat(links[current_menu]);
 
 		var a, b, id, list;
-		var output = "<table id='menu'>";
+		var output = "<div class='data-header'><table id='menu'>";
 		
 		for (a = 0; a < links.length; ++a) {
 			list = [];
@@ -646,9 +653,11 @@
 	 	}
 		
 		display(
-			output + "</table><div id='footer'>" +
+			output + "</table></div><div id='footer'>" +
 			getOptions(null, "menu-options", ["mythic", "misc"], current_menu) +
-			"<pre>version: " + version + "</pre></div>"
+			"<pre>version: " + version + "</pre>" +
+			getOptions(null, "color-theme", ["dark", "light"], color_theme) +
+			"</div>"
 		);
 		if (current_section) $(current_section).scrollIntoView(true);
 		
@@ -670,6 +679,8 @@
 			saveSettings(soloData.current_menu = current_menu);
 			showPage();
 		});
+		
+		$("#color-theme").addEventListener("change", function() { setColorTheme(this.value); });
 	}
 
 	window.onload = function() { 
@@ -719,6 +730,7 @@
 		focus = (soloData.focus || "random event");
 		progress = (soloData.progress || 0);
 		current_menu = (soloData.current_menu || "mythic");
+		color_theme = (soloData.color_theme || "dark");
 		drawn_card = (soloData.drawn_card || []);
 		playing_cards = (soloData.playing_cards || shuffleCards());
 		twist_counter = (soloData.twist_counter || 0);
@@ -730,8 +742,9 @@
 		var a;
 		for (a in muse.motif.impacts) { muse.motif.answers[a] = muse.motif.impacts[a]; }
 		
-		if (inIframe()) addClass($("body")[0], "iframe");
-
+		if (inIframe()) addClass($("html")[0], "iframe");
+		setColorTheme(color_theme);
+		
 		showPage();
 	};
 
@@ -819,7 +832,7 @@
 		var match;
 
 		var colors = [];
-		var color_map = {"R": "#ff7979", "G": "#72cb72", "B": "#8e8eff", "Y": "#ffff00", "P": "#ca7eff;", "O": "#ffa93e"};
+		var color_map = {"R": "red", "G": "green", "B": "blue", "Y": "yellow", "P": "purple", "O": "orange"};
 		if (/[XRGBYPO]/.test(mods)) {
 			match = mods.match(/([XRGBYPO]+)([+-][0-9]+)?/);
 			colors = match[1].split("");
@@ -884,7 +897,7 @@
 
 			if (colors.length) {
 				color = colors.shift();
-				if (color !== "X") roll = "<span style='color:" + color_map[color] + "'>" + roll + "</span>";
+				if (color !== "X") roll = "<span class='" + color_map[color] + "'>" + roll + "</span>";
 			}
 			rolls.push(roll);
 		}
@@ -996,7 +1009,7 @@
 			}
 			else {
 				result.name =  "D" + result.size;
-				result.html = "D<span style='color:white'>" + result.size + "</span>";
+				result.html = "D<span class='die-size'>" + result.size + "</span>";
 			}
 
 			if (result.name.length > longest) longest = result.name.length;
@@ -1884,7 +1897,6 @@
 		);
 	}
 
-
 	solo.showAnswer = showAnswer;
 	solo.showNewMeaning = showNewMeaning;
 	solo.showDice = showDice;
@@ -1903,10 +1915,8 @@
 	html {
 		font-family: Arial, Helvetica, sans-serif !important;
 		font-size: 15px;
-		color:#ffffff;
 		width: 100%;
 		line-height: 1.5em !important;
-		background-color:#1e1e1e !important;
 	}
 	
 	body {
@@ -1915,8 +1925,6 @@
 	}
 
 	blockquote {
-		color: #cccccc;
-		background-color: #00000040;
 		margin-inline-start: 0;
 		margin-inline-end: 0;
 		padding: 0.75em;
@@ -1940,25 +1948,20 @@
 	}
 
 	h3, h3 a {
-		color: #FF6666;
 		font-size: 1.15em;
 		text-shadow: 0 0 3px #ff0000;
 	}
 
 	h4, h4 a {
-		color: #DDDDBB;
 		font-size: 1em;
 		text-shadow: 0 0 3px #ff8800;
 	}
 
 	a {
-		color: #E1C87D !important;
 		font-weight: bold;
 		text-decoration: underline;
 	}
 	a:hover, summary:hover { cursor: pointer; }
-
-	a:visited { color:#dddddd; }
 	
 	img {
 		display: block;
@@ -1993,21 +1996,15 @@
 
 	ol, ul { padding-inline-start: 0; }
 
-	em, i { color: #FFFF88 !important; }
-
-	strong, b { color: #FFBB55 !important; }
-
-	code, pre { color: #dddddd; }
-
 	del { opacity: 0.5  !important; }
 
 	blockquote, ul { text-align: left; }
 
 	details {
-		background: #00000040;
 		padding: 0.5em;
 		margin-left: -0.5em;
 		margin-right: -0.5em;
+		border-radius: 3px;
 	}
 	
 	input {
@@ -2017,7 +2014,6 @@
 
 	ul { margin: 0; }
 	li { line-height: 1.5em; }
-	li::marker { color: #444444; } 
  
 	textarea {
 		height: 20em;
@@ -2025,21 +2021,9 @@
 	}
 	
 	details > :not(summary) { padding-left: 1em; }
-	
-	select {
-		background-color: #333333;
-		color: #cccccc;
-	}
-	
-	.iframe {
-		padding: 0 0 0 0;
-	}
-	
+
 	.hidden { display: none; }
-	
-	.maybe { color: #E1C87D; }
-	.no { color: #f44336; }
-	.yes { color: #66bb6a; }
+
 	.exceptional { text-decoration: underline; }
 
 	a, .prevent-select {
@@ -2055,7 +2039,6 @@
 		border: none;
 		text-align: right;
 	}
-	.roll-results td:last-of-type { background-color: #222222; }
 
 	.answer { width: 100%; }
 	.answer:hover { cursor: pointer; }
@@ -2074,7 +2057,6 @@
 		text-align: right;
 		padding-right: 1em !important;
 	}
-	.data-table td:last-of-type { background-color: #222222; }
 	.data-table, .data-header { margin-bottom: 3em !important; }
 	.data-footer { 
 		margin-top: unset;
@@ -2082,9 +2064,6 @@
 	}
 	
 	.spacer { height: 3em; }
-
-	.red-suit { color: #ff6666; }
-	.black-suit { color: #888888; }
 	
 	.hide {
 		transition: opacity initial;
@@ -2115,6 +2094,10 @@
 	
 	#display td { padding: 0.5em; }
 	
+	#menu td:first-of-type { 
+		text-align: right;
+		padding-right: 1em !important;
+	}
 	#menu li:not(:first-of-type) { margin-top: 1em; }
 	#menu, #menu td:not(:last-of-type) { border: none; }
 
@@ -2140,10 +2123,7 @@
 
 	#questions { margin-bottom: 1em; }
 	#questions table, #questions td:first-of-type { border: none; }
-	#questions td:last-of-type {
-		min-width: 200px;
-		background-color: #222222;
-	}
+	#questions td:last-of-type { min-width: 200px;	}
 	#questions td:last-of-type:hover { cursor: pointer; }
 
 	#back-links { 
@@ -2154,12 +2134,13 @@
 	#footer {
 		margin: 3em auto 0 auto;
 		width: fit-content;
-		background-color: #2a2a2a;
 		padding: 2px;
 	}
 	#footer select, #footer pre { display: inline; }
-	#footer select { margin-right: 20px; }
-	#footer pre { font-size: 10px; }
+	#footer pre { 
+		font-size: 10px;
+		margin: 0 20px 0 20px;
+	}
 
 	@media screen and (max-width: 600px) {
 		html, body { 
@@ -2167,8 +2148,80 @@
 			text-align: left; 
 		}
 		
-		.iframe { padding-bottom: 3em; }
+		html.iframe { padding-bottom: 2em; }
 	}
+	
+	/* dark theme */
+	html {
+		color: #ffffff;
+		background-color: #1e1e1e !important;
+	}
+	blockquote {
+		color: #cccccc;
+		background-color: #00000040;
+	}
+	h3, h3 a { color: #ff6666; }
+	h4, h4 a { color: #ddddbb; }
+	a { color: #e1c87d !important; }
+	em, i { color: #ffff88 !important; }
+	strong, b { color: #FFBB55 !important; }
+	code, pre { color: #dddddd; }
+	details { background-color: #00000040; }
+	li::marker { color: #444444; } 
+	select {
+		background-color: #333333;
+		color: #cccccc;
+	}
+	.no { color: #f44336; }
+	.yes { color: #66bb6a; }
+	.die-size { color: #ffffff; }
+	.roll-results td:last-of-type { background-color: #222222; }
+	.data-table td:last-of-type { background-color: #222222; }
+	.red { color: #ff7979; }
+	.green { color: #72cb72; }
+	.blue { color: #8e8eff; }
+	.yellow { color: #ffff00; }
+	.purple { color: #ca7eff; }
+	.orange { color: #ffa93e }
+	.red-suit { color: #ff6666; }
+	.black-suit { color: #888888; }
+	#questions td:last-of-type { background-color: #222222; }
+	#footer { background-color: #2a2a2a;  }
+	
+	/* light theme */
+	html.light { 
+		color: #000000;
+		background-color: #e0e0e0 !important;
+	}
+	html.light blockquote {
+		color: #333333;
+		background-color: #00000010;
+	}
+	html.light a { color: #000088 !important; }
+	html.light em, html.light i { color: #006600 !important; }
+	html.light strong, html.light b { color: #660000 !important; }
+	html.light code, html.light pre { color: #333333; }
+	html.light details { background-color: #00000010; }
+	html.light li::marker { color: #888888; } 
+	html.light select {
+		background-color: #eeeeee;
+		color: #555555;
+	}
+	html.light .no { color: #880000; }
+	html.light .yes { color: #006600; }
+	html.light .die-size { color: #000000; }
+	html.light .roll-results td:last-of-type { background-color: #00000010; }
+	html.light .data-table td:last-of-type { background-color: #00000010; }
+	html.light .red { color: #aa0000; }
+	html.light .green { color: #008800; }
+	html.light .blue { color: #0000aa; }
+	html.light .yellow { color: #b0b0b000; }
+	html.light .purple { color: #880088; }
+	html.light .orange { color: #ff6c3f; }
+	html.light .red-suit { color: #ff0000; }
+	html.light .black-suit { color: #000000; }
+	html.light #questions td:last-of-type { background-color: #00000010; }
+	html.light #footer { background-color: #00000010;  }
 </style>
 
 <body>
