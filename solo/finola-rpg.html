@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
 <script>
 (function(solo) {
-	var version = "2023.03.07";
+	var version = "2023.03.19";
 
 	var current_page, current_section, current_menu, color_theme;
 	var spacer = "<div class='spacer'></div>";
@@ -12,7 +12,7 @@
 	var muse = {
 		mythic: {
 			fate: {
-				rank: ["Miniscule 2+", "Miniscule", "Weak", "Low", "Below Average", "Average", "Above Average", "High", "Exceptional", "Incredible", "Awesome", "Superhuman", "Superhuman 2+"],
+				rank: ["Superhuman 2+", "Superhuman", "Awesome", "Incredible", "Exceptional", "High", "Above Average", "Average", "Below Average", "Low", "Weak", "Miniscule", "Miniscule 2+"],
 				odds: ["Certain", "Nearly Certain", "Very Likely", "Likely", "50/50", "Unlikely", "Very Unlikely", "Nearly Impossible", "Impossible"],
 				chart: [
 					[[10, 50, 91], [7, 35, 88], [5, 25, 86], [3, 15, 84], [2, 10, 83], [1, 5, 82], [-1, 1, 81], [-100, 1, 81], [-100, 1, 81]],
@@ -125,7 +125,7 @@
 			"A character with questionable motives enters the story.", "A character's weakness or mistake is exploited.",
 			"Someone or something is taken from you or becomes broken.", "A character does something contrary to who they are.", "A sacrifice is necessary to succeed.",
 			"A past event or action is revealed that directly affects the current situation.", "Someone or something taken for granted is discovered to be unexpectedly important.",
-			"A strength becomes a momentary weakness.", "A previously unseen weakness or fear comes is revealed.", "The current path to your goal is closed off unexpectedly."
+			"A strength becomes a momentary weakness.", "A previously unseen weakness or fear is revealed.", "The current path to your goal is closed off unexpectedly."
 		],
 		character: {
 			identities: ["Warrior", "Healer", "Protector", "Assistant", "Dependent", "Ruler", "Administrator", "Victim", "Scholar", "Expert", "Elite", "Investigator", "Criminal", "Supporter", "Helpless", "Outsider", "Mediator", "Entertainer", "Socialite", "Athlete", "Performer", "Representative", "Merchant", "Trader", "Creator", "Artist", "Servant", "Laborer", "Religious", "Hunte r", "Leader", "Fighter", "Crafter", "Thief", "Radical", "Executive", "Thug", "Guard", "Guardian", "Explorer", "Hero", "Villain", "Deceiver", "Engineer", "Scout", "Fixer", "Wanderer", "Subverter", "Soldier", "Law Enforcement", "Exotic", "Scientist", "Gatherer", "Foreigner", "Survivor", "Gambler", "Rogue", "Farmer", "Killer", "Professional", "Driver/Pilot", "Student", "Organizer", "Deliverer", "Lackey", "Teacher", "gypsy", "missionary", "villager", "witch", "outcast", "magus", "crook", "magister", "mercenary", "conscript", "civilian", "serf", "caretaker", "worker", "activist", "brute", "commoner", "hermit", "actor", "inquisitor", "judge", "orator", "herald", "champion", "lord", "ranger", "chieftain", "highwayman", "cleric", "occultist", "pioneer", "fortune-hunter", "slave", "professor", "reverend", "burglar", "governor", "gunman", "vicar", "scrapper", "clairvoyant", "charmer", "drifter", "officer", "monk", "patriarch", "globetrotter", "journeyman", "homemaker", "shopkeeper", "sniper", "statesman", "warden", "recluse", "crone", "courtier", "astrologer", "outlaw", "steward", "adventurer", "priest", "duelist", "adept", "polymath", "tradesman", "jack-of-all-trades", "bum", "magician", "hitman", "aristocrat", "sorcerer", "traveler", "craftsman", "wizard", "preacher", "vagrant", "beggar", "artisan", "master", "apprentice", "ascetic", "ascendant", "politician", "superior", "Antiquarian", "Journalist", "Servant/Butler", "Lawyer", "Librarian", "High Priest", "Author", "Military Commander", "Clergyman", "Assassin", "Musician", "Gravedigger", "Dilletante", "Parapsychologist", "Henchman", "Doctor of Medicine", "Police Detective", "Restauranteur", "Police Patrolman", "Private Investigator", "Foot Soldier", "Revolutionary", "Hobo", "Archaeologist", "Intelligence Agent", "Historian", "Savant", "Cultist", "Abandoned", "Adventurous", "Adversary", "Advisor", "Ally", "Art", "Authority", "Bureaucrat", "Business", "Combatant", "Competitor", "Controller", "Enemy", "Enforcer", "Family", "Friend", "Information", "Innocent", "Inspector", "Intellectual", "Law", "Legal", "Lost", "Mechanical", "Messenger", "Military", "Mundane", "Mystery", "Official", "Persecutor", "Planner", "Pleaser", "Power", "Prisoner", "Public", "Punish", "Represent", "Ruffian", "Hunter"],
@@ -1426,7 +1426,7 @@
 		acting_rank = $("#acting").value;
 		difficulty_rank = $("#difficulty").value;
 
-		var mod = muse.mythic.fate.rank.indexOf(acting_rank) - muse.mythic.fate.rank.indexOf(difficulty_rank);
+		var mod = muse.mythic.fate.rank.indexOf(difficulty_rank) - muse.mythic.fate.rank.indexOf(acting_rank);
 
 		var die1 = random(1, 10);
 		var die2 = random(1, 10);
