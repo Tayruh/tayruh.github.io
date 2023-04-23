@@ -46,7 +46,7 @@
 - **Classic Magic**
 	- *Create an Advantage* — Engineering/Ritual Magic with Discernment bonus, used to create a magical object/ward as a situational aspect with a free Invoke, which may stack additional free Invokes through repeated CaA. Invokes from the aspect may be applied to *any* action that the object/ward was created to assist with (eg. an unlocking spell to aid the Larceny skill), and the aspect is removed once all free Invokes are expended.
 
-	- *Overcome/Counter* — Detect magic using Engineering/Ritual Magic with Alertness bonus. Dispel magic using Discernment bonus.
+	- *Overcome/Counter* — Detect magic using Engineering/Ritual Magic with Alertness bonus. Dispel magic using Engineering/Ritual Magic with Discernment bonus.
 
 	- *Attack* — Standard skill and attribute bonuses (eg. Shoot with Alertness bonus) with Invoke bonuses from created situational aspect, and Physique WR bonus (if it applies).
 
