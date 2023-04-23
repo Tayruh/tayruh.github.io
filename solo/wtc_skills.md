@@ -4,7 +4,7 @@
 
 - Physique and Willpower are only used directly to perform (or Counter against) Overcomes or Create an Advantages, unless a stunt adds an action. When Attacking or Defending, they may add WR and AR bonuses as long as the attribute or its bonuses were not used before the roll.
 
-+ Alertness is used to aim kinesis (object movement, force blasts, force fields, etc) as if it were a ranged weapon. Discernment is the telepathic/magic equivalent of Athleticism. Kinetics, telepaths, and modern magic users who rely on inner strength buff the Willpower attribute. Classic magic users who perform incantations to create wards and magical objects buff the Discernment attribute. 
++ Alertness is used to aim kinesis (object movement, force blasts, force fields, etc) as if it were a ranged weapon. Discernment increases the success of telepathy and magic through comprehension of thoughts, feelings, and forces of magic. Kinetics, telepaths, and modern magic users who rely on inner strength buff the Willpower attribute. Classic magic users who perform incantations to create wards and magical objects buff the Discernment attribute. 
 
 - **Melee**
 	- *Overcome/Create an Advantage/Counter* — Physique.
