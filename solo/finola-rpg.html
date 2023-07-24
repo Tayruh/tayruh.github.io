@@ -3,11 +3,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
 <script>
 (function(solo) {
-	var version = "2023.05.14";
+	var version = "2023.07.23";
 
 	var current_page, current_section, current_menu, color_theme;
 	var spacer = "<div class='spacer'></div>";
 	var soloData = {};
+
+	/*
+		PBTA moves markdown:
+			||                 break two blocks of text up
+			((dice))           insert dice roller. options are: d100, ptba (2d6), progress (2d10), and ironsworn (2d10,d6)
+			{link}             create link to another move
+			{{table}}          insert table from move_tables
+			[bold]             bold the text
+			[[italic]]         italicize the text
+			<<item 1|item 2>>  create a bullet list with items separated by |
+			***                insert a spacer
+
+		PBTA oracles markdown:
+			>roll twice        roll two items on the table
+			>roll thrice       roll three items on the table
+			>category:oracle   roll on another oracle
+			>category:oracleA + category:oracleB   combine two or more oracles
+	*/
 	
 	var muse = {
 		mythic: {
@@ -178,12 +196,12 @@
 			focus: { 3: "Current Scene", 6: "Last Story", 9: "Equipment", 12: "Parents", 15: "History", 18: "Retainers", 21: "Wealth", 24: "Relics", 27: "Last Action", 30: "Skills", 33: "Superiors", 36: "Fame", 39: "Campaign", 42: "Future Action", 45: "Friends", 48: "Allies", 51: "Last Scene", 54: "Contacts", 57: "Flaws", 60: "Antagonist", 63: "Rewards", 66: "Experience", 69: "Knowledge", 72: "Recent Scene", 75: "Community", 78: "Treasure", 81: "Character", 84: "Current Story", 87: "Family", 90: "Power", 93: "Weapons", 96: "Previous Scene", 100: "Enemy" }
 		},
 		meanings: {
-			"verb": ["Attain", "Start", "Neglect", "Recruit", "Triumph", "Persecute", "Increase", "Decrease", "Gratify", "Inquire", "Antagonize", "Waste", "Truce", "Haggle", "Imprison", "Celebrate", "Develop", "Travel", "Block", "Harm", "Debase", "Overindulge", "Adjourn", "Kill", "Disrupt", "Usurp", "Create", "Agree", "Abuse", "Work", "Release", "Befriend", "Judge", "Desert", "Procrastinate", "Praise", "Separate", "Break", "Heal", "Delay", "Stop", "Lie", "Return", "Inform", "Bestow", "Postpone", "Spy", "Attach", "Carry", "Open", "Trick", "Propose", "Divide", "Mistrust", "Trust", "Excite", "Activate", "Assist", "Care", "Negligence", "Attract", "Failure", "Pursue", "Vengeance", "Proceedings", "Dispute", "Punish", "Overthrow", "Scheme", "Clash", "Weaken", "Initiate", "Swear", "Control", "Risk", "Surrender", "Raid", "Deflect", "Threaten", "Leave", "Preserve", "Manipulate", "Remove", "Eliminate", "Withdraw", "Focus", "Uncover", "Breach", "Uphold", "Falter", "Suppress", "Hunt", "Share", "Avoid", "Reject", "Explore", "Bolster", "Seize", "Mourn", "Defy", "Transform", "Persevere", "Serve", "Begin", "Move", "Coordinate", "Await", "Impress", "Take", "Oppose", "Overwhelm", "Acquire", "Finish", "Strengthen", "Restore", "Advance", "Refuse", "Find", "Fortify", "Secure", "Arrive", "Affect", "Change", "Support", "Locate", "Endure", "Reduce", "Escalate", "Distract", "Journey", "Learn", "Communicate", "Depart", "Search", "Charge", "Summon", "Veil", "Conquer", "Vanquish", "Shepherd", "Absorb", "Modify", "Spawn", "Implant", "Echo", "Eclipse", "Resolve", "Splinter", "Design", "Extinguish", "Amplify", "Magnify", "Juxtapose", "Compel", "Expand", "Assail", "Rush", "Reconfigure", "Transfigure", "Position", "Probe", "Embrace", "Revile", "Harden", "Instruct", "Govern", "Engulf", "Imbue", "Guide", "Discern", "Coalesce", "Isolate", "Repulse", "Poison", "Sculpt", "Deter", "Purge", "Dismantle", "Refresh", "Overcome", "Dominate", "Infuse", "Steer", "Intertwine", "Emit", "Immolate", "Engender", "Stifle", "Fuse", "Shame", "Ruin", "Dissolve", "Raise", "Revitalize", "Grow", "Twist", "Deviate", "Amend", "Unravel", "Exacerbate", "Deposit", "Emanate", "Deteriorate", "Embellish", "Corrode", "Scatter", "Incite", "Atone", "Reap", "Desecrate", "Consume", "Advise", "Reposition", "Bury", "Wreck", "Evoke", "Contort", "Lead", "Assert", "Amass", "Kindle", "Insulate", "Inhibit", "Climb", "Subvert", "Unearth", "Drain", "Revere", "Forbid", "Struggle", "Sever", "Stalk", "Suffocate", "Mystify", "Tame", "Sabotage", "Impart", "Retreat", "Rend", "Reconnect", "Detect", "Devastate", "Shake", "Smite", "Spurn", "Dissect", "Ravage", "Prune", "Batter", "Starve", "Pierce", "Augment", "Crush", "Affirm", "Race", "Empower", "Shatter", "Reconcile", "Illuminate", "Soften", "Reflect", "Repel", "Switch", "Fight", "Untangle", "Diminish", "Wrest", "Obtain", "Imitate", "Commune", "Strain", "Hinder", "Refine", "Embolden", "Stretch", "Weave", "Revoke", "Erode", "Boost", "Extract", "Winnow", "Nurture", "Sustain", "Smother", "Coerce", "Catch", "Expel", "Awaken", "abandon", "abolish", "accuse", "address", "aggravate", "agitate", "aid", "aim", "alarm", "alert", "alter", "amaze", "ambush", "amuse", "annihilate", "annoy", "appeal", "applaud", "apprehend", "approach", "argue", "arise", "arouse", "arrange", "arrest", "ask", "assassinate", "assault", "assemble", "astonish", "attack", "attempt", "attend", "auction", "audition", "avenge", "avert", "babble", "badmouth", "bait", "ban", "banish", "baptize", "bargain", "bark", "barricade", "barter", "bash", "bawl", "beautify", "beckon", "beg", "beguile", "belch", "belittle", "bellow", "bemoan", "bequeath", "berate", "besiege", "bet", "betray", "bewilder", "bewitch", "bid", "bite", "blab", "blame", "blast", "bleed", "bless", "blunder", "blurt", "boast", "bother", "bow", "brag", "bribe", "broadcast", "build", "capture", "careen", "caress", "carve", "challenge", "charm", "chase", "cheat", "choke", "claim", "collaborate", "collapse", "collide", "command", "complain", "compliment", "conceal", "concoct", "condemn", "confiscate", "conflict", "confront", "confuse", "congratulate", "congregate", "conjure", "consecrate", "consider", "construct", "contact", "contaminate", "contestconverse", "cook", "corner", "corrupt", "cremate", "crowd", "crown", "customize", "damage", "dance", "dare", "dash", "dazzle", "deal", "debate", "decay", "deceive", "declare", "decline", "decompose", "decorate", "decree", "dedicate", "deduce", "deface", "defeat", "defend", "defuse", "deliver", "demand", "demolish", "denounce", "deride", "despair", "destroy", "devour", "dig", "disappear", "disarm", "discipline", "discover", "discriminate", "discuss", "disgrace", "disguise", "disgust", "dishonor", "dismount", "dispel", "disperse", "display", "displease", "disrespect", "distill", "distress", "disturb", "divert", "dodge", "drag", "dress", "drink", "drop", "drown", "drum", "dump", "dupe", "duplicate", "earn", "eat", "elude", "employ", "enchant", "end", "endanger", "endear", "endorse", "enforce", "engage", "engineer", "enjoy", "enlarge", "enlighten", "enlist", "enquire", "enrage", "enrich", "enroll", "enshrine", "ensnare", "entangle", "enter", "entertain", "entice", "erect", "escape", "escort", "evacuate", "evade", "evict", "exaggerate", "examine", "excavate", "exchange", "exclaim", "exclude", "execute", "exhibit", "experiment", "explode", "expose", "faint", "fake", "fall", "falsify", "fashion", "flaunt", "flee", "fling", "flirt", "follow", "force", "foresee", "foretell", "forge", "forgive", "fracture", "frame", "free", "freeze", "fret", "frighten", "frustrate", "fumble", "fund", "fuss", "gallop", "gamble", "gather", "gaze", "gesture", "gift", "giggle", "give", "glare", "gleam", "glimpse", "goad", "gob", "goggle", "gossip", "grab", "grapple", "grieve", "guard", "hamper", "harass", "help", "hide", "hit", "hold", "humiliate", "hurry", "hurtle", "ignite", "impede", "implore", "infect", "infest", "inflame", "inflict", "infringe", "infuriate", "injure", "inspect", "inspire", "instigate", "insult", "interfere", "interrogate", "intimidate", "intoxicate", "investigate", "invite", "involve", "irritate", "jaywalk", "jeer", "joke", "jostle", "kick", "kiss", "lament", "laugh", "leap", "lecture", "leer", "look", "loot", "lose", "love", "lunge", "lurk", "maim", "manhandle", "march", "market", "massacre", "meddle", "mesmerize", "mimic", "misspell", "mob", "mock", "murder", "mutate", "mutilate", "nag", "narrate", "near", "notify", "obscure", "observe", "obstruct", "offend", "oppress", "order", "overhear", "overpower", "overturn", "parade", "parley", "patrol", "pelt", "penalize", "perform", "persuade", "petition", "play", "plead", "plunder", "pollute", "pounce", "practice", "preach", "proclaim", "prohibit", "promote", "pronounce", "prophesize", "prosecute", "protect", "protest", "provide", "provoke", "prowl", "pry", "punch", "purchase", "push", "quarrel", "query", "queue", "rage", "ransack", "rebel", "recite", "recount", "rejoice", "remark", "renege", "repair", "research", "rescue", "resist", "restrain", "resurrect", "reveal", "revolt", "reward", "ridicule", "riot", "rob", "run", "salute", "scamper", "scare", "scavenge", "scream", "scrounge", "seduce", "segregate", "sell", "ship", "shout", "shove", "show", "silence", "sing", "slaughter", "sleep", "smash", "sob", "solicit", "speak", "spill", "spit", "stab", "stage", "startle", "steal", "strangle", "strike", "subdue", "suffer", "surround", "suspect", "taunt", "tease", "tempt", "terrify", "terrorize", "thank", "throw", "torment", "torture", "trade", "translate", "transport", "trap", "tug", "unite", "unleash", "unload", "unveil", "vandalize", "vanish", "victimize", "violate", "volunteer", "wait", "warn", "wave", "weep", "welcome", "whittle", "wield", "win", "wink", "witness", "worship", "wound", "wrestle", "write", "yell", "yield", "Accompany", "Close", "Combine", "Continue", "Deny", "Distrust", "Easy", "Energize", "Fail", "Indulge", "Invade", "Lure", "Misuse", "Proceed", "Relinquish", "Strange", "Succeed", "Use", "Plant", "Ready", "Testing", "Hurt", "Prepare", "Crawl", "Combat", "Exile", "Mistake", "Place", "Service", "Group", "Guilt", "Hate", "Home", "Hope", "Fear", "Goal", "Plan", "Pleasure", "Recover", "Tail", "Anger", "Compete", "Balance", "Sense", "Animate", "Armor", "Depower", "Paralyze", "Stun", "Swim", "Telepathy", "Touch", "Limit", "Comfort", "Upgrade", "View", "Encounter", "Constrain", "Deprive", "Elaborate", "Heat", "Trigger", "Compromise", "Leverage", "Conclude", "Incapacitate", "Promise", "Repeat", "Require", "Time", "Rot", "Burn", "Counteract", "Fix", "Contain", "Access", "Lock", "Question", "Solve", "Desire", "Replenish", "Defect", "Curse", "Enhance", "Fly", "Recharge", "Replace", "Survive", "Hard", "Rumor", "Crash", "Intensify", "Object", "Progress", "Misbehave", "Offer", "Talk", "Alternate", "Intercept"],
+			"verb": ["Attain", "Start", "Neglect", "Recruit", "Triumph", "Persecute", "Increase", "Decrease", "Gratify", "Inquire", "Antagonize", "Waste", "Truce", "Haggle", "Imprison", "Celebrate", "Develop", "Travel", "Block", "Harm", "Debase", "Overindulge", "Adjourn", "Kill", "Disrupt", "Usurp", "Create", "Agree", "Abuse", "Work", "Release", "Befriend", "Judge", "Desert", "Procrastinate", "Praise", "Separate", "Break", "Heal", "Delay", "Stop", "Lie", "Return", "Inform", "Bestow", "Postpone", "Spy", "Attach", "Carry", "Open", "Trick", "Propose", "Divide", "Mistrust", "Trust", "Excite", "Activate", "Assist", "Care", "Negligence", "Attract", "Failure", "Pursue", "Vengeance", "Proceedings", "Dispute", "Punish", "Overthrow", "Scheme", "Clash", "Weaken", "Initiate", "Swear", "Control", "Risk", "Surrender", "Raid", "Deflect", "Threaten", "Leave", "Preserve", "Manipulate", "Remove", "Eliminate", "Withdraw", "Focus", "Uncover", "Breach", "Uphold", "Falter", "Suppress", "Hunt", "Share", "Avoid", "Reject", "Explore", "Bolster", "Seize", "Mourn", "Defy", "Transform", "Persevere", "Serve", "Begin", "Move", "Coordinate", "Await", "Impress", "Take", "Oppose", "Overwhelm", "Acquire", "Finish", "Strengthen", "Restore", "Advance", "Refuse", "Find", "Fortify", "Secure", "Arrive", "Affect", "Change", "Support", "Locate", "Endure", "Reduce", "Escalate", "Distract", "Journey", "Learn", "Communicate", "Depart", "Search", "Charge", "Summon", "Veil", "Conquer", "Vanquish", "Shepherd", "Absorb", "Modify", "Spawn", "Implant", "Echo", "Eclipse", "Resolve", "Splinter", "Design", "Extinguish", "Amplify", "Magnify", "Juxtapose", "Compel", "Expand", "Assail", "Rush", "Reconfigure", "Transfigure", "Position", "Probe", "Embrace", "Revile", "Harden", "Instruct", "Govern", "Engulf", "Imbue", "Guide", "Discern", "Coalesce", "Isolate", "Repulse", "Poison", "Sculpt", "Deter", "Purge", "Dismantle", "Refresh", "Overcome", "Dominate", "Infuse", "Steer", "Intertwine", "Emit", "Immolate", "Engender", "Stifle", "Fuse", "Shame", "Ruin", "Dissolve", "Raise", "Revitalize", "Grow", "Twist", "Deviate", "Amend", "Unravel", "Exacerbate", "Deposit", "Emanate", "Deteriorate", "Embellish", "Corrode", "Scatter", "Incite", "Atone", "Reap", "Desecrate", "Consume", "Advise", "Reposition", "Bury", "Wreck", "Evoke", "Contort", "Lead", "Assert", "Amass", "Kindle", "Insulate", "Inhibit", "Climb", "Subvert", "Unearth", "Drain", "Revere", "Forbid", "Struggle", "Sever", "Stalk", "Suffocate", "Mystify", "Tame", "Sabotage", "Impart", "Retreat", "Rend", "Reconnect", "Detect", "Devastate", "Shake", "Smite", "Spurn", "Dissect", "Ravage", "Prune", "Batter", "Starve", "Pierce", "Augment", "Crush", "Affirm", "Race", "Empower", "Shatter", "Reconcile", "Illuminate", "Soften", "Reflect", "Repel", "Switch", "Fight", "Untangle", "Diminish", "Wrest", "Obtain", "Imitate", "Commune", "Strain", "Hinder", "Refine", "Embolden", "Stretch", "Weave", "Revoke", "Erode", "Boost", "Extract", "Winnow", "Nurture", "Sustain", "Smother", "Coerce", "Catch", "Expel", "Awaken", "abandon", "abolish", "accuse", "address", "aggravate", "agitate", "aid", "aim", "alarm", "alert", "alter", "amaze", "ambush", "amuse", "annihilate", "annoy", "appeal", "applaud", "apprehend", "approach", "argue", "arise", "arouse", "arrange", "arrest", "ask", "assassinate", "assault", "assemble", "astonish", "attack", "attempt", "attend", "auction", "audition", "avenge", "avert", "babble", "badmouth", "bait", "ban", "banish", "baptize", "bargain", "bark", "barricade", "barter", "bash", "bawl", "beautify", "beckon", "beg", "beguile", "belch", "belittle", "bellow", "bemoan", "bequeath", "berate", "besiege", "bet", "betray", "bewilder", "bewitch", "bid", "bite", "blab", "blame", "blast", "bleed", "bless", "blunder", "blurt", "boast", "bother", "bow", "brag", "bribe", "broadcast", "build", "capture", "careen", "caress", "carve", "challenge", "charm", "chase", "cheat", "choke", "claim", "collaborate", "collapse", "collide", "command", "complain", "compliment", "conceal", "concoct", "condemn", "confiscate", "conflict", "confront", "confuse", "congratulate", "congregate", "conjure", "consecrate", "consider", "construct", "contact", "contaminate", "contest", "converse", "cook", "corner", "corrupt", "cremate", "crowd", "crown", "customize", "damage", "dance", "dare", "dash", "dazzle", "deal", "debate", "decay", "deceive", "declare", "decline", "decompose", "decorate", "decree", "dedicate", "deduce", "deface", "defeat", "defend", "defuse", "deliver", "demand", "demolish", "denounce", "deride", "despair", "destroy", "devour", "dig", "disappear", "disarm", "discipline", "discover", "discriminate", "discuss", "disgrace", "disguise", "disgust", "dishonor", "dismount", "dispel", "disperse", "display", "displease", "disrespect", "distill", "distress", "disturb", "divert", "dodge", "drag", "dress", "drink", "drop", "drown", "drum", "dump", "dupe", "duplicate", "earn", "eat", "elude", "employ", "enchant", "end", "endanger", "endear", "endorse", "enforce", "engage", "engineer", "enjoy", "enlarge", "enlighten", "enlist", "enquire", "enrage", "enrich", "enroll", "enshrine", "ensnare", "entangle", "enter", "entertain", "entice", "erect", "escape", "escort", "evacuate", "evade", "evict", "exaggerate", "examine", "excavate", "exchange", "exclaim", "exclude", "execute", "exhibit", "experiment", "explode", "expose", "faint", "fake", "fall", "falsify", "fashion", "flaunt", "flee", "fling", "flirt", "follow", "force", "foresee", "foretell", "forge", "forgive", "fracture", "frame", "free", "freeze", "fret", "frighten", "frustrate", "fumble", "fund", "fuss", "gallop", "gamble", "gather", "gaze", "gesture", "gift", "giggle", "give", "glare", "gleam", "glimpse", "goad", "gob", "goggle", "gossip", "grab", "grapple", "grieve", "guard", "hamper", "harass", "help", "hide", "hit", "hold", "humiliate", "hurry", "hurtle", "ignite", "impede", "implore", "infect", "infest", "inflame", "inflict", "infringe", "infuriate", "injure", "inspect", "inspire", "instigate", "insult", "interfere", "interrogate", "intimidate", "intoxicate", "investigate", "invite", "involve", "irritate", "jaywalk", "jeer", "joke", "jostle", "kick", "kiss", "lament", "laugh", "leap", "lecture", "leer", "look", "loot", "lose", "love", "lunge", "lurk", "maim", "manhandle", "march", "market", "massacre", "meddle", "mesmerize", "mimic", "misspell", "mob", "mock", "murder", "mutate", "mutilate", "nag", "narrate", "near", "notify", "obscure", "observe", "obstruct", "offend", "oppress", "order", "overhear", "overpower", "overturn", "parade", "parley", "patrol", "pelt", "penalize", "perform", "persuade", "petition", "play", "plead", "plunder", "pollute", "pounce", "practice", "preach", "proclaim", "prohibit", "promote", "pronounce", "prophesize", "prosecute", "protect", "protest", "provide", "provoke", "prowl", "pry", "punch", "purchase", "push", "quarrel", "query", "queue", "rage", "ransack", "rebel", "recite", "recount", "rejoice", "remark", "renege", "repair", "research", "rescue", "resist", "restrain", "resurrect", "reveal", "revolt", "reward", "ridicule", "riot", "rob", "run", "salute", "scamper", "scare", "scavenge", "scream", "scrounge", "seduce", "segregate", "sell", "ship", "shout", "shove", "show", "silence", "sing", "slaughter", "sleep", "smash", "sob", "solicit", "speak", "spill", "spit", "stab", "stage", "startle", "steal", "strangle", "strike", "subdue", "suffer", "surround", "suspect", "taunt", "tease", "tempt", "terrify", "terrorize", "thank", "throw", "torment", "torture", "trade", "translate", "transport", "trap", "tug", "unite", "unleash", "unload", "unveil", "vandalize", "vanish", "victimize", "violate", "volunteer", "wait", "warn", "wave", "weep", "welcome", "whittle", "wield", "win", "wink", "witness", "worship", "wound", "wrestle", "write", "yell", "yield", "Accompany", "Close", "Combine", "Continue", "Deny", "Distrust", "Easy", "Energize", "Fail", "Indulge", "Invade", "Lure", "Misuse", "Proceed", "Relinquish", "Strange", "Succeed", "Use", "Plant", "Ready", "Testing", "Hurt", "Prepare", "Crawl", "Combat", "Exile", "Mistake", "Place", "Service", "Group", "Guilt", "Hate", "Home", "Hope", "Fear", "Goal", "Plan", "Pleasure", "Recover", "Tail", "Anger", "Compete", "Balance", "Sense", "Animate", "Armor", "Depower", "Paralyze", "Stun", "Swim", "Telepathy", "Touch", "Limit", "Comfort", "Upgrade", "View", "Encounter", "Constrain", "Deprive", "Elaborate", "Heat", "Trigger", "Compromise", "Leverage", "Conclude", "Incapacitate", "Promise", "Repeat", "Require", "Time", "Rot", "Burn", "Counteract", "Fix", "Contain", "Access", "Lock", "Question", "Solve", "Desire", "Replenish", "Defect", "Curse", "Enhance", "Fly", "Recharge", "Replace", "Survive", "Hard", "Rumor", "Crash", "Intensify", "Object", "Progress", "Misbehave", "Offer", "Talk", "Alternate", "Intercept"],
 			"noun": ["Goals", "Dreams", "Environment", "Outside", "Inside", "Reality", "Allies", "Enemies", "Evil", "Good", "Emotions", "Opposition", "Innocent", "Intellect", "Ideas", "Joy", "Advice", "Prison", "Attention", "Success", "Travel", "Jealousy", "Home", "Investment", "Suffering", "Wishes", "Tactics", "Stalemate", "Randomness", "Normal", "Messages", "Friendship", "Physical", "Project", "Pleasures", "Possessions", "Benefits", "Plans", "Lies", "Expectations", "Legal", "Bureaucracy", "Business", "News", "Exterior", "Intrigues", "Fears", "Ambush", "Wounds", "Representative", "Adversities", "Military", "Mundane", "Trials", "Masses", "Vehicle", "Art", "Status quo", "Technology", "Magic", "Illusions", "Portals", "Weapons", "Animals", "Weather", "Elements", "public", "Leadership", "Information", "wealthy", "gluttony", "hardship", "populous", "discretion", "lust", "propaganda", "affluence", "envy", "science", "prosperity", "laziness", "communications", "poor", "opulence", "slavery", "pride", "myths", "deprivation", "elite", "enlightenment", "purity", "riddles", "academia", "racism", "moderation", "stories", "distress", "forsaken", "sensuality", "vigilance", "legends", "contraband", "law", "dissonance", "zeal", "industry", "music", "government", "composure", "new religions", "literature", "oppressed", "discrimination", "friends", "disbelief", "modesty", "alcohol", "criminals", "pleasure", "atrocities", "ghosts", "medicines", "secret societies", "happiness", "narcissism", "servitude", "old religions", "harmony", "valor", "expertise", "force", "church", "spirits", "adversary", "air", "almanac", "ancestor", "arm", "armor", "assistance", "astrolabe", "authority", "babe", "bargain", "bear", "beauty", "bed", "beggar", "belfry", "blood", "boar", "boat", "bog", "boundary", "bread", "bridge", "bud", "butcher", "calm", "caste", "cauldron", "cave", "cesspool", "chaos", "charlatan", "chest", "child", "chill", "chime", "city", "cloister", "code", "coin", "compassion", "compulsion", "comradeship", "constellation", "craft", "creator", "crocus", "cup", "curio", "damnation", "dark", "day", "death", "den", "descendant", "diagram", "disgust", "dock", "doubter", "drain", "dredger", "drum", "earth", "east", "eave", "emergence", "equivalent", "escape", "estate", "eye", "family", "fear", "fertility", "fire", "fleece", "flood", "flute", "foe", "fool", "fortress", "frustration", "glen", "glut", "goal", "gold", "grasshopper", "grave", "habit", "hatred", "health", "heart", "holiness", "honesty", "house", "icon", "illusion", "imagination", "independence", "infusion", "intuition", "invocation", "keystone", "kick", "kimono", "knight", "knot", "land", "lap", "leisure", "lie", "life", "limit", "lion", "lock", "love", "luck", "malefactor", "man", "meal", "merchant", "message", "meteor", "mind", "minion", "monarchy", "month", "moon", "nobility", "north", "number", "observation", "offer", "opportunity", "orchid", "owner", "ox", "partner", "pass", "passion", "philosophy", "plant", "poem", "populace", "power", "progress", "provisions", "quiet", "reason", "reception", "reduction", "relation", "reliability", "relief", "reminder", "rest", "road", "rod", "room", "rush", "sage", "savior", "scheme", "secret", "shame", "shield", "sibling", "singer", "sitar", "slave", "soldier", "sound", "south", "spear", "spirit", "spouse", "stain", "status", "steed", "step", "storm", "struggle", "sun", "surgeon", "sword", "teacher", "temple", "temporariness", "temptress", "time", "tome", "tool", "touch", "transgression", "trap", "triumph", "trust", "twin", "underground", "vanity", "vice", "virus", "vision", "voyage", "wait", "walker", "war", "water", "west", "will", "wine", "wisdom", "witness", "woman", "Risk", "Ability", "Price", "Ally", "Battle", "Safety", "Survival", "Weapon", "Wound", "Shelter", "Leader", "Duty", "Innocence", "Renown", "Direction", "Honor", "Labor", "Solution", "Balance", "Barrier", "Creation", "Decay", "Trade", "Bond", "Hope", "Superstition", "Peace", "Deception", "History", "World", "Vow", "Protection", "Nature", "Opinion", "Burden", "Vengeance", "Faction", "Danger", "Corruption", "Freedom", "Debt", "Hate", "Possession", "Stranger", "Passage", "Creature", "Disease", "Advantage", "Language", "Rumor", "Weakness", "Greed", "Resource", "Structure", "Dream", "Community", "Portent", "Prize", "Destiny", "Momentum", "Memory", "Ruin", "Mysticism", "Rival", "Problem", "Idea", "Revenge", "Fellowship", "Enemy", "Religion", "Fame", "Desolation", "Strength", "Knowledge", "Truth", "Quest", "Loss", "Path", "Warning", "Relationship", "Wealth", "Strategy", "Supply", "Treasure", "Curse", "Ceremony", "Courage", "Victory", "Charity", "Covenant", "Energy", "Wrath", "Disagreement", "Society", "Connection", "Order", "Friend", "Disruption", "Plot", "Identity", "Growth", "Imitation", "Patience", "Company", "Skill", "Belief", "Intelligence", "Disadvantage", "Conflict", "Blessing", "Devotion", "Dishonor", "Dispute", "Worth", "Cooperation", "Punishment", "Madness", "Failure", "Skirmish", "End", "Violation", "Transformation", "Alliance", "Anger", "Rupture", "Trick", "Degradation", "Miracle", "Warband", "Offense", "Competition", "Exploration", "Plague", "Essence", "Union", "Harm", "Integrity", "Security", "Mystery", "Proposal", "Plan", "Achievement", "Glory", "Change", "Relic", "Desertion", "Oppression", "Dignity", "Intolerance", "Control", "Ancestry", "Misfortune", "Support", "Deceit", "Atonement", "Judgment", "Extravagance", "Redemption", "Payment", "Bias", "Sympathy", "Betrayal", "Fascination", "Illness", "Poverty", "Crime", "Cowardice", "Brilliance", "Penance", "Beast", "Obstacle", "Horror", "Monument", "Monster", "Justice", "Healing", "Rage", "Insecurity", "Distortion", "Duel", "Preparation", "Way", "Machination", "Tangle", "Agreement", "Misuse", "Talent", "Trial", "Submission", "Pain", "Sickness", "Waste", "Cruelty", "Heritage", "Division", "Coup", "Doubt", "Disaster", "Fleet", "Riches", "Aid", "Herd", "Loyalty", "Influence", "Retribution", "Omen", "Ruler", "Arrogance", "Misery", "Discord", "Resources", "Beginning", "Culture", "Solace", "Territory", "Haunting", "Blockade", "Inspiration", "Organization", "Indulgence", "Remains", "Ritual", "Swarm", "Liberty", "Delay", "Heroism", "Worship", "Arrival", "Gratitude", "Grief", "Defense", "Pursuit", "Destruction", "Falsehood", "Artistry", "Tension", "Revolt", "Symbol", "Exchange", "Dominance", "Value", "Disorder", "Defeat", "Artifact", "Supplies", "Negotiation", "Pact", "Mistrust", "Exposure", "Hesitation", "Negligence", "Food", "Mercy", "Zealotry", "Forgiveness", "Faith", "Oversight", "Separation", "Dwelling", "Depravity", "Refusal", "Adversity", "Animal", "Building", "Comfort", "Completion", "Depletion", "Distraction", "Emotion", "Expectation", "Group", "Hindrance", "Individual", "Interior", "Location", "Needs", "Object", "Obscurity", "Official", "People", "Personal", "Portal", "Reassurance", "Surprise", "Tactic", "Vulnerability", "Work", "Action", "Activity", "Attainment", "Familiar", "Intrigue", "Humanoid", "Liquid", "Fight", "Travelers", "Hunt", "Arrive", "Betray", "Block", "Celebrate", "Communicate", "Deceive", "Divide", "Problems", "Truce", "Echo", "Cliff", "Boulder", "Empty", "Exit", "Flora", "Fungus", "Hole", "Minerals", "Mist", "Plants", "Pool", "River", "Rock", "Slope", "Sounds", "Stalactites", "Abuse", "Care", "Clothing", "Equipment", "Eyewear", "Features", "Hair", "Headwear", "Insignia", "Jewelry", "Limbs", "Scar", "Tattoo", "Tools", "Career", "Cheat", "Combat", "Commitment", "Exile", "Experience", "Gifts", "Injury", "Injustice", "Mistake", "Outsider", "Person", "Place", "Prestige", "Privilege", "Seclusion", "Service", "Tradition", "Training", "Trauma", "Youth", "Praise", "Refuse", "Administrator", "Advisor", "Artist", "Assistant", "Athlete", "Bureaucrat", "Combatant", "Competitor", "Controller", "Crafter", "Criminal", "Deceiver", "Deliverer", "Dependent", "Driver/Pilot", "Enforcer", "Engineer", "Entertainer", "Executive", "Expert", "Explorer", "Farmer", "Fighter", "Fixer", "Foreigner", "Gambler", "Gatherer", "Guardian", "Healer", "Hero", "Hunter", "Inspector", "Intellectual", "Investigator", "Judge", "Killer", "Laborer", "Lackey", "Lost", "Mediator", "Messenger", "Organizer", "Performer", "Persecutor", "Planner", "Pleaser", "Prisoner", "Protector", "Radical", "Religious", "Represent", "Rogue", "Ruffian", "Scholar", "Scientist", "Scout", "Servant", "Socialite", "Student", "Subverter", "Supporter", "Survivor", "Thief", "Trader", "Victim", "Villain", "Wanderer", "Warrior", "Adventure", "Ambition", "Approval", "Character", "Guide", "Guilt", "Help", "Malice", "Obligation", "Follower", "Gourmet", "Tail", "Lead", "Powers", "Psychic", "Servitor", "Wings", "Ledge", "Charge", "Damage", "Master", "Motion", "Obstacles", "Perception", "Specialist", "Violence", "Missing", "Rich", "Sense", "Trouble", "Commerce", "Hills", "Lake", "Mountain", "Bite", "Breath", "Contact", "Extra", "Flight", "Element", "Others", "Resistance", "Proximity", "Senses", "Sleep", "Speed", "Stealth", "Summon", "Alien", "Body", "Color", "Extra Limbs", "Fangs", "Horns", "Mandibles", "Movement", "Mutant", "Shape", "Stinger", "Tongue", "Undead", "Instruction", "Legend", "Recipient", "Riddle", "Unknown", "Age", "Fate", "Propose", "Compel", "Condemn", "Storage", "Upgrade", "Valuables", "View", "Chamber", "Door", "Encounter", "Furnishings", "Gate", "Stairs", "Stonework", "Blades", "Ceiling", "Choice", "Cloud", "Heat", "Projectile", "Trigger", "Floor", "Toxin", "Transport", "Wall", "Pond", "Rocks", "Tree", "Cult", "Destroyer", "Night", "Sacrifice", "Caution", "Crisis", "Theft", "Atmosphere", "Entrance", "Spell", "Staff", "Utility", "Wand", "Appearance", "Claws", "Eyes", "Limb", "Surroundings", "Defect", "Services", "Area", "Benefit", "Book", "Communication", "Container", "Gem", "Restore", "Ring", "Rope", "Rune", "Scroll", "Self", "Dimensions", "Orb", "Potion", "Compromise", "Connections", "Headquarters", "Heirloom", "Leverage", "Politics", "Royalty", "Succession", "Clue", "Garbage", "Guidance", "Consequence", "Evidence", "Outcast", "Past", "Promise", "Repair", "Rescue", "Response", "Reversal", "Reward", "Distance", "Electricity", "Emission", "Explosion", "Matter", "Radius", "Abundance", "Switch", "Clothes", "Concealment", "Drink", "Fuel", "Antiseptic", "Cooking", "Rot", "Alarm", "Approach", "Grinding", "Hammering", "Clang", "Construction", "Conversation", "Crash", "Cries", "Drip", "Footsteps", "Growl", "Machinery", "Productivity", "Beep", "Bell", "Burning", "Rip", "Roar", "Rumbling", "Rustling", "Scraping", "Scratching", "Sizzle", "Slam", "Tapping", "Thud", "Traffic", "Whirring", "Whistle", "Wind", "Burn", "Fix", "Ice", "Limitation", "Manipulation", "Soul", "Computer", "Crew", "Engine", "Hall", "Maintenance", "System", "Catastrophe", "Civilization", "Cliffs", "Clouds", "Desert", "Ocean", "Rain", "Ruins", "Trees", "Wonders", "Glow", "Event", "Future", "Hint", "Hurry", "Threat", "Furnishing", "Luxury", "Motive", "Associate", "Negative", "Cities", "Oceans", "Rings", "Star", "Access", "Combination", "Controls", "Countdown", "Precision", "Resolve", "Words", "Answers", "Challenge", "Desire", "Gift", "Key", "Resolution", "Task", "Deliverance", "Mechanism", "Setback", "Walls", "Accident", "Coincidence", "Decision", "Detour", "Discovery", "Fatigue", "Malfunction", "Mishap", "Mutiny", "Scarcity", "Abduction", "Attack", "Chase", "Collateral", "Confrontation", "Culmination", "Emergency", "Intervention", "Turnabout", "Urgency", "Coercion", "Diminishment", "Disappearance", "Incapacitation", "Intimidation", "Recurrence", "Repercussion", "Suspicion", "Ultimatum", "Behavior", "Fraud", "Lucky", "Motivation", "Observer", "Reappearance", "Revelation", "Source", "Theory", "Argument", "Celebration", "Duplicitous", "Gathering", "Inadequate", "Meeting", "Reinforcements", "Scapegoat", "Transaction", "Animosity", "Bribe", "Humiliation", "Persuasion", "Protect", "Schism", "Talk"],
 			"adverb": ["Abnormally", "Adventurously", "Aggressively", "Angrily", "Anxiously", "Awkwardly", "Beautifully", "Bleakly", "Boldly", "Bravely", "Busily", "Calmly", "Carefully", "Carelessly", "Cautiously", "Ceaselessly", "Cheerfully", "Combatively", "Coolly", "Crazily", "Fully", "Generously", "Gently", "Gladly", "Gracefully", "Gratefully", "Happily", "Hastily", "Healthily", "Helpfully", "Helplessly", "Hopelessly", "Innocently", "Intensely", "Interestingly", "Irritatingly", "Jovially", "Joyfully", "Judgementally", "Kindly", "Peacefully", "Perfectly", "Playfully", "Politely", "Positively", "Powerfully", "Quaintly", "Quarrelsomely", "Quietly", "Roughly", "Rudely", "Ruthlessly", "Slowly", "Softly", "Swiftly", "Threateningly", "Very", "Violently", "Wildly", "Yieldingly", "Curiously", "Daintily", "Dangerously", "Defiantly", "Deliberately", "Delightfully", "Dimly", "Efficiently", "Energetically", "Enormously", "Enthusiastically", "Excitedly", "Fearfully", "Ferociously", "Fiercely", "Foolishly", "Fortunately", "Frantically", "Freely", "Frighteningly", "Kookily", "Lazily", "Lightly", "Loosely", "Loudly", "Lovingly", "Loyally", "Majestically", "Meaningfully", "Mechanically", "Miserably", "Mockingly", "Mysteriously", "Naturally", "Neatly", "Nicely", "Oddly", "Offensively", "Officially", "Partially", "Delicately", "Emotionally", "Mildly", "Passively", "Strangely", "Timidly", "Jealously"],
 			"adjective": ["Abandoned", "Abnormal", "Amusing", "Ancient", "Aromatic", "Average", "Beautiful", "Bizarre", "Classy", "Clean", "Cold", "Colorful", "Creepy", "Cute", "Damaged", "Dark", "Defeated", "Delicate", "Delightful", "Dirty", "Graceful", "Hard", "Harsh", "Healthy", "Heavy", "Historical", "Horrible", "Important", "Interesting", "Juvenile", "Lacking", "Lame", "Large", "Lavish", "Lean", "Less", "Lethal", "Lonely", "Lovely", "Macabre", "Remarkable", "Rotten", "Rough", "Ruined", "Rustic", "Scary", "Simple", "Small", "Smelly", "Smooth", "Soft", "Strong", "Tranquil", "Ugly", "Valuable", "Warlike", "Warm", "Watery", "Weak", "Young", "Disagreeable", "Disgusting", "Drab", "Dry", "Dull", "Empty", "Enormous", "Exotic", "Faded", "Familiar", "Fancy", "Fat", "Feeble", "Feminine", "Festive", "Flawless", "Fresh", "Full", "Glorious", "Good", "Magnificent", "Masculine", "Mature", "Messy", "Mighty", "Military", "Modern", "Extravagant", "Mundane", "Mysterious", "Natural", "Nondescript", "Odd", "Pale", "Petite", "Poor", "Powerful", "Quaint", "Rare", "Reassuring", "barring", "befriending", "beginning", "belonging", "blessing", "boasting", "bowing", "breaking", "bringing", "building", "burying", "calming", "caring", "carrying", "charming", "choking", "choosing", "claiming", "closing", "collapsing", "competing", "concentrating", "condemning", "confusing", "connecting", "controlling", "covering", "creating", "crossing", "crushing", "curing", "dancing", "daring", "decaying", "deceiving", "delaying", "delivering", "depending", "deserting", "deserving", "destroying", "digging", "disagreeing", "dividing", "doubting", "drowning", "earning", "embarrassing", "employing", "emptying", "entertaining", "entreating", "entwining", "escaping", "excusing", "expanding", "fading", "failing", "falling", "fearing", "fighting", "filling", "finding", "floating", "flowing", "flying", "foreseeing", "foretelling", "granting", "guarding", "halting", "handling", "harassing", "hating", "healing", "hiding", "holding", "hoping", "hunting", "hurrying", "identifying", "ignoring", "imagining", "including", "informing", "instructing", "intending", "interfering", "inviting", "judging", "killing", "kneeling", "leaping", "leaving", "loving", "lying", "meeting", "moaning", "needing", "observing", "offending", "opening", "owing", "paying", "permitting", "planning", "preaching", "preventing", "protesting", "providing", "pulling", "punishing", "pursuing", "pushing", "reading", "recognizing", "reducing", "reflecting", "refusing", "regretting", "rejoicing", "relaxing", "relying", "remembering", "removing", "repairing", "repeating", "replacing", "reporting", "resolving", "retiring", "riding", "ruining", "ruling", "running", "sailing", "scattering", "scolding", "scorching", "searching", "seeing", "sharing", "shedding", "showing", "signaling", "signing", "slinking", "soothsaying", "speaking", "spilling", "spoiling", "springing", "standing", "staying", "stealing", "stinging", "stirring", "stopping", "strengthening", "striking", "striving", "suggesting", "surprising", "suspending", "swelling", "taunting", "telling", "tempting", "thawing", "threatening", "thriving", "tracing", "training", "transforming", "traveling", "trusting", "tying", "understanding", "undertaking", "usurping", "vanishing", "wailing", "waiting", "walking", "wanting", "wasting", "welcoming", "whining", "whirling", "whispering", "whistling", "winning", "withdrawing", "withstanding", "wondering", "wrestling", "writing", "able", "absolute", "accordant", "active", "aggressive", "all", "alone", "alternative", "amicable", "ample", "anthropological", "anxious", "apt", "asleep", "available", "aware", "beloved", "benevolent", "bright", "broad", "buttressed", "calm", "careful", "celestial", "certain", "comfortable", "common", "competitive", "complete", "complex", "confident", "confused", "consistent", "contrite", "cool", "cordial", "correct", "creative", "credible", "critical", "curious", "dangerous", "dead", "deceptive", "decree", "demonic", "desperate", "diabolical", "didactic", "difficult", "direct", "distinct", "draconic", "drunk", "dubious", "due", "durable", "eastern", "edifying", "effective", "elegant", "elemental", "embarrassed", "enticing", "environmental", "esoteric", "ethereal", "extreme", "fair", "false", "famous", "fascinating", "fearful", "fecund", "feudal", "few", "final", "fine", "fit", "foreign", "free", "furious", "ghostly", "gradual", "grotesque", "guilty", "hearty", "helpful", "high", "holy", "honed", "hued", "human", "hungry", "ill", "immediate", "impossible", "impressive", "independent", "inferior", "infernal", "inner", "intelligent", "intimate", "joyous", "just", "known", "last", "late", "left", "light", "living", "long", "lost", "loud", "lucky", "mad", "main", "massive", "medicinal", "mental", "miserable", "monetary", "nearby", "new", "noble", "northern", "noxious", "obligatory", "obvious", "old", "opposite", "original", "other", "outer", "owned", "painful", "past", "perplexing", "philosophical", "pleasant", "potent", "private", "proper", "public", "pure", "rapid", "ready", "reasonable", "recent", "relevant", "restrained", "rich", "right", "royal", "scarred", "secure", "severe", "sharp", "significant", "similar", "skilled", "southern", "stunned", "substantial", "subterranean", "successful", "sudden", "sufficient", "suitable", "superior", "suspicious", "terrible", "thick", "thin", "traditional", "true", "tyrannical", "ubiquitous", "unable", "uncommon", "undaunted", "undead", "unfair", "unholy", "unique", "united", "unlocked", "unnatural", "various", "vast", "virtuous", "visible", "western", "willing", "wonderful", "wounded", "wrong", "Artificial", "Boring", "Broken", "Colorless", "Comforting", "Extraordinary", "Forlorn", "Fragile", "Fragrant", "Lively", "Normal", "Peaceful", "Plain", "Protective", "Shocking", "Stylish", "Unpleasant", "Vibrant", "Hopeful", "Fierce", "Fortunate", "Frantic", "Frightening", "Exterior", "Crazy", "Emotional", "Energetic", "Epic", "Evil", "Bleak", "Bold", "Busy", "Cheerful", "Combative", "Adventurous", "Intense", "Legal", "Majestic", "Meaningful", "Mechanical", "Personal", "Physical", "Random", "Slow", "Social", "Strange", "Very", "Violent", "Wild", "Advanced", "Agile", "Amphibious", "Aquatic", "Arrogant", "Artistic", "Avian", "Carapace", "Clawed", "Conquering", "Declining", "Defensive", "Destructive", "Dominating", "Emotionless", "Exploitive", "Explorers", "Fast", "Feral", "Ferocious", "Friendly", "Fungal", "Furry", "Generous", "Gentle", "Glowing", "Immortal", "Insectlike", "Insubstantial", "Intimidating", "Levitating", "Mammalian", "Many-eyed", "Militaristic", "Nightmarish", "Oppressive", "Passive", "Perfect", "Powered", "Primitive", "Prosperous", "Psychic", "Reptilian", "Robotic", "Scientific", "Secretive", "Slender", "Suffering", "Tall", "Technological", "Tentacled", "Toothy", "Treacherous", "Wary", "Wormish", "Angry", "Assist", "Careless", "Cautious", "Ceaseless", "Deliberate", "Disinterested", "Disrupt", "Distracted", "Dominate", "Excited", "Hasty", "Helpless", "Ignore", "Imitate", "Implore", "Imprison", "Irritating", "Lazy", "Loyal", "Playful", "Quiet", "Swift", "Tactics", "Defiant", "Disorganized", "Efficient", "Foolish", "Ruthless", "Tired", "Unequipped", "Unexpected", "Untrained", "Blocked", "Closed", "Collapsed", "Cracked", "Cramped", "Crumbling", "Discouraging", "Dripping", "Huge", "Icy", "Occupied", "Open", "Slippery", "Tight", "Unstable", "Untouched", "Windy", "Accompanied", "Armed", "Casual", "Deceitful", "Equipped", "Expected", "Frightened", "Glad", "Happy", "Harmful", "Inactive", "Influential", "Innocent", "Knowledgeable", "Multiple", "Official", "Professional", "Protected", "Protecting", "Questioning", "Resourceful", "Seeking", "Stealthy", "Thieving", "Triumphant", "Unusual", "Vocal", "Antagonize", "Brave", "Cruel", "Enthusiastic", "Expectation", "Rude", "Kind", "Nice", "Athletic", "Attractive", "Bald", "Brutish", "Dainty", "Different", "Expensive", "Frail", "Hairy", "Lithe", "Muscular", "Neat", "Piercing", "Regal", "Scented", "Scholarly", "Short", "Sinister", "Stocky", "Trendy", "Academic", "Bad", "Burden", "Chaotic", "Guided", "Helped", "Heroic", "Humble", "Humiliation", "Imprisonment", "Inherit", "Pursued", "Recruited", "Rural", "Saved", "Sheltered", "Urban", "Awkward", "Grateful", "Hopeless", "Joyful", "Judgmental", "Mocking", "Offensive", "Polite", "Positive", "Quarrelsome", "Agreeable", "Capable", "Clumsy", "Commanding", "Disciplined", "Educated", "Erratic", "Foul", "Humorous", "Ignorant", "Impulsive", "Inept", "Informative", "Intrusive", "Meek", "Naive", "Powerless", "Principled", "Respectful", "Sneaky", "Sophisticated", "Supportive", "Sweet", "Trained", "Uniformed", "Wealthy", "Ambitious", "Annoying", "Bitter", "Collector", "Committed", "Crude", "Determined", "Devoted", "Empathetic", "Fastidious", "Haunted", "Honest", "Honor", "Inconsistent", "Intolerant", "Irresponsible", "Larcenous", "Likable", "Manipulative", "Mercurial", "Nervous", "Oblivious", "Obstinate", "Optimistic", "Perceptive", "Perfectionist", "Practical", "Prepared", "Quirky", "Rash", "Rational", "Responsible", "Restless", "Savvy", "Selfish", "Selfless", "Shallow", "Studious", "Superstitious", "Tolerant", "Vindictive", "Wise", "Agility", "Beginner", "Deceit", "Domestic", "Driving", "Experienced", "Investigative", "Master", "Medical", "Ranged", "Driven", "Focused", "Impaired", "Limited", "Missing", "Multi", "Partial", "Principles", "Resistant", "Specialized", "Technical", "Tough", "Trustworthy", "Bustling", "Dense", "Developed", "Isolated", "Opulence", "Sparse", "Structures", "Troubled", "Agricultural", "Bureaucratic", "Carefree", "Commercial", "Constructive", "Distrustful", "Dominant", "Failed", "Greedy", "Industrial", "Lawful", "Lawless", "Punitive", "Struggling", "Suppressed", "Blunt", "Extra", "Enhanced", "Immune", "Rechargeable", "Self-Sufficient", "Substance", "Vulnerable", "Amorphous", "Armored", "Bony", "Clothed", "Composite", "Constructed", "Decayed", "Filthy", "Gaunt", "Growling", "Inscribed", "Insect-like", "Metallic", "Odorous", "Rooted", "Shifting", "Silent", "Solitary", "Spider-like", "Spiked", "Steaming", "Sticky", "Supernatural", "Transparent", "Tree-like", "Twisted", "Verbal", "Wooden", "Hidden", "Obscured", "Secret", "Unknown", "Incapacity", "Ironic", "Permanent", "Separate", "Temporary", "Cluttered", "Crowded", "Customized", "Desolate", "Neglected", "Opulent", "Organized", "Roomy", "Thoughtful", "Tidy", "Utilitarian", "Foreboding", "Angelic", "Capricious", "Corruption", "Cosmic", "Fallen", "Fertility", "Jealous", "Major", "Minor", "Monstrous", "Underworld", "Worshipped", "Carelessness", "Cataclysm", "Enclosed", "Exclusive", "Exposed", "Intriguing", "Mobile", "Purposeful", "Remote", "Safe", "Immunity", "Requirement", "Spacious", "Useful", "Instant", "Special", "Deformed", "Toxic", "Complicated", "Consumable", "Deactivated", "Desired", "Expended", "Moving", "Ornamental", "Ornate", "Prized", "Stolen", "Useless", "Wet", "Worn", "Conditional", "Impending", "Necessary", "Unlikely", "Urgent", "Chemical", "Cosmetic", "Repairable", "Acrid", "Burnt", "Decrepit", "Delicious", "Earthy", "Electrical", "Evocative", "Faint", "Fetid", "Fishy", "Floral", "Fruity", "Funky", "Grassy", "Gratifying", "Heady", "Herbal", "Humid", "Intoxicating", "Laden", "Malodorous", "Mildew", "Moist", "Mossy", "Musky", "Musty", "Nauseating", "Odorless", "Overpowering", "Perfumed", "Pleasurable", "Pungent", "Putrid", "Rancid", "Reek", "Ripe", "Savory", "Smokey", "Sour", "Stagnant", "Stale", "Stench", "Stuffy", "Sulphuric", "Woody", "Banging", "Beseeching", "Burning", "Creaking", "Distant", "Grinding", "Hammering", "Indistinct", "Muffled", "Near", "Noisy", "Rumbling", "Rustling", "Scraping", "Scratching", "Tapping", "Uncertain", "Whirring", "Automated", "Abundant", "Barren", "Fertile", "Habitable", "Hazy", "Hostile", "Hot", "Mountainous", "Populated", "Rocky", "Sandy", "Bound", "Mindless", "Possessive", "Rotting", "Shambling", "Vengeful", "Future", "Incomplete", "Obscure", "Preventable", "Unsettling", "Descriptive", "Detailed", "Afraid", "Aggrieved", "Argumentative", "Connected", "Conniving", "Corrupt", "Elusive", "Fleeing", "Frivolous", "Involved", "Motivated", "Negligent", "Passionate", "Privileged", "Unhelpful", "Negative", "Unsteady", "Single", "Fixable", "Oversized", "Written", "Gaseous", "Game", "Inscription", "Maze", "Pattern", "Precision", "Timed", "Meager", "Outside", "Revealed", "Stuck", "Frenetic", "Guarded", "Risky", "Shady", "Trapped", "Alternate", "Cryptic", "Duplicitous", "Misled", "Solved", "Dependent", "Depowered", "Disarmed", "Ethical"],
 			"vocal": ["Abuse", "Advice", "Aggressive", "Agree", "Amusing", "Angry", "Anxious", "Assist", "Awkward", "Betray", "Bizarre", "Bleak", "Bold", "Business", "Calm", "Careful", "Careless", "Cautious", "Cheerful", "Classy", "Cold", "Colorful", "Combative", "Crazy", "Creepy", "Curious", "Defiant", "Delightful", "Disagreeable", "Dispute", "Efficient", "Energetic", "Enthusiastic", "Excited", "Fearful", "Fierce", "Foolish", "Frantic", "Frightening", "Generous", "Gentle", "Glad", "Grateful", "Haggle", "Happy", "Harsh", "Hasty", "Helpful", "Helpless", "Hopeless", "Ideas", "Inform", "Innocent", "Inquire", "Intense", "Interesting", "Intolerance", "Irritating", "Joyful", "Judgemental", "Juvenile", "Kind", "Leadership", "Lie", "Loud", "Loving", "Loyal", "Macabre", "Mature", "Meaningful", "Miserable", "Mistrust", "Mocking", "Mundane", "Mysterious", "News", "Nice", "Normal", "Odd", "Offensive", "Official", "Oppose", "Peace", "Plans", "Playful", "Polite", "Positive", "Praise", "Quarrelsome", "Quiet", "Reassuring", "Refuse", "Rude", "Rumor", "Simple", "Threatening", "Truce", "Trust", "Warm", "Wild", "Swear", "Support", "Elude", "Order", "Conceal", "Forgive", "Weak", "Deflect", "Threaten", "Attack", "Manipulate", "Withdraw", "Investigate", "Focus", "Aid", "Falter", "Suppress", "Share", "Reject", "Demand", "Bolster", "Mourn", "Reveal", "Defy", "Resist", "Overwhelm", "Challenge", "Protect", "Command", "Hide", "Defend", "Debate", "Distract", "Communicate", "Terrorize", "Compel", "Instruct", "Deter", "Dominate", "Humiliate", "Engender", "Stifle", "Deceive", "Shame", "Insult", "Exacerbate", "Embellish", "Grieve", "Condemn", "Incite", "Advise", "Subvert", "Forbid", "Provoke", "Impart", "Entice", "Oppress", "Affirm", "Empower", "Frighten", "Imitate", "Blame", "Embolden", "Nurture", "Coerce", "Obscure", "Spurn", "accuse", "aggravate", "alarm", "amaze", "amuse", "annoy", "antagonize", "appeal", "argue", "arouse", "babble", "badmouth", "bait", "bargain", "barter", "bawl", "befriend", "beg", "beguile", "belittle", "berate", "boast", "brag", "bribe", "celebrate", "charm", "complain", "compliment", "dare", "declare", "decline", "despair", "discriminate", "disgrace", "disrespect", "endorse", "enforce", "exaggerate", "evade", "flirt", "fumble", "gamble", "gaze", "giggle", "harass", "guard", "gossip", "irritate", "intimidate", "interrogate", "inspire", "instigate", "joke", "laugh", "lecture", "nag", "mock", "mimic", "overhear", "promote", "preach", "plead", "persuade", "protest", "pry", "quarrel", "rejoice", "remark", "recruit", "recite", "recount", "rebel", "query", "ridicule", "scare", "scream", "sing", "silence", "show", "seduce", "summon", "thank", "taunt", "tease", "tempt", "unload", "volunteer", "warn", "wave", "weep", "welcome", "yell", "Depressed", "Adventurous", "Animated", "Disgusted", "Annoyed", "Carefree", "Blissful", "Fuming", "Casual", "Elated", "Incensed", "Belligerent", "Euphoric", "Bitter", "Content", "Exuberant", "Pissed", "Bored", "Delighted", "Suicidal", "Downhearted", "Devilish", "Gleeful", "Upset", "Flirtatious", "Joyous", "Venomous", "Galled", "Merry", "Wrathful", "Indignant", "Mirthful", "Stinging", "Irritable", "Jubilant", "Ecstatic", "Spiteful", "Peeved", "Lucky", "Rapturous", "Malicious", "Pessimistic", "Mischievous", "Exultant", "Sadistic", "Remote", "Optimistic", "Exhilarated", "Hostile", "Sad", "Triumphant", "Vicious", "Touchy", "Rascally", "Blithe", "Resentful", "Uncaring", "Romantic", "Effervescent", "Hateful", "Unlucky", "Sincere", "Whimsical", "Mean", "Vexed", "Surprised", "Thrilled", "Scornful", "Weary", "Thankful", "Energized", "Judgmental"],
-			"character": ["Aggressive", "Amusing", "Anger", "Anxious", "Bizarre", "Bold", "Calm", "Careful", "Careless", "Change", "Combative", "Control", "Crazy", "Creepy", "Dangerous", "Defiant", "Delay", "Dominate", "Efficient", "Energetic", "Excited", "Exotic", "Fearful", "Feeble", "Fierce", "Fight", "Foolish", "Frantic", "Frightening", "Generous", "Gentle", "Harsh", "Hasty", "Helpful", "Imitate", "Important", "Inspect", "Intense", "Juvenile", "Kind", "Lazy", "Leadership", "Lethal", "Loud", "Loyal", "Mature", "Meaningful", "Messy", "Move", "Mundane", "Mysterious", "Nice", "Normal", "Odd", "Official", "Oppose", "Passion", "Peace", "Playful", "Pleasures", "Possessions", "Release", "Simple", "Slow", "Swift", "Tactics", "Technology", "Threatening", "Violent", "Weapons", "Wild", "Yield", "Scheme", "Weaken", "Risk", "Surrender", "Deflect", "Threaten", "Manipulate", "Withdraw", "Falter", "Suppress", "Share", "Avoid", "Reject", "Explore", "Support", "Distract", "Communicate", "Terrorize", "Compel", "Embrace", "Guide", "Shame", "Advise", "Mourn", "Defy", "Refuse", "Find", "Summon", "Isolate", "Dismantle", "Overcome", "Incite", "Forbid", "Struggle", "Mystify", "Tame", "Spurn", "Repel", "Coerce", "Attain", "Start", "Neglect", "Recruit", "Triumph", "Persecute", "Increase", "Decrease", "Gratify", "Inquire", "Waste", "Truce", "Haggle", "Develop", "Travel", "Block", "Debase", "Overindulge", "Adjourn", "Usurp", "Create", "Agree", "Work", "Judge", "Desert", "Procrastinate", "Praise", "Separate", "Break", "Heal", "Stop", "Lie", "Return", "Postpone", "Spy", "Attach", "Open", "Trick", "Propose", "Divide", "Mistrust", "Trust", "Excite", "Activate", "Assist", "Care", "Negligence", "Attract", "Failure", "Pursue", "Vengeance", "Proceedings", "Punish", "Overthrow", "Depressed", "Angry", "Adventurous", "Animated", "Disgusted", "Annoyed", "Carefree", "Blissful", "Fuming", "Casual", "Elated", "Incensed", "Belligerent", "Cheerful", "Euphoric", "Miserable", "Bitter", "Content", "Exuberant", "Pissed", "Bored", "Delighted", "Suicidal", "Downhearted", "Devilish", "Gleeful", "Upset", "Flirtatious", "Joyous", "Venomous", "Galled", "Grateful", "Merry", "Wrathful", "Indignant", "Happy", "Mirthful", "Stinging", "Irritable", "Jubilant", "Ecstatic", "Spiteful", "Peeved", "Lucky", "Rapturous", "Malicious", "Pessimistic", "Mischievous", "Exultant", "Sadistic", "Remote", "Optimistic", "Exhilarated", "Hostile", "Sad", "Triumphant", "Vicious", "Touchy", "Rascally", "Blithe", "Resentful", "Uncaring", "Romantic", "Effervescent", "Hateful", "Unlucky", "Sincere", "Whimsical", "Mean", "Vexed", "Surprised", "Thrilled", "Scornful", "Weary", "Thankful", "Energized", "abandon", "abolish", "abuse", "accuse", "address", "aggravate", "agitate", "aid", "aim", "alarm", "alert", "alter", "amaze", "ambush", "amuse", "annihilate", "annoy", "antagonize", "appeal", "applaud", "apprehend", "approach", "argue", "arise", "arouse", "arrange", "arrest", "ask", "assassinate", "assault", "assemble", "astonish", "attack", "attempt", "attend", "auction", "audition", "avenge", "avert", "babble", "badmouth", "bait", "ban", "banish", "baptize", "bargain", "bark", "barricade", "barter", "bash", "bawl", "beautify", "beckon", "befriend", "beg", "beguile", "belch", "belittle", "bellow", "bemoan", "bequeath", "berate", "besiege", "bestow", "bet", "betray", "bewilder", "bewitch", "bid", "bite", "blab", "blame", "blast", "bleed", "bless", "blunder", "blurt", "boast", "bother", "bow", "brag", "bribe", "broadcast", "build", "capture", "careen", "caress", "carry", "carve", "catch", "celebrate", "challenge", "charm", "chase", "cheat", "choke", "claim", "climb", "collaborate", "collapse", "collide", "command", "complain", "compliment", "conceal", "concoct", "condemn", "confiscate", "conflict", "confront", "confuse", "congratulate", "congregate", "conjure", "consecrate", "consider", "construct", "contact", "contaminate", "contestconverse", "cook", "corner", "corrupt", "cremate", "crowd", "crown", "customize", "damage", "dance", "dare", "dash", "dazzle", "deal", "debate", "decay", "deceive", "declare", "decline", "decompose", "decorate", "decree", "dedicate", "deduce", "deface", "defeat", "defend", "defuse", "deliver", "demand", "demolish", "denounce", "deride", "despair", "destroy", "devour", "dig", "disappear", "disarm", "discipline", "discover", "discriminate", "discuss", "disgrace", "disguise", "disgust", "dishonor", "dismount", "dispel", "disperse", "display", "displease", "dispute", "disrespect", "disrupt", "distill", "distress", "disturb", "divert", "dodge", "drag", "dress", "drink", "drop", "drown", "drum", "dump", "dupe", "duplicate", "earn", "eat", "elude", "employ", "enchant", "end", "endanger", "endear", "endorse", "enforce", "engage", "engineer", "enjoy", "enlarge", "enlighten", "enlist", "enquire", "enrage", "enrich", "enroll", "enshrine", "ensnare", "entangle", "enter", "entertain", "entice", "erect", "escape", "escort", "evacuate", "evade", "evict", "exaggerate", "examine", "excavate", "exchange", "exclaim", "exclude", "execute", "exhibit", "experiment", "explode", "expose", "faint", "fake", "fall", "falsify", "fashion", "flaunt", "flee", "fling", "flirt", "follow", "force", "foresee", "foretell", "forge", "forgive", "fracture", "frame", "free", "freeze", "fret", "frighten", "frustrate", "fumble", "fund", "fuss", "gallop", "gamble", "gather", "gaze", "gesture", "gift", "giggle", "give", "glare", "gleam", "glimpse", "goad", "gob", "goggle", "gossip", "grab", "grapple", "grieve", "guard", "hamper", "harass", "harm", "help", "hide", "hit", "hold", "humiliate", "hurry", "hurtle", "ignite", "impede", "implore", "imprison", "infect", "infest", "inflame", "inflict", "inform", "infringe", "infuriate", "injure", "inspire", "instigate", "insult", "interfere", "interrogate", "intimidate", "intoxicate", "investigate", "invite", "involve", "irritate", "jaywalk", "jeer", "joke", "jostle", "kick", "kill", "kiss", "lament", "laugh", "leap", "lecture", "leer", "look", "loot", "lose", "love", "lunge", "lurk", "maim", "manhandle", "march", "market", "massacre", "meddle", "mesmerize", "mimic", "misspell", "mob", "mock", "murder", "mutate", "mutilate", "nag", "narrate", "near", "notify", "obscure", "observe", "obstruct", "offend", "oppress", "order", "overhear", "overpower", "overturn", "parade", "parley", "patrol", "pelt", "penalize", "perform", "persuade", "petition", "play", "plead", "plunder", "pollute", "pounce", "practice", "preach", "proclaim", "prohibit", "promote", "pronounce", "prophesize", "prosecute", "protect", "protest", "provide", "provoke", "prowl", "pry", "punch", "purchase", "push", "quarrel", "query", "queue", "rage", "raid", "ransack", "rebel", "recite", "recount", "rejoice", "remark", "renege", "repair", "research", "rescue", "resist", "restrain", "resurrect", "reveal", "revolt", "reward", "ridicule", "riot", "rob", "run", "rush", "salute", "scamper", "scare", "scavenge", "scream", "scrounge", "search", "secure", "seduce", "segregate", "seize", "sell", "ship", "shout", "shove", "show", "silence", "sing", "slaughter", "sleep", "smash", "sob", "solicit", "speak", "spill", "spit", "stab", "stage", "startle", "steal", "strangle", "strike", "subdue", "suffer", "surround", "suspect", "take", "taunt", "tease", "tempt", "terrify", "thank", "throw", "torment", "torture", "trade", "transform", "translate", "transport", "trap", "tug", "unite", "unleash", "unload", "unveil", "vandalize", "vanish", "victimize", "violate", "volunteer", "wait", "warn", "wave", "weep", "welcome", "whittle", "wield", "win", "wink", "witness", "worship", "wound", "wreck", "wrestle", "write", "yell", "Ally", "Brave", "Cautious", "Charge", "Compete", "Cruel", "Enthusiastic", "Expectation", "Ferocious", "Lead", "Liberty", "Magic", "Mechanical", "Mighty", "Military", "Pain", "Path", "Prepare", "Rough", "Rude", "Ruin", "Ruthless", "Strange", "Vehicle", "Weapon"],
+			"character": ["Aggressive", "Amusing", "Anger", "Anxious", "Bizarre", "Bold", "Calm", "Careful", "Careless", "Change", "Combative", "Control", "Crazy", "Creepy", "Dangerous", "Defiant", "Delay", "Dominate", "Efficient", "Energetic", "Excited", "Exotic", "Fearful", "Feeble", "Fierce", "Fight", "Foolish", "Frantic", "Frightening", "Generous", "Gentle", "Harsh", "Hasty", "Helpful", "Imitate", "Important", "Inspect", "Intense", "Juvenile", "Kind", "Lazy", "Leadership", "Lethal", "Loud", "Loyal", "Mature", "Meaningful", "Messy", "Move", "Mundane", "Mysterious", "Nice", "Normal", "Odd", "Official", "Oppose", "Passion", "Peace", "Playful", "Pleasures", "Possessions", "Release", "Simple", "Slow", "Swift", "Tactics", "Technology", "Threatening", "Violent", "Weapons", "Wild", "Yield", "Scheme", "Weaken", "Risk", "Surrender", "Deflect", "Threaten", "Manipulate", "Withdraw", "Falter", "Suppress", "Share", "Avoid", "Reject", "Explore", "Support", "Distract", "Communicate", "Terrorize", "Compel", "Embrace", "Guide", "Shame", "Advise", "Mourn", "Defy", "Refuse", "Find", "Summon", "Isolate", "Dismantle", "Overcome", "Incite", "Forbid", "Struggle", "Mystify", "Tame", "Spurn", "Repel", "Coerce", "Attain", "Start", "Neglect", "Recruit", "Triumph", "Persecute", "Increase", "Decrease", "Gratify", "Inquire", "Waste", "Truce", "Haggle", "Develop", "Travel", "Block", "Debase", "Overindulge", "Adjourn", "Usurp", "Create", "Agree", "Work", "Judge", "Desert", "Procrastinate", "Praise", "Separate", "Break", "Heal", "Stop", "Lie", "Return", "Postpone", "Spy", "Attach", "Open", "Trick", "Propose", "Divide", "Mistrust", "Trust", "Excite", "Activate", "Assist", "Care", "Negligence", "Attract", "Failure", "Pursue", "Vengeance", "Proceedings", "Punish", "Overthrow", "Depressed", "Angry", "Adventurous", "Animated", "Disgusted", "Annoyed", "Carefree", "Blissful", "Fuming", "Casual", "Elated", "Incensed", "Belligerent", "Cheerful", "Euphoric", "Miserable", "Bitter", "Content", "Exuberant", "Pissed", "Bored", "Delighted", "Suicidal", "Downhearted", "Devilish", "Gleeful", "Upset", "Flirtatious", "Joyous", "Venomous", "Galled", "Grateful", "Merry", "Wrathful", "Indignant", "Happy", "Mirthful", "Stinging", "Irritable", "Jubilant", "Ecstatic", "Spiteful", "Peeved", "Lucky", "Rapturous", "Malicious", "Pessimistic", "Mischievous", "Exultant", "Sadistic", "Remote", "Optimistic", "Exhilarated", "Hostile", "Sad", "Triumphant", "Vicious", "Touchy", "Rascally", "Blithe", "Resentful", "Uncaring", "Romantic", "Effervescent", "Hateful", "Unlucky", "Sincere", "Whimsical", "Mean", "Vexed", "Surprised", "Thrilled", "Scornful", "Weary", "Thankful", "Energized", "abandon", "abolish", "abuse", "accuse", "address", "aggravate", "agitate", "aid", "aim", "alarm", "alert", "alter", "amaze", "ambush", "amuse", "annihilate", "annoy", "antagonize", "appeal", "applaud", "apprehend", "approach", "argue", "arise", "arouse", "arrange", "arrest", "ask", "assassinate", "assault", "assemble", "astonish", "attack", "attempt", "attend", "auction", "audition", "avenge", "avert", "babble", "badmouth", "bait", "ban", "banish", "baptize", "bargain", "bark", "barricade", "barter", "bash", "bawl", "beautify", "beckon", "befriend", "beg", "beguile", "belch", "belittle", "bellow", "bemoan", "bequeath", "berate", "besiege", "bestow", "bet", "betray", "bewilder", "bewitch", "bid", "bite", "blab", "blame", "blast", "bleed", "bless", "blunder", "blurt", "boast", "bother", "bow", "brag", "bribe", "broadcast", "build", "capture", "careen", "caress", "carry", "carve", "catch", "celebrate", "challenge", "charm", "chase", "cheat", "choke", "claim", "climb", "collaborate", "collapse", "collide", "command", "complain", "compliment", "conceal", "concoct", "condemn", "confiscate", "conflict", "confront", "confuse", "congratulate", "congregate", "conjure", "consecrate", "consider", "construct", "contact", "contaminate", "contest", "converse", "cook", "corner", "corrupt", "cremate", "crowd", "crown", "customize", "damage", "dance", "dare", "dash", "dazzle", "deal", "debate", "decay", "deceive", "declare", "decline", "decompose", "decorate", "decree", "dedicate", "deduce", "deface", "defeat", "defend", "defuse", "deliver", "demand", "demolish", "denounce", "deride", "despair", "destroy", "devour", "dig", "disappear", "disarm", "discipline", "discover", "discriminate", "discuss", "disgrace", "disguise", "disgust", "dishonor", "dismount", "dispel", "disperse", "display", "displease", "dispute", "disrespect", "disrupt", "distill", "distress", "disturb", "divert", "dodge", "drag", "dress", "drink", "drop", "drown", "drum", "dump", "dupe", "duplicate", "earn", "eat", "elude", "employ", "enchant", "end", "endanger", "endear", "endorse", "enforce", "engage", "engineer", "enjoy", "enlarge", "enlighten", "enlist", "enquire", "enrage", "enrich", "enroll", "enshrine", "ensnare", "entangle", "enter", "entertain", "entice", "erect", "escape", "escort", "evacuate", "evade", "evict", "exaggerate", "examine", "excavate", "exchange", "exclaim", "exclude", "execute", "exhibit", "experiment", "explode", "expose", "faint", "fake", "fall", "falsify", "fashion", "flaunt", "flee", "fling", "flirt", "follow", "force", "foresee", "foretell", "forge", "forgive", "fracture", "frame", "free", "freeze", "fret", "frighten", "frustrate", "fumble", "fund", "fuss", "gallop", "gamble", "gather", "gaze", "gesture", "gift", "giggle", "give", "glare", "gleam", "glimpse", "goad", "gob", "goggle", "gossip", "grab", "grapple", "grieve", "guard", "hamper", "harass", "harm", "help", "hide", "hit", "hold", "humiliate", "hurry", "hurtle", "ignite", "impede", "implore", "imprison", "infect", "infest", "inflame", "inflict", "inform", "infringe", "infuriate", "injure", "inspire", "instigate", "insult", "interfere", "interrogate", "intimidate", "intoxicate", "investigate", "invite", "involve", "irritate", "jaywalk", "jeer", "joke", "jostle", "kick", "kill", "kiss", "lament", "laugh", "leap", "lecture", "leer", "look", "loot", "lose", "love", "lunge", "lurk", "maim", "manhandle", "march", "market", "massacre", "meddle", "mesmerize", "mimic", "misspell", "mob", "mock", "murder", "mutate", "mutilate", "nag", "narrate", "near", "notify", "obscure", "observe", "obstruct", "offend", "oppress", "order", "overhear", "overpower", "overturn", "parade", "parley", "patrol", "pelt", "penalize", "perform", "persuade", "petition", "play", "plead", "plunder", "pollute", "pounce", "practice", "preach", "proclaim", "prohibit", "promote", "pronounce", "prophesize", "prosecute", "protect", "protest", "provide", "provoke", "prowl", "pry", "punch", "purchase", "push", "quarrel", "query", "queue", "rage", "raid", "ransack", "rebel", "recite", "recount", "rejoice", "remark", "renege", "repair", "research", "rescue", "resist", "restrain", "resurrect", "reveal", "revolt", "reward", "ridicule", "riot", "rob", "run", "rush", "salute", "scamper", "scare", "scavenge", "scream", "scrounge", "search", "secure", "seduce", "segregate", "seize", "sell", "ship", "shout", "shove", "show", "silence", "sing", "slaughter", "sleep", "smash", "sob", "solicit", "speak", "spill", "spit", "stab", "stage", "startle", "steal", "strangle", "strike", "subdue", "suffer", "surround", "suspect", "take", "taunt", "tease", "tempt", "terrify", "thank", "throw", "torment", "torture", "trade", "transform", "translate", "transport", "trap", "tug", "unite", "unleash", "unload", "unveil", "vandalize", "vanish", "victimize", "violate", "volunteer", "wait", "warn", "wave", "weep", "welcome", "whittle", "wield", "win", "wink", "witness", "worship", "wound", "wreck", "wrestle", "write", "yell", "Ally", "Brave", "Cautious", "Charge", "Compete", "Cruel", "Enthusiastic", "Expectation", "Ferocious", "Lead", "Liberty", "Magic", "Mechanical", "Mighty", "Military", "Pain", "Path", "Prepare", "Rough", "Rude", "Ruin", "Ruthless", "Strange", "Vehicle", "Weapon"],
 			"animal": ["Abandon", "Abnormal", "Aggressive", "Angry", "Anxious", "Assist", "Attack", "Befriend", "Bestow", "Bizarre", "Bold", "Break", "Busy", "Calm", "Careful", "Careless", "Cautious", "Ceaseless", "Change", "Combative", "Curious", "Dangerous", "Deliberate", "Disinterested", "Disrupt", "Distracted", "Dominate", "Energetic", "Excited", "Exotic", "Familiar", "Fearful", "Feeble", "Ferocious", "Fierce", "Fight", "Flee", "Follow", "Food", "Frantic", "Friendship", "Frightening", "Generous", "Gentle", "Graceful", "Harm", "Hasty", "Helpful", "Helpless", "Hungry", "Hunt", "Ignore", "Imitate", "Implore", "Imprison", "Inspect", "Intense", "Irritating", "Juvenile", "Lazy", "Leave", "Lethal", "Loud", "Loyal", "Messy", "Mistrust", "Move", "Mundane", "Mysterious", "Natural", "Neglect", "Normal", "Observe", "Odd", "Oppose", "Playful", "Protect", "Pursue", "Quiet", "Reassuring", "Release", "Return", "Scary", "Simple", "Slow", "Strange", "Struggle", "Swift", "Tactics", "Take", "Threatening", "Tranquil", "Transform", "Trick", "Trust", "Violent", "Warn", "Waste", "Wild", "Yield"]
 		},
 		calypso: {
@@ -232,9 +250,348 @@
 				"Those Who Act": ["The Magus of Power. A flashy youth with winged helmet and heels, displaying the mystical arts.", "The Flaming Sword. A smiling woman holds the jaws of a fierce and powerful lion open.", "The Ruler of the Hosts of Air. A holy and energetic ruler under a starry sky, bearing a wicked shield.", "The Reconciler, Bringer-Forth of Life. Crowned with stars, a winged goddess stands upon the moon.", "The Son of the Morning. A flame-clad god wielding light with certainty.", "The Exaltation of the Physical. Uncouth Pan, innocent and playful, or eager, curious Priapus."],
 				"Those Who Are": ["The Twilight Crux. A child of two worlds, fated to serve just one.", "The Dweller in the Waters. A woman-octopus, singing idly as she waits.", "That Which Was and Will Be Again. The dead rising, hungry and yearning, at the fool’s command.", "The Life-Tree. Adorned with eyes; the bitterest wisdom imparted is that some prices are too high to pay.", "The Lord of the Gates of Death. The transformer of all that lives, bearing scythe and with an open hand.", "The Exaltation of the Soul. Grey-eyed Athena, wielder of the aegis, or gentle Venus, hand-in-hand with her child Eros."]
 			}
+		},
+		starforged: {
+			move_list: {
+				"Session": ["Begin a Session", "Set a Flag", "Change Your Fate", "Take a Break", "End a Session"],
+				"Adventure": ["Face Danger", "Secure an Advantage", "Gather Information", "Compel", "Aid Your Ally", "Check Your Gear"],
+				"Quest": ["Swear an Iron Vow", "Reach a Milestone", "Fulfill Your Vow", "Forsake Your Vow"],
+				"Connection": ["Make a Connection", "Develop Your Relationship", "Test Your Relationship", "Forge a Bond"],
+				"Exploration": ["Undertake an Expedition", "Explore a Waypoint", "Make a Discovery", "Confront Chaos", "Finish an Expedition", "Set a Course"],
+				"Combat": ["Enter the Fray", "Gain Ground", "React Under Fire", "Strike", "Clash", "Take a Decisive Action", "Face Defeat", "Battle"],
+				"Suffer": ["Lose Momentum", "Endure Harm", "Endure Stress", "Companion Takes a Hit", "Sacrifice Resources", "Withstand Damage"],
+				"Threshold": ["Face Death", "Face Desolation", "Overcome Destruction"],
+				"Recover": ["Sojourn", "Heal", "Hearten", "Resupply", "Repair"],
+				"Legacy": ["Earn Experience", "Advance", "Continue a Legacy"],
+				"Fate": ["Ask the Oracle", "Pay the Price"]
+		 	},
+			moves: {
+				"Begin a Session": "[When you begin a significant session or chapter of play], do all of the following.<<Identify or adjust flagged content and {Set a Flag}.|Review or recap what happened last session.|Set the scene by envisioning your character’s current situation and intent.>>In addition, you may spotlight a new danger, opportunity, or insight. This can include a scene hidden from your character’s perspective. If you do, envision a brief vignette (you may roll or choose on the table below for inspiration). Then, all players take +1 momentum as you return to play from the viewpoint of your characters.((d100)){{vignette}}",
+				"Set a Flag": "[When you identify situations or topics you don’t want to include, don’t want to envision in detail, or otherwise may need mindfulness when approaching], that content is now flagged.||When you encounter content flagged as something to approach mindfully, pause to consider or discuss its role in your story. When you come across flagged content that you would rather adjust or omit, {Change Your Fate}",
+				"Change Your Fate": "[When you encounter flagged content, reject an oracle, resist a consequence, or otherwise need to shift your circumstances within the game for your comfort or enjoyment], pause and identify what needs to be changed. Choose as many options as appropriate.<<[Reframe:] This didn’t happen the way you first thought. Envision the moment from another perspective in a way that diminishes or changes the content.|[Refocus:] This is not the most important thing happening right now. Envision how the spotlight shifts to change the focus.|[Replace:] This happens but with a small adjustment. Switch out an element and envision how this new detail changes the scenario.|[Redirect:] Adjust the trajectory to involve a helping hand. Envision how another person or party becomes involved.|[Reshape:] The situation changes completely. Envision what happened instead.>>",
+				"Take a Break": "[When you resolve a progress move or complete an intense scenario], take a few deep breaths and take some time to attend to the needs of your body. Reflect on what just happened and how it made you feel. Then, choose one.<<Move on: Continue the session. You or an ally may add +1 on the next move (not a progress move), bolstered by your reflection and past experiences.|Stop for now: {End a Session}.>>",
+				"End a Session": "[When you end a significant session or chapter of play], reflect on the events of the game and identify any missed opportunities to mark progress.<<If you strengthened your ties to a connection, {Develop Your Relationship}.|If you moved forward on a quest, {Reach a Milestone}.>>If there is a quest, connection, or other situation you would like to give focus in your next session, make note of it and take +1 momentum.",
+				"Face Danger": "[When you attempt something risky or react to an imminent threat], envision your action and roll. If you act…<<With speed, mobility, or agility: Roll +edge|With resolve, command, or sociability: Roll +heart|With strength, endurance, or aggression: Roll +iron|With deception, stealth, or trickery: Roll +shadow|With expertise, focus, or observation: Roll +wits>>((ironsworn))On a [strong hit], you are successful. Take +1 momentum.||On a [weak hit], you succeed, but not without a cost. Make a suffer move (-1).||On a [miss], you fail, or a momentary success is undermined by a dire turn of events. {Pay the Price}.",
+				"Secure an Advantage": "[When you assess a situation, make preparations, or attempt to gain leverage], envision your action and roll. If you act…<<With speed, mobility, or agility: Roll +edge|With resolve, command, or sociability: Roll +heart|With strength, endurance, aggression: Roll +iron|With deception, stealth, or trickery: Roll +shadow|With expertise, focus, or observation: Roll +wits>>((ironsworn))On a [hit], you succeed. On a [strong hit], take both. On a [weak hit], choose one.<<Take +2 momentum|Add +1 on your next move (not a progress move)>>On a miss, you fail or your assumptions betray you. {Pay the Price}.",
+				"Gather Information": "[When you search for clues, conduct an investigation, analyze evidence, or do research], roll +wits.((ironsworn))On a [strong hit], you discover something helpful and specific. The path you must follow or action you must take to make progress is made clear. Envision what you learn. Then, take +2 momentum.||On a [weak hit], the information provides new insight, but also complicates your quest. Envision what you discover. Then, take +1 momentum.||On a [miss], your investigation unearths a dire threat or reveals an unwelcome truth that undermines your quest. {Pay the Price}.",
+				"Compel": "[When you try to persuade someone or make them an offer], envision your approach. If you…<<Charm, pacify, encourage, or barter: Roll +heart|Threaten or incite: Roll +iron|Lie or swindle: Roll +shadow>>((ironsworn))On a [strong hit], they’ll do what you want or agree to your conditions. Take +1 momentum.||On a [weak hit], as above, but their agreement comes with a demand or complication. Envision their counteroffer.||On a [miss], they refuse or make a demand that costs you greatly. {Pay the Price}.",
+				"Aid Your Ally": "[When you act in direct support of an ally], envision how you aid them. Then, {Secure an Advantage} or {Gain Ground} to take action. If you score a hit, they (instead of you) take the benefits of the move.||If you {Gain Ground} and score a strong hit, you are both in control. On a weak hit, your ally is in control but you are in a bad spot.",
+				"Check Your Gear": "[When you check to see if you have a specific helpful item or resource], roll +supply.((ironsworn))On a [strong hit], you have it, and are ready to act. Take +1 momentum.||On a [weak hit], you have it, but must choose one.<<Your supply is diminished: {Sacrifice Resources} (-1)|It’s not quite right, and causes a complication or delay: {Lose Momentum} (-2)>>On a [miss], you don’t have it and the situation grows more perilous. {Pay the Price}.",
+				"Swear an Iron Vow": "[When you swear upon iron to complete a quest], write your vow and give it a rank. Then, roll +heart. If you swear this vow to a connection, add +1; if you share a bond, add +2.((ironsworn))On a [strong hit], you are emboldened and it is clear what you must do next. Take +2 momentum.||On a [weak hit], you are determined but begin your quest with more questions than answers. Take +1 momentum, and envision what you do to find a path forward.||On a [miss], you must overcome a significant obstacle before you begin your quest. Envision what stands in your way.",
+				"Reach a Milestone": "[When you make headway in your quest] by doing any of the following… <<overcoming a critical obstacle|gaining meaningful insight|completing a perilous expedition|acquiring a crucial item or resource|earning vital support|defeating a notable foe>>…you may mark progress per the rank of the vow.",
+				"Fulfill Your Vow": "[[Progress Move]]||[When you reach the end of your quest], roll the challenge dice and compare to your progress.((progress))On a [strong hit], your vow is fulfilled. Mark a reward on your quests legacy track per the vow’s rank: troublesome=1 tick; dangerous=2 ticks; formidable=1 box; extreme=2 boxes; epic=3 boxes. Any allies who shared this vow also mark the reward.||On a [weak hit], as above, but there is more to be done or you realize the truth of your quest. If you {Swear an Iron Vow} to set things right, take your full legacy reward. Otherwise, make the legacy reward one rank lower (none for a troublesome quest).||On a [miss], your vow is undone through an unexpected complication or realization. Envision what happens and choose one.<<Give up on the quest: {Forsake Your Vow}.|Recommit to the quest: Roll both challenge dice, take the lowest value, and clear that number of progress boxes.>>Then, raise the vow’s rank by one (if not already epic).",
+				"Forsake Your Vow": "[When you renounce your quest, betray your promise, or the goal is lost to you], clear the vow.||Then, envision the impact of this failure and choose one or more as appropriate to the nature of the vow. Any allies who shared this vow may also envision a cost.<<You are demoralized or dispirited: {Endure Stress}|A connection loses faith: {Test Your Relationship} when you next interact.|You must abandon a path or resource: Discard an asset.|Someone else pays a price: Envision how a person, being, or community bears the cost of the failure.|Someone else takes advantage: Envision how an enemy gains power.|Your reputation suffers: Envision how this failure marks you.>>",
+				"Make a Connection": "[When you search out a new relationship or give focus to an existing relationship (not an ally or companion)], roll +heart.((ironsworn))On a [strong hit], you create a connection. Give them a role and rank. Whenever your connection aids you on a move closely associated with their role, add +1 and take +1 momentum on a hit.||On a [weak hit], as above, but this connection comes with a complication or cost. Envision what they reveal or demand.||On a [miss], you don’t make a connection and the situation worsens. {Pay the Price}.",
+				"Develop Your Relationship": "[When you reinforce your relationship with a connection] by doing any of the following…<<swearing a vow to undertake a perilous quest in their service|completing a quest to their benefit|leveraging their help in desperate circumstances|giving them something of worth|sharing a profound moment|standing with them against hardship|overcoming a test of your relationship>>…you may mark progress per the rank of the connection.||If you already share a bond with the connection, do not mark progress. Instead, roll +their rank to learn the impact on your legacy: troublesome=+1; dangerous=+2; formidable=+3; extreme=+4; epic=+5.((ironsworn))On a [strong hit], mark 2 ticks on your bonds legacy track. On a [strong hit with a match], you may also envision how recent events bolstered your connection’s standing and raise their rank by one (if not already epic). On a [weak hit], take +2 momentum. On a [miss], take no lasting benefit.",
+				"Test Your Relationship": "[When your relationship with a connection is tested through conflict, betrayal, or circumstance], roll +heart. If you share a bond, add +1. ((ironsworn))On a [strong hit], {Develop Your Relationship}.||On a [weak hit], {Develop Your Relationship}, but also envision a demand or complication as a fallout of this test.||On a [miss], or if you have no interest in maintaining this relationship, choose one.<<Lose the connection: Envision how this impacts you and {Pay the Price}.|Prove your loyalty: Envision what you offer or what they demand, and {Swear an Iron Vow} (formidable or greater) to see it done. Until you complete the quest, take no benefit for the connection. If you refuse or fail, the connection is permanently undone.>>",
+				"Forge a Bond": "[[Progress Move]]||[When your relationship with a connection is ready to evolve], roll the challenge dice and compare to your progress.((progress))On a [strong hit], you now share a bond. Mark a reward on your bonds legacy track per the connection’s rank: troublesome=1 tick; dangerous=2 ticks; formidable=1 box; extreme=2 boxes; epic=3 boxes. Any allies who share this connection also mark the reward. Then, choose one.<<Bolster their influence: When they aid you on a move closely associated with their role, add +2 instead of +1.|Expand their influence: Give them a second role. When they aid you on a move closely associated with either role, add +1 and take +1 momentum on a hit.>>On a [weak hit], as above, but they ask something more of you first. To gain the bond and the legacy reward, envision the nature of the request, and do it (or {Swear an Iron Vow} to see it done).||On a [miss], they reveal a motivation or background that puts you at odds. If you recommit to this relationship, roll both challenge dice, take the lowest value, and clear that number of progress boxes. Then, raise the connection’s rank by one (if not already epic).",
+				"Undertake an Expedition": "[When you trailblaze a route through perilous space, journey over hazardous terrain, or survey a mysterious site], give the expedition a name and rank.||Then, for each segment of the expedition, envision your approach. If you…<<Move at speed: Roll +edge|Keep under the radar: Roll +shadow|Stay vigilant: Roll +wits>>((ironsworn))On a [strong hit], you reach a waypoint. Envision the location and mark progress per the rank of the expedition.||On a [weak hit], as above, but this progress costs you. Choose one.<<Suffer costs en route: Make a suffer move (-2), or two suffer moves (-1).|Face a peril at the waypoint: Envision what you encounter.>>On a [miss], you are waylaid by a crisis, or arrive at a waypoint to confront an immediate hardship or threat. Do not mark progress, and {Pay the Price}.",
+				"Explore a Waypoint": "[When you divert from an expedition to examine a notable location], roll +wits.((ironsworn))On a [strong hit], choose one. On a [strong hit with a match], you may instead {Make a Discovery}.<<Find an opportunity: Envision a favorable insight, situation, resource, or encounter. Then, take +2 momentum.|Gain progress: Mark progress on your expedition, per its rank.>>On a [weak hit], you uncover something interesting, but it is bound up in a peril or reveals an ominous aspect of this place. Envision what you encounter. Then, take +1 momentum.||On a [miss] you encounter an immediate hardship or threat, and must {Pay the Price}.||On a [miss with a match], you may instead {Confront Chaos}.",
+				"Make a Discovery": "[When your exploration of a waypoint uncovers something wondrous], roll on the table below or choose one. Then, envision the nature of the discovery and how it is revealed. When you first experience or engage with the discovery, you and your allies may mark two ticks on your discoveries legacy track.((d100)){{discovery}}",
+				"Confront Chaos": "[When your exploration of a waypoint uncovers something dreadful], decide the number of aspects: one, two, or three. Roll that number of times or choose that number of aspects on the table below. Then, envision how the encounter begins.||For each result, when you first confront that aspect within the scope of the encounter, you and your allies may mark one tick on your discoveries legacy track.((d100)){{chaos}}",
+				"Finish an Expedition": "[[Progress Move]]||[When your expedition comes to an end], roll the challenge dice and compare to your progress.((progress))On a [strong hit], you reach your destination or complete your survey. Mark a reward on your discoveries legacy track per expedition’s rank: troublesome=1 tick; dangerous=2 ticks; formidable=1 box; extreme=2 boxes; epic=3 boxes. Any allies who shared this expedition also mark the reward.||On a [weak hit], as above, but you face an unforeseen complication at the end of your expedition. Make the legacy reward one rank lower (none for a troublesome expedition), and envision what you encounter.||On a [miss], your destination is lost to you, or you come to understand the true nature or cost of the expedition. Envision what happens and choose one.<<Abandon the expedition: Envision the cost of this setback and {Pay the Price}.|Return to the expedition: Roll both challenge dice, take the lowest value, and clear that number of progress boxes. Then, raise the expedition’s rank by one (if not already epic).>>",
+				"Set a Course": "[When you follow a known route through perilous space, across hazardous terrain, or within a mysterious site], roll +supply.((ironsworn))On a [strong hit], you reach your destination and the situation there favors you. Take +1 momentum.||On a [weak hit], you arrive, but face a cost or complication. Choose one.<<Suffer costs en route: Make a suffer move (-2), or two suffer moves (-1).|Face a complication at the destination: Envision what you encounter.>>On a [miss], you are waylaid by a significant threat, and must {Pay the Price}. If you overcome this obstacle, you may push on safely to your destination.",
+				"Enter the Fray": "[When you initiate combat or are forced into a fight], envision your objective and give it a rank. If the combat includes discrete challenges or phases, set an objective with a rank for each.||Then, roll to see if you are in control. If you are…<<On the move: Roll +edge|Facing off against your foe: Roll +heart|In the thick of it at close quarters: Roll +iron|Preparing to act against an unaware foe: Roll +shadow|Caught in a trap or sizing up the situation: Roll +wits>>((ironsworn))On a [strong hit], take both. On a [weak hit], choose one.<<Take +2 momentum|You are in control>>On a [miss], the fight begins with you in a bad spot.",
+				"Gain Ground": "[When you are in control and take action in a fight to reinforce your position or move toward an objective], envision your approach and roll. If you are…<<In pursuit, fleeing, or maneuvering: Roll +edge|Charging boldly into action, coming to the aid of others, negotiating, or commanding: Roll +heart|Gaining leverage with force, powering through, or making a threat: Roll +iron|Hiding, preparing an ambush, or misdirecting: Roll +shadow|Coordinating a plan, studying a situation, or cleverly gaining leverage: Roll +wits>>((ironsworn))On a [hit], you stay in control. On a [strong hit], choose two. On a [weak hit], choose one.<<Mark progress|Take +2 momentum|Add +1 on your next move (not a progress move)>>On a [miss], your foe gains the upper hand, the fight moves to a new location, or you encounter a new peril. You are in a bad spot and must {Pay the Price}.",
+				"React Under Fire": "[When you are in a bad spot and take action in a fight to avoid danger or overcome an obstacle], envision your approach and roll. If you are…<<In pursuit, fleeing, dodging, getting back into position, or taking cover: Roll +edge|Remaining stalwart against fear or temptation: Roll +heart|Blocking or diverting with force, or taking the hit: Roll +iron|Moving into hiding or creating a distraction: Roll +shadow|Changing the plan, finding a way out, or cleverly bypassing an obstacle: Roll +wits>>((ironsworn))On a [strong hit], you succeed and are in control. Take +1 momentum.||On a [weak hit], you avoid the worst of the danger or overcome the obstacle, but not without a cost. Make a suffer move (-1). You stay in a bad spot.||On a [miss], the situation worsens. You stay in a bad spot and must {Pay the Price}.",
+				"Strike": "[When you are in control and assault a foe at close quarters], roll +iron; [when you attack at a distance], roll +edge.((ironsworn))On a [strong hit], mark progress twice. You dominate your foe and stay in control.||On a [weak hit], mark progress twice, but you expose yourself to danger. You are in a bad spot.||On a [miss], the fight turns against you. You are in a bad spot and must {Pay the Price}.",
+				"Clash": "[When you are in a bad spot and fight back against a foe at close quarters], roll +iron; [when you exchange fire at a distance], roll +edge.((ironsworn))On a [strong hit], mark progress twice. You overwhelm your foe and are in control.||On a [weak hit], mark progress, but you are dealt a counterblow or setback. You stay in a bad spot and must {Pay the Price}.||On a [miss], your foe dominates this exchange. You stay in a bad spot and must {Pay the Price}.",
+				"Take a Decisive Action": "[[Progress Move]]||[When you seize an objective in a fight], envision how you take decisive action. Then, roll the challenge dice and compare to your progress.||If you are in control, check the result as normal. If you are in a bad spot, count a strong hit without a match as a weak hit, and a weak hit as a miss.((progress))On a [strong hit], you prevail. Take +1 momentum. If any objectives remain and the fight continues, you are in control.||On a [weak hit], you achieve your objective, but not without cost. Roll on the table below or choose one. If the fight continues, you are in a bad spot.((d100)){{decisive action}}On a [miss], you are defeated or your objective is lost. {Pay the Price}.",
+				"Face Defeat": "[When you abandon or are deprived of an objective], envision the consequence of this failure, clear the objective, and {Pay the Price}.||If the fight continues, you may create a new objective and give it a rank to represent the changing situation. If any objectives remain, the fight continues and you are in a bad spot.",
+				"Battle": "[When you fight a battle and it happens in a blur], envision your objective and roll. If you primarily…<<Fight at range, or using your speed and the environment to your advantage: Roll +edge.|Fight depending on your courage, leadership, or companions: Roll +heart.|Fight in close to overpower your foe: Roll +iron.|Fight using trickery to befuddle your foe: Roll +shadow.|Fight using careful tactics to outsmart your foe: Roll +wits.>>((ironsworn))On a [strong hit], you achieve your objective unconditionally. You and any allies who joined the battle may take +2 momentum.||On a [weak hit], you achieve your objective, but not without cost. {Pay the Price}.||On a [miss], you are defeated or the objective is lost. {Pay the Price}.",
+				"Lose Momentum": "[When you are delayed or disadvantaged], suffer -1 momentum for a minor setback, -2 for a serious setback, or -3 for a major setback.||When your momentum is at its minimum (-6) and you must suffer -momentum, choose one.<<Envision how the price is paid and apply the cost to a different suffer move.|Envision how this undermines your progress on a vow, expedition, connection, or combat. Then, clear 1 unit of progress on that track per its rank: troublesome=3 boxes; dangerous=2 boxes; formidable=1 box; extreme=2 ticks; epic=1 tick.>>",
+				"Endure Harm": "[When you face physical injury, fatigue, or illness], suffer -1 health for minor harm, -2 for serious harm, or -3 for major harm. If your health is 0, {Lose Momentum} equal to any remaining harm.||Then, if your health is 0 or you choose to resist the harm, roll +health or +iron, whichever is higher.((ironsworn))On a [strong hit], choose one.<<Shake it off: If you are not wounded, take +1 health|Embrace the pain: Take +1 momentum>>On a [weak hit], if you are not wounded, you may Lose Momentum (-1) in exchange for +1 health. Otherwise, press on.||On a [miss], it’s worse than you thought. Suffer an additional -1 health or {Lose Momentum} (-2). If your health is 0, you must also mark [wounded] or [permanently harmed], or roll on the table below.((d100)){{harm}}",
+				"Endure Stress": "[When you face mental strain, shock, or despair], suffer -1 spirit for minor stress, -2 for serious stress, or -3 for major stress. If your spirit is 0, {Lose Momentum} equal to any remaining stress.||Then, if your spirit is 0 or you choose to resist the stress, roll +spirit or +heart, whichever is higher.((ironsworn))On a [strong hit], choose one.<<Shake it off: If you are not shaken, take +1 spirit|Embrace the darkness: Take +1 momentum>>On a [weak hit], if you are not shaken, you may Lose Momentum (-1) in exchange for +1 spirit. Otherwise, press on.||On a [miss], it’s worse than you thought. Suffer an additional -1 spirit or {Lose Momentum} (-2). If your spirit is 0, you must also mark [shaken] or [traumatized], or roll on the table below.((d100)){{stress}}",
+				"Companion Takes a Hit": "[When your companion faces physical hardship], they suffer -1 health for minor harm, -2 for serious harm, or -3 for major harm. If your companion’s health is 0, {Lose Momentum} equal to any remaining harm.||Then, if their health is 0 or you choose to test their resilience, roll +your companion’s health.((ironsworn))On a [strong hit], your companion rallies. Give them +1 health.||On a [weak hit], if your companion’s health is not 0, you may {Lose Momentum} (-1) and give them +1 health. Otherwise, they press on.||On a [miss], it’s worse than you thought. They suffer an additional -1 health or you {Lose Momentum} (-2). If your companion’s health is 0, they are out of action until given aid. If their health is 0 and you rolled a miss with a match on this move, they are dead or destroyed; discard the asset.",
+				"Sacrifice Resources": "[When you lose or consume resources], suffer -1 supply for a minor loss, -2 for a serious loss, or -3 for a major loss.||If your supply is exhausted (reduced to 0), mark [unprepared]. When you suffer a loss of resources while unprepared, envision how this causes you hardship and apply the cost to a different suffer move.",
+				"Withstand Damage": "When your vehicle faces a damaging situation or environment, suffer -1 integrity for minor damage, -2 for serious damage, or -3 for major damage. If your integrity is 0, {Lose Momentum} equal to any remaining damage.||Then, if your integrity is 0 or you choose to resist the damage, roll +integrity.((ironsworn))On a [strong hit], choose one.<<Bypass: If your vehicle is not battered, take +1 integrity|Ride it out: Take +1 momentum>>On a [weak hit], if your vehicle is not battered, you may {Lose Momentum} (-1) in exchange for +1 integrity. Otherwise, press on.||On a [miss], it’s worse than you thought. Suffer an additional -1 integrity or {Lose Momentum} (-2). If your integrity is 0, also suffer a cost according to the vehicle type.<<[Command vehicle:] Mark the vehicle as [battered] or [cursed], mark a module as [broken], destroy a broken module by discarding it, or roll on the table below. If the command vehicle is destroyed, {Overcome Destruction}.|[Support vehicle:] Mark the vehicle as [battered] or roll on the table below. If the vehicle is destroyed, discard the asset.|[Incidental vehicle:] Roll on the table below.>>((d100)){{damage}}",
+				"Face Death": "[When you encounter a situation where death is an immediate and unavoidable outcome], you are dead. [When you are instead brought to the brink of death with a chance for recovery or redemption], roll +heart.((ironsworn))On a [strong hit], you are cast back into the mortal world.||On a [weak hit], choose one.<<You die, but not before making a noble sacrifice. Envision your final moments.|There is more to be done. Envision what is revealed or asked of you at death’s door, and {Swear an Iron Vow} to complete an extreme quest. You return to the mortal world and must mark [doomed]. When you complete the death-bound quest, clear the impact.>>On a [miss], you are dead.",
+				"Face Desolation": "[When you are brought to the brink of desolation], roll +heart.((ironsworn))On a [strong hit], you resist and press on.||On a [weak hit], choose one.<<Your spirit breaks, but not before you make a noble sacrifice. Envision your final moments.|You see a vision of a dreaded event coming to pass. Envision that dark future, and {Swear an Iron Vow} to prevent it through an extreme quest. You return to your senses and must mark [tormented]. When you complete the soul-bound quest, clear the impact.>>On a [miss], you succumb to despair or horror and are lost.",
+				"Overcome Destruction": "[[Progress Move]]||[When your command vehicle is destroyed or irrevocably lost], you must discard the asset, along with any modules and docked support vehicles.||If you survive, you may use your connections to replace some of what was lost. To learn the cost, roll the challenge dice and compare to the progress on your bonds legacy track.((progress))On a [strong hit], you may call in a favor. This comes without conditions.||On a [weak hit], you owe someone. You must mark [indebted] and {Swear an Iron Vow} to complete an extreme quest in their service. When you complete the duty-bound quest, clear the impact.||On a [miss], as with the weak hit result, but this quest is against your nature, forces you to {Forsake Your Vow} on another quest, or is in the service of an enemy.||If you accept the cost, take 1 experience for every marked ability on the discarded assets (minimum 3 experience). Spend this experience only on a new command vehicle, modules, and support vehicles.",
+				"Sojourn": "[When you spend time recovering within a community], roll +heart.((ironsworn))On a [strong hit], this is a safe refuge. You and your allies may each choose two recover moves: {Heal}, {Hearten}, {Repair}, or {Resupply}. Instead of rolling, assume an automatic strong hit for each. An individual move can be taken more than once.||On a [weak hit], as above, but time is short or resources are strained. You and your allies each make one recover move instead of two, with no more than three moves total among the group.||On a [miss], choose one.<<The community needs your help, or makes a costly demand in exchange for safe harbor. Envision what they ask of you. If you do it, or {Swear an Iron Vow} to see it done, resolve this move as a strong hit.|You find no relief, and the situation grows worse. {Pay the Price}.>>",
+				"Heal": "[When you receive medical care or provide treatment], envision the situation and roll. If you…<<Receive treatment from someone (not an ally): Roll +iron|Mend your own wounds: Roll +iron or +wits, whichever is lower|Obtain treatment for a companion: Roll +heart|Provide care: Roll +wits>>((ironsworn))On a [strong hit], the care is helpful. If you (or the ally under your care) are wounded, clear the impact and take or give +2 health. Otherwise, take or give +3 health.||On a [weak hit], as above, but the recovery costs extra time or resources. Choose one: {Lose Momentum} (-2) or {Sacrifice Resources} (-2).||On a [miss], the aid is ineffective and the situation worsens. {Pay the Price}.",
+				"Hearten": "[When you socialize, share intimacy, or find a moment of peace], roll +heart.((ironsworn))On a [strong hit], you find companionship or comfort and your spirit is strengthened. If you are shaken, clear the impact and take +1 spirit. Otherwise, take +2 spirit. If you make this move as you {Sojourn}, take +1 more.||On a [weak hit], as above, but this indulgence is fleeting. Envision an interruption, complication, or inner conflict. Then, {Lose Momentum} (-1).||On a [miss], you take no comfort and the situation worsens. Pay the Price.",
+				"Resupply": "[When you attempt to bolster your readiness], envision the opportunity and your approach. If you…<<Barter or make an appeal: Roll +heart|Threaten or seize: Roll +iron|Steal or swindle: Roll +shadow|Scavenge or craft: Roll +wits>>((ironsworn))On a [strong hit], choose one.<<If you are unprepared, clear the impact and take +1 supply. Otherwise, take +2 supply. |If you are in need of a specific item or resource that can reasonably be obtained, you acquire it. Take +1 momentum.>>On a [weak hit], as above, but you must first deal with a cost, complication, or demand. Envision the nature of this obstacle.||On a [miss], you encounter an unexpected peril. {Pay the Price}.",
+				"Repair": "[When you make repairs to your vehicles, modules, mechanical companions, or other devices], envision the situation and roll. If you…<<Make your own repairs, or direct a companion to make repairs: Roll +wits|Obtain repairs from someone (not an ally): Roll +supply>>((ironsworn))On a [hit], you gain repair points as appropriate to the situation, per the table below. Additionally, you may {Sacrifice Resources} and exchange each -1 of supply for 1 extra repair point (up to 3 points).{{repair}}Spend repair points as follows. Unused points are discarded.<<Clear the battered impact on a vehicle: 2 points|Fix one broken module: 2 points|Take +1 integrity on a vehicle: 1 point|Take +1 health for a mechanical companion: 1 point|Repair any other device: 3 points|Repair any other device, but with a complication or malfunction: 2 points>>On a [miss], the repairs are not made and the situation worsens. {Pay the Price}.",
+				"Earn Experience": "[When you fill a box (four ticks) on any legacy track], take 2 experience. This experience may be spent when you {Advance}.||Once you completely fill the tenth box on any legacy track, clear that track. You may start again marking progress on the cleared track, but earn experience at a reduced rate of 1 experience (instead of 2) for each filled progress box. If you make a progress roll against this track, resolve the outcome as if at 10 progress.",
+				"Advance": "[When you develop your abilities, improve your resources, gain a reward, or boost your influence], you may spend 3 experience to add a new asset, or 2 experience to upgrade an asset. Choose from the following categories as appropriate to your focus and opportunities.<<Module: Upgrade your command vehicle|Support Vehicle: Acquire or improve a secondary vehicle|Path: Bolster your personal capabilities or follow a new calling|Companion: Gain or improve a trusted helper|Deed: Learn from your experiences or build a legacy>>",
+				"Continue a Legacy": "[[Progress Move]]||[When you retire from your life as Ironsworn, or succumb to death or desolation], you may create a new character in your established setting. If you do, roll the challenge dice and compare to each of the former character’s legacy tracks: quests, bonds, and discoveries (one roll per track).((progress))For each [strong hit], choose one from below, or one from the weak hit or miss options.<<Follow their path: Take one path or companion asset from the former character (at no cost), including any marked abilities.|Share a connection: Take one connection from the former character, including any accrued progress or bond benefits.|Accept an inheritance: Take the former character’s command vehicle and one module or support vehicle (at no cost), including any marked abilities.>>For each [weak hit], choose one from below, or one from the miss options.<<See it through: Choose one of the former character’s unfinished quests, and {Swear an Iron Vow} (with an automatic strong hit) to see it done. You may immediately mark up to half their earned progress (round down) on this quest.|Rebuild a connection: Name one of the former character’s connections, and envision how time or circumstances have changed them in a dramatic way. When you {Make a Connection} with them, take an automatic strong hit and mark two ticks on your bonds legacy track.|Explore familiar ground: Name a location that was meaningful to the former character. When you first visit that place, envision how it has changed or is endangered. Then, mark two ticks on your discoveries legacy track.>>For each [miss], choose one.<<Deal with the aftermath: Envision how one of your former character’s foes has gained power or influence.|Switch loyalties: Envision how you begin in opposition to your former character’s beliefs, goals, or allegiances.|Open Pandora’s Box: Envision how an advancement or discovery has unleashed unexpectedly dire consequences.>>",
+				"Ask the Oracle": "[When you seek to resolve questions, reveal details, discover locations, determine how other characters respond, or trigger encounters or events], you may…<<Draw a conclusion: Decide the answer based on the most interesting and obvious result.|Spark an idea: Use an oracle table or other random prompt.|Ask a yes/no question: Decide the odds of a yes, and roll on the table below to check the answer.|Pick two: Envision two options. Rate one as likely, and roll on the table below to see if it is true. If not, it is the other.>>((d100)){{fate}}On a match, envision an extreme result or twist.",
+				"Pay the Price": "[When you suffer the outcome of an action], choose one.<<Make the most obvious negative outcome happen.|{Ask the Oracle} for inspiration. Interpret the answer as a hardship or complication appropriate to the situation.|Roll on the table below. If the result doesn’t fit the situation, roll again.>>((d100)){{pay the price}}"
+			},
+			moves_tables: {
+				"vignette": {
+					rolled: true,
+					rows: [
+						["1–10", "Flashback reveals an aspect of your background or nature"],
+						["11–20", "Flashback reveals an aspect of another character, place, or faction"],
+						["21–30", "Influential character or faction is introduced or given new detail"],
+						["31–40", "Seemingly unrelated situations are shown to be connected"],
+						["41–50", "External factors create new danger, urgency, or importance for a quest"],
+						["51–60", "Important character is put in danger or suffers a misadventure"],
+						["61–70", "Key location is made unsafe or becomes mired in conflict"],
+						["71–80", "Unexpected return of an enemy or threat"],
+						["81–90", "Peril lies ahead or lurks just out of view"],
+						["91–100", "Unforeseen aid is on the way or within reach"]
+					]
+				},
+				"discovery": {
+					rolled: true,
+					rows: [
+						["1–4", "Advanced technology waiting to be harnessed or salvaged"],
+						["5–9", "Ancient archive or message"],
+						["10–12", "Artificial consciousness evolved to a higher state"],
+						["13–17", "Clues to a crucial resource or uncharted domain"],
+						["18–20", "Envoy from another time or reality"],
+						["21–24", "Extraordinary natural phenomenon"],
+						["25–27", "First contact with intelligent life"],
+						["28–32", "Gateway to another time or alternate reality"],
+						["33–36", "Key to unlocking a language or method of communication"],
+						["37–41", "Lost or hidden people"],
+						["42–45", "Majestic or unusual lifeforms"],
+						["46–50", "Marvel of ancient engineering"],
+						["51–53", "Miraculously preserved artifact or specimen"],
+						["54–58", "Monumental architecture or artistry of an ancient civilization"],
+						["59–63", "Mysterious device or artifact of potential value"],
+						["64–68", "New understanding of an enduring mystery"],
+						["69–72", "Pathway or means of travel to a distant location"],
+						["73–77", "Person or lifeform with phenomenal abilities"],
+						["78–82", "Place of awe-inspiring beauty"],
+						["83–87", "Rare and valuable resource"],
+						["88–92", "Safeguarded or idyllic location"],
+						["93–96", "Visions or prophesies of the future"],
+						["97–100", "Roll twice"]
+					]
+				},
+				"chaos": {
+					rolled: true,
+					rows: [
+						["1–4", "Baneful weapon of mass destruction"],
+						["5–9", "Cataclysmic environmental effects"],
+						["10–12", "Dead given unnatural life"],
+						["13–17", "Destructive lifeform of monstrous proportion"],
+						["18–20", "Dread hallucinations or illusions"],
+						["21–24", "Harbingers of an imminent invasion"],
+						["25–27", "Horde of insatiable hunger or fury"],
+						["28–32", "Horrific lifeforms of inscrutable purpose"],
+						["33–36", "Impostors in human form"],
+						["37–41", "Machines made enemy"],
+						["42–45", "Malignant contagion or parasite"],
+						["46–50", "Messenger or signal with a dire warning "],
+						["51–53", "Passage to a grim alternate reality "],
+						["54–58", "People corrupted by chaos"],
+						["59–63", "Powerful distortions of time or space "],
+						["64–68", "Signs of an impending catastrophe"],
+						["69–72", "Site of a baffling disappearance"],
+						["73–77", "Site of a horrible disaster"],
+						["78–82", "Site of terrible carnage"],
+						["83–87", "Technology nullified or made unstable "],
+						["88–92", "Technology warped for dark purpose"],
+						["93–96", "Vault of dread technology or power "],
+						["97–100", "Worshipers of great and malevolent powers"], 
+					]
+				},
+				"decisive action": {
+					rolled: true,
+					rows: [
+						["1–40", "It’s worse than you thought: Make a suffer move (-2)"],
+						["41–52", "Victory is short-lived: A new peril or foe appears"],
+						["53–64", "You face collateral damage: Something is lost, damaged, or broken"],
+						["65–76", "Others pay the price: Someone else suffers the cost"],
+						["77–88", "Others won’t forget: You are marked for vengeance"],
+						["89–100", "It gets complicated: The true nature of a foe or objective is revealed"],
+					]
+				},
+				"repair": {
+					header: ["Situation", "Strong Hit", "Weak Hit"],
+					rows: [
+						["At a facility", "5 points", "3 points"],
+						["In the field", "3 points", "1 points"],
+						["Under fire", "2 points", "0 points"]
+					]
+				},
+				"fate": {
+					header: ["Odds", "The answer is yes if you roll…"],
+					rows: [
+						["Small Chance", "10 or less"],
+						["Unlikely", "25 or less"],
+						["50/50", "50 or less"],
+						["Likely", "75 or less"],
+						["Almost Certain", "90 or less"]
+					]
+				},
+				"pay the price": {
+					rolled: true,
+					rows: [
+						["1-2", "A trusted individual or community acts against you"], 
+						["3-4", "An individual or community you care about is exposed to danger"],
+						["5-7", "You encounter signs of a looming threat"],
+						["8-10", "You create an opportunity for an enemy"],
+						["11-14", "You face a tough choice"],
+						["15-18", "You face the consequences of an earlier choice"],
+						["19-22", "A surprising development complicates your quest"],
+						["23-26", "You are separated from something or someone"],
+						["27-32", "Your action causes collateral damage or has an unintended effect"],
+						["33-38", "Something of value is lost or destroyed"],
+						["39-44", "The environment or terrain introduces a new hazard"],
+						["45-50", "A new enemy is revealed"],
+						["51-56", "A friend, companion, or ally is in harm’s way (or you are, if alone)"],
+						["57-62", "Your equipment or vehicle malfunctions"],
+						["63-68", "Your vehicle suffers damage"],
+						["69-74", "You waste resources"],
+						["75-81", "You are harmed"],
+						["82-88", "You are stressed"],
+						["89-95", "You are delayed or put at a disadvantage"],
+						["96-100", "Roll twice"]
+					]
+				},
+				"harm": {
+					rolled: true,
+					rows: [
+						["1–10", "You suffer mortal harm. {Face Death}."],
+						["11–20", "You are dying. Within an hour or two, you must {Heal} and raise your health above 0, or {Face Death}."],
+						["21–35", "You are unconscious and out of action. If left alone, you come back to your senses in an hour or two. If you are vulnerable to ongoing harm, {Face Death}."],
+						["36–50", "You are reeling. If you engage in any vigorous activity before taking a breather, roll on this table again (before resolving the other move)."],
+						["51–100", "You are still standing."]
+					]
+				},
+				"stress": {
+					rolled: true,
+					rows: [
+						["1–10", "You are overwhelmed. {Face Desolation}."],
+						["11–25", "You give up. {Forsake Your Vow}."],
+						["26–50", "You give in to fear or compulsion, and act against your better instincts."],
+						["51–100", "You persevere."]
+					]
+				},
+				"damage": {
+					rolled: true,
+					rows: [
+						["1–10", "Immediate catastrophic destruction. All aboard must {Endure Harm} or {Face Death}, as appropriate."],
+						["11–25", "Destruction is imminent and unavoidable. If you do not have the means or intention to get clear, {Endure Harm} or {Face Death}, as appropriate."],
+						["26–40", "Destruction is imminent, but can be averted if you {Repair} your vehicle and raise its integrity above 0. If you fail, see 11–25."],
+						["41–55", "You cannot {Repair} this vehicle until you {Resupply} and obtain a crucial replacement part. If you roll this result again prior to that, see 11–25."],
+						["56–70", "The vehicle is crippled or out of your control. To get it back in action, you must {Repair} and raise its integrity above 0. "],
+						["71–85", "It’s a rough ride. All aboard must make the {Endure Harm}, {Endure Stress}, or {Companion Takes a Hit} move, suffering a serious (-2) cost."],
+						["86–95", "You’ve lost fuel, energy, or cargo. {Sacrifice Resources} (-2)."],
+						["96–100", "Against all odds, the vehicle holds together."]
+					]
+				}
+			},
+			oracle_rolls: {
+				"settlements:first look": 2,
+				"settlements:settlement projects": 2,
+				"settlements:settlement trouble": 2,
+				"characters:first look": 2,
+				"characters:revealed character aspects": 3,
+				"factions:dominion": 3,
+				"factions:faction projects": 2,
+				"factions:faction quirks": 2,
+				"factions:faction rumors": 2
+			},
+			oracle_lists: {
+				core: [
+					"Action:Action:core:action", "Theme:Theme:core:theme", "Descriptor:Descriptor:core:descriptor", "Focus:Focus:core:focus", 
+					"<spacer>","Action + Theme:Action+Theme:core:action + core:theme", "Descriptor + Focus:Descriptor+Focus:core:descriptor + core:focus"
+				],
+				settlements: [
+					"First Look:First Look:settlements:first look", "Initial Contact:Contact:settlements:initial contact",
+					"Authority:Authority:settlements:authority", "Settlement Projects:Project:settlements:settlement projects",
+					"Settlement Trouble:Trouble:settlements:settlement trouble"
+				],
+				characters: [
+					"First Look:First Look:characters:first look", "Initial Disposition:Disposition:characters:initial disposition",
+					"Character Role:Role:characters:character role", "Character Goal:Goal:characters:character goal",
+					"Revealed Character Aspects:Aspect:characters:revealed character aspects"
+				],
+				factions: [
+					"Influence:Dominion:factions:influence", "Dominion:Dominion:factions:dominion", "Dominion Leadership:Leadership:factions:dominion leadership",
+					"Guild:Guild:factions:guild", "Fringe Group:Group:factions:fringe group", "Faction Projects:Project:factions:faction projects",
+					"Faction Relationships:Relationship:factions:faction relationships", "Faction Quirks:Quirk:factions:faction quirks",
+					"Faction Rumors:Rumor:factions:faction rumors"
+				],
+				miscellaneous: [
+					"Story Complications:Complication:miscellaneous:story complication", "Opportunity:Opportunity:miscellaneous:opportunity",
+					"Story Clue:Clue:miscellaneous:story clue", "Combat Action:Action:miscellaneous:combat action"
+				]
+			},
+			oracles: {
+				core: {
+					"action": ["Abandon", "Eliminate", "Reject", "Acquire", "Endure", "Release", "Advance", "Escalate", "Remove", "Affect", "Escort", "Research", "Aid", "Evade", "Resist", "Arrive", "Explore", "Restore", "Assault", "Falter", "Reveal", "Attack", "Find", "Risk", "Avenge", "Finish", "Scheme", "Avoid", "Focus", "Search", "Await", "Follow", "Secure", "Begin", "Fortify", "Seize", "Betray", "Gather", "Serve", "Bolster", "Guard", "Share", "Breach", "Hide", "Strengthen", "Break", "Hold", "Summon", "Capture", "Hunt", "Support", "Challenge", "Impress", "Suppress", "Change", "Initiate", "Surrender", "Charge", "Inspect", "Swear", "Clash", "Investigate", "Threaten", "Command", "Journey", "Transform", "Communicate", "Learn", "Uncover", "Construct", "Leave", "Uphold", "Control", "Locate", "Weaken", "Coordinate", "Lose", "Withdraw", "Create", "Manipulate", "Debate", "Mourn", "Defeat", "Move", "Defend", "Oppose", "Deflect", "Overwhelm", "Defy", "Persevere", "Deliver", "Preserve", "Demand", "Protect", "Depart", "Raid", "Destroy", "Reduce", "Distract", "Refuse"],
+					"theme": ["Ability", "Freedom", "Rival", "Advantage", "Greed", "Rumor", "Alliance", "Hardship", "Safety", "Authority", "Hate", "Sanctuary", "Balance", "Health", "Secret", "Barrier", "History", "Solution", "Belief", "Home", "Spirit", "Blood", "Honor", "Stranger", "Bond", "Hope", "Strategy", "Burden", "Humanity", "Strength", "Commerce", "Innocence", "Superstition", "Community", "Knowledge", "Supply", "Corruption", "Labor", "Survival", "Creation", "Language", "Technology", "Crime", "Law", "Time", "Culture", "Legacy", "Tool", "Cure", "Life", "Trade", "Danger", "Love", "Truth", "Death", "Memory", "Vengeance", "Debt", "Nature", "Vow", "Decay", "Opportunity", "War", "Deception", "Passage", "Warning", "Defense", "Peace", "Weakness", "Destiny", "Phenomenon", "Wealth", "Disaster", "Possession", "Weapon", "Discovery", "Power", "World", "Disease", "Price", "Dominion", "Pride", "Dream", "Prize", "Duty", "Prophesy", "Enemy", "Protection", "Expedition", "Quest", "Faction", "Relationship", "Fame", "Religion", "Family", "Reputation", "Fear", "Resource", "Fellowship", "Revenge"],
+					"descriptor": ["Abandoned", "Expansive", "Powerful", "Abundant", "Exposed", "Preserved", "Active", "Fiery", "Prominent", "Advanced", "Foreboding", "Protected", "Alien", "Forgotten", "Radiant", "Ancient", "Forsaken", "Rare", "Archaic", "Fortified", "Remote", "Automated", "Foul", "Rich", "Barren", "Fragile", "Ruined", "Biological", "Frozen", "Sacred", "Blighted", "Functional", "Safe", "Blocked", "Grim", "Sealed", "Breached", "Guarded", "Secret", "Broken", "Haunted", "Settled", "Captured", "Hidden", "Shrouded", "Chaotic", "Hoarded", "Stolen", "Civilized", "Hostile", "Strange", "Collapsed", "Immersed", "Subsurface", "Colossal", "Inaccessible", "Toxic", "Confined", "Infested", "Trapped", "Conspicuous", "Inhabited", "Undiscovered", "Constructed", "Isolated", "Unnatural", "Contested", "Living", "Unstable", "Corrupted", "Lost", "Untamed", "Created", "Lush", "Valuable", "Damaged", "Makeshift", "Violent", "Dead", "Mechanical", "Deadly", "Misleading", "Decaying", "Moving", "Defended", "Mysterious", "Depleted", "Natural", "Desolate", "New", "Destroyed", "Obscured", "Diverse", "Open", "Empty", "Peaceful", "Engulfed", "Perilous", "Ensnaring", "Pillaged"],
+					"focus": ["Alarm", "Gas", "Shelter", "Anomaly", "Grave", "Ship", "Apparition", "Habitat", "Shortcut", "Archive", "Hazard", "Signal", "Art", "Hideaway", "Sound", "Artifact", "Home", "Storage", "Atmosphere", "Illusion", "Storm", "Battleground", "Industry", "Structure", "Beacon", "Intelligence", "Supply", "Being", "Lair", "Symbol", "Blockade", "Lifeform", "System", "Boundary", "Liquid", "Technology", "Cache", "Machine", "Terrain", "Cargo", "Material", "Territory", "Commodity", "Mechanism", "Threshold", "Confinement", "Message", "Time", "Connection", "Mineral", "Transport", "Container", "Monument", "Trap", "Creation", "Obstacle", "Treasure", "Creature", "Organism", "Vault", "Crossing", "Outbreak", "Vehicle", "Data", "Outpost", "Viewpoint", "Debris", "Path", "Void", "Device", "People", "Weapon", "Dimension", "Person", "World", "Discovery", "Plant", "Wreckage", "Ecosystem", "Portal", "Enclosure", "Reality", "Energy", "Refuge", "Environment", "Relic", "Equipment", "Remains", "Experiment", "Rendezvous", "Facility", "Resource", "Faction", "Route", "Fleet", "Ruins", "Force", "Salvage", "Fortification", "Settlement"],
+				},
+				settlements: {
+					"first look": {4: "Beautiful architecture", 8: "Built from natural materials", 14: "Built from scrap metal", 20: "Built within repurposed ship", 25: "Built within terrain or asteroid", 29: "Elevated or multi-level construction", 34: "Hidden or subsurface location", 37: "High-tech construction", 43: "Industrial architecture", 48: "Intimidating defenses", 51: "Moving or transforming", 56: "Obvious social stratification", 61: "Precarious location", 65: "Prominent emblems or signage", 71: "Rustic architecture", 76: "Significant structural damage", 80: "Sprawling or dispersed structures", 83: "Temporary or seasonal location", 87: "Toxic or polluted habitat", 90: "Within or near {Precursor Vault}", 100: ">core:descriptor + core:focus"},
+					"initial contact": {20:"Welcoming", 30:"Neutral / automated", 50:"Wary", 60:"Uncooperative", 70:"Hostile", 83:"Asking for help", 86:"In battle", 89:"Captured", 92:"Unresponsive", 95:"Destroyed", 100:"{Derelict}"},
+					"authority": {15:"None / lawless", 30:"Ineffectual", 45:"Tolerant", 55:"Fair", 70:"Unyielding", 85:"Corrupt", 100:"Oppressive"},
+					"settlement projects": {5: "Agriculture", 7: "Archeology", 9: "Automation", 11: "Black market", 13: "Command", 17: "Defense", 22: "Energy", 25: "Engineering", 27: "Entertainment", 29: "Environmentalism", 31: "Evacuation", 33: "Expansion", 37: "Exploration", 39: "Festival", 41: "History", 43: "Hunting", 46: "Manufacturing", 49: "Medical", 51: "Migration", 57: "Mining", 59: "Pacifism", 62: "Raiding", 65: "Research", 69: "Salvage", 72: "Secrecy", 75: "Shipbuilding", 78: "Spirituality", 84: "Subsistence", 86: "Surveillance", 88: "Terraforming", 92: "Trade", 95: "Warfare", 100: ">core:action + core:theme"},
+					"settlement trouble": {3: "Battle for leadership", 6: "Betrayal from within", 8: "Caught in the crossfire", 11: "Changing environment", 13: "Clash of cultures", 17: "Dangerous discovery", 21: "Depleted supplies", 24: "Deprived of a resource", 28: "Failing technology", 32: "Feuding factions", 34: "Ghostly visitations", 38: "Hazardous environment", 42: "Hostile lifeforms", 45: "Impassable route", 48: "Impending attack", 51: "Impending natural disaster", 53: "Invasive organisms", 55: "Mounting debt", 57: "Mysterious deaths", 60: "Overdue delivery", 62: "Plagued by sickness", 65: "Preyed upon by raiders", 67: "Revolt against leadership", 69: "Sabotaged technology", 71: "Shunned by others", 74: "Social strife", 76: "Someone is ill or injured", 78: "Someone is missing", 80: "Stolen technology or object", 83: "Strange phenomenon", 86: "Toxic waste or pollution", 88: "Volatile energy source", 90: "Vulnerable lifeforms", 100: ">core:action + core:theme"},
+				},
+				characters: {
+					"first look": {3: "Accented", 6: "Accompanied", 8: "Adorned", 11: "Aged", 13: "Alluring", 15: "Armed", 17: "Armored", 20: "Athletic", 23: "Attractive", 25: "Augmented", 27: "Concealed", 30: "Distracted", 33: "Eccentric", 35: "Energetic", 37: "Flashy", 40: "Graceful", 43: "Grim", 46: "Haggard", 49: "Ill-equipped", 52: "Imposing", 55: "Large", 57: "Mutated", 60: "Plain", 62: "Poised", 65: "Scarred", 68: "Scruffy", 71: "Shifty", 73: "Sickly", 76: "Slight", 78: "Swaggering", 81: "Tattooed", 83: "Threatened", 85: "Uncanny", 87: "Visibly disabled", 90: "Weathered", 92: "Well-equipped", 95: "Wiry", 97: "Wounded", 100: "Youthful"},
+					"initial disposition": {6: "Helpful", 14: "Friendly", 22: "Cooperative", 30: "Curious", 40: "Indifferent", 50: "Suspicious", 60: "Wanting", 70: "Desperate", 78: "Demanding", 86: "Unfriendly", 94: "Threatening", 100: "Hostile"},
+					"character role": {2: "Agent", 4: "AI", 6: "Artisan", 8: "Assassin", 10: "Bounty Hunter", 12: "Courier", 14: "Crew", 16: "Criminal", 18: "Cultist", 20: "Diplomat", 22: "Engineer", 24: "Entertainer", 26: "Explorer", 28: "Farmer", 30: "Fugitive", 32: "Guard", 34: "Guide", 36: "Healer", 38: "Historian", 40: "Hunter", 42: "Investigator", 44: "Laborer", 46: "Lawkeeper", 48: "Leader", 50: "Mercenary", 52: "Merchant", 54: "Miner", 56: "Mystic", 58: "Navigator", 60: "Outcast", 62: "Pilgrim", 64: "Pilot", 66: "Pirate", 68: "Preacher", 70: "Prophet", 72: "Raider", 74: "Researcher", 76: "Scavenger", 78: "Scholar", 80: "Scout", 82: "Shipwright", 84: "Smuggler", 86: "Soldier", 88: "Spacer", 90: "Technician", 92: "Thief", 95: ">core:action + core:theme", 100: ">roll twice"},
+					"character goal": {2: "Avenge a wrong", 4: "Build a home", 7: "Build a relationship", 10: "Claim a resource", 12: "Collect a debt", 14: "Craft an object", 16: "Cure an ill", 18: "Defeat a rival", 20: "Defend a person", 23: "Defend a place", 25: "Discover a truth", 27: "End a conflict", 29: "Escape a captor", 31: "Fight injustice", 33: "Find a person", 35: "Forge an alliance", 37: "Gain knowledge", 39: "Gain riches", 41: "Maintain order", 43: "Make an agreement", 45: "Obtain an object", 47: "Pay a debt", 49: "Protect a lifeform", 51: "Protect a secret", 53: "Prove worthiness", 55: "Rebel against power", 57: "Refute a falsehood", 59: "Repair a technology", 61: "Resolve a dispute", 63: "Restore a relationship", 65: "Sabotage a technology", 68: "Secure a resource", 70: "Seek redemption", 72: "Seize power", 74: "Solve a mystery", 76: "Spread faith", 78: "Travel to a place", 80: "Undermine a relationship", 90: ">core:action + core:theme", 100: ">roll twice"},
+					"revealed character aspects": ["Addicted", "Generous", "Quiet", "Adventurous", "Gifted", "Quirky", "Afflicted", "Greedy", "Rebellious", "Aggressive", "Grief-stricken", "Reclusive", "Ambitious", "Handy", "Relaxed", "Angry", "Hardhearted", "Remorseful", "Anxious", "Haunted", "Resourceful", "Apathetic", "Honorable", "Secretive", "Bitter", "Hot-tempered", "Selfish", "Boastful", "Impulsive", "Sociable", "Boisterous", "Incompetent", "Stealthy", "Bold", "Independent", "Stern", "Brave", "Infamous", "Stingy", "Careless", "Influential", "Stoic", "Cautious", "Insensitive", "Strong", "Charismatic", "Insightful", "Stubborn", "Clever", "Intelligent", "Successful", "Conceited", "Intolerant", "Suspicious", "Confident", "Ironsworn", "Talented", "Confused", "Kind", "Technical", "Connected", "Law-abiding", "Timid", "Corrupted", "Lonely", "Tolerant", "Cowardly", "Loving", "Tough", "Creative", "Loyal", "Vengeful", "Critical", "Manipulative", "Violent", "Cruel", "Oblivious", "Wary", "Cunning", "Obsessed", "Watchful", "Dangerous", "Oppressed", "Weak", "Deceitful", "Passive", "Weary", "Defiant", "Powerful", "Wild", "Determined", "Proud", "Wise", "Disabled", "Doomed", "Driven", "Dying", "Envious", "Experienced", "Faithful"]
+				},
+				factions: {
+					"influence": {10: "Forsaken", 30: "Isolated", 50: "Localized", 70: "Established", 85: "Notable", 95: "Dominant", 100: "Inescapable"},
+					"dominion": {5: "Agriculture", 9: "Artistry", 14: "Commerce", 18: "Conquest", 22: "Construction", 26: "Diplomacy", 30: "Education", 34: "Environmentalism", 38: "Exploration", 42: "Faith", 46: "History", 50: "Honor", 55: "Industry", 59: "Isolationism", 63: "Law", 67: "Mysticism", 71: "Pacifism", 75: "Prophecy", 79: "Science", 83: "Secrecy", 87: "Technology", 91: "Treachery", 96: "Warfare", 100: "Wealth"},
+					"dominion leadership": {5: "Anarchist", 70: "Fated or prophesied leader", 15: "Disputed leadership", 80: "Clan chiefs or elders", 30: "Authoritarian dictatorship", 90: "Elected representatives", 45: "Oligarchical elite", 95: "Machine intelligence", 60: "Dynastic lineage", 100: "Varied / decentralized"},
+					"guild": {5: "Assassins", 10: "Bounty hunters", 15: "Couriers", 20: "Courtesans", 25: "Engineers", 30: "Healers", 40: "Industrialists", 50: "Mercenaries", 60: "Merchants", 65: "Mystics", 75: "Navigators", 80: "Peacekeepers", 85: "Researchers", 90: "Spies", 100: ">roll twice"},
+					"fringe group": {5: "Cultists", 15: "Exiles", 25: "Gangsters", 35: "Hackers", 40: "Monster hunters", 50: "Pirates", 60: "Raiders", 70: "Rebels", 75: "Rogue AI", 85: "Scavengers", 95: "Smugglers", 100: ">roll twice"},
+					"faction projects": {3: "Broaden scope of the faction to include a new focus", 6: "Build or secure a powerful device", 9: "Consolidate control of a valuable commodity", 12: "Destroy or defeat a rival", 15: "Disrupt the operations of a rival", 18: "Escape the control of another faction or power", 21: "Establish a monument or memorial", 24: "Establish a safe refuge or headquarters", 27: "Expand operations to a new location or sector", 30: "Form an alliance", 33: "Fulfill a prophecy", 36: "Give aid to a faction", 39: "Harness unnatural or forbidden power", 42: "Hunt down a rogue asset", 45: "Incite conflict among rivals", 48: "Negotiate an agreement", 51: "Obtain a needed commodity", 54: "Obtain an important cultural artifact", 57: "Obtain crucial data or information", 60: "Obtain incriminating information about a rival", 63: "Prevent a prophecy", 66: "Put down an internal revolt or rebellion", 69: "Repay a debt", 72: "Rescue or recover a group or asset", 75: "Research an innovation", 78: "Resolve a conflict with another faction", 81: "Reunite splintered elements of the faction", 84: "Seize a powerful artifact or valuable treasure", 87: "Seize rival territory or operations", 90: "Subsume another faction", 93: "Transport a valued asset", 96: "Usurp leadership within a rival faction", 100: ">core:action + core:theme"},
+					"faction relationships": {4: "Antagonistic towards", 8: "Apathetic or unaware of", 11: "Betrayed by", 14: "Broke faith with", 18: "Distrustful of", 22: "Does business with", 25: "Extorted by", 29: "Holds contempt for", 33: "Holds leverage over", 36: "In control of", 40: "Maneuvering against", 44: "Needs aid from", 47: "Negotiating with", 51: "Open alliance with", 54: "Owes a debt to", 58: "Shares a rivalry with", 61: "Shares power with", 64: "Shows respect for", 67: "Splintered from", 70: "Subordinate to", 74: "Supplied with resources by", 78: "Supplies resources to", 81: "Temporary alliance with", 85: "Tolerates", 89: "Trades favors with", 92: "Unjustly accused by", 96: "Warring with", 100: ">roll twice"},
+					"faction quirks": {3: "Ancient or coded language", 6: "Animal or creature motif used as a faction symbol", 9: "Banishes the disloyal", 12: "Body augmentations are respected and valued", 15: "Body ornamentations signify castes or roles", 18: "Conceals individual identity", 21: "Dependent on an addictive substance", 24: "Distinctive or elaborate clothing", 27: "Elite soldiers provide defense or serve as bodyguards", 30: "Favors a signature weapon", 33: "Guided by superstition or prophecy", 36: "Heavily stratified social structure", 39: "Hoards precursor artifacts", 42: "Honors the fallen through unusual death rites", 45: "Idolizes a long-dead founder or martyr", 48: "Keeps exhaustive records or archives", 51: "Lives off-planet in spaceborne fleets", 54: "Members take a new name when joining the faction", 57: "Nomadic people and mobile operations", 60: "Operates under strict codes or laws", 63: "Recognizes others through a distinctive greeting or gesture", 66: "Reliant on machine intelligence", 69: "Resolves disputes through formal duels", 72: "Rites of adulthood or ascension", 75: "Shuns or distrusts machine intelligence", 78: "Starships share a distinctive and recognizable profile", 81: "Suspicious of outsiders", 84: "Symbiotic relationship with a specific type of creature", 87: "Trades in a unique currency or commodity", 90: "Trains in a demanding physical discipline or martial art", 93: "Wields unnatural abilities or strange technologies", 96: "Work or environment causes mutations", 100: ">core:action + core:theme"},
+					"faction rumors": {3: "Caught in the crossfire of feuding factions", 6: "Colluding with a criminal enterprise", 9: "Corrupted by a dangerous power", 12: "Critical resource is in short supply", 15: "Defenses are overextended", 18: "Developing revolutionary technology", 21: "Digital systems are corrupted or infiltrated", 24: "Heavily in debt", 27: "Hit hard by a recent attack or calamity", 30: "Holds a powerful artifact", 33: "Holds incriminating information against a leader or faction", 36: "Hoarding a valuable commodity", 39: "Infiltrated by a rival faction", 42: "Knows the location of a fabled treasure or lost technology", 45: "Leaders are haunted by a dark prophecy", 48: "Leaders are incompetent", 51: "Leaders are puppets of another power or faction", 54: "Lesser members of the leadership are plotting a coup", 57: "New belief or religion is creating a schism among members", 60: "Operations are a false front for their true purpose", 63: "Overdependence on a failing or vulnerable technology", 66: "Plagued by infighting and low morale", 69: "Plotting to betray an allied faction", 72: "Preparing a major offensive or operation", 75: "Pulling the strings of a leader or faction", 78: "Recently acquired an unexpected fortune", 81: "Secretly supporting a reviled faction", 84: "Sheltering an infamous or dangerous fugitive", 87: "Suffered destructive sabotage from within", 90: "Suffering a shortage of key workers or personnel", 93: "Uprising or revolt is brewing from within", 96: "Vulnerable to attack or aggression", 100: ">core:action + core:theme"}
+				},
+				miscellaneous: {
+					"story complication": {4: "Crucial equipment or device fails", 7: "Crucial equipment or device is sabotaged", 10: "Debt or promise comes due", 14: "Enemy reveals unexpected powers, abilities, or influence", 17: "Enemy reveals their true agenda or nature", 20: "Enemy unexpectedly benefits from your actions", 23: "Key location is made inaccessible", 26: "Key location is threatened or made unsafe", 29: "Natural disaster is imminent", 33: "Needed item or resource is unavailable", 36: "Object of a quest is not what you assumed", 39: "Old enemy resurfaces", 42: "Simultaneous problems force a hard choice", 45: "Someone important betrays your trust", 48: "Someone important is threatened or endangered", 51: "Someone important reveals their problematic secret or history", 54: "Something important goes missing", 57: "Technology or device is shown to have unexpected effects", 61: "Time pressure suddenly increases", 65: "Trap is sprung", 68: "True agenda of a connection or patron is revealed", 72: "Trusted information is shown to be false", 76: "Two seemingly unrelated problems are shown to be connected", 80: "Undermined by self-doubt or vulnerabilities", 84: "Unexpected enemies appear", 88: "Urgent message distracts you from your quest", 92: "You are tracked or followed", 95: "You were diverted from the true crisis", 100: ">roll twice"},
+					"opportunity": {20: "Access to a hidden or sealed area", 40: "Encounter with a helpful adherent or heretic", 60: "Insight into the nature or history of the faith", 80: "Insight into the schemes or methods of religious zealots", 100: "Interesting or valuable artifact or device"},
+					"story clue": {3: "Affirms a previously understood fact or clue", 6: "Connects to a known rumor or scandal", 9: "Connects to a previously unrelated mystery or quest", 12: "Connects to your own expertise or interests", 15: "Contradicts a previously understood fact or clue", 18: "Evokes a personal memory", 21: "Evokes a remarkable anomaly or phenomenon", 24: "Evokes a vision or prophecy", 27: "Involves a cultural touchstone", 30: "Involves a hidden or mysterious faction", 33: "Involves a hidden or mysterious person", 36: "Involves a key or means of access", 39: "Involves a machine or technology", 42: "Involves a non-human being or creature", 45: "Involves a notable faction", 48: "Involves a notable person ", 51: "Involves a person or faction from your background", 54: "Involves a personal item", 57: "Involves an enemy or rival", 60: "Involves an organism or biological evidence", 63: "Involves an unusual ability or power", 66: "Involves someone you trust", 69: "Involves something rare, expensive, or precious", 72: "Leads to a distant or unfamiliar place", 75: "Leads to a hidden or forgotten place", 78: "Leads to a nearby or familiar place", 81: "Leads to a notable or central place", 84: "Suggests a history of similar incidents", 87: "Suggests a looming event or deadline", 90: "Suggests an imposter or forgery", 100: ">core:descriptor + core:focus"},
+					"combat action": {3: "Block a path or cut off an objective", 6: "Cause reckless damage", 9: "Change weapons or tactics", 12: "Compel a surrender or concession", 15: "Coordinate with allies", 18: "Corner, trap, or entangle", 21: "Counter or reflect an attack", 24: "Create a distraction", 27: "Destroy something or render it useless", 30: "Fall back or stand off", 33: "Hide or sneak", 36: "Intimidate, taunt, or frighten", 39: "Leverage the advantage of a weapon or ability", 42: "Leverage the terrain or surroundings", 45: "Lure into a vulnerable position", 48: "Make a cautious or probing attack", 51: "Make a ferocious or powerful attack", 54: "Make a precise or careful attack", 57: "Make a sacrificial attack", 60: "Make an indirect attack", 63: "Move in close or grapple", 66: "Nullify a system, device, or weapon", 69: "Overrun a position", 72: "Perform a feint or trick", 75: "Press an advantage", 78: "Provoke a careless response", 81: "Ready a decisive action", 84: "Shift the fight to a new area", 87: "Summon aid or reinforcements", 90: "Take cover or bolster defenses", 93: "Use an unexpected weapon or ability", 96: "Weaken defenses", 100: ">roll twice"}
+				}
+			}
+		},
+		city_of_mist: {
+			move_list: {
+				"Core Moves": ["Change the Game", "Convince", "Face Danger", "Go Toe to Toe", "Hit With All You've Got", "Investigate", "Look Beyond the Mist", "Montage (Downtime)", "Sneak Around", "Take the Risk"],
+				"Balance of Mythos and Logos": ["Finally, Some Answers", "End of the Road", "Make a Hard Choice", "Stop. Holding. Back."],
+				"MC Soft Moves": ["Complicate Things", "Hit Them After a Fair Warning", "Optional: Activate Their Weakness Tags as Flaws"],
+				"MC Hard Moves": ["Complicate Things, Bigtime", "Deny Them Something They Want", "Make Something Horrible Happen", "Turn Their Move Against Them", "Give a Status", "Reduce or Remove a Status", "Burn a Tag", "Force Them to Choose"]
+			},
+			moves: {
+				"Change the Game": "When you use your abilities [to give yourself or your allies an advantage], roll+Power.((ptba))On a hit, you get Juice=Power. Spend your Juice to gain the following effects, one-to-one:<<Create a story tag|Burn a power tag or a story tag|Give or reduce a status (one tier per point of Juice)>>On a 10+, you get a minimum of 2 Juice, and you can also use your Juice to choose:<<Scale up the effect (greater area or more targets)|Prolong the effect (make it ongoing)|Hide the effect|Any other improvement you and the MC agree on>>",
+				"Convince": "When you use your abilities [to talk, threaten, or seduce someone into doing something], roll+Power.((ptba))On a hit, choose a relevant status with tier=Power. Your target can choose either to take the status or:<<on a 7-9, to give in a little, but protect their own agenda.|on a 10+, to change their agenda to include yours, at least for the time being.>>",
+				"Face Danger": "When you use your abilities [to avoid an incoming hit, endure harm, resist a malign influence, or hold it together], the MC (or player) will name a status with its tag and tier. Roll+Power.((ptba))On a 10+, you fend off the effect and take no status at all. On a 7-9, you take the status, but with -1 tier. On a miss, you take the full status.",
+				"Go Toe to Toe": "When you use your abilities [to overcome someone or something in a struggle for control], state what your goal is. Your opponent can describe how they respond, at their option. Roll+Power.((ptba))On a 7-9, choose 1. On a 10+, choose 2:<<You manage to achieve your goal, e.g., take something they hold.|You get them good, giving your opponent a status with tier=Power.|You block, dodge, or counter their best attempts. If you don’t choose this, they can impose a status on you. If they are a PC, its tier=their Power.>>",
+				"Hit With All You've Got": "When you [have a clear shot] and you use your abilities [to hit someone or something with all you’ve got], roll+Power.((ptba))On a hit, you give the target an appropriate status of your choice with tier=Power. On a 10+, choose 2. On a 7-9, choose 1:<<You take cover or secure a superior position. If you don’t choose this, they can impose a status on you. If they are a PC, its tier=their Power.|You get them good or get many of them (+1 tier).|You control the collateral damage.|You hold the target’s attention, if possible.|You gain the upper hand. Take 1 Juice.>>",
+				"Investigate": "When you use your abilities [to seek answers to burning questions], roll+Power.((ptba))On a hit, you get Clues=Power. Spend your Clues one-to-one to ask the MC a question about the subject of your investigation or ask another player a relevant question about their character. They must give you either a straight answer or a solid lead. On a 7-9, they can also choose 1:<<Your investigation exposes you to danger.|The clues you get are fuzzy, incomplete, or part-true part-false.|Whoever or whatever you are asking the question(s) can ask you one question as well. You answer on the same terms.>>",
+				"Look Beyond the Mist": "When you [reach inside to get in touch with your Mythos], you can feel the truth behind things without even knowing how. Play it out like the Investigate move, but roll+Mythos instead.((ptba))On a hit, you get Clues=Mythos.",
+				"Montage (Downtime)": "Whenever your character has some downtime, choose one way to spend it:<<[Give attention] to one of your Logos (or extra) themes. Tell everyone at the table how you do it and mark Attention on that theme.|[Work the case.] Tell everyone at the table how you do it, and gain 3 Clues with a method and a source based on your description.|[Explore your Mythos.] Tell everyone at the table which Mystery you explore and how you do it. You gain 1 Clue with a method and a source based on your description. Mark Attention on that Mystery’s theme.|[Prepare for your next activity.] Tell everyone at the table how you prepare and choose one: recover all your burnt power tags OR gain 3 Juice with a method based on your description. You can choose from the effect improvements under {Change the Game}.|[Recover from you last activity.] For each ongoing status still affecting you, the MC will tell you if and how it can be reduced during your downtime and by how many tiers. Alternatively, the MC can allow you to reduce any or some of your statuses by one tier for each relevant tag you have.>>The MC can cue into any of the montage events and continue them as scenes.",
+				"Sneak Around": "When you use your abilities [to act secretly or deceptively], roll+Power.((ptba))On a hit, everyone that should fall for it falls for it. On a 7-9, it’s complicated. The MC chooses 1:<<Someone unimportant noticed you, but that just made them important, right?|You are perceived only by a secondary sense (someone picks up your scent while you’re stalking them; you’re seen whispering a message but the message is not heard).|You must leave something important behind – or be discovered.>>",
+				"Take the Risk": "When [you perform a daring, risky, or outright stupid feat], roll+Power.((ptba))On a 10+, you do it, somehow. On a 7-9, things get messy. The MC will offer you a hard bargain or an ugly choice.",
+				"Finally, Some Answers": "When [you find answers to your Mystery], choose one, two, or all three:<<You gain a deeper understanding of your Mythos, of the subject of your Mystery, or of the link between your Mystery and your Mythos. Mark Attention on the theme to which this Mystery belongs.|You are shocked by the discovery to the point of rejecting your Mythos or an aspect of your ordinary life. Mark Fade or Crack on any theme.|Your questions are answered. Choose a new Mystery for this theme.>>",
+				"End of the Road": "If [your Identity ever becomes resolved], rephrase it in the same spirit to describe a new goal, a greater scope, a new angle, etc. Alternatively, if this aspect of your life truly ended, you may replace this Identity’s theme.",
+				"Make a Hard Choice": "When [answers to your Mystery are within reach], but you forego them, mark Fade on that Mystery’s theme.||When [your Identity demands you act or speak in a given way and you don’t], mark Crack on that Identity’s theme.||When [you sacrifice something you truly want in order to abide by your Identity], mark Attention on that Identity’s theme.",
+				"Stop. Holding. Back.": "When [you use your powers in a new and never-before-seen way or scale], tell the MC what you hope to achieve. The MC will tell you the sacrifice it will take from you. Then roll+Logos.((ptba))On a hit, you achieve exactly what you wanted to achieve and pay the price:<<[Significant:] On a 7-9, mark Fade/Crack and burn all the power tags on one theme. On a 10+, mark Fade/Crack on one theme.|[No Return:] On a 7-9, replace one theme. On a 10+, mark Fade/Crack and burn all the power tags on one theme.|[Ultimate:] On a 7-9, you are killed, destroyed, or transformed forever (for now). Take a tier-6 status. You cannot {Face Danger}. On a 10+, replace one theme.>>On a 6 or less, you pay the price given for 7-9, but you also lose control over your powers or fail to use them as planned. The MC will decide how, and what the consequences are.",
+				"Complicate Things": "You introduce a new problem into the story. As of now, this problem is not a burning one, but it’s an opening for trouble: if mishandled or neglected, it can evolve into a significant threat. Such complications are always an obstacle or a threat on the way to the lead characters’ goals: information, friendship, victory, survival, moral integrity, obtaining an item, keeping their Identities intact, etc. Overcoming this new obstacle usually requires at least one successful player move.",
+				"Hit Them After a Fair Warning": "If the characters ignore or neglect an approaching threat for long enough, you can make a hard move against them instead of a soft move to reflect the threat becoming a reality. This assumes that you let the characters know about this threat using {Complicate Things}. When you play <u>Hit Them After a Fair Warning</u>, you don’t have to wait for the players to miss a move; you can play it whenever you have the spotlight.||||The number of warnings you give the players with {Complicate Things} before {Hitting Them After a Fair Warning} can vary. Depending on your cinematic considerations and the pace of the game, you can go for shock and hit your players with a hard move after even a single warning, or spread it over several warnings, allowing the players time to handle other threats or creating a suspenseful atmosphere of something approaching. However, if you plan to hit them with a hard move, make sure your narration of {Complicate Things} divulges the severity of the situation. In other words, this move requires a fair warning, as the name denotes.||The use of this move does not have to be limited to a single scene; it can spread over several scenes or even sessions.",
+				"Optional: Activate Their Weakness Tags as Flaws": "If your group is using the optional rule <u>Weakness Tags as Flaws</u>, you can use a soft move to invoke a character’s weakness tag as a flaw. This allows you to then make a hard move against her without waiting for a missed roll. The player marks Attention on the theme to which the weakness tag belongs.",
+				"Complicate Things, Bigtime": "You introduce a new crisis into the story or escalate an existing problem into a crisis. The crisis is a real and immediate threat to the lead characters; it can cost the characters a great deal in the very near future. This crisis can affect the wellbeing of the lead characters, their lives, characters around them, the course of their investigation, the state of things in the City, etc. Mitigating the crisis usually requires several successful player moves and/or forces the players to sacrifice game resources (e.g., mark Fade or Crack, burn tags, spend Juice, etc.).",
+				"Deny Them Something They Want": "You declare that something that the characters want is no longer within their reach, at least not within the scope of the current scene. For example, a witness could get away, an item could be stolen, or a course of action could be revealed as dead-ended or impossible.",
+				"Make Something Horrible Happen": "Describe a shocking development for emotional effect. This could be the tragic loss, gruesome injury, or even sudden death of a non-player character, a personal loss of a lead character, a tragedy or catastrophe in the City, etc.",
+				"Turn Their Move Against Them": "Describe an outcome that is similar to what the character was trying to achieve in her action, but has negative implications instead.",
+				"Give a Status": "Give a status with a tag and a tier of your choice to a player character, an ally or an object belonging to player, or a non-player character or object. You can affect a single target, multiple targets, anyone within an area or who meet specific conditions, etc.||Narrate the development that inflicts the status and describe it. Name the [tag] and the [tier] of the status; they should describe the nature and severity of the condition the target would suffer if hit by the [[full power]] of the effect.||The nature of the effect defines how difficult it would be to defend from the status: whether a {Face Danger} move can be attempted and which tags, if any, may be relevant. For example, defending from a punch that causes a [[bruised-2]] status would require different abilities from those required to defend from an ancient curse that causes [[turned-to-stone-5]].||If the recipient of the status is a player character or one of its allies or objects, the player of that character may {Face Danger} to reduce or ignore the status, assuming the character is able to do so. You may also rule that the character is in a situation so deadly, hopeless, or dead-ended that she cannot {Face Danger}.||If the recipient is a non-player character or object, they take the status in full. If they have relevant Danger moves that modify the status, they apply. You can also use this move to give a Danger which is competing with the lead characters a positive status, such as [[cover-2]].",
+				"Reduce or Remove a Status": "Reduce the tier of any status in the game by any number of tiers or completely remove it, if appropriate. This could affect positive statuses that the crew members possess or negative statuses on Dangers.||You can also use this move to remove any number of Juice points a player has banked. This is appropriate when the advantage won by the player is no longer relevant.",
+				"Burn a Tag": "You burn one of the player characters’ power tags or story tags or a crew or extra power tag. Tell the player to mark the burn icon (🔥) next to it (or discard it, if it’s a temporary or ongoing story tag). The burnt tag can be recovered normally. Burning a tag represent an ability, item, ally, or resource that is rendered temporarily unusable.",
+				"Force Them to Choose": "Describe a development that forces a player to choose between two undesirable outcomes, each a hard MC Move in itself.||If the choice given to the player is based on the circumstances alone, they make the choice and suffer the undesirable outcome.||If one or more of the options involves the character’s or crew Mysteries or Identities, the player decides whether to invoke Make a Hard Choice. Read more about Mystery and Identity dilemmas under {Make a Hard Choice}.||Note that a hard MC move is not required for the player to Make a Hard Choice or for you to orchestrate a dilemma. Sometimes, the soft MC move {Complicate Things} can be enough to put the character in a position where she’s facing a difficult choice. However, using this hard MC move allows you introduce more pressure, putting the character on the spot and forcing her to choose."
+			}
 		}
 	};
-	
+
 	// chance
 	var quick_rolls_text = "";
 	var quick_rolls = [];
@@ -244,9 +601,11 @@
 	// mythic
 	var chaos, focus, progress, acting_rank, difficulty_rank;
 
+	// ptba
+	var pbta_move_type = "";
+
 	// mine
 	var twist_counter;
-
 	
 	/* system */
 
@@ -345,6 +704,7 @@
 		
 		//$("#display").innerHTML = text;
 		fadeIn("#display", 0, text);
+		return true;
 	}
 
 	function addClass(id, classname) {
@@ -530,7 +890,7 @@
 	function getBackLink(retry, page) {
 		var link = "<hr><div id='back-links'><p>";
 		if (retry) link += "<a onclick='solo.showPage(\"" + current_page + "\")'>Reroll</a>";
-		return link + "<a onclick='solo.showPage()'>Back</a></p></div>";
+		return link + "<a onclick='solo.showPage(\"" + (page || "") + "\")'>Back</a></p></div>";
 	}
 
 	function setColorTheme(theme) {
@@ -541,6 +901,23 @@
 	}
 
 	function showPage(page, section) {
+		var getPbtAPage = function(page, game) {
+			if (RegExp("^" + game + "\\-oracle\\-list:").test(page)) return showPbtAOracleList(game, page.replace(RegExp("^" + game + "\\-oracle\\-list:(.+)"), "$1"));
+			else if (RegExp("^" + game + "\\-oracle:").test(page)) {
+				page = page.match(RegExp("^" + game + "\\-oracle:([^:]+):(.+)"));
+				return showPbtAOracle(game, page[1], page[2]);
+			}
+			else if (RegExp("^" + game + "\\-move\\-list:").test(page)) {
+				pbta_move_type = page;
+				return showPbtAMoveList(game, page.replace(RegExp("^" + game + "\\-move\\-list:(.+)"), "$1"));
+			}
+			else if (RegExp("^" + game + "\\-move:").test(page)) return showPbtAMove(game, page.replace(RegExp("^" + game + "\\-move:(.+)"), "$1"));
+
+			if (RegExp("^" + game).test(page)) pbta_move_type = "";
+			
+			return false;
+		};
+
 		if (section) current_section = section;
 		if (page) current_page = page;
 		
@@ -562,7 +939,10 @@
 			return showMeaning(page[1], "mythic", page[2]);
 		}
 
-		// mine
+		// PbtA
+		else if (getPbtAPage(page, "city_of_mist")) return;
+		else if (getPbtAPage(page, "starforged")) return;
+ 
 		else if (/^motif/.test(page)) return showMotif(/:roll$/.test(page));
 		else if (page === "scene") return showScene();
 		else if (page === "character") return showCharacter();
@@ -584,6 +964,10 @@
 
 		var links = {
 			mythic: [
+				["Chance", [
+					["Dice", "dice"],
+					["Cards", "cards"],
+				]],
 				["Mythic", [
 					["Fate Chart", "fate-chart"],
 					["Resisted Rank", "resisted-rank"],
@@ -610,7 +994,25 @@
 					["Spells &amp; Powers", "mythic:spells and powers"]
 				]]
 			],
+			starforged: [
+				["Chance", [["Dice", "dice"]]],
+				["Moves", getPbtAMoveTypes("starforged")],
+				["Oracles", [
+					["Core", "starforged-oracle-list:core"],
+					["Settlements", "starforged-oracle-list:settlements"],
+					["Characters", "starforged-oracle-list:characters"],
+					["Factions", "starforged-oracle-list:factions"],
+					["Miscellaneous", "starforged-oracle-list:miscellaneous"],
+				]]
+			],
+			"city of mist": [["Chance", [["Dice", "dice"]]],
+				["Moves", getPbtAMoveTypes("city_of_mist")]
+			],
 			misc: [
+				["Chance", [
+					["Dice", "dice"],
+					["Cards", "cards"],
+				]],
 				["Tools", [
 					["Motif", "motif"],
 					["Twist", "muse:twist"],
@@ -639,12 +1041,8 @@
 			]
 		};
 		
-		links = [
-			["Chance", [
-				["Dice", "dice"],
-				["Cards", "cards"],
-			]]
-		].concat(links[current_menu]);
+		var toc = Object.keys(links);
+		links = links[current_menu];
 
 		var a, b, id, list;
 		var output = "<div class='data-header'><table id='menu'>";
@@ -669,7 +1067,7 @@
 		
 		display(
 			output + "</table></div><div id='footer'>" +
-			getOptions(null, "menu-options", ["mythic", "misc"], current_menu) +
+			getOptions(null, "menu-options", toc, current_menu) +
 			"<pre>version: " + version + "</pre>" +
 			getOptions(null, "color-theme", ["dark", "light"], color_theme) +
 			"</div>"
@@ -740,6 +1138,15 @@
 			);
 		};
 
+		var reorganizeHash = function(hash) {
+			var item;
+			var output = "";
+			for (item in hash) {
+				output += item + ': "' + hash[item] + '", ';
+			}
+			console.log("{" + output + "},");
+		}
+
 		// findUniques(muse.meanings.adjective, 20000)
 		
 		checkLocalStorage();
@@ -762,6 +1169,210 @@
 		
 		showPage();
 	};
+
+
+	/* powered by the apocalypse */
+
+	function getPbtAMoveTypes(game) {
+		var move;
+		var list = [];
+		var moves = muse[game].move_list;
+
+		for (move in moves) {
+			list.push([move, game + "-move-list:" + move])
+		}
+		return list;
+	}
+
+	function showPbtAMoveList(game, type) {
+		var a;
+		var list = [];
+		var group = muse[game].move_list[type];
+		for (a = 0; a < group.length; ++a) {
+			if (!(group[a] in muse[game].moves)) list.push(["<s>" + group[a] + "</s>", "solo.showPage()"]);
+			else list.push([group[a], "solo.showPage('" + game + "-move:" + group[a].replace(/'/g, "\\'") + "')"]);
+		}
+		return display(getDataLinksList(list) + getBackLink());
+	}
+
+	function rollMoveDie(el, start, end) {
+		if (el !== "all") return fadeIn(el.id, 0, random(start, end));
+		
+		var a;
+		for (a = start; a <= end; ++a) {
+			document.getElementById("die-" + a).click();
+		}
+	}
+
+	function showPbtAMove(game, name) {
+		var insertTable = function(table) {
+			if (!(table in muse[game].moves_tables)) return "<table class='move-table'><tr><td><s>table:" + table + "</s></td></tr></table>";
+
+			table = muse[game].moves_tables[table];
+			var a, b, output;
+			var list = [];
+			var rolled = (table.rolled) ? " rolled" : "";
+			var header = (table.header) ? "<th>" + table.header.join("</th><th>") + "</th>" : "";
+			
+			for (a = 0; a < table.rows.length; ++a) {
+				list.push("<td>" + table.rows[a].join("</td><td>") + "</td>");
+			}
+
+			return "<table class='move-table" + rolled + "'>" + header + "<tr>" + list.join("</tr><tr>") + "</tr></table>";
+		};
+
+		var getDieLink = function(start, end) {
+			die_count += 1;
+			return "<td id='die-" + die_count + "' onclick='solo.rollMoveDie(this, " + start + ", " + end + ")'>&nbsp;</td>";
+		}
+
+		var getDice = function(type) {
+			var output = "<table class='move-table move-dice'><tr>";
+			var die_start = die_count + 1;
+			
+			if (type === "ironsworn") {
+				output += "<td class='label'>d10</td>" + getDieLink(1, 10) + getDieLink(1, 10) +
+				"<td class='label'></td>" +
+				"<td class='label'>d6</td>" + getDieLink(1, 6);
+			}
+			else if (type === "ptba") output += "<td class='label'>d6</td>" + getDieLink(1, 6) + getDieLink(1, 6);
+			else if (type === "progress") output += "<td class='label'>d10</td>" + getDieLink(1, 10) + getDieLink(1, 10);
+			else if (type === "d100") output += "<td class='label'>d100</td>" + getDieLink(1, 100);
+			else output += "<td><s>dice:" + type + "</s></td>";
+
+			return output + "<td class='label'></td>" +
+				"<td><a onclick='solo.rollMoveDie(\"all\", " + die_start + ", " + die_count + ")'>Roll</a></td>" +
+				"</tr></table>";
+		};
+
+		var replaceMarkup = function(text) {
+			text = text.replace(/\<\</g, "<ul class='move-list'><li>");
+			text = text.replace(/\>\>/g, "</li></ul>");
+			text = text.replace(/\|\|/g, "</p><p>");
+			text = text.replace(/\|/g, "</li><li>");
+			text = text.replace(/\[\[/g, "<i>");
+			text = text.replace(/\]\]/g, "</i>");
+			text = text.replace(/\[/g, "<b>");
+			text = text.replace(/\]/g, "</b>");
+			text = text.replace(/\(\(([^)]+)\)\)/g, function(m, p1) { return getDice(p1); });
+			text = text.replace(/\{\{([^}]+)\}\}/g, function(m, p1) { return insertTable(p1); });
+			text = text.replace(/\{([^}]+)\}/g, function(m, p1) {
+				if (!(p1 in muse[game].moves)) return "<s>&lt;move:" + p1 + "&gt;</s>";
+				return "<a onclick='solo.showPage(\"" + game + "-move:" + p1 + "\")'>" + p1 + "</a>";
+			});
+			text = text.replace(/<p><ul/g, "<ul");
+			text = text.replace(/<\/ul><\/p>/g, "</ul>");
+			text = text.replace(/<p><table/g, "<table");
+			text = text.replace(/<\/table><\/p>/g, "</table>");
+			text = text.replace(/\*\*\*/g, spacer);
+			text = text.replace(/(?<!^)(?<!:\n|\/p>|\/ul>|\/table>|\/div>)(<(?:ul|table|div))/g, "</p>$1");
+			text = text.replace(/(\/(?:ul|table|div)>)(?!$)(?!:\n|<p|<ul|<table|<div)/g, "$1<p>");
+			return text;
+		};
+
+		var die_count = 0;
+		
+		return display(
+			"<h2>" + name + "</h2>" + getBackLink(false, pbta_move_type) + 
+			"<p>" + replaceMarkup(muse[game].moves[name]) + "</p>"
+		);
+	}
+
+	function showPbtAOracle(game, label, oracle) {
+		var getRolls = function(oracle) {
+			depth += 1;
+
+			var roll, temp, a, b, type, roll_count
+			var rolls = [];
+			var reroll = 0;
+
+			var loop = 1;
+			if (depth === 1 && oracle in muse[game].oracle_rolls) loop =  random(1, muse[game].oracle_rolls[oracle]);
+
+			temp = oracle.split(":");
+			type = temp[0];
+			oracle = temp[1];
+
+			var list = muse[game].oracles[type][oracle];
+			var is_array = isArray(list);
+			
+			for (a = 0; a < loop; ++a) {
+				reroll = 0;
+				roll_count = 0;
+				do {
+					roll = (is_array) ? randomItem(list) : getRolledItem(random(1, 100), list);
+
+					// oracle    example: {Label|oracle group}
+					roll = roll.replace(/{([^}|]+)(?:\|([^}]+))?}/g, function(m, p1, p2) {
+						return "<a onclick='solo.showPage(\"" + game + "-oracle-list:" + (p2 || p1).trim() + "\")'>" + p1.trim() + "</a>";
+					});
+
+					// reroll    example: > reroll twice
+					if (/^>/.test(roll)) {
+						// only do multiple rerolls if on outer layer
+						if (depth > 1) {
+							a -= 1;
+							continue;
+						}
+						if ((/^>\s*roll (twice|thrice)\b/i.test(roll))) {
+							if (reroll) continue;if (!reroll && /\btwice\b/.test(roll)) reroll = 2;
+							else if (!reroll && /\bthrice\b/.test(roll)) reroll = 3;
+							continue;
+						}
+
+						// from another oracle    example: > action + theme
+						if (/\+/.test(roll)) {
+							roll = roll.match(/(?!>|\+)([^+]+)/g);
+							for (b = 0; b < roll.length; ++b) {
+								roll[b] = getRolls(roll[b].trim());
+							}
+							roll = roll.join(" ");
+						}
+						else roll = getRolls(roll.substring(1).trim());
+					}
+
+					rolls.push(roll);
+					roll_count += 1;
+				}
+				while (roll_count < reroll);
+			}
+
+			depth -= 1;
+			return rolls.join("; ");
+		}
+
+		var a, roll, temp;
+		var rolls = [];
+		var depth = 0;
+		
+		if (/\+/.test(oracle)) {
+			oracle = oracle.match(/(?!\+)([^+]+)/g);
+			for (a = 0; a < oracle.length; ++a) {
+				rolls.push(getRolls(oracle[a].trim()));
+			}
+			roll = rolls.join(" ");
+		}
+		else roll = getRolls(oracle);
+
+		return display(getDataTable([label, roll]) + getBackLink(true));
+	}
+	
+	function showPbtAOracleList(game, type) {
+		var temp, a;
+		var list = [];
+		var oracle_list = muse[game].oracle_lists[type];
+
+		for (a = 0; a < oracle_list.length; ++a) {
+			temp = oracle_list[a].match(/([^:]+):(.+)/);
+			if (temp === null) {
+				list.push([oracle_list[a]]);
+				continue;
+			}
+			list.push([temp[1], "solo.showPage('" + game + "-oracle:" + temp[2] + "')"]);
+		}
+
+		return display(getDataLinksList(list) + getBackLink());
+	}
 
 
 	/* chance */
@@ -1951,6 +2562,7 @@
 		);
 	}
 
+	solo.rollMoveDie = rollMoveDie;
 	solo.showAnswer = showAnswer;
 	solo.showNewMeaning = showNewMeaning;
 	solo.showDice = showDice;
@@ -2085,7 +2697,7 @@
 
 	.exceptional { text-decoration: underline; }
 
-	a, .prevent-select {
+	a,.move-table td.label, .prevent-select {
 		-webkit-user-select: none; /* Safari */
 		-ms-user-select: none; /* IE 10 and IE 11 */
 		user-select: none; /* Standard syntax */
@@ -2121,6 +2733,38 @@
 		margin-top: unset;
 		margin-bottom: 1.5em; 
 	}
+
+	ul + table, table + ul,
+	p + table.move-dice { margin-top: 1.5em !important; }
+	table + table { margin-top: 0.5em !important; }
+	.move-table table { border: none }
+	.move-table th { 
+		/* color: #000000; */
+		background-color: #333333;
+	}
+	.move-table td { line-height: 1.5em !important; }
+	.move-table {
+		width: fit-content;
+		margin: 0 auto 0 auto;
+		border: none;
+	}
+	.move-table.rolled td:first-of-type, .move-table .label {
+		text-align: right;
+		font-family: monospace;
+		color: #aaaaaa;
+		text-wrap: nowrap;
+		font-size: 12px;
+		border: none;
+	}
+	.move-list { margin-left: 1em; }
+	.move-dice td { vertical-align: middle !important; }
+	.move-dice td:not(.label) { 
+		min-width: 2em;
+		text-align: center;
+	}
+	.move-dice td[id^=die-]:hover { cursor: pointer; }
+
+	.move-table td.label, .move-dice td:last-of-type { border: none; }
 	
 	.spacer { height: 3em; }
 	
@@ -2201,7 +2845,7 @@
 		margin: 0 20px 0 20px;
 	}
 
-	@media screen and (max-width: 600px) {
+	@media screen and (max-width: 500px) {
 		html, body { 
 			font-size: 13px;
 			text-align: left; 
@@ -2224,6 +2868,8 @@
 	a { color: #e1c87d !important; }
 	em, i { color: #ffff88 !important; }
 	strong, b { color: #FFBB55 !important; }
+	strike, s { color: #888888; }
+	strike, s { color: #888888; }
 	code, pre { color: #dddddd; }
 	details { background-color: #00000040; }
 	li::marker { color: #444444; } 
