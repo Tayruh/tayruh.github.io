@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
 <script>
 (function(solo) {
-	var version = "2023.07.23";
+	var version = "2023.07.24";
 
 	var current_page, current_section, current_menu, color_theme;
 	var spacer = "<div class='spacer'></div>";
@@ -12,7 +12,7 @@
 	/*
 		PBTA moves markdown:
 			||                 break two blocks of text up
-			((dice))           insert dice roller. options are: d100, ptba (2d6), progress (2d10), and ironsworn (2d10,d6)
+			((dice))           insert dice roller. options are: d100, pbta (2d6), progress (2d10), and ironsworn (2d10,d6)
 			{link}             create link to another move
 			{{table}}          insert table from move_tables
 			[bold]             bold the text
@@ -252,7 +252,7 @@
 			}
 		},
 		starforged: {
-			move_list: {
+			move_lists: {
 				"Session": ["Begin a Session", "Set a Flag", "Change Your Fate", "Take a Break", "End a Session"],
 				"Adventure": ["Face Danger", "Secure an Advantage", "Gather Information", "Compel", "Aid Your Ally", "Check Your Gear"],
 				"Quest": ["Swear an Iron Vow", "Reach a Milestone", "Fulfill Your Vow", "Forsake Your Vow"],
@@ -556,29 +556,29 @@
 			}
 		},
 		city_of_mist: {
-			move_list: {
+			move_lists: {
 				"Core Moves": ["Change the Game", "Convince", "Face Danger", "Go Toe to Toe", "Hit With All You've Got", "Investigate", "Look Beyond the Mist", "Montage (Downtime)", "Sneak Around", "Take the Risk"],
 				"Balance of Mythos and Logos": ["Finally, Some Answers", "End of the Road", "Make a Hard Choice", "Stop. Holding. Back."],
 				"MC Soft Moves": ["Complicate Things", "Hit Them After a Fair Warning", "Optional: Activate Their Weakness Tags as Flaws"],
 				"MC Hard Moves": ["Complicate Things, Bigtime", "Deny Them Something They Want", "Make Something Horrible Happen", "Turn Their Move Against Them", "Give a Status", "Reduce or Remove a Status", "Burn a Tag", "Force Them to Choose"]
 			},
 			moves: {
-				"Change the Game": "When you use your abilities [to give yourself or your allies an advantage], roll+Power.((ptba))On a hit, you get Juice=Power. Spend your Juice to gain the following effects, one-to-one:<<Create a story tag|Burn a power tag or a story tag|Give or reduce a status (one tier per point of Juice)>>On a 10+, you get a minimum of 2 Juice, and you can also use your Juice to choose:<<Scale up the effect (greater area or more targets)|Prolong the effect (make it ongoing)|Hide the effect|Any other improvement you and the MC agree on>>",
-				"Convince": "When you use your abilities [to talk, threaten, or seduce someone into doing something], roll+Power.((ptba))On a hit, choose a relevant status with tier=Power. Your target can choose either to take the status or:<<on a 7-9, to give in a little, but protect their own agenda.|on a 10+, to change their agenda to include yours, at least for the time being.>>",
-				"Face Danger": "When you use your abilities [to avoid an incoming hit, endure harm, resist a malign influence, or hold it together], the MC (or player) will name a status with its tag and tier. Roll+Power.((ptba))On a 10+, you fend off the effect and take no status at all. On a 7-9, you take the status, but with -1 tier. On a miss, you take the full status.",
-				"Go Toe to Toe": "When you use your abilities [to overcome someone or something in a struggle for control], state what your goal is. Your opponent can describe how they respond, at their option. Roll+Power.((ptba))On a 7-9, choose 1. On a 10+, choose 2:<<You manage to achieve your goal, e.g., take something they hold.|You get them good, giving your opponent a status with tier=Power.|You block, dodge, or counter their best attempts. If you don’t choose this, they can impose a status on you. If they are a PC, its tier=their Power.>>",
-				"Hit With All You've Got": "When you [have a clear shot] and you use your abilities [to hit someone or something with all you’ve got], roll+Power.((ptba))On a hit, you give the target an appropriate status of your choice with tier=Power. On a 10+, choose 2. On a 7-9, choose 1:<<You take cover or secure a superior position. If you don’t choose this, they can impose a status on you. If they are a PC, its tier=their Power.|You get them good or get many of them (+1 tier).|You control the collateral damage.|You hold the target’s attention, if possible.|You gain the upper hand. Take 1 Juice.>>",
-				"Investigate": "When you use your abilities [to seek answers to burning questions], roll+Power.((ptba))On a hit, you get Clues=Power. Spend your Clues one-to-one to ask the MC a question about the subject of your investigation or ask another player a relevant question about their character. They must give you either a straight answer or a solid lead. On a 7-9, they can also choose 1:<<Your investigation exposes you to danger.|The clues you get are fuzzy, incomplete, or part-true part-false.|Whoever or whatever you are asking the question(s) can ask you one question as well. You answer on the same terms.>>",
-				"Look Beyond the Mist": "When you [reach inside to get in touch with your Mythos], you can feel the truth behind things without even knowing how. Play it out like the Investigate move, but roll+Mythos instead.((ptba))On a hit, you get Clues=Mythos.",
+				"Change the Game": "When you use your abilities [to give yourself or your allies an advantage], roll+Power.((pbta))On a hit, you get Juice=Power. Spend your Juice to gain the following effects, one-to-one:<<Create a story tag|Burn a power tag or a story tag|Give or reduce a status (one tier per point of Juice)>>On a 10+, you get a minimum of 2 Juice, and you can also use your Juice to choose:<<Scale up the effect (greater area or more targets)|Prolong the effect (make it ongoing)|Hide the effect|Any other improvement you and the MC agree on>>",
+				"Convince": "When you use your abilities [to talk, threaten, or seduce someone into doing something], roll+Power.((pbta))On a hit, choose a relevant status with tier=Power. Your target can choose either to take the status or:<<on a 7-9, to give in a little, but protect their own agenda.|on a 10+, to change their agenda to include yours, at least for the time being.>>",
+				"Face Danger": "When you use your abilities [to avoid an incoming hit, endure harm, resist a malign influence, or hold it together], the MC (or player) will name a status with its tag and tier. Roll+Power.((pbta))On a 10+, you fend off the effect and take no status at all. On a 7-9, you take the status, but with -1 tier. On a miss, you take the full status.",
+				"Go Toe to Toe": "When you use your abilities [to overcome someone or something in a struggle for control], state what your goal is. Your opponent can describe how they respond, at their option. Roll+Power.((pbta))On a 7-9, choose 1. On a 10+, choose 2:<<You manage to achieve your goal, e.g., take something they hold.|You get them good, giving your opponent a status with tier=Power.|You block, dodge, or counter their best attempts. If you don’t choose this, they can impose a status on you. If they are a PC, its tier=their Power.>>",
+				"Hit With All You've Got": "When you [have a clear shot] and you use your abilities [to hit someone or something with all you’ve got], roll+Power.((pbta))On a hit, you give the target an appropriate status of your choice with tier=Power. On a 10+, choose 2. On a 7-9, choose 1:<<You take cover or secure a superior position. If you don’t choose this, they can impose a status on you. If they are a PC, its tier=their Power.|You get them good or get many of them (+1 tier).|You control the collateral damage.|You hold the target’s attention, if possible.|You gain the upper hand. Take 1 Juice.>>",
+				"Investigate": "When you use your abilities [to seek answers to burning questions], roll+Power.((pbta))On a hit, you get Clues=Power. Spend your Clues one-to-one to ask the MC a question about the subject of your investigation or ask another player a relevant question about their character. They must give you either a straight answer or a solid lead. On a 7-9, they can also choose 1:<<Your investigation exposes you to danger.|The clues you get are fuzzy, incomplete, or part-true part-false.|Whoever or whatever you are asking the question(s) can ask you one question as well. You answer on the same terms.>>",
+				"Look Beyond the Mist": "When you [reach inside to get in touch with your Mythos], you can feel the truth behind things without even knowing how. Play it out like the Investigate move, but roll+Mythos instead.((pbta))On a hit, you get Clues=Mythos.",
 				"Montage (Downtime)": "Whenever your character has some downtime, choose one way to spend it:<<[Give attention] to one of your Logos (or extra) themes. Tell everyone at the table how you do it and mark Attention on that theme.|[Work the case.] Tell everyone at the table how you do it, and gain 3 Clues with a method and a source based on your description.|[Explore your Mythos.] Tell everyone at the table which Mystery you explore and how you do it. You gain 1 Clue with a method and a source based on your description. Mark Attention on that Mystery’s theme.|[Prepare for your next activity.] Tell everyone at the table how you prepare and choose one: recover all your burnt power tags OR gain 3 Juice with a method based on your description. You can choose from the effect improvements under {Change the Game}.|[Recover from you last activity.] For each ongoing status still affecting you, the MC will tell you if and how it can be reduced during your downtime and by how many tiers. Alternatively, the MC can allow you to reduce any or some of your statuses by one tier for each relevant tag you have.>>The MC can cue into any of the montage events and continue them as scenes.",
-				"Sneak Around": "When you use your abilities [to act secretly or deceptively], roll+Power.((ptba))On a hit, everyone that should fall for it falls for it. On a 7-9, it’s complicated. The MC chooses 1:<<Someone unimportant noticed you, but that just made them important, right?|You are perceived only by a secondary sense (someone picks up your scent while you’re stalking them; you’re seen whispering a message but the message is not heard).|You must leave something important behind – or be discovered.>>",
-				"Take the Risk": "When [you perform a daring, risky, or outright stupid feat], roll+Power.((ptba))On a 10+, you do it, somehow. On a 7-9, things get messy. The MC will offer you a hard bargain or an ugly choice.",
+				"Sneak Around": "When you use your abilities [to act secretly or deceptively], roll+Power.((pbta))On a hit, everyone that should fall for it falls for it. On a 7-9, it’s complicated. The MC chooses 1:<<Someone unimportant noticed you, but that just made them important, right?|You are perceived only by a secondary sense (someone picks up your scent while you’re stalking them; you’re seen whispering a message but the message is not heard).|You must leave something important behind – or be discovered.>>",
+				"Take the Risk": "When [you perform a daring, risky, or outright stupid feat], roll+Power.((pbta))On a 10+, you do it, somehow. On a 7-9, things get messy. The MC will offer you a hard bargain or an ugly choice.",
 				"Finally, Some Answers": "When [you find answers to your Mystery], choose one, two, or all three:<<You gain a deeper understanding of your Mythos, of the subject of your Mystery, or of the link between your Mystery and your Mythos. Mark Attention on the theme to which this Mystery belongs.|You are shocked by the discovery to the point of rejecting your Mythos or an aspect of your ordinary life. Mark Fade or Crack on any theme.|Your questions are answered. Choose a new Mystery for this theme.>>",
 				"End of the Road": "If [your Identity ever becomes resolved], rephrase it in the same spirit to describe a new goal, a greater scope, a new angle, etc. Alternatively, if this aspect of your life truly ended, you may replace this Identity’s theme.",
 				"Make a Hard Choice": "When [answers to your Mystery are within reach], but you forego them, mark Fade on that Mystery’s theme.||When [your Identity demands you act or speak in a given way and you don’t], mark Crack on that Identity’s theme.||When [you sacrifice something you truly want in order to abide by your Identity], mark Attention on that Identity’s theme.",
-				"Stop. Holding. Back.": "When [you use your powers in a new and never-before-seen way or scale], tell the MC what you hope to achieve. The MC will tell you the sacrifice it will take from you. Then roll+Logos.((ptba))On a hit, you achieve exactly what you wanted to achieve and pay the price:<<[Significant:] On a 7-9, mark Fade/Crack and burn all the power tags on one theme. On a 10+, mark Fade/Crack on one theme.|[No Return:] On a 7-9, replace one theme. On a 10+, mark Fade/Crack and burn all the power tags on one theme.|[Ultimate:] On a 7-9, you are killed, destroyed, or transformed forever (for now). Take a tier-6 status. You cannot {Face Danger}. On a 10+, replace one theme.>>On a 6 or less, you pay the price given for 7-9, but you also lose control over your powers or fail to use them as planned. The MC will decide how, and what the consequences are.",
+				"Stop. Holding. Back.": "When [you use your powers in a new and never-before-seen way or scale], tell the MC what you hope to achieve. The MC will tell you the sacrifice it will take from you. Then roll+Logos.((pbta))On a hit, you achieve exactly what you wanted to achieve and pay the price:<<[Significant:] On a 7-9, mark Fade/Crack and burn all the power tags on one theme. On a 10+, mark Fade/Crack on one theme.|[No Return:] On a 7-9, replace one theme. On a 10+, mark Fade/Crack and burn all the power tags on one theme.|[Ultimate:] On a 7-9, you are killed, destroyed, or transformed forever (for now). Take a tier-6 status. You cannot {Face Danger}. On a 10+, replace one theme.>>On a 6 or less, you pay the price given for 7-9, but you also lose control over your powers or fail to use them as planned. The MC will decide how, and what the consequences are.",
 				"Complicate Things": "You introduce a new problem into the story. As of now, this problem is not a burning one, but it’s an opening for trouble: if mishandled or neglected, it can evolve into a significant threat. Such complications are always an obstacle or a threat on the way to the lead characters’ goals: information, friendship, victory, survival, moral integrity, obtaining an item, keeping their Identities intact, etc. Overcoming this new obstacle usually requires at least one successful player move.",
-				"Hit Them After a Fair Warning": "If the characters ignore or neglect an approaching threat for long enough, you can make a hard move against them instead of a soft move to reflect the threat becoming a reality. This assumes that you let the characters know about this threat using {Complicate Things}. When you play <u>Hit Them After a Fair Warning</u>, you don’t have to wait for the players to miss a move; you can play it whenever you have the spotlight.||||The number of warnings you give the players with {Complicate Things} before {Hitting Them After a Fair Warning} can vary. Depending on your cinematic considerations and the pace of the game, you can go for shock and hit your players with a hard move after even a single warning, or spread it over several warnings, allowing the players time to handle other threats or creating a suspenseful atmosphere of something approaching. However, if you plan to hit them with a hard move, make sure your narration of {Complicate Things} divulges the severity of the situation. In other words, this move requires a fair warning, as the name denotes.||The use of this move does not have to be limited to a single scene; it can spread over several scenes or even sessions.",
+				"Hit Them After a Fair Warning": "If the characters ignore or neglect an approaching threat for long enough, you can make a hard move against them instead of a soft move to reflect the threat becoming a reality. This assumes that you let the characters know about this threat using {Complicate Things}. When you play <u>Hit Them After a Fair Warning</u>, you don’t have to wait for the players to miss a move; you can play it whenever you have the spotlight.||||The number of warnings you give the players with {Complicate Things} before <u>Hit Them After a Fair Warning</u> can vary. Depending on your cinematic considerations and the pace of the game, you can go for shock and hit your players with a hard move after even a single warning, or spread it over several warnings, allowing the players time to handle other threats or creating a suspenseful atmosphere of something approaching. However, if you plan to hit them with a hard move, make sure your narration of {Complicate Things} divulges the severity of the situation. In other words, this move requires a fair warning, as the name denotes.||The use of this move does not have to be limited to a single scene; it can spread over several scenes or even sessions.",
 				"Optional: Activate Their Weakness Tags as Flaws": "If your group is using the optional rule <u>Weakness Tags as Flaws</u>, you can use a soft move to invoke a character’s weakness tag as a flaw. This allows you to then make a hard move against her without waiting for a missed roll. The player marks Attention on the theme to which the weakness tag belongs.",
 				"Complicate Things, Bigtime": "You introduce a new crisis into the story or escalate an existing problem into a crisis. The crisis is a real and immediate threat to the lead characters; it can cost the characters a great deal in the very near future. This crisis can affect the wellbeing of the lead characters, their lives, characters around them, the course of their investigation, the state of things in the City, etc. Mitigating the crisis usually requires several successful player moves and/or forces the players to sacrifice game resources (e.g., mark Fade or Crack, burn tags, spend Juice, etc.).",
 				"Deny Them Something They Want": "You declare that something that the characters want is no longer within their reach, at least not within the scope of the current scene. For example, a witness could get away, an item could be stolen, or a course of action could be revealed as dead-ended or impossible.",
@@ -588,6 +588,44 @@
 				"Reduce or Remove a Status": "Reduce the tier of any status in the game by any number of tiers or completely remove it, if appropriate. This could affect positive statuses that the crew members possess or negative statuses on Dangers.||You can also use this move to remove any number of Juice points a player has banked. This is appropriate when the advantage won by the player is no longer relevant.",
 				"Burn a Tag": "You burn one of the player characters’ power tags or story tags or a crew or extra power tag. Tell the player to mark the burn icon (🔥) next to it (or discard it, if it’s a temporary or ongoing story tag). The burnt tag can be recovered normally. Burning a tag represent an ability, item, ally, or resource that is rendered temporarily unusable.",
 				"Force Them to Choose": "Describe a development that forces a player to choose between two undesirable outcomes, each a hard MC Move in itself.||If the choice given to the player is based on the circumstances alone, they make the choice and suffer the undesirable outcome.||If one or more of the options involves the character’s or crew Mysteries or Identities, the player decides whether to invoke Make a Hard Choice. Read more about Mystery and Identity dilemmas under {Make a Hard Choice}.||Note that a hard MC move is not required for the player to Make a Hard Choice or for you to orchestrate a dilemma. Sometimes, the soft MC move {Complicate Things} can be enough to put the character in a position where she’s facing a difficult choice. However, using this hard MC move allows you introduce more pressure, putting the character on the spot and forcing her to choose."
+			},
+			oracle_lists: {
+				dilemmas: ["Allies:Dilemma:dilemmas:allies", "Situational:Dilemma:dilemmas:situational", "Objects:Dilemma:dilemmas:objects", "Powers:Dilemma:dilemmas:powers"],
+			},
+			oracles: {
+				dilemmas: {
+					"allies": ["<i>Make Something Horrible Happen:</i> Your ally, familiar, or loved one is grievously hurt or killed, or your conjuration causes collateral damage.", "<i>Deny Them What They Want:</i> Your ally, familiar, loved one, or conjuration has been turned against you somehow. You must make amends.", "<i>Burn A Tag:</i> Your ally, familiar, loved one, or conjuration becomes pinned, dispelled or otherwise unable to act.", "<i>Give A Status (cannot Face Danger):</i> Your ally, familiar, loved one, or conjuration receives a status from the Danger, and cannot avoid it.", "<i>Give A Status (can Face Danger):</i> You intercept an attack meant for your ally, familiar, loved one, or conjuration, and must Face Danger.", "<i>Give A Status (positive status for the opposition):</i> Your opposition gains a helpful status, distracting you by threatening your ally, familiar, loved one.", "<i>Remove A Status (yours):</i> You must abandon a helpful status in order to protect your ally, familiar, loved one, or conjuration.", "<i>Remove A Status (the opposition’s):</i> Your ally, familiar, loved one, or conjuration does something that unknowingly helps your opposition.", "<i>Reduce A Status (yours) or Remove Banked Juice:</i> Your ally, familiar, loved one, or conjuration unintentionally wrecks a part of your plan.", "<i>Reduce A Status (the opposition’s):</i> Your opposition recovers from a harmful status by stealing your ally’s resources, life energy, or magic.", "<i>Turn Their Move Against Them:</i> Your attack misses and accidentally hits your ally, familiar, loved one, or conjuration.", "<i>Complicate Things, Bigtime (add a threat or Nemesis):</i> A new threat or your Nemesis goes after your ally, familiar, loved one, or conjuration.", "<i>Complicate Things, Bigtime (alter the setting):</i> You are separated from your allies."],
+					"situational": ["<i>Make Something Horrible Happen:</i> A bystander or hostage is grievously hurt or killed by your opposition or collateral damage.", "<i>Deny Them What They Want:</i> Your opposition flees the scene, or achieves their objective.", "<i>Burn A Tag:</i> A helpful tactical advantage is lost or destroyed by your opposition, collateral damage, or bad luck.", "<i>Give A Status (cannot Face Danger):</i> You fall for your opposition’s trap and suffer a status you cannot avoid.", "<i>Give A Status (can Face Danger):</i> Your opposition sees an opening, forcing you to press your luck to avoid their attack or trap.", "<i>Give A Status (positive status for the opposition):</i> Your opposition gains the higher ground or the upper hand, and earns a helpful status.", "<i>Remove A Status (yours):</i> Unexpected changes in the situation cause you to lose a tactical or strategic advantage.", "<i>Remove A Status (the opposition’s):</i> Your opposition finds a strategy to offset a negative status affecting them, or finds a way to heal quickly.", "<i>Reduce A Status (yours) or Remove Banked Juice:</i> Your opposition becomes wise to your plans or inquiries, and changes plans to adapt.", "<i>Reduce A Status (the opposition’s):</i> Your opposition is making progress on a strategy to remove a negative status affecting them.", "<i>Turn Their Move Against Them:</i> Your attack misses and accidentally causes structural or collateral damage.", "<i>Complicate Things, Bigtime (add a threat or Nemesis):</i> A new threat or your Nemesis enters the scene or otherwise complicates the situation.", "<i>Complicate Things, Bigtime (alter the setting):</i> Your surroundings become precarious, or you end up somewhere new with different pitfalls."],
+					"objects": ["<i>Make Something Horrible Happen:</i> An important object in your hands or nearby is broken beyond repair or falls somewhere you can’t get to.", "<i>Deny Them What They Want:</i> Something the crew is after is snatched up by an antagonist who runs with it or seals it away.", "<i>Burn A Tag:</i> An object- or gear-based tag is rendered useless, suddenly jams or freezes, or breaks completely.", "<i>Give A Status (cannot Face Danger):</i> An object nearby cannot avoid being damaged, tangled, or destroyed.", "<i>Give A Status (can Face Danger):</i> Something threatens an object you hold but you can try blocking the attack with your body.", "<i>Give A Status (positive status for the opposition):</i> The opposition gains a piece of gear or a Mist-powered object that gives them a positive status.", "<i>Remove A Status (yours):</i> You lose an advantage from a piece of gear you rely on.", "<i>Remove A Status (the opposition’s):</i> The opposition has a piece of gear or a Mist-powered object that lets them remove a negative status.", "<i>Reduce A Status (yours) or Remove Banked Juice:</i> A piece of gear overheats, starts to fail, or otherwise becomes unreliable, throwing your plans into disarray.", "<i>Reduce A Status (the opposition’s):</i> The opposition has a piece of gear or a Mist-powered object that lets them heal or reduce a negative status.", "<i>Turn Their Move Against Them:</i> Instead of affecting the opposition, your weapon gives the intended status to your ally, who cannot avoid it.", "<i>Complicate Things, Bigtime (add a threat or Nemesis):</i> Your use of gear or powerful object draws the attention of an enemy that arrives on the scene focused on you.", "<i>Complicate Things, Bigtime (alter the setting):</i> Using the object has pulled the Mist into this area and it temporarily dampens Mythos powers (tags)."],
+					"powers": ["<i>Make Something Horrible Happen:</i> Your powers backlash in a way that reveals your Mythos to someone who will use that info against you.", "<i>Deny Them What They Want:</i> Your powers misfire and allow the opposition to get away or gain control of something they want.", "<i>Burn A Tag:</i> You use too much power or rely on your Mythos in an incompatible way, temporarily disrupting your powers.", "<i>Give A Status (cannot Face Danger):</i> An innocent bystander, nearby building, or prominent object cannot avoid being affected by your powers.", "<i>Give A Status (can Face Danger):</i> Your powers turn against you in some way unless you can control them.", "<i>Give A Status (positive status for the opposition):</i> You try to help but your powers inadvertently give a positive status to the opposition.", "<i>Remove A Status (yours):</i> You lose control of your powers and an advantage you created fizzles out.", "<i>Remove A Status (the opposition’s):</i> A moment of distraction allows an antagonist to shrug off an effect your powers have inflicted on them.", "<i>Reduce A Status (yours) or Remove Banked Juice:</i> The dual nature of the City suddenly fills you with uncertainty or distracts you, and your plans to fall apart.", "<i>Reduce A Status (the opposition’s):</i> Your powers inadvertently heal your opposition or mitigate a negative status affecting them.", "<i>Turn Their Move Against Them:</i> Your powers have the exact opposite effect that you are trying to achieve.", "<i>Complicate Things, Bigtime (add a threat or Nemesis):</i> Your Mythos calls out to similar legends, bringing the attention of a Rift opposed to you, or Gatekeepers.", "<i>Complicate Things, Bigtime (alter the setting):</i> Your Mythos changes your Logos (your appearance, life, or relationships) to better reflect its story."]
+				}
+			}
+		},
+		masks: {
+			move_lists: {
+				"Basic": ["Directly Engage a Threat", "Unleash Your Powers", "Defend Someone", "Assess the Situation", "Provoke Someone", "Comfort or Support Someone", "Pierce the Mask", "Take a Powerful Blow"],
+				"Influence": ["Accept What They Say", "Take Advantage of Influence", "Rejecting Influence"],
+				"Team": ["Act Selfishly", "Enter Battle Against a Dangerous Foe"],
+				"Session": ["Start the Session", "End the Session"]
+			},
+			moves: {
+				"Directly Engage a Threat": "When you [directly engage a threat], roll + Danger.((pbta))On a hit, trade blows. On a 10+, pick two. On a 7-9, pick one:<<resist or avoid their blows • take something from them|create an opportunity for your allies|impress, surprise, or frighten the opposition>>",
+				"Unleash Your Powers": "When you [unleash your powers] to overcome an obstacle, reshape your environment, or extend your senses, roll + ((pbta))On a hit, you do it. On a 7-9, mark a condition or the GM will tell you how the effect is unstable or temporary.",
+				"Defend Someone": "When you [defend someone or something] from an immediate threat, roll + Savior.((pbta))For NPC threats: on a hit, you keep them safe and choose one. On a 7-9, it costs you:<<expose yourself to danger or escalate the situation.|add a Team to the pool|take Influence over someone you protect|clear a condition>>For PC threats: on a hit, give them -2 to their roll. On a 7-9, you expose yourself to cost, retribution, or judgment.",
+				"Assess the Situation": "When you [assess the situation], roll + Superior.((pbta))On a 10+, ask two. On a 7-9, ask one. Take +1 while acting on the answers.<<what here can I use to ________?|what here is the biggest threat?|what here is in the greatest danger?|who here is most vulnerable to me?|how could we best end this quickly?>>",
+				"Provoke Someone": "When you [provoke someone] susceptible to your words, say what you’re trying to get them to do and roll + Superior.((pbta))For NPCs: on a 10+, they rise to the bait and do what you want. On a 7-9, they can instead choose one:<<they stumble: you take +1 forward against them|they err: you gain a critical opportunity|they overreact: you gain influence over them For PCs: on a 10+, both. On a 7-9, choose one.|if they do it, add a Team to the pool|if they don’t do it, they mark a condition>>",
+				"Comfort or Support Someone": "When you [comfort or support someone], roll + Mundane.((pbta))On a hit, they hear you: they mark potential, clear a condition, or shift Labels if they open up to you. On a 10+, you can also add a Team to the pool or clear a condition yourself.",
+				"Pierce the Mask": "When you [pierce someone’s mask] to see the person beneath, roll + Mundane.((pbta))On a 10+, ask three. On a 7-9, ask one.<<what do you intend to do?|how could I get your character to ___?|how could I gain Influence over you?|what are you really planning?|what do you want me to do?>>",
+				"Take a Powerful Blow": "When you [take a powerful blow], roll + conditions marked.((pbta))On a 10+, choose one:<<you must remove yourself from the situation: flee, pass out, etc.|you lose control of yourself or your powers in a terrible way|two options from the 7-9 list>>On a 7-9, choose one:<<you lash out verbally: provoke a teammate to foolhardy action or take advantage of your Influence to inflict a condition|you give ground; your opposition gets an opportunity |you struggle past the pain; mark two conditions>>On a miss, you stand strong. Mark potential as normal, and say how you weather the blow.",
+				"Accept What They Say": "When [someone with Influence over you tells you who you are or how the world works], accept what they say or reject their influence. If you accept what they say, the GM adjusts your Labels accordingly; if you want to keep your Labels as they are, you must reject their Influence.",
+				"Take Advantage of Influence": "When you [take advantage of your Influence] over someone, surrender the Influence you hold over them to choose one:<<give them -2 on a move they just made (after the roll)|inflict a condition on them|take an additional +1 on a move targeting them (after the roll)>>",
+				"Rejecting Influence": "When you [reject someone’s Influence], roll.((pbta))On a hit, you successfully hold to yourself and tune them out. On a 10+, choose two. On a 7-9, choose one.<<clear a condition or mark potential by immediately acting to prove them wrong|shift one Label up and one Label down, your choice|cancel their Influence and take +1 forward against them>>On a miss, their words hit you hard. Mark a condition, and the GM adjusts your Labels.",
+				"Act Selfishly": "When you [act selfishly], say how your actions ignore or insult your teammates, remove one Team from the pool, and shift one Label up and one Label down, your choice. You can use this option after rolling to alter the Label you’re rolling with.",
+				"Enter Battle Against a Dangerous Foe": "When you [enter battle against a dangerous foe as a team], add two to the Team pool.<<If the leader has Influence over every teammate, add another Team.|If everyone has the same purpose in the fight, add another Team.|If any team member mistrusts the leader or the team, remove a Team.|If your team is ill-prepared or off-balance, remove a Team.>>The leader of the team can mark a condition to avoid removing a Team from the pool.",
+				
+				"Start the Session": "At the [start of every session], the GM adds one Team to the pool.",
+				"End the Session": "At the [end of every session], choose one:<<Grow closer to the team. Explain who made you feel welcome; give Influence to that character and clear a condition or mark potential.|Grow into your own image of yourself. Explain how you see yourself and why; shift one Label up and another down.|Grow away from the team. Explain why you feel detached. Take Influence over you away from another character.>>",
+				
 			}
 		}
 	};
@@ -601,7 +639,7 @@
 	// mythic
 	var chaos, focus, progress, acting_rank, difficulty_rank;
 
-	// ptba
+	// pbta
 	var pbta_move_type = "";
 
 	// mine
@@ -942,6 +980,7 @@
 		// PbtA
 		else if (getPbtAPage(page, "city_of_mist")) return;
 		else if (getPbtAPage(page, "starforged")) return;
+		else if (getPbtAPage(page, "masks")) return;
  
 		else if (/^motif/.test(page)) return showMotif(/:roll$/.test(page));
 		else if (page === "scene") return showScene();
@@ -1005,8 +1044,16 @@
 					["Miscellaneous", "starforged-oracle-list:miscellaneous"],
 				]]
 			],
-			"city of mist": [["Chance", [["Dice", "dice"]]],
-				["Moves", getPbtAMoveTypes("city_of_mist")]
+			"city of mist": [
+				["Chance", [["Dice", "dice"]]],
+				["Moves", getPbtAMoveTypes("city_of_mist")],
+				["Oracles", [
+					["Dilemmas", "city_of_mist-oracle-list:dilemmas"]
+				]]
+			],
+			masks: [
+				["Chance", [["Dice", "dice"]]],
+				["Moves", getPbtAMoveTypes("masks")]
 			],
 			misc: [
 				["Chance", [
@@ -1176,7 +1223,7 @@
 	function getPbtAMoveTypes(game) {
 		var move;
 		var list = [];
-		var moves = muse[game].move_list;
+		var moves = muse[game].move_lists;
 
 		for (move in moves) {
 			list.push([move, game + "-move-list:" + move])
@@ -1187,7 +1234,7 @@
 	function showPbtAMoveList(game, type) {
 		var a;
 		var list = [];
-		var group = muse[game].move_list[type];
+		var group = muse[game].move_lists[type];
 		for (a = 0; a < group.length; ++a) {
 			if (!(group[a] in muse[game].moves)) list.push(["<s>" + group[a] + "</s>", "solo.showPage()"]);
 			else list.push([group[a], "solo.showPage('" + game + "-move:" + group[a].replace(/'/g, "\\'") + "')"]);
@@ -1235,7 +1282,7 @@
 				"<td class='label'></td>" +
 				"<td class='label'>d6</td>" + getDieLink(1, 6);
 			}
-			else if (type === "ptba") output += "<td class='label'>d6</td>" + getDieLink(1, 6) + getDieLink(1, 6);
+			else if (type === "pbta") output += "<td class='label'>d6</td>" + getDieLink(1, 6) + getDieLink(1, 6);
 			else if (type === "progress") output += "<td class='label'>d10</td>" + getDieLink(1, 10) + getDieLink(1, 10);
 			else if (type === "d100") output += "<td class='label'>d100</td>" + getDieLink(1, 100);
 			else output += "<td><s>dice:" + type + "</s></td>";
@@ -1287,7 +1334,7 @@
 			var reroll = 0;
 
 			var loop = 1;
-			if (depth === 1 && oracle in muse[game].oracle_rolls) loop =  random(1, muse[game].oracle_rolls[oracle]);
+			if (depth === 1 && muse[game].oracle_rolls && (oracle in muse[game].oracle_rolls)) loop =  random(1, muse[game].oracle_rolls[oracle]);
 
 			temp = oracle.split(":");
 			type = temp[0];
