@@ -1638,9 +1638,7 @@
 		var parseMoves = function() {
 			if (!(game in pbta_custom_move_text)) pbta_custom_move_text[game] = "";
 
-			var input = pbta_custom_move_text[game].replace("'", "");
-			input = input.replace('"', '');
-
+			var input = "" + pbta_custom_move_text[game];
 			var move_text = input;
 			var table_text = input;
 			var a, b, table, row, rows, match;
@@ -2365,7 +2363,7 @@
 	}
 
 	function saveQuickRolls() {
-		quick_rolls_text = $("#quick-rolls").value;
+		quick_rolls_text = $("#quick-rolls-input").value;
 		parseQuickRolls();
 		
 		soloData.quick_rolls = quick_rolls_text;
@@ -2376,12 +2374,12 @@
 
 	function showQuickRolls() {
 		display(
-			"<p><textarea id='quick-rolls' spellcheck='false'>" + quick_rolls_text + "</textarea></p>" +
+			"<p><textarea id='quick-rolls-input' spellcheck='false'>" + quick_rolls_text + "</textarea></p>" +
 			"<div id='dice-buttons'><p><div id='save-button'>" + 
 				"<a onclick='solo.saveQuickRolls()'>Save</a>" + 
 				"<a onclick='solo.showPage(\"dice\")'>Back</a></div></p></div>" +
 			"<p>Each new line is a new quick roll.<br>Labels are separated with a colon.</p>" +
-			"<p><b>Example:</b><br><code>2d10,d6<br>Sword Attack: 4dF+4<br>Cortex: d6,2d8,d10</code></p>"
+			"<blockquote id='quick-rolls'><p><b>Example:</b></p><pre><code>2d10,d6<br>Sword Attack: 4dF+4<br>Cortex: d6,2d8,d10</code></pre></blockquote>"
 		);
 	}
 
@@ -3359,10 +3357,15 @@
 	#menu li:not(:first-of-type) { margin-top: 1em; }
 	#menu, #menu td:not(:last-of-type) { border: none; }
 
-	#quick-rolls { margin: 0; }
+	#quick-rolls, #quick-rolls-input { margin: 0; }
 	#quick-rolls ul { padding-inline-start: 0; }
 	#quick-rolls li:not(:first-of-type) { margin-top: 1em; }
 	#quick-rolls p { margin-bottom: 0; }
+	#quick-rolls pre {
+		font-family: monospace;
+		font-size: 80%;
+		margin-top: 1em;
+	}
 	
 	#dice-roller { display: none; }
 
