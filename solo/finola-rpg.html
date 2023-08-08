@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
 <script>
 (function(solo) {
-	var version = "2023.08.07";
+	var version = "2023.08.08";
 
 	var current_page, current_section, current_menu, color_theme
 	var toc = [];
@@ -814,7 +814,7 @@
 			text = text.substring(pos);
 		}
 		
-		var regex = "(?<!\\\\)" + token.replace(/([\\()[\]{}|+])/g, "\\$1");
+		var regex = "(?<!\\\\)" + token.replace(/([\\()[\]{}|+*.])/g, "\\$1");
 		var match = text.match(RegExp(regex));
 		if (match === null) return -1;
 		return match.index + pos;
@@ -840,7 +840,7 @@
 		*/
 
 		var firstIndex = getIndex(text, open);
-		if (firstIndex === -1) return {"before": "", "markup": "", "after": text};
+		if (firstIndex === -1) return {"before": "", "markup": "", "inner": "", "after": text};
 
 		var markup;
 		var lastIndex = 0;
@@ -1588,8 +1588,9 @@
 			text = parseMarkup(text, "<<", ">>", function(el) {
 				return "<ul class='move-list'><li>" + replaceMarkup(el.inner).replace(/(?<!\\)\|/g, "</li><li>") + "</li></ul>";
 			});
+			
 			text = parseMarkup(text, "((", "))", function(el) { return getDice(el.inner); });
-			text = parseMarkup(text, "{{", "}}", function(el) { return insertTable(el.inner); });
+			text = parseMarkup(text, "{{", "}}", function(el) {  return insertTable(el.inner); });
 			
 			text = parseMarkup(text, "{", "}", function(el) {
 				el = el.inner.split(/(?<!\\)\|/);
@@ -1613,7 +1614,7 @@
 			text = text.replace(/(?<!\\)\*\*\*/g, "<div class='move-spacer'></div>");
 			text = text.replace(/(?<!^)(?<!:\n|\/p>|\/ul>|\/table>|\/div>|\/h\d>)(<(?:ul|table|div|h\d))/g, "</p>$1");
 			text = text.replace(/(\/(?:ul|table|div|h\d)>)\s*(?!$)(?!:\n|<p|<ul|<table|<div|<h\d)/g, "$1<p>");
-			text = text.replace(/\\([\[\](){}<>|*])/g, "$1");
+			text = text.replace(/\\([\[\](){}<>|*@#])/g, "$1");
 			return text;
 		};
 
@@ -1642,28 +1643,31 @@
 
 			var move_text = input;
 			var table_text = input;
-			var a, row, rows, match;
+			var a, b, table, row, rows, match;
 
 			pbta_custom_moves = {};
 			pbta_custom_tables = {};
 
-			while ((match = move_text.match(/(?<!\\)\s*##\s*((?:(?!##|\n|\|)[\w\W])+)\s*(?:##|\n)\a*((?:(?!@@|##)[\w\W])+)/)) !== null) {
+			while ((match = move_text.match(/\s*(?<!\\)##\s*((?:(?!##|\n|\|)[^$])+)\s*(?:##|\n)\s*((?:(?!(?<!\\)(?:@@|##))[^$])+)/)) !== null) {
 				move_text = move_text.substr(match[0].length);
 				pbta_custom_moves[match[1]] = match[2];
 			}
 
-			while ((match = table_text.match(/(?<!\\)\s*@@\s*((?:(?!@@|\n|\|)[\w\W])+)\s*(?:\|((?:(?!@@|\n)[\w\W])+)\s*)?(?:@@|\n)\s*((?:(?!@@|##)[\w\W])+)/)) !== null) {
-				table_text = table_text.substr(match[0].length);
-
-				rows = [];
-				row = splitMarkup(match[3], "<>");
-				for (a = 0; a < row.length; ++a) {
-					rows.push(splitMarkup(row[a], "|"));
+			match = table_text.match(/(?<!\\)@@\s*((?:(?!@@|\n|\|)[^$])+)\s*(?:\|((?:(?!@@|\n)[^$])+)\s*)?(?:@@|\n)\s*((?:(?!(?<!\\)(?:@@|##))[^$])+)/g);
+			if (match !== null) {
+				for (a = 0; a < match.length; ++a) {
+					table = match[a].match(/@@\s*((?:(?!@@|\n|\|)[^$])+)\s*(?:\|((?:(?!@@|\n)[^$])+)\s*)?(?:@@|\n)\s*([^$]+)/);
+					
+					rows = [];
+					row = splitMarkup(table[3], "<>");
+					for (b = 0; b < row.length; ++b) {
+						rows.push(splitMarkup(row[b], "|"));
+					}
+	
+					pbta_custom_tables[table[1]] = { rows: rows };
+					if (/rolled/.test(table[2])) pbta_custom_tables[table[1]].rolled = true;
+					if (/headered/.test(table[2])) pbta_custom_tables[table[1]].header = pbta_custom_tables[table[1]].rows.shift();
 				}
-
-				pbta_custom_tables[match[1]] = { rows: rows };
-				if (/rolled/.test(match[2])) pbta_custom_tables[match[1]].rolled = true;
-				if (/headered/.test(match[2])) pbta_custom_tables[match[1]].header = pbta_custom_tables[match[1]].rows.shift();
 			}
 		};
 
@@ -1733,11 +1737,14 @@
 					]) + "<p>All move markup also applies to tables, including embedding tables within tables.</p></details><br>" +
 				"<details><summary>Example Move</summary><br><pre><code>" +
 					"##Example\n[When you do something], roll+stat.\n((pbta))\n" +
-					"On a [weak hit], choose one. On [strong hit], do both.\n" +
+					"On a [weak hit], choose one. On a [strong hit], do both.\n" +
 					"<<\n  do what you want|\n  don't get hurt\n>>\n" +
 					"On a [miss], roll on the following table.\n((d10))\n{{table}}\n\n" +
-					"@@table|rolled|headered\n|a|b\n1-5|item 1|item 2<>6-10|item 3|item 4\n" +
-				"</code></pre></details></div>"
+					"@@table|rolled|headered\n|a|b<>\n1-5|item 1|item 2<>\n6-10|item 3|item 4\n" +
+				"</code></pre><br>" +
+				"<p>Code can also be compressed to save space if you don't need the legibility. The following renders the same as the above.</p>" +
+				"<p><code>##Example##[When you do something], roll+stat.((pbta))On a [weak hit], choose one. On a [strong hit], do both.<<do what you want|don't get hurt>>On a [miss], roll on the following table.((d10)){{table}}@@table|rolled|headered@@|a|b<>1-5|item 1|item 2<>6-10|item 3|item 4</code></p>" +
+				"</details></div>"
 			));
 	}
 
@@ -3290,10 +3297,7 @@
 	p + table.move-dice { margin-top: 1.5em !important; }
 	table + table { margin-top: 0.5em !important; }
 	.move-table table { border: none }
-	.move-table th { 
-		/* color: #000000; */
-		background-color: #333333;
-	}
+	
 	.move-table td { line-height: 1.5em !important; }
 	.move-table {
 		width: fit-content;
@@ -3303,7 +3307,6 @@
 	.move-table.rolled > tbody > tr > td:first-of-type, .move-table .label {
 		text-align: right;
 		font-family: monospace;
-		color: #aaaaaa;
 		text-wrap: nowrap;
 		font-size: 12px;
 		border: none;
@@ -3398,15 +3401,11 @@
 	}
 
 	#move-markup td { line-height: 1.25em !important; }
-	#move-markup td:first-of-type {
+	#move-markup td:first-of-type, #move-markup code {
 		font-family:monospace;
 		font-size: 80%;
-		color:#aaaaaa;
 	}
-	#move-markup pre code  {
-		font-size: 80%;
-	}
-
+	
 	@media screen and (max-width: 500px) {
 		html, body { 
 			font-size: 13px;
@@ -3414,6 +3413,12 @@
 		}
 		
 		html.iframe { padding-bottom: 3em; }
+		
+		textarea {
+			font-family: monospace;
+			font-size: 80%;
+			line-height: 1.25em:
+		}
 	}
 	
 	/* dark theme */
@@ -3453,13 +3458,17 @@
 	.red-suit { color: #ff6666; }
 	.black-suit { color: #888888; }
 	#questions td:last-of-type { background-color: #222222; }
-	#footer { background-color: #2a2a2a;  }
-	
+	#footer { background-color: #2a2a2a; }
+	#move-markup td:first-of-type { color:#aaaaaa; }
+	.move-table th { background-color: #333333; }
+	.move-table.rolled > tbody > tr > td:first-of-type, .move-table .label { color: #aaaaaa; }
+
 	/* light theme */
 	html.light { 
 		color: #000000;
 		background-color: #e0e0e0 !important;
 	}
+	html.light h2 { text-shadow: 0 0 3px #aaaaff; }
 	html.light blockquote {
 		color: #333333;
 		background-color: #00000010;
@@ -3489,6 +3498,10 @@
 	html.light .black-suit { color: #000000; }
 	html.light #questions td:last-of-type { background-color: #ffffff40; }
 	html.light #footer { background-color: #00000010;  }
+	html.light #move-markup td:first-of-type { color: #333333; }
+	html.light .move-table th { background-color: #bbbbbb; }
+	html.light .move-table.rolled > tbody > tr > td:first-of-type, html.light .move-table .label { color: #333333; }
+
 </style>
 
 <body>
