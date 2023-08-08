@@ -3,28 +3,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
 <script>
 (function(solo) {
-	var version = "2023.07.24";
+	var version = "2023.08.07";
 
-	var current_page, current_section, current_menu, color_theme;
+	var current_page, current_section, current_menu, color_theme
+	var toc = [];
 	var spacer = "<div class='spacer'></div>";
 	var soloData = {};
 
 	/*
-		PBTA moves markdown:
+		PBTA moves markup:
 			||                 break two blocks of text up
 			((dice))           insert dice roller. options are: d100, pbta (2d6), progress (2d10), and ironsworn (2d10,d6)
-			{link}             create link to another move
+			{move}             create link to another move
+			{move|name}        create a link to another move but with a different name
 			{{table}}          insert table from move_tables
 			[bold]             bold the text
 			[[italic]]         italicize the text
 			<<item 1|item 2>>  create a bullet list with items separated by |
 			***                insert a spacer
 
-		PBTA oracles markdown:
+		PBTA oracles markup:
 			>roll twice        roll two items on the table
 			>roll thrice       roll three items on the table
 			>category:oracle   roll on another oracle
-			>category:oracleA + category:oracleB   combine two or more oracles
+			>categoryA:oracleA + categoryB:oracleB   combine two or more oracles
+			{oracle}           create a link to a different oracle
+			{oracle|name}      create a link to a different oracle but with a different name
+			||                 break two blocks of text up
+			[bold]             bold the text
+			[[italic]]         italicize the text
+			***                insert a spacer
+
+		PBTA oracle lists markup:
+			>list              link to another oracle list
 	*/
 	
 	var muse = {
@@ -263,9 +274,12 @@
 				"Threshold": ["Face Death", "Face Desolation", "Overcome Destruction"],
 				"Recover": ["Sojourn", "Heal", "Hearten", "Resupply", "Repair"],
 				"Legacy": ["Earn Experience", "Advance", "Continue a Legacy"],
-				"Fate": ["Ask the Oracle", "Pay the Price"]
+				"Fate": ["Ask the Oracle", "Pay the Price"],
+				"Scene": ["Begin the Scene", "Face Danger (Scene Challenge)", "Secure an Advantage (Scene Challenge)","Finish the Scene"]
 		 	},
 			moves: {
+				"Standard Roll": "This is a standard roll for checks not covered by the moves.((ironsworn))",
+				"Progress Roll": "This is a progress roll for checks not covered by the moves.((progress))",
 				"Begin a Session": "[When you begin a significant session or chapter of play], do all of the following.<<Identify or adjust flagged content and {Set a Flag}.|Review or recap what happened last session.|Set the scene by envisioning your character’s current situation and intent.>>In addition, you may spotlight a new danger, opportunity, or insight. This can include a scene hidden from your character’s perspective. If you do, envision a brief vignette (you may roll or choose on the table below for inspiration). Then, all players take +1 momentum as you return to play from the viewpoint of your characters.((d100)){{vignette}}",
 				"Set a Flag": "[When you identify situations or topics you don’t want to include, don’t want to envision in detail, or otherwise may need mindfulness when approaching], that content is now flagged.||When you encounter content flagged as something to approach mindfully, pause to consider or discuss its role in your story. When you come across flagged content that you would rather adjust or omit, {Change Your Fate}",
 				"Change Your Fate": "[When you encounter flagged content, reject an oracle, resist a consequence, or otherwise need to shift your circumstances within the game for your comfort or enjoyment], pause and identify what needs to be changed. Choose as many options as appropriate.<<[Reframe:] This didn’t happen the way you first thought. Envision the moment from another perspective in a way that diminishes or changes the content.|[Refocus:] This is not the most important thing happening right now. Envision how the spotlight shifts to change the focus.|[Replace:] This happens but with a small adjustment. Switch out an element and envision how this new detail changes the scenario.|[Redirect:] Adjust the trajectory to involve a helping hand. Envision how another person or party becomes involved.|[Reshape:] The situation changes completely. Envision what happened instead.>>",
@@ -317,9 +331,13 @@
 				"Advance": "[When you develop your abilities, improve your resources, gain a reward, or boost your influence], you may spend 3 experience to add a new asset, or 2 experience to upgrade an asset. Choose from the following categories as appropriate to your focus and opportunities.<<Module: Upgrade your command vehicle|Support Vehicle: Acquire or improve a secondary vehicle|Path: Bolster your personal capabilities or follow a new calling|Companion: Gain or improve a trusted helper|Deed: Learn from your experiences or build a legacy>>",
 				"Continue a Legacy": "[[Progress Move]]||[When you retire from your life as Ironsworn, or succumb to death or desolation], you may create a new character in your established setting. If you do, roll the challenge dice and compare to each of the former character’s legacy tracks: quests, bonds, and discoveries (one roll per track).((progress))For each [strong hit], choose one from below, or one from the weak hit or miss options.<<Follow their path: Take one path or companion asset from the former character (at no cost), including any marked abilities.|Share a connection: Take one connection from the former character, including any accrued progress or bond benefits.|Accept an inheritance: Take the former character’s command vehicle and one module or support vehicle (at no cost), including any marked abilities.>>For each [weak hit], choose one from below, or one from the miss options.<<See it through: Choose one of the former character’s unfinished quests, and {Swear an Iron Vow} (with an automatic strong hit) to see it done. You may immediately mark up to half their earned progress (round down) on this quest.|Rebuild a connection: Name one of the former character’s connections, and envision how time or circumstances have changed them in a dramatic way. When you {Make a Connection} with them, take an automatic strong hit and mark two ticks on your bonds legacy track.|Explore familiar ground: Name a location that was meaningful to the former character. When you first visit that place, envision how it has changed or is endangered. Then, mark two ticks on your discoveries legacy track.>>For each [miss], choose one.<<Deal with the aftermath: Envision how one of your former character’s foes has gained power or influence.|Switch loyalties: Envision how you begin in opposition to your former character’s beliefs, goals, or allegiances.|Open Pandora’s Box: Envision how an advancement or discovery has unleashed unexpectedly dire consequences.>>",
 				"Ask the Oracle": "[When you seek to resolve questions, reveal details, discover locations, determine how other characters respond, or trigger encounters or events], you may…<<Draw a conclusion: Decide the answer based on the most interesting and obvious result.|Spark an idea: Use an oracle table or other random prompt.|Ask a yes/no question: Decide the odds of a yes, and roll on the table below to check the answer.|Pick two: Envision two options. Rate one as likely, and roll on the table below to see if it is true. If not, it is the other.>>((d100)){{fate}}On a match, envision an extreme result or twist.",
-				"Pay the Price": "[When you suffer the outcome of an action], choose one.<<Make the most obvious negative outcome happen.|{Ask the Oracle} for inspiration. Interpret the answer as a hardship or complication appropriate to the situation.|Roll on the table below. If the result doesn’t fit the situation, roll again.>>((d100)){{pay the price}}"
+				"Pay the Price": "[When you suffer the outcome of an action], choose one.<<Make the most obvious negative outcome happen.|{Ask the Oracle} for inspiration. Interpret the answer as a hardship or complication appropriate to the situation.|Roll on the table below. If the result doesn’t fit the situation, roll again.>>((d100)){{pay the price}}",
+				"Begin the Scene": "[When you face an extended or complex challenge outside of a fight], name your objective and set its rank as formidable. Then, envision the situation and choose the number of segments for the scene’s tension clock.<<You are severely disadvantaged: Four segments|You are on equal footing: Six segments|You have strong advantage: Eight segments>>When the clock is full, you must {Finish the Scene}.",
+				"Face Danger (Scene Challenge)": "[When you attempt something risky or react to an imminent threat within a scene challenge], envision your action and roll. If you act…<<With speed, mobility, or agility: Roll +edge|With resolve, command, or sociability: Roll +heart|With strength, endurance, or aggression: Roll +iron|With deception, stealth, or trickery: Roll +shadow|With expertise, focus, or observation: Roll +wits>>((ironsworn))On a [strong hit], you are successful and mark progress. On a [strong hit with a match], mark progress twice.||On a [weak hit], you are successful and mark progress, but also encounter a complication or setback. Envision what occurs and fill a clock segment.||On a [miss], you fail, or a momentary success is undermined by a dramatic turn of events. Fill a clock segment and {Pay the Price}. On a [miss with a match], fill two segments and {Pay the Price}.",
+				"Secure an Advantage (Scene Challenge)": "[When you assess a situation, make preparations, or attempt to gain leverage within a scene challenge], envision your action and roll. If you act…<<With speed, mobility, or agility: Roll +edge|With resolve, command, or sociability: Roll +heart|With strength, endurance, aggression: Roll +iron|With deception, stealth, or trickery: Roll +shadow|With expertise, focus, or observation: Roll +wits>>((ironsworn))On a [hit], you are successful. On a [strong hit], take both. On a [strong hit with a match], take both and mark progress. On a [weak hit], choose one.<<Take +2 momentum|Add +1 on your next move (not a progress move)>>On a [miss], you fail or your assumptions betray you. Fill a clock segment and {Pay the Price}. On a [miss with a match], fill two segments and {Pay the Price}.",
+				"Finish the Scene": "[[Progress Move]]||[When the scene challenge tension clock or progress track is filled, or when events lead to the scene’s conclusion], roll the challenge dice and compare to your progress.((progress))On a [strong hit], you achieve your objective unconditionally.||On a [weak hit], you succeed, but not without cost. You must {Pay the Price}. Make this a minor cost relative to the scope of the scene.||On a [miss], you fail or are undermined by a dire and costly turn of events. {Pay the Price}."
 			},
-			moves_tables: {
+			move_tables: {
 				"vignette": {
 					rolled: true,
 					rows: [
@@ -557,10 +575,12 @@
 		},
 		city_of_mist: {
 			move_lists: {
-				"Core Moves": ["Change the Game", "Convince", "Face Danger", "Go Toe to Toe", "Hit With All You've Got", "Investigate", "Look Beyond the Mist", "Montage (Downtime)", "Sneak Around", "Take the Risk"],
-				"Balance of Mythos and Logos": ["Finally, Some Answers", "End of the Road", "Make a Hard Choice", "Stop. Holding. Back."],
-				"MC Soft Moves": ["Complicate Things", "Hit Them After a Fair Warning", "Optional: Activate Their Weakness Tags as Flaws"],
-				"MC Hard Moves": ["Complicate Things, Bigtime", "Deny Them Something They Want", "Make Something Horrible Happen", "Turn Their Move Against Them", "Give a Status", "Reduce or Remove a Status", "Burn a Tag", "Force Them to Choose"]
+				"Core": ["Change the Game", "Convince", "Face Danger", "Go Toe to Toe", "Hit With All You've Got", "Investigate", "Look Beyond the Mist", "Sneak Around", "Take the Risk"],
+				"Cinematic": ["Voiceover Monologue (Session Start)", "Flashback", "Montage (Downtime)", "Geek Out During Credits (Session End)"],
+				"Crew Theme": ["Season Premiere, Season Finale"],
+				"Dramatic Moments": ["Finally, Some Answers", "End of the Road", "Make a Hard Choice", "Stop. Holding. Back.", "Foreshadowing", "Denying the Beyond"],
+				"Gatekeepers": ["Escape From Memory", "Pull Rank", "Look Behind the Mist (Gatekeepers)", "Performance Review", "Make a Hard Choice (Gatekeepers)"],
+				"MC": ["Intrusions", "Soft Moves", "Hard Moves"]
 			},
 			moves: {
 				"Change the Game": "When you use your abilities [to give yourself or your allies an advantage], roll+Power.((pbta))On a hit, you get Juice=Power. Spend your Juice to gain the following effects, one-to-one:<<Create a story tag|Burn a power tag or a story tag|Give or reduce a status (one tier per point of Juice)>>On a 10+, you get a minimum of 2 Juice, and you can also use your Juice to choose:<<Scale up the effect (greater area or more targets)|Prolong the effect (make it ongoing)|Hide the effect|Any other improvement you and the MC agree on>>",
@@ -570,56 +590,87 @@
 				"Hit With All You've Got": "When you [have a clear shot] and you use your abilities [to hit someone or something with all you’ve got], roll+Power.((pbta))On a hit, you give the target an appropriate status of your choice with tier=Power. On a 10+, choose 2. On a 7-9, choose 1:<<You take cover or secure a superior position. If you don’t choose this, they can impose a status on you. If they are a PC, its tier=their Power.|You get them good or get many of them (+1 tier).|You control the collateral damage.|You hold the target’s attention, if possible.|You gain the upper hand. Take 1 Juice.>>",
 				"Investigate": "When you use your abilities [to seek answers to burning questions], roll+Power.((pbta))On a hit, you get Clues=Power. Spend your Clues one-to-one to ask the MC a question about the subject of your investigation or ask another player a relevant question about their character. They must give you either a straight answer or a solid lead. On a 7-9, they can also choose 1:<<Your investigation exposes you to danger.|The clues you get are fuzzy, incomplete, or part-true part-false.|Whoever or whatever you are asking the question(s) can ask you one question as well. You answer on the same terms.>>",
 				"Look Beyond the Mist": "When you [reach inside to get in touch with your Mythos], you can feel the truth behind things without even knowing how. Play it out like the Investigate move, but roll+Mythos instead.((pbta))On a hit, you get Clues=Mythos.",
-				"Montage (Downtime)": "Whenever your character has some downtime, choose one way to spend it:<<[Give attention] to one of your Logos (or extra) themes. Tell everyone at the table how you do it and mark Attention on that theme.|[Work the case.] Tell everyone at the table how you do it, and gain 3 Clues with a method and a source based on your description.|[Explore your Mythos.] Tell everyone at the table which Mystery you explore and how you do it. You gain 1 Clue with a method and a source based on your description. Mark Attention on that Mystery’s theme.|[Prepare for your next activity.] Tell everyone at the table how you prepare and choose one: recover all your burnt power tags OR gain 3 Juice with a method based on your description. You can choose from the effect improvements under {Change the Game}.|[Recover from you last activity.] For each ongoing status still affecting you, the MC will tell you if and how it can be reduced during your downtime and by how many tiers. Alternatively, the MC can allow you to reduce any or some of your statuses by one tier for each relevant tag you have.>>The MC can cue into any of the montage events and continue them as scenes.",
 				"Sneak Around": "When you use your abilities [to act secretly or deceptively], roll+Power.((pbta))On a hit, everyone that should fall for it falls for it. On a 7-9, it’s complicated. The MC chooses 1:<<Someone unimportant noticed you, but that just made them important, right?|You are perceived only by a secondary sense (someone picks up your scent while you’re stalking them; you’re seen whispering a message but the message is not heard).|You must leave something important behind – or be discovered.>>",
 				"Take the Risk": "When [you perform a daring, risky, or outright stupid feat], roll+Power.((pbta))On a 10+, you do it, somehow. On a 7-9, things get messy. The MC will offer you a hard bargain or an ugly choice.",
+				"Voiceover Monologue (Session Start)": "[At the beginning of every session], one player goes into a monologue as his or her character, relating the character’s thoughts and feelings at this point in the story.",
+				"Flashback": "[Once per session, when you have the spotlight], choose 1:<<Describe an action carried out by your character in the past and make a move for that action. The outcome of the move affects the current scene.|Describe events from your character’s backstory that become relevant now. The MC can award you with 1 Juice or 1 Clue based on your description.>>",
+				"Montage (Downtime)": "Whenever your character has some downtime, choose one way to spend it:<<[Give attention] to one of your Logos (or extra) themes. Tell everyone at the table how you do it and mark Attention on that theme.|[Work the case.] Tell everyone at the table how you do it, and gain 3 Clues with a method and a source based on your description.|[Explore your Mythos.] Tell everyone at the table which Mystery you explore and how you do it. You gain 1 Clue with a method and a source based on your description. Mark Attention on that Mystery’s theme.|[Prepare for your next activity.] Tell everyone at the table how you prepare and choose one: recover all your burnt power tags OR gain 3 Juice with a method based on your description. You can choose from the effect improvements under {Change the Game}.|[Recover from you last activity.] For each ongoing status still affecting you, the MC will tell you if and how it can be reduced during your downtime and by how many tiers. Alternatively, the MC can allow you to reduce any or some of your statuses by one tier for each relevant tag you have.>>The MC can cue into any of the montage events and continue them as scenes.",
+				"Geek Out During Credits (Session End)": "[At the end of the session], when the credits roll, go around the table. Each player can answer one or more of the following questions:<<[How has the crew grown this session?] Recover a burnt crew power tag or mark Attention on a crew theme.|[Which character had the most meaningful interaction with your character this session?] Add one Help point or one Hurt point next to their name on your character card.|[Which of your themes is under the most strain? If it collapses, what new aspect will show up in its place?] Write down the answer under FLIPSIDE on that theme’s card.>>",
 				"Finally, Some Answers": "When [you find answers to your Mystery], choose one, two, or all three:<<You gain a deeper understanding of your Mythos, of the subject of your Mystery, or of the link between your Mystery and your Mythos. Mark Attention on the theme to which this Mystery belongs.|You are shocked by the discovery to the point of rejecting your Mythos or an aspect of your ordinary life. Mark Fade or Crack on any theme.|Your questions are answered. Choose a new Mystery for this theme.>>",
 				"End of the Road": "If [your Identity ever becomes resolved], rephrase it in the same spirit to describe a new goal, a greater scope, a new angle, etc. Alternatively, if this aspect of your life truly ended, you may replace this Identity’s theme.",
 				"Make a Hard Choice": "When [answers to your Mystery are within reach], but you forego them, mark Fade on that Mystery’s theme.||When [your Identity demands you act or speak in a given way and you don’t], mark Crack on that Identity’s theme.||When [you sacrifice something you truly want in order to abide by your Identity], mark Attention on that Identity’s theme.",
 				"Stop. Holding. Back.": "When [you use your powers in a new and never-before-seen way or scale], tell the MC what you hope to achieve. The MC will tell you the sacrifice it will take from you. Then roll+Logos.((pbta))On a hit, you achieve exactly what you wanted to achieve and pay the price:<<[Significant:] On a 7-9, mark Fade/Crack and burn all the power tags on one theme. On a 10+, mark Fade/Crack on one theme.|[No Return:] On a 7-9, replace one theme. On a 10+, mark Fade/Crack and burn all the power tags on one theme.|[Ultimate:] On a 7-9, you are killed, destroyed, or transformed forever (for now). Take a tier-6 status. You cannot {Face Danger}. On a 10+, replace one theme.>>On a 6 or less, you pay the price given for 7-9, but you also lose control over your powers or fail to use them as planned. The MC will decide how, and what the consequences are.",
-				"Complicate Things": "You introduce a new problem into the story. As of now, this problem is not a burning one, but it’s an opening for trouble: if mishandled or neglected, it can evolve into a significant threat. Such complications are always an obstacle or a threat on the way to the lead characters’ goals: information, friendship, victory, survival, moral integrity, obtaining an item, keeping their Identities intact, etc. Overcoming this new obstacle usually requires at least one successful player move.",
-				"Hit Them After a Fair Warning": "If the characters ignore or neglect an approaching threat for long enough, you can make a hard move against them instead of a soft move to reflect the threat becoming a reality. This assumes that you let the characters know about this threat using {Complicate Things}. When you play <u>Hit Them After a Fair Warning</u>, you don’t have to wait for the players to miss a move; you can play it whenever you have the spotlight.||||The number of warnings you give the players with {Complicate Things} before <u>Hit Them After a Fair Warning</u> can vary. Depending on your cinematic considerations and the pace of the game, you can go for shock and hit your players with a hard move after even a single warning, or spread it over several warnings, allowing the players time to handle other threats or creating a suspenseful atmosphere of something approaching. However, if you plan to hit them with a hard move, make sure your narration of {Complicate Things} divulges the severity of the situation. In other words, this move requires a fair warning, as the name denotes.||The use of this move does not have to be limited to a single scene; it can spread over several scenes or even sessions.",
-				"Optional: Activate Their Weakness Tags as Flaws": "If your group is using the optional rule <u>Weakness Tags as Flaws</u>, you can use a soft move to invoke a character’s weakness tag as a flaw. This allows you to then make a hard move against her without waiting for a missed roll. The player marks Attention on the theme to which the weakness tag belongs.",
-				"Complicate Things, Bigtime": "You introduce a new crisis into the story or escalate an existing problem into a crisis. The crisis is a real and immediate threat to the lead characters; it can cost the characters a great deal in the very near future. This crisis can affect the wellbeing of the lead characters, their lives, characters around them, the course of their investigation, the state of things in the City, etc. Mitigating the crisis usually requires several successful player moves and/or forces the players to sacrifice game resources (e.g., mark Fade or Crack, burn tags, spend Juice, etc.).",
-				"Deny Them Something They Want": "You declare that something that the characters want is no longer within their reach, at least not within the scope of the current scene. For example, a witness could get away, an item could be stolen, or a course of action could be revealed as dead-ended or impossible.",
-				"Make Something Horrible Happen": "Describe a shocking development for emotional effect. This could be the tragic loss, gruesome injury, or even sudden death of a non-player character, a personal loss of a lead character, a tragedy or catastrophe in the City, etc.",
-				"Turn Their Move Against Them": "Describe an outcome that is similar to what the character was trying to achieve in her action, but has negative implications instead.",
-				"Give a Status": "Give a status with a tag and a tier of your choice to a player character, an ally or an object belonging to player, or a non-player character or object. You can affect a single target, multiple targets, anyone within an area or who meet specific conditions, etc.||Narrate the development that inflicts the status and describe it. Name the [tag] and the [tier] of the status; they should describe the nature and severity of the condition the target would suffer if hit by the [[full power]] of the effect.||The nature of the effect defines how difficult it would be to defend from the status: whether a {Face Danger} move can be attempted and which tags, if any, may be relevant. For example, defending from a punch that causes a [[bruised-2]] status would require different abilities from those required to defend from an ancient curse that causes [[turned-to-stone-5]].||If the recipient of the status is a player character or one of its allies or objects, the player of that character may {Face Danger} to reduce or ignore the status, assuming the character is able to do so. You may also rule that the character is in a situation so deadly, hopeless, or dead-ended that she cannot {Face Danger}.||If the recipient is a non-player character or object, they take the status in full. If they have relevant Danger moves that modify the status, they apply. You can also use this move to give a Danger which is competing with the lead characters a positive status, such as [[cover-2]].",
-				"Reduce or Remove a Status": "Reduce the tier of any status in the game by any number of tiers or completely remove it, if appropriate. This could affect positive statuses that the crew members possess or negative statuses on Dangers.||You can also use this move to remove any number of Juice points a player has banked. This is appropriate when the advantage won by the player is no longer relevant.",
-				"Burn a Tag": "You burn one of the player characters’ power tags or story tags or a crew or extra power tag. Tell the player to mark the burn icon (🔥) next to it (or discard it, if it’s a temporary or ongoing story tag). The burnt tag can be recovered normally. Burning a tag represent an ability, item, ally, or resource that is rendered temporarily unusable.",
-				"Force Them to Choose": "Describe a development that forces a player to choose between two undesirable outcomes, each a hard MC Move in itself.||If the choice given to the player is based on the circumstances alone, they make the choice and suffer the undesirable outcome.||If one or more of the options involves the character’s or crew Mysteries or Identities, the player decides whether to invoke Make a Hard Choice. Read more about Mystery and Identity dilemmas under {Make a Hard Choice}.||Note that a hard MC move is not required for the player to Make a Hard Choice or for you to orchestrate a dilemma. Sometimes, the soft MC move {Complicate Things} can be enough to put the character in a position where she’s facing a difficult choice. However, using this hard MC move allows you introduce more pressure, putting the character on the spot and forcing her to choose."
+				"Season Premiere, Season Finale": "When all of you, including the MC, agree that your crew has a new overarching goal or purpose, you receive a new nascent crew theme (in addition to any existing ones) to represent this new aspect of your crew.||When all of you, including the MC, agree that the crew has achieved its overarching goal or purpose, take a new nascent extra theme for your crew.",
+				"Foreshadowing": "At the end of a session, if one of your Nemeses is still out there, roll+(the number of sessions since one of your Nemeses last appeared).((pbta))<<On a 10+, one of your Nemeses will overwhelm you or get the drop on you in the next session. When the MC introduces your Nemesis, she also gets to make a move as if you missed a player move.|On a 7-9, you can sense your Nemesis is coming but you’re not sure. The MC can choose whether to include your Nemesis in the next session or not. If she does, she does not get to make a surprise MC move.|On a miss, you’re safe for now. Your Nemesis will not take part in the next session.>>",
+				"Denying the Beyond": "When you are a Sleeper Denying the Beyond:<<Anyone and anything around you takes an immediate ongoing suppressed-Mythos-powers-5 status. They can only {Face Danger} if they have the ability to resist Mist effects.|Any existing Mythos-based story tags, statuses, and effects around you are either removed, temporarily suppressed, or revised to reflect a mundane version of themselves (MC’s choice)|The MC cannot use any Mythos-based moves.>>When affected targets leave your vicinity, all of the above effects expire. Removed statuses stay removed, suppressed statuses are restored, and revised statuses regain their original version.||[Trail:] You can make anyone or anything in your life who is not a Rift into a source of the same effect described above, as long as you regularly interact with them.",
+				"Escape From Memory": "When you {Sneak Around} and use your Clearance Level to avoid a Sleeper, roll+Mist instead of roll+Power. The move is Dynamite! You may not invoke any power tags or weakness tags, but statuses relating to your Clearance Level and ambient Mist statuses modify your final score.",
+				"Pull Rank": "When you {Convince} and issue an official order to a fellow Gatekeeper, you may first gain a temporary [[superior-rank]] status with a tier equal to the difference between your Mist ratings.||Similarly, when you {Convince} a Gatekeeper who outranks you, the MC can first give you a temporary [[outranked]] status with a tier equal to the difference between your Mist ratings.||For NPCs, consider their Mist rating to be 0 for a Trainee or Sleeper Staff, 1 for a low-ranking agent, 2 for middle-management or a specialist, and 3 for a high-ranking manager or a veteran.",
+				"Look Behind the Mist (Gatekeepers)": "When you pull aside the veil of the Mist by the authority given to you as a Gatekeeper, you can behold things as they truly are. Play it out like the {Investigate} move, but roll+Mist instead. On a hit, you get Clues=Mist.",
+				"Performance Review": "When you receive credit from your superiors for successfully accomplishing a task given to you as a Directive, mark Attention on its theme. You may also mark Crack on one of your Logos themes to represent an upcoming promotion.||When you are accused by your superiors of failing to accomplish a task given to you as a Directive or crossing a line defined by a Directive, mark 1 Strike on the Directive’s theme (2 Strikes if your transgression was especially severe, as chosen by your superiors).||When the Directive is resolved, or if your superiors elect to reassign you, choose an appropriate new Directive for this theme with the MC.",
+				"Make a Hard Choice (Gatekeepers)": "When following your Directive demands you act or speak in a given way and you don’t, if it’s discovered, it will show up on your {Performance Review}.||When your Identity demands you act or speak in a given way and you don’t, mark Crack on that Identity’s theme.||When you sacrifice something you truly want in order to abide by your Identity, mark Attention on that Identity’s theme.",
+				"Intrusions": "The rules require that you intrude into a player’s spotlight in a number of situations:<<Translating Story Into Rules|Triggering Moves|Determining Power|Determining the Outcome of Moves>>",
+				"Soft Moves": "You can make soft MC moves casually as you are narrating, e.g., when there is a pause in the conversation or in between player moves.<<Complicate Things|Hit Them After a Fair Warning|Optional: Activate Their Weakness Tags as Flaws>>",
+				"Hard Moves": "Hard MC moves are dire complications and predicaments; you can only make hard moves when a player scores a miss (six or less) on a player move, or elsewhere where the rules say so specifically.||Note that this does not apply to the player move {Face Danger}, which, when missed, does not trigger a hard MC move.<<Complicate Things, Bigtime|Deny Them Something They Want|Make Something Horrible Happen|Turn Their Move Against Them|Give a Status|Reduce or Remove a Status|Burn a Tag|Force Them to Choose>>"
 			},
 			oracle_lists: {
-				dilemmas: ["Allies:Dilemma:dilemmas:allies", "Situational:Dilemma:dilemmas:situational", "Objects:Dilemma:dilemmas:objects", "Powers:Dilemma:dilemmas:powers"],
+				dilemmas: ["Allies:Dilemma:dilemmas:allies", "Situational:Dilemma:dilemmas:situational", "Objects:Dilemma:dilemmas:objects", "Powers:Dilemma:dilemmas:powers", "Random:Dilemma:dilemmas:random",],
 			},
 			oracles: {
 				dilemmas: {
-					"allies": ["<i>Make Something Horrible Happen:</i> Your ally, familiar, or loved one is grievously hurt or killed, or your conjuration causes collateral damage.", "<i>Deny Them What They Want:</i> Your ally, familiar, loved one, or conjuration has been turned against you somehow. You must make amends.", "<i>Burn A Tag:</i> Your ally, familiar, loved one, or conjuration becomes pinned, dispelled or otherwise unable to act.", "<i>Give A Status (cannot Face Danger):</i> Your ally, familiar, loved one, or conjuration receives a status from the Danger, and cannot avoid it.", "<i>Give A Status (can Face Danger):</i> You intercept an attack meant for your ally, familiar, loved one, or conjuration, and must Face Danger.", "<i>Give A Status (positive status for the opposition):</i> Your opposition gains a helpful status, distracting you by threatening your ally, familiar, loved one.", "<i>Remove A Status (yours):</i> You must abandon a helpful status in order to protect your ally, familiar, loved one, or conjuration.", "<i>Remove A Status (the opposition’s):</i> Your ally, familiar, loved one, or conjuration does something that unknowingly helps your opposition.", "<i>Reduce A Status (yours) or Remove Banked Juice:</i> Your ally, familiar, loved one, or conjuration unintentionally wrecks a part of your plan.", "<i>Reduce A Status (the opposition’s):</i> Your opposition recovers from a harmful status by stealing your ally’s resources, life energy, or magic.", "<i>Turn Their Move Against Them:</i> Your attack misses and accidentally hits your ally, familiar, loved one, or conjuration.", "<i>Complicate Things, Bigtime (add a threat or Nemesis):</i> A new threat or your Nemesis goes after your ally, familiar, loved one, or conjuration.", "<i>Complicate Things, Bigtime (alter the setting):</i> You are separated from your allies."],
-					"situational": ["<i>Make Something Horrible Happen:</i> A bystander or hostage is grievously hurt or killed by your opposition or collateral damage.", "<i>Deny Them What They Want:</i> Your opposition flees the scene, or achieves their objective.", "<i>Burn A Tag:</i> A helpful tactical advantage is lost or destroyed by your opposition, collateral damage, or bad luck.", "<i>Give A Status (cannot Face Danger):</i> You fall for your opposition’s trap and suffer a status you cannot avoid.", "<i>Give A Status (can Face Danger):</i> Your opposition sees an opening, forcing you to press your luck to avoid their attack or trap.", "<i>Give A Status (positive status for the opposition):</i> Your opposition gains the higher ground or the upper hand, and earns a helpful status.", "<i>Remove A Status (yours):</i> Unexpected changes in the situation cause you to lose a tactical or strategic advantage.", "<i>Remove A Status (the opposition’s):</i> Your opposition finds a strategy to offset a negative status affecting them, or finds a way to heal quickly.", "<i>Reduce A Status (yours) or Remove Banked Juice:</i> Your opposition becomes wise to your plans or inquiries, and changes plans to adapt.", "<i>Reduce A Status (the opposition’s):</i> Your opposition is making progress on a strategy to remove a negative status affecting them.", "<i>Turn Their Move Against Them:</i> Your attack misses and accidentally causes structural or collateral damage.", "<i>Complicate Things, Bigtime (add a threat or Nemesis):</i> A new threat or your Nemesis enters the scene or otherwise complicates the situation.", "<i>Complicate Things, Bigtime (alter the setting):</i> Your surroundings become precarious, or you end up somewhere new with different pitfalls."],
-					"objects": ["<i>Make Something Horrible Happen:</i> An important object in your hands or nearby is broken beyond repair or falls somewhere you can’t get to.", "<i>Deny Them What They Want:</i> Something the crew is after is snatched up by an antagonist who runs with it or seals it away.", "<i>Burn A Tag:</i> An object- or gear-based tag is rendered useless, suddenly jams or freezes, or breaks completely.", "<i>Give A Status (cannot Face Danger):</i> An object nearby cannot avoid being damaged, tangled, or destroyed.", "<i>Give A Status (can Face Danger):</i> Something threatens an object you hold but you can try blocking the attack with your body.", "<i>Give A Status (positive status for the opposition):</i> The opposition gains a piece of gear or a Mist-powered object that gives them a positive status.", "<i>Remove A Status (yours):</i> You lose an advantage from a piece of gear you rely on.", "<i>Remove A Status (the opposition’s):</i> The opposition has a piece of gear or a Mist-powered object that lets them remove a negative status.", "<i>Reduce A Status (yours) or Remove Banked Juice:</i> A piece of gear overheats, starts to fail, or otherwise becomes unreliable, throwing your plans into disarray.", "<i>Reduce A Status (the opposition’s):</i> The opposition has a piece of gear or a Mist-powered object that lets them heal or reduce a negative status.", "<i>Turn Their Move Against Them:</i> Instead of affecting the opposition, your weapon gives the intended status to your ally, who cannot avoid it.", "<i>Complicate Things, Bigtime (add a threat or Nemesis):</i> Your use of gear or powerful object draws the attention of an enemy that arrives on the scene focused on you.", "<i>Complicate Things, Bigtime (alter the setting):</i> Using the object has pulled the Mist into this area and it temporarily dampens Mythos powers (tags)."],
-					"powers": ["<i>Make Something Horrible Happen:</i> Your powers backlash in a way that reveals your Mythos to someone who will use that info against you.", "<i>Deny Them What They Want:</i> Your powers misfire and allow the opposition to get away or gain control of something they want.", "<i>Burn A Tag:</i> You use too much power or rely on your Mythos in an incompatible way, temporarily disrupting your powers.", "<i>Give A Status (cannot Face Danger):</i> An innocent bystander, nearby building, or prominent object cannot avoid being affected by your powers.", "<i>Give A Status (can Face Danger):</i> Your powers turn against you in some way unless you can control them.", "<i>Give A Status (positive status for the opposition):</i> You try to help but your powers inadvertently give a positive status to the opposition.", "<i>Remove A Status (yours):</i> You lose control of your powers and an advantage you created fizzles out.", "<i>Remove A Status (the opposition’s):</i> A moment of distraction allows an antagonist to shrug off an effect your powers have inflicted on them.", "<i>Reduce A Status (yours) or Remove Banked Juice:</i> The dual nature of the City suddenly fills you with uncertainty or distracts you, and your plans to fall apart.", "<i>Reduce A Status (the opposition’s):</i> Your powers inadvertently heal your opposition or mitigate a negative status affecting them.", "<i>Turn Their Move Against Them:</i> Your powers have the exact opposite effect that you are trying to achieve.", "<i>Complicate Things, Bigtime (add a threat or Nemesis):</i> Your Mythos calls out to similar legends, bringing the attention of a Rift opposed to you, or Gatekeepers.", "<i>Complicate Things, Bigtime (alter the setting):</i> Your Mythos changes your Logos (your appearance, life, or relationships) to better reflect its story."]
+					"allies": ["[[Make Something Horrible Happen:]] Your ally, familiar, or loved one is grievously hurt or killed, or your conjuration causes collateral damage.", "[[Deny Them What They Want:]] Your ally, familiar, loved one, or conjuration has been turned against you somehow. You must make amends.", "[[Burn A Tag:]] Your ally, familiar, loved one, or conjuration becomes pinned, dispelled or otherwise unable to act.", "[[Give A Status (cannot Face Danger):]] Your ally, familiar, loved one, or conjuration receives a status from the Danger, and cannot avoid it.", "[[Give A Status (can Face Danger):]] You intercept an attack meant for your ally, familiar, loved one, or conjuration, and must Face Danger.", "[[Give A Status (positive status for the opposition):]] Your opposition gains a helpful status, distracting you by threatening your ally, familiar, loved one.", "[[Remove A Status (yours):]] You must abandon a helpful status in order to protect your ally, familiar, loved one, or conjuration.", "[[Remove A Status (the opposition’s):]] Your ally, familiar, loved one, or conjuration does something that unknowingly helps your opposition.", "[[Reduce A Status (yours) or Remove Banked Juice:]] Your ally, familiar, loved one, or conjuration unintentionally wrecks a part of your plan.", "[[Reduce A Status (the opposition’s):]] Your opposition recovers from a harmful status by stealing your ally’s resources, life energy, or magic.", "[[Turn Their Move Against Them:]] Your attack misses and accidentally hits your ally, familiar, loved one, or conjuration.", "[[Complicate Things, Bigtime (add a threat or Nemesis):]] A new threat or your Nemesis goes after your ally, familiar, loved one, or conjuration.", "[[Complicate Things, Bigtime (alter the setting):]] You are separated from your allies."],
+					"situational": ["[[Make Something Horrible Happen:]] A bystander or hostage is grievously hurt or killed by your opposition or collateral damage.", "[[Deny Them What They Want:]] Your opposition flees the scene, or achieves their objective.", "[[Burn A Tag:]] A helpful tactical advantage is lost or destroyed by your opposition, collateral damage, or bad luck.", "[[Give A Status (cannot Face Danger):]] You fall for your opposition’s trap and suffer a status you cannot avoid.", "[[Give A Status (can Face Danger):]] Your opposition sees an opening, forcing you to press your luck to avoid their attack or trap.", "[[Give A Status (positive status for the opposition):]] Your opposition gains the higher ground or the upper hand, and earns a helpful status.", "[[Remove A Status (yours):]] Unexpected changes in the situation cause you to lose a tactical or strategic advantage.", "[[Remove A Status (the opposition’s):]] Your opposition finds a strategy to offset a negative status affecting them, or finds a way to heal quickly.", "[[Reduce A Status (yours) or Remove Banked Juice:]] Your opposition becomes wise to your plans or inquiries, and changes plans to adapt.", "[[Reduce A Status (the opposition’s):]] Your opposition is making progress on a strategy to remove a negative status affecting them.", "[[Turn Their Move Against Them:]] Your attack misses and accidentally causes structural or collateral damage.", "[[Complicate Things, Bigtime (add a threat or Nemesis):]] A new threat or your Nemesis enters the scene or otherwise complicates the situation.", "[[Complicate Things, Bigtime (alter the setting):]] Your surroundings become precarious, or you end up somewhere new with different pitfalls."],
+					"objects": ["[[Make Something Horrible Happen:]] An important object in your hands or nearby is broken beyond repair or falls somewhere you can’t get to.", "[[Deny Them What They Want:]] Something the crew is after is snatched up by an antagonist who runs with it or seals it away.", "[[Burn A Tag:]] An object- or gear-based tag is rendered useless, suddenly jams or freezes, or breaks completely.", "[[Give A Status (cannot Face Danger):]] An object nearby cannot avoid being damaged, tangled, or destroyed.", "[[Give A Status (can Face Danger):]] Something threatens an object you hold but you can try blocking the attack with your body.", "[[Give A Status (positive status for the opposition):]] The opposition gains a piece of gear or a Mist-powered object that gives them a positive status.", "[[Remove A Status (yours):]] You lose an advantage from a piece of gear you rely on.", "[[Remove A Status (the opposition’s):]] The opposition has a piece of gear or a Mist-powered object that lets them remove a negative status.", "[[Reduce A Status (yours) or Remove Banked Juice:]] A piece of gear overheats, starts to fail, or otherwise becomes unreliable, throwing your plans into disarray.", "[[Reduce A Status (the opposition’s):]] The opposition has a piece of gear or a Mist-powered object that lets them heal or reduce a negative status.", "[[Turn Their Move Against Them:]] Instead of affecting the opposition, your weapon gives the intended status to your ally, who cannot avoid it.", "[[Complicate Things, Bigtime (add a threat or Nemesis):]] Your use of gear or powerful object draws the attention of an enemy that arrives on the scene focused on you.", "[[Complicate Things, Bigtime (alter the setting):]] Using the object has pulled the Mist into this area and it temporarily dampens Mythos powers (tags)."],
+					"powers": ["[[Make Something Horrible Happen:]] Your powers backlash in a way that reveals your Mythos to someone who will use that info against you.", "[[Deny Them What They Want:]] Your powers misfire and allow the opposition to get away or gain control of something they want.", "[[Burn A Tag:]] You use too much power or rely on your Mythos in an incompatible way, temporarily disrupting your powers.", "[[Give A Status (cannot Face Danger):]] An innocent bystander, nearby building, or prominent object cannot avoid being affected by your powers.", "[[Give A Status (can Face Danger):]] Your powers turn against you in some way unless you can control them.", "[[Give A Status (positive status for the opposition):]] You try to help but your powers inadvertently give a positive status to the opposition.", "[[Remove A Status (yours):]] You lose control of your powers and an advantage you created fizzles out.", "[[Remove A Status (the opposition’s):]] A moment of distraction allows an antagonist to shrug off an effect your powers have inflicted on them.", "[[Reduce A Status (yours) or Remove Banked Juice:]] The dual nature of the City suddenly fills you with uncertainty or distracts you, and your plans to fall apart.", "[[Reduce A Status (the opposition’s):]] Your powers inadvertently heal your opposition or mitigate a negative status affecting them.", "[[Turn Their Move Against Them:]] Your powers have the exact opposite effect that you are trying to achieve.", "[[Complicate Things, Bigtime (add a threat or Nemesis):]] Your Mythos calls out to similar legends, bringing the attention of a Rift opposed to you, or Gatekeepers.", "[[Complicate Things, Bigtime (alter the setting):]] Your Mythos changes your Logos (your appearance, life, or relationships) to better reflect its story."],
+					"random": [">dilemmas:allies", ">dilemmas:situational", ">dilemmas:objects", ">dilemmas:powers"]
+				},
+				npcs: {
+					"how awakened they are": ["[[Sleeper:]] The NPC is not a Rift at all but a Sleeping denizen of the City, yet unaware of the mystical.||Do not generate Mythos.", "[[Awakening:]] The Rift is just starting to realize that there is something different about them.", "[[Touched:]] The Rift is coming to terms with her Mythos, but might lose it if her mundane life keeps her away from her Mythos.||-OR-||The Rift is not individually awakened and receives her awakening and powers from another, more powerful Rift.", "[[Borderliner:]]  The Rift is walking the line between becoming her legend and maintaining her ordinary identity.", "[[Legendary:]]  The Rift has almost entirely opened up to her Mythos and is less involved in her mundane life. Nevertheless, she still has one last thing that keeps her grounded.", "[[Avatar:]]  The Rift has fully shed her mortal coil and is the full embodiment of her legend."],
+					"their mythos": ["Assassin (Cain, Feng Meng, Hashishiyyin)", "Blacksmith God/dess (Ogun, Tvastar, Vulcan)", "Beast (Big Bad Wolf, Qilin, Shere Khan)", "Commoner Thief (Aladdin, Goldilocks, Jack and the Beanstalk)", "Construct (Frankenstein’s monster, Golem of Prague, Talos)", "Creature of Darkness (Naga, Vampire, Wendigo)", "Mischievous Fairy or Spirit (Gremlin, Rumplestiltskin, Coyote)", "Monstrosity (Cyclops, Manticore, Yamata no Orochi)", "Musician (Pied Piper of Hamelin, Orpheus, Han Xiangzi)", "Nature Spirit (Anito, Dryad, Kami)", "Nature God/dess (Aja, The Horned God, Yum Kaax)", "Prince (Lancelot, Panji, Paris of Troy)", "Demigod or Giant (Gilgamesh, Hercules, Paul Bunyan)", "Elemental Creature (Alicanto, Ifrit, Sylph)", "Fertility God/dess (Dagda, Ishtar, Persephone)", "Folk Hero/ine (Hansel & Gretel, Moremi Ajasoro, Vasilisa)", "Ghost (Banshee, Bloody Mary, Hamlet’s father)", "Good Fairy or Spirit (Angel, Eudaemon, Fairy Godmother/ father)", "Princess (Lady Godiva, Rapunzel, Yennenga)", "Prophet or Seer (Cassandra, Laozi, Utnapishtim)", "Queen (Cleopatra, Guinevere, Wu Zetian) 54 Seafarer (Captain Ahab, Sinbad, Zheng He)", "Sun God/dess (Amaterasu, Apollo, Ra)", "Swashbuckler (The Three Musketeers, Zorro, The Count of Monte Cristo)", "Healer (Ashvins, Ixchel, Shennong)", "Hunter or Woodsperson (Artemis, Finn MacCool, Robin Hood)", "King (Indra, Jade Emperor, King Solomon)", "Knight (El Cid, Jeanne d’Arc, Miyamoto Musashi)", "Knowledge God/dess (Odin, Saraswati, Wenchang Wang)", "Military Leader (Gajah Mada, Hua Mulan, Tomyris)", "Talking Animal (Puss in Boots, Reynard the Fox, Serpent of Eden)", "Trickster God/dess (Anansi, Eris, Loki)", "Underworld God/dess (Anubis, Pluto, Xolotl)", "Warrior (Achilles, Tomyris, William Wallace)", "Witch (Baba Yaga, The Evil Queen, Witch of Endor)", "Wizard or Sorcerer (Merlin, Wizard of Oz, Zhang Jue)"],
+					"their logos": ["Attorney at Law", "Bartender / Barista", "Beat Officer", "Bodega Cashier", "Bounty Hunter / Mercenary", "Boxer / Professional Fighter", "Mailroom Clerk", "Mortician", "Politician", "Plumber", "Private Investigator", "PR Manager", "Cat Burglar", "Construction Worker", "Crime Lord", "Detective", "Delivery Person", "Doctor", "Retired Citizen", "School Pupil / University Student", "School Teacher / University Professor", "Socialite", "Stage Performer", "Stock Broker", "Technician", "Ticket Scalper", "(Used) Car Salesperson", "Vagrant", "Vigilante", "Waiter / Waitress Table", "Gardener", "Getaway Driver", "Grocery Store Attendant", "Hairdresser", "Homemaker", "Journalist"],
+					"how they awakened": ["[[Gradually:]] She started noticing strange things about herself, her life in the City, about her family, friends, or coworkers.", "[[Exposure:]] She was exposed to a legendary happening around her, pushing her to become aware of her own legend.", "[[Purposefully:]] She was part of an experiment, a ritual, or a premeditated event that led to her awakening (whether she’s already aware of it or not).", "[[Violently:]] She was the victim of a Rift or their actions, or that her victimhood enabled her to find her powers.","[[Relic, Familiar, or Enclave:]] She found, was found, or even chosen by an item, animal, or location in the City, opening her up to the mythical.", "[[Mythos Resonance:]] She awakened while doing something in accordance with or directly against her Mythos."],
+					"their mythos motivation": ["To reenact a certain part of her story in the City", "To overcome a challenge she faced or best an enemy from her story", "To find people who fit major roles in her story, and make them act according to it", "To save someone or protect something from her story", "To obtain an important item from her story", "To become who she is at the end of her story, physically and/or mentally"],
+					"their logos motivation": ["Establish something (an institution, a store, a restaurant, etc.)", "Help someone specific (family member, friend, etc.)", "Help a community or group", "Provide for her family", "Cover a debt", "Return a favor", "Make something of herself", "Learn all she can about a topic", "Achieve something that will make her well known", "Get first place in a contest or competition", "Get the recognition she believes she deserves", "Find her place in the world", "Get some peace and quiet", "Just keep to her daily routine", "Be more liked or get more friends", "Repair her failing relationship(s) or social circle(s)", "Avoid someone or something", "Discontinue a relationship (lover, close friend, family member, etc.)", "Attract or date someone", "Have kids", "Care for her kids or grandkids", "Enjoy her married life", "Keep her adultery secret", "Go on a far away trip", "Hatred toward someone or something", "Greed (for wealth, or for something else)", "General anger at the world", "Envy (at someone, or for something)", "Chasing an impossible dream", "Change something about herself", "Train for an emergency service role (police, paramedic, firefighter, etc.)", "Be accepted for a lucrative position (government, corporate, etc.)", "Urban exploration", "Uncover a grand conspiracy (the Gatekeepers, the Mist, etc.)", "Cover or uncover facts from her past life", "Foodie (try out all kinds of food in the City)"]
+				},
+				crimes: {
+					"the crime": ["Animal Abuse", "Bribe ", "Fencing", "Arson", "Burglary", "Fraud", "Assassination", "Drug Abuse", "Hacking", "Assault", "Embezzlement", "Hijacking", "Blackmail", "Espionage", "Identity Theft", "Bombing", "Extortion", "Kidnapping", "Larceny", "Prison Break", "Smuggling", "Loansharking", "Racketeering", "Tagging (Graffiti)", "Loitering", "Rioting", "Trafficking of Objects (drugs, arms, art and antiques)", "Money Laundering", "Robbery", "Trafficking of Humans (Sleepers / Rifts)", "Murder", "Sexual Abuse", "Trespassing", "Price Fixing", "Shooting", "Vandalism"],
+					"the wrong": ["Betrayal", "Bullying", "Infidelity", "Lying or hiding the truth", "Psychological abuse", "Taking something belonging to another, even if lawfully"],
+					"the problem": ["Disagreement", "Hazard to health or safety", "Natural disaster", "Loss or suicide", "Misfortune (whether by pure chance or mythically induced)", " Rivalry"],
+					"the rifts involvement": ["The Rift herself committed a crime, or has wronged someone.", "The existence, presence, or activity of this Rift puts at risk something important to a resident or residents of the City: their lives, their health, their property, their own (possibly illegal) activity, their lifestyle, their quality of life, etc.", "This Rift clashed with another legendary or mundane individual or group, either because of their Mythos or Logos, and possibly affecting others in the process.", "The Rift has taken the first steps in a planned crime or a scheme targeting a person of importance, a group, a population, or the lead characters themselves.", "The Rift is a victim of a crime, or was used by someone else for some wrongdoing, either knowingly or unknowingly.", "The instigating Rift for this case isn’t human; it’s an Enclave, a Relic or a Familiar. However, this instigating Rift is sought by others (most likely the human Rift(s) you’ve created), but maybe by other Rifts who are part of the same mythical story."]
+				},
+				scope: {
+					"the scope": ["[[Limited:]]  A personal drama or tragedy", "[[Small:]] A case with several victims (e.g. a serial killer striking the boardwalk)", "[[Local  Big trouble in a little neighborhood", "[[Large:]] Fighting factions (e.g. a gang war between two districts)", "[[Deep:]] An intra-organizational investigation (e.g. police Internal Affairs dealing with large scale corruption or a cover-up)", "[[All-encompassing:]]  A City-wide catastrophe"],
+					"the theme": ["Love triangle gone bad", "Organized crime", "A heist", "Illegal or unethical experiments", "Corporate shenanigans or political corruption", "Police inefficiency, corruption, or brutality"],
+					"the format": ["[[Whodunit:]] All suspects are present but hiding the truth for their own reasons", "[[Cold case:]] Digging up and putting together old evidence to solve an old case or stop someone still on the loose", "[[The clock is ticking:]] Uncover and foil an evil scheme before it’s too late", "[[A quest narrative:]] The protagonists set off in search of some sort of prize or to achieve a certain goal (this could be either the crew or an NPC(s) that the crew is helping)", "[[Overcoming the monster:]] Going against an antagonist. It may be a group, such as a faceless police force and the person in charge, or more concrete such as a drug trafficking gang, or a particular individual such as a powerful person suspected of murder; alternatively, it can even be a non-human agent, like a natural or magical force", "[[Unusual:]]||a) It’s a bottle episode (the entire investigation takes place in the same location), or||b) it’s told in a roundabout way (the end is played before the beginning), or||c) it takes place in the past or the future (or both at the same time)"]
+				},
+				hooks: {
+					"how the crew hears about the case": ["The victim(s) of the affected party approach the crew, they are in need", "Someone related to the victim approaches the crew, they ask for help or an investigation", "Someone affected by a 2nd or 3rd degree consequence of the crime approaches the crew, on a matter that only connects into the bigger case after being investigated. (e.g. a supporting cast member who lives in an old tenement building tells the crew of strange noises coming from the building’s basement, which turn out to be an illegal drug lab, missing person case, etc.)", "The perpetrator(s) or their allies approach the crew themselves, under cover or in the open, to blackmail, warn, or ask for help with a situation that is going out of control", "Reports of crime in the media draw the attention of the crew, based on issues that matter to them", "The crew members are witnesses, or the evidence crops up during the crew members’ investigation of their Mysteries or of a crew Mystery"],
+					"when the crew comes in": ["The deed is done; the crew must find the perpetrator(s)", "The deed is done, but the crew must stop it from happening again", "The act has been committed, but it’s only a small step on the way to a bigger crime", "A crime is currently taking place, and the crew must stop it", "The crew is at the scene shortly before the event is about to unfold", "Something is brewing somewhere, the crew must find out what it is and stop it"],					
+				},
+				backstory: {
+					"unexpected developments": ["[[“The truth runs deeper than you know”:]] The truth you originally chose only appears to be the truth; in fact, there is someone else behind the entire case, or it’s all just a consequence of some deeper or darker event.", "[[“There’s always a middleman”:]] The actions of the Rift didn’t affect as directly as you originally planned. Instead, there were additional steps in the chain reaction that eventually alerted the crew. There’s some need that must be met: a matter of timing, skills, resources, etc., which requires someone to use someone else or go through somewhere.", "[[“Remember that other incident?”:]] The main Rift involved is not the only side to the story – there are multiple parties involved and their actions had different consequences that floated up separately but are in fact tied.||-OR-||The crimes, wrongs, or problems didn’t have only one effect, they had multiple consequences that only appeared unrelated.", "[[The Bodyguard:]] The main Rift is indeed culpable, but they’re working to protect the main culprit by either masking as the main villain, covering up for them, taking the blame, etc.", "[[The Blindside:]] A third party with motives that conflict with both the the main villain and the crew shows up", "[[The Redeemable:]] The main villain starts off as bad, but is actually doing it for a good cause, because of extreme circumstances, or has other redeeming reasons or qualities"]
 				}
 			}
 		},
 		masks: {
 			move_lists: {
 				"Basic": ["Directly Engage a Threat", "Unleash Your Powers", "Defend Someone", "Assess the Situation", "Provoke Someone", "Comfort or Support Someone", "Pierce the Mask", "Take a Powerful Blow"],
-				"Influence": ["Accept What They Say", "Take Advantage of Influence", "Rejecting Influence"],
+				"Influence": ["Accept Influence", "Take Advantage of Influence", "Rejecting Influence"],
 				"Team": ["Act Selfishly", "Enter Battle Against a Dangerous Foe"],
 				"Session": ["Start the Session", "End the Session", "Time Passes"],
 				"Adult": ["Wield Your Powers", "Overwhelm a Vulnerable Foe", "Persuade With Best Interests", "Empathize", "Stand Up for Something"],
-				"GM Moves": ["Inflict a Condition", "Take Influence Over Someone", "Bring Them Together", "Capture Someone", "Put Innocents in Danger", "Show the Costs of Collateral Damage", "Reveal the Future, Subtly or Directly", "Announce Between-Panel Threats", "Make Them Pay a Price for Victory", "Turn Their Move Back on Them", "Tell Them the Possible Consequences and Ask", "Tell Them Who They Are or Who They Should Be", "Bring an NPC to Rash Decisions and Hard Conclusions", "Activate the Downsides of Their Abilities and Relationships", "Make a Playbook Move", "Make a Villain Move"]
+				"GM": ["GM Moves", "Playbook Moves", "Villain Moves"]
 			},
 			moves: {
+				"Standard Roll": "This is a standard roll for checks not covered by the moves.((pbta))",
 				"Directly Engage a Threat": "When you [directly engage a threat], roll + Danger.((pbta))On a hit, trade blows. On a 10+, pick two. On a 7-9, pick one:<<resist or avoid their blows|take something from them|create an opportunity for your allies|impress, surprise, or frighten the opposition>>",
-				"Unleash Your Powers": "When you [unleash your powers] to overcome an obstacle, reshape your environment, or extend your senses, roll + ((pbta))On a hit, you do it. On a 7-9, mark a condition or the GM will tell you how the effect is unstable or temporary.",
-				"Defend Someone": "When you [defend someone or something] from an immediate threat, roll + Savior.((pbta))For NPC threats: on a hit, you keep them safe and choose one. On a 7-9, it costs you:<<expose yourself to danger or escalate the situation.|add a Team to the pool|take Influence over someone you protect|clear a condition>>For PC threats: on a hit, give them -2 to their roll. On a 7-9, you expose yourself to cost, retribution, or judgment.",
+				"Unleash Your Powers": "When you [unleash your powers] to overcome an obstacle, reshape your environment, or extend your senses, roll + Freak.((pbta))On a hit, you do it. On a 7-9, mark a condition or the GM will tell you how the effect is unstable or temporary.",
+				"Defend Someone": "When you [defend someone or something] from an immediate threat, roll + Savior.((pbta))For NPC threats: on a hit, you keep them safe and choose one. On a 7-9, it costs you: expose yourself to danger or escalate the situation.<<add a Team to the pool|take Influence over someone you protect|clear a condition>>For PC threats: on a hit, give them -2 to their roll. On a 7-9, you expose yourself to cost, retribution, or judgment.",
 				"Assess the Situation": "When you [assess the situation], roll + Superior.((pbta))On a 10+, ask two. On a 7-9, ask one. Take +1 while acting on the answers.<<what here can I use to ________?|what here is the biggest threat?|what here is in the greatest danger?|who here is most vulnerable to me?|how could we best end this quickly?>>",
-				"Provoke Someone": "When you [provoke someone] susceptible to your words, say what you’re trying to get them to do and roll + Superior.((pbta))For NPCs: on a 10+, they rise to the bait and do what you want. On a 7-9, they can instead choose one:<<they stumble: you take +1 forward against them|they err: you gain a critical opportunity|they overreact: you gain influence over them For PCs: on a 10+, both. On a 7-9, choose one.|if they do it, add a Team to the pool|if they don’t do it, they mark a condition>>",
+				"Provoke Someone": "When you [provoke someone] susceptible to your words, say what you’re trying to get them to do and roll + Superior.((pbta))For NPCs: on a 10+, they rise to the bait and do what you want. On a 7-9, they can instead choose one:<<they stumble: you take +1 forward against them|they err: you gain a critical opportunity|they overreact: you gain influence over them>>For PCs: on a 10+, both. On a 7-9, choose one.<<if they do it, add a Team to the pool|if they don’t do it, they mark a condition>>",
 				"Comfort or Support Someone": "When you [comfort or support someone], roll + Mundane.((pbta))On a hit, they hear you: they mark potential, clear a condition, or shift Labels if they open up to you. On a 10+, you can also add a Team to the pool or clear a condition yourself.",
 				"Pierce the Mask": "When you [pierce someone’s mask] to see the person beneath, roll + Mundane.((pbta))On a 10+, ask three. On a 7-9, ask one.<<what do you intend to do?|how could I get your character to ___?|how could I gain Influence over you?|what are you really planning?|what do you want me to do?>>",
 				"Take a Powerful Blow": "When you [take a powerful blow], roll + conditions marked.((pbta))On a 10+, choose one:<<you must remove yourself from the situation: flee, pass out, etc.|you lose control of yourself or your powers in a terrible way|two options from the 7-9 list>>On a 7-9, choose one:<<you lash out verbally: provoke a teammate to foolhardy action or take advantage of your Influence to inflict a condition|you give ground; your opposition gets an opportunity |you struggle past the pain; mark two conditions>>On a miss, you stand strong. Mark potential as normal, and say how you weather the blow.",
-				"Accept What They Say": "When [someone with Influence over you tells you who you are or how the world works], accept what they say or reject their influence. If you accept what they say, the GM adjusts your Labels accordingly; if you want to keep your Labels as they are, you must reject their Influence.",
+				"Accept Influence": "When [someone with Influence over you tells you who you are or how the world works], accept what they say or reject their influence. If you accept what they say, the GM adjusts your Labels accordingly; if you want to keep your Labels as they are, you must reject their Influence.",
 				"Take Advantage of Influence": "When you [take advantage of your Influence] over someone, surrender the Influence you hold over them to choose one:<<give them -2 on a move they just made (after the roll)|inflict a condition on them|take an additional +1 on a move targeting them (after the roll)>>",
 				"Rejecting Influence": "When you [reject someone’s Influence], roll.((pbta))On a hit, you successfully hold to yourself and tune them out. On a 10+, choose two. On a 7-9, choose one.<<clear a condition or mark potential by immediately acting to prove them wrong|shift one Label up and one Label down, your choice|cancel their Influence and take +1 forward against them>>On a miss, their words hit you hard. Mark a condition, and the GM adjusts your Labels.",
 				"Act Selfishly": "When you [act selfishly], say how your actions ignore or insult your teammates, remove one Team from the pool, and shift one Label up and one Label down, your choice. You can use this option after rolling to alter the Label you’re rolling with.",
@@ -628,26 +679,13 @@
 				"End the Session": "At the [end of every session], choose one:<<Grow closer to the team. Explain who made you feel welcome; give Influence to that character and clear a condition or mark potential.|Grow into your own image of yourself. Explain how you see yourself and why; shift one Label up and another down.|Grow away from the team. Explain why you feel detached. Take Influence over you away from another character.>>",
 				"Wield Your Powers": "When you [wield your powers] with precision or grace, roll + Freak.((pbta))On a hit, choose one. On a 10+, choose two.<<take hold of something vulnerable to you|create something useful from your environment|neutralize an opponent or threat, at least for now>>",
 				"Time Passes": "Whenever [time passes], the GM empties the Team pool and restores it to one Team.",
-				"Overwhelm a Vulnerable Foe": "When you [overwhelm a vulnerable foe], roll +Danger.((pbta))On a hit, the fight’s over. They’re done. On a 10+, choose one. On a 7-9, choose two.<<you take a powerful blow in turn|you hurt your foe more than you intended|you cause serious collateral damage>>",
-				"Persuade With Best Interests": "When you [persuade someone with their best interests], roll +Superior.((pbta))If they’re an NPC, on a 10+, they buy it and act accordingly. On a 7-9, they need concrete assurance, right now.||If they’re a PC, on a hit, they can mark potential or shift their own Labels if they do what you want. On a 10+, take Influence over them as well.",
-				"Empathize": "When you openly [empathize with someone], roll +Mundane.((pbta))On a hit, they must reveal a vulnerability or mark a condition. On a 10+, take Influence over them as well.",
-				"Stand Up for Something": "When you [stand up for something], roll +Savior.((pbta))On a 10+, choose two. On a 7-9, choose one.<<listeners can’t keep doing what they’re doing|listeners can’t flee without addressing you|listeners can’t attack you without losing status or position>>",
-				"Inflict a Condition": "Young heroes lead stressful lives! [Inflict a condition] to clarify how intense the pressure’s getting, how they’re negatively affected by all that’s coming at them. Inflicting a condition always leads to more fiction, which is exactly what you want. When you [inflict a condition], you should only tell the PC which condition if you have a very clear idea for it.",
-				"Take Influence Over Someone": "Young heroes often leave themselves vulnerable. They open themselves up and find themselves affected by the words of people they thought they could ignore. That’s you [taking Influence over someone]. You’re flagging that the PCs don’t have as much control over their own emotions as they might want...that they don’t always get to pick and choose whose words matter to them.",
-				"Bring Them Together": "The young heroes will do a bang-up job of separating themselves. They’ve all got their own stuff to worry about, their own interests and ideas to pursue. It’s your job to bring ’em back together and connect the disparate elements of their lives so they wind up encountering each other again in surprising places and ways. You don’t have to make them love each other—but you do need to point them at each other.",
-				"Capture Someone": "Lock people down. Put them into dangerous situations, with no clear way out. Do it to the PCs, or to people the PCs care about. Sometimes you can even just straight up capture characters, having the villain take them to a secret lair or something similar. When you [capture someone], you amp up the stakes, giving the heroes a chance to be heroes and save their friend.",
-				"Put Innocents in Danger": "Halcyon City is full of people, and they may be used to the superhuman conflict that riddles the city, but they aren’t immune to it or safe from it. That’s why heroes are needed in the first place—to keep people safe. When Rampage throws a car, it has to go somewhere, and that means people are often put in danger. [Putting innocents in danger] ups the ante, and gives the heroes a chance to be heroes.",
-				"Show the Costs of Collateral Damage": "It’s easy to just pass over and ignore the damage when buildings get destroyed, cars trashed, streets torn up. Halcyon City’s gotten pretty darn good at cleaning up that kind of destruction, after all. But that doesn’t mean someone doesn’t come calling, demanding that the PCs take responsibility for the damage they’ve caused—especially when it’s important structures, or people, who’ve been hurt. Show them the costs and the penalties for letting that damage ensue.",
-				"Reveal the Future, Subtly or Directly": "The characters in MASKS are the future of this city. They’ll determine what Halcyon City becomes. So keep showing them the future and the possible paths they’re on. Sometimes you can do this in a straightforwardly comic book fashion—literally, showing them the future through time portals or future versions of themselves or whatever. But other times, do it indirectly, through current figures that might represent what they’re becoming.",
-				"Announce Between-Panel Threats": "Halcyon City marches on, even while the heroes deal with other problems and issues. Between scenes, outside of the conversation, villains may take action that threatens the heroes and their interests. When you need to make a move, you can [announce those threats]. Draw attention to them. Show a villain cackling ominously, or have them make veiled allusions to what they’ve done—or just straight up announce it, publicly. Villains can be a pompous bunch, after all.",
-				"Make Them Pay a Price for Victory": "You can open paths for the heroes to come through victoriously, having another hero or even a villain arrive with a way to succeed—but always at a price. The villain will only help if you give them something you shouldn’t; the hero offers help, but only in exchange for your team agreeing to follow her lead in the future.",
-				"Turn Their Move Back on Them": "Sometimes, all you have to do to make a move is flip around the move a PC just made. They tried to [pierce someone’s mask]? Great! Pierce theirs, and ask them some questions. They tried to [provoke someone]? Great! Provoke them, telling them to do something nasty. When you turn their move back on them, always do it as if it was a 10+ result.",
-				"Tell Them the Possible Consequences and Ask": "Sometimes, the path to victory is clear—but it won’t come without taking a few hits along the way. You can always tell a PC exactly what will happen if they follow a particular course of action, giving them a difficult choice to make or a messy option they hadn’t considered. It raises the tension around their choice and decisions, while still keeping things moving forward.",
-				"Tell Them Who They Are or Who They Should Be": "Adults and other NPCs who hold Influence over the PCs are always telling the PCs exactly who to be. How to act. What to think. Do it, and do it often. This almost always means they have to shift their Labels or reject the NPC’s Influence, and that’s exactly what you want.",
-				"Bring an NPC to Rash Decisions and Hard Conclusions": "NPCs don’t always know what’s best. They judge situations quickly and harshly and, especially when they have power of their own, they act just as quickly. Those decisions can set in motion all kinds of mayhem and future moves. Don’t hesitate to take advantage of an opportunity in which an NPC would jump to a wrong conclusion.",
-				"Activate the Downsides of Their Abilities and Relationships": "Every ability has a downside; every relationship comes with responsibility. Bring those into play to increase the pressure on the PCs. Make the problems and difficulties of each PC’s abilities and relationships come up to counterbalance the benefits.",
-				"Make a Playbook Move": "Every playbook has its own unique issues and themes to deal with. You can make these moves any time you could make any other GM move.||[The Beacon]<<Draw attention to their inadequacies|Praise their best traits|Make them pay for their audacity|Compare them to the others|Play to their drives>>[The Bull]<<Endanger their love|Bolster their rival|Reveal dark secrets of their past|Attack with someone just like them|Swarm with mundane forces>>[The Delinquent]<<Put them in chains|Give or take an audience|Give them conditional love|Show them the line|Offer a helping hand>>[The Doomed]<<Mark their doom track|Offer a chance to further their cause|Remind them of what they could lose|Push them to the brink|Offer temporary relief with a cost>>[The Janus]<<Bring their obligations to bear|Endanger someone from either life|Make their lives cross over|Put more obligations on them|Take away their mask>>[The Legacy]<<Remind them of their traditions|Compare them to the past|Make them answer their family’s concerns|Raise expectations on them|Honor them>>[The Nova]<<Remind them of past collateral damage|Reveal a terrible truth of their powers|Make their powers flare out of control|Stoke their conditions|Introduce threats only they can tackle>>[The Outsider]<<Draw attention to their differences|Make a request from home|Introduce a monitor from home|Accept and support them in their moments of weakness|Provoke their beliefs and practices in tense situations>>[The Protégé]<<Convey their mistakes|Bestow wisdom, wanted or unwanted|Hold up a mirror to them|Give them exactly what they need at a cost|Endanger their mentor>>[The Transformed]<<Reject them|Show how they are feared or hated|Attack them with unthinking hordes|Remind them of what they’ve lost|See their true self>>",
-				"Make a Villain Move": "Like the playbook moves, every villain you make has a few moves of their own. You can make these moves when you would make any other move, so long as the villain’s involved in the situation. They always amp up the situation, and highlight that villain’s own particular idiom.<h3>Villains in a Fight</h3>Here are the core guidelines that villains follow in fights:<<When a villain gets hit hard, by trading blows or in other situations, they mark a condition as appropriate.|When a villain marks a condition, they make a move from the condition moves list immediately, before the PCs act again.|When you need to say what the villain does next, look to your GM moves, their villain moves, and the condition moves.|When a villain needs to mark a condition but can’t, they are defeated.|Villains can flee or give up long before all their conditions are filled— don’t think they have to fight to the bitter end.>>Villains, and NPCs in general, always try to clear conditions—they always choose to open up after a PC’s successful comfort or support move.||Beyond always seeking to clear conditions as the result of a PC’s successful comfort or support move, villains clear conditions when you think it fictionally appropriate, most likely after time has passed and they’ve had the chance to get over their feelings.<h3>Conditions</h3>These are GM moves for villains to make immediately after they’ve marked a condition, and any time you’d make a GM move after that.||[Afraid]<<Hide out of harm’s way|Flee from danger or difficulty|Lash out without thought at a threat|Plead for mercy|Throw up blocks and walls>>[Angry]<<Vent through unthinking violence|Break the environment|Shut down conversation|Lash out at any vulnerability|Escalate the situation dangerously>>[Guilty]<<Seek forgiveness|Sacrifice anything or everything for redemption|Turn to the unthinkable|Implicate others in guilt|Reveal the nature of their drive>>[Hopeless]<<Give up without a fight|Burn down the world around them|Seek any light in the dark|Undermine others’ beliefs|Veer toward drastic and terrible action>>[Insecure]<<Double down on broken plans or ideas|Follow the lead of someone else|Doubt and question their own allies and plans|Admit wrongful action|Recede into the background>>",
+				"Overwhelm a Vulnerable Foe": "When you [overwhelm a vulnerable foe], roll + Danger.((pbta))On a hit, the fight’s over. They’re done. On a 10+, choose one. On a 7-9, choose two.<<you take a powerful blow in turn|you hurt your foe more than you intended|you cause serious collateral damage>>",
+				"Persuade With Best Interests": "When you [persuade someone with their best interests], roll + Superior.((pbta))If they’re an NPC, on a 10+, they buy it and act accordingly. On a 7-9, they need concrete assurance, right now.||If they’re a PC, on a hit, they can mark potential or shift their own Labels if they do what you want. On a 10+, take Influence over them as well.",
+				"Empathize": "When you openly [empathize with someone], roll + Mundane.((pbta))On a hit, they must reveal a vulnerability or mark a condition. On a 10+, take Influence over them as well.",
+				"Stand Up for Something": "When you [stand up for something], roll + Savior.((pbta))On a 10+, choose two. On a 7-9, choose one.<<listeners can’t keep doing what they’re doing|listeners can’t flee without addressing you|listeners can’t attack you without losing status or position>>",
+				"GM Moves": "You [make a move]—as hard or as soft as you like—when:<<...there’s a lull in the conversation.|...a player misses a roll.|...a player hands you a golden opportunity.>>Here's your basic moves.||<<Inflict a Condition|Take Influence Over Someone|Bring Them Together|Capture Someone|Put Innocents in Danger|Show the Costs of Collateral Damage|Reveal the Future, Subtly or Directly|Announce Between-Panel Threats|Make Them Pay a Price for Victory|Turn Their Move Back on Them|Tell Them the Possible Consequences and Ask|Tell Them Who They Are or Who They Should Be|Bring an NPC to Rash Decisions and Hard Conclusions|Activate the Downsides of Their Abilities and Relationships|Make a Playbook Move|Make a Villain Move>>",
+				"Playbook Moves": "[The Beacon]<<Draw attention to their inadequacies|Praise their best traits|Make them pay for their audacity|Compare them to the others|Play to their drives>>[The Bull]<<Endanger their love|Bolster their rival|Reveal dark secrets of their past|Attack with someone just like them|Swarm with mundane forces>>[The Delinquent]<<Put them in chains|Give or take an audience|Give them conditional love|Show them the line|Offer a helping hand>>[The Doomed]<<Mark their doom track|Offer a chance to further their cause|Remind them of what they could lose|Push them to the brink|Offer temporary relief with a cost>>[The Janus]<<Bring their obligations to bear|Endanger someone from either life|Make their lives cross over|Put more obligations on them|Take away their mask>>[The Legacy]<<Remind them of their traditions|Compare them to the past|Make them answer their family’s concerns|Raise expectations on them|Honor them>>[The Nova]<<Remind them of past collateral damage|Reveal a terrible truth of their powers|Make their powers flare out of control|Stoke their conditions|Introduce threats only they can tackle>>[The Outsider]<<Draw attention to their differences|Make a request from home|Introduce a monitor from home|Accept and support them in their moments of weakness|Provoke their beliefs and practices in tense situations>>[The Protégé]<<Convey their mistakes|Bestow wisdom, wanted or unwanted|Hold up a mirror to them|Give them exactly what they need at a cost|Endanger their mentor>>[The Transformed]<<Reject them|Show how they are feared or hated|Attack them with unthinking hordes|Remind them of what they’ve lost|See their true self>>[The Innocent]<<Confront them with their future self|Mirror the steps on their future self’s path|Show them an absurdity of the present (their future)|Show them an artifact of the past (their present)|Judge them by their future self’s standard>>[The Joined]<<Offer them, and them alone, opportunities for success or fun|Flaunt the abilities and successes of their other half in front of them|Mistake them and their other half for being each other, or a single entity|Express interest in them, and them alone|Separate them>>[The Newborn]<<Teach them a new lesson|Correct an existing lesson|Push one of their lessons to the brink|Remind them of their fundamental inhumanity|Exert ownership or control over them as a piece of property>>[The Reformed]<<Remind them of what they’ve done|Ask them for a criminal or villainous favor|Doubt them from a position of moral superiority|Offer them solace with a criminal or villainous source|Confront them with a nightmare from their past>>[The Star]<<Reinterpret their actions in the media|Make a demand from their audience|Offer an opportunity for public attention|Offer an opportunity for quiet heroism|Demean their superficiality>>[The Harbinger]<<Center a plot around their “remembered” characters|Undermine what they think they know|Reveal clear future paths|Evoke the pleasures of the present|Show the timeline ripples of their actions>>[The Nomad]<<Introduce bizarre elements from their adventures|Offer them solace, comfort, and the feeling of home|Threaten what anchors they have|Restrain and confine them|Show them how little they really know>>[The Scion]<<Blame them for their parent’s deeds|Grant them respect|Make demands on them|Interrogate their reasons or deeds|Introduce characters tied to their parent>>[The Brain]<<Confront them with their Shame|Complicate their solution or gadget|Present an impossible problem to solve|Judge them for their overconfidence|Show them how they need others>>[The Soldier]<<Give them new orders, active and tense|Endanger their allies in the organization|Reward their faith and commitment|Reveal signs of corruption|Review their performance>>",
+				"Villain Moves": "<h3>Villains in a Fight</h3>Here are the core guidelines that villains follow in fights:<<When a villain gets hit hard, by trading blows or in other situations, they mark a condition as appropriate.|When a villain marks a condition, they make a move from the condition moves list immediately, before the PCs act again.|When you need to say what the villain does next, look to your GM moves, their villain moves, and the condition moves.|When a villain needs to mark a condition but can’t, they are defeated.|Villains can flee or give up long before all their conditions are filled— don’t think they have to fight to the bitter end.>>Villains, and NPCs in general, always try to clear conditions—they always choose to open up after a PC’s successful comfort or support move.||Beyond always seeking to clear conditions as the result of a PC’s successful comfort or support move, villains clear conditions when you think it fictionally appropriate, most likely after time has passed and they’ve had the chance to get over their feelings.***<h3>Conditions</h3>These are GM moves for villains to make immediately after they’ve marked a condition, and any time you’d make a GM move after that.||[Afraid]<<Hide out of harm’s way|Flee from danger or difficulty|Lash out without thought at a threat|Plead for mercy|Throw up blocks and walls>>[Angry]<<Vent through unthinking violence|Break the environment|Shut down conversation|Lash out at any vulnerability|Escalate the situation dangerously>>[Guilty]<<Seek forgiveness|Sacrifice anything or everything for redemption|Turn to the unthinkable|Implicate others in guilt|Reveal the nature of their drive>>[Hopeless]<<Give up without a fight|Burn down the world around them|Seek any light in the dark|Undermine others’ beliefs|Veer toward drastic and terrible action>>[Insecure]<<Double down on broken plans or ideas|Follow the lead of someone else|Doubt and question their own allies and plans|Admit wrongful action|Recede into the background>>"
 			}
 		}
 	};
@@ -662,7 +700,10 @@
 	var chaos, focus, progress, acting_rank, difficulty_rank;
 
 	// pbta
-	var pbta_move_type = "";
+	var pbta_menu = "";
+	var pbta_custom_move_text = {};
+	var pbta_custom_moves = {};
+	var pbta_custom_tables = {};
 
 	// mine
 	var twist_counter;
@@ -739,6 +780,13 @@
 	}
 
 	function saveSettings() {
+		var item;
+		if ("pbta_custom_moves" in soloData) {
+			for (item in soloData.pbta_custom_moves) {
+				if (!soloData.pbta_custom_moves[item].trim().length) delete soloData.pbta_custom_moves[item];
+			}
+		}
+
 		var settingsData = JSON.stringify(soloData);
 		localStorage.setItem("finola_rpg_settings", settingsData);
 	}
@@ -746,6 +794,7 @@
 	function loadSettings() {
 		var settingsData = localStorage.getItem("finola_rpg_settings");
 		soloData = JSON.parse(settingsData) || {};
+		soloData.pbta_custom_moves = soloData.pbta_custom_moves || {};
 		return soloData;
 	}
 
@@ -757,12 +806,184 @@
 		try { return window.self !== window.top;} 
 		catch (e) { return true; }
 	}
+	
+	function getIndex(text, token, pos) {
+		if (!pos) pos = 0;
+		else {
+			if (pos > text.length - 1) return -1;
+			text = text.substring(pos);
+		}
+		
+		var regex = "(?<!\\\\)" + token.replace(/([\\()[\]{}|+])/g, "\\$1");
+		var match = text.match(RegExp(regex));
+		if (match === null) return -1;
+		return match.index + pos;
+	}
+
+	function getMarkup(text, open, close) {
+		/*
+			Parses the text by the open and close tags.
+
+			- Performs tag matching, so it will only return the markup of the
+			  outer most block.
+			- Only looksk for first instance of open tag, so 'after' text may
+			  contain more markup.
+
+			text (string): Text to be parsed.
+			open (string): Open tag.
+			close (string): Close tag.
+
+			returns (object):
+				before (string): Text before markup block.
+				markup (string): Text containing markup block.
+				after (string): Text after markup block.
+		*/
+
+		var firstIndex = getIndex(text, open);
+		if (firstIndex === -1) return {"before": "", "markup": "", "after": text};
+
+		var markup;
+		var lastIndex = 0;
+		var closeIndex;
+		var closeLength;
+
+		while (closeIndex !== -1) {
+			closeIndex = getIndex(text, close, lastIndex);
+			
+			if (closeIndex === -1) break;
+			lastIndex = closeIndex + close.length;
+			markup = text.substring(firstIndex, lastIndex);
+			if (markup.split(open).length === markup.split(close).length) break;
+		}
+
+		if (closeIndex === -1) {
+			console.error("Script:", text);
+			throw new Error("Unmatched " + open + " and " + close + " tokens.");
+		}
+
+		var before = text.substring(0, firstIndex);
+		var after = text.substring(closeIndex + close.length);
+		var inner = markup.substring(open.length, markup.length - close.length);
+
+		return {"before": before, "markup": markup, "inner": inner, "after": after};
+	}
+
+	function parseMarkup(text, open, close, action) {
+		/*
+			Indexes through text, performing 'action' function on parsed markup.
+
+			text (string): Text to parse.
+			open (string): Open markup tag.
+			close (string): Close markup tag.
+			action (function): Function to be applied to markup object.
+
+			returns (text): Modified text.
+		*/
+
+		if (getIndex(text, open) === -1) return text;
+
+		var before;
+		var result = "";
+		var temp = getMarkup(text, open, close);
+
+		while (temp.markup.trim().length) {
+			before = temp.before;
+			text = temp.after;
+
+			result += before + action(temp);
+			temp = getMarkup(text, open, close);
+		}
+
+		return result + temp.after;
+	}
+
+	function getToken(text) {
+		/*
+			Finds first token block token.
+
+			text (string): Text containing token to find.
+
+			returns (object):
+				token (string): Token found.
+				index: (integer): Index in string of token.
+		*/
+
+		var checkIndex = function(token_type, value) {
+			if (value === -1) return;
+			if (value > index) return;
+
+			token = token_type;
+			index = value;
+		}
+		
+		var match;
+		var index = text.length;
+		var list_index = getIndex(text, "<<");
+		var table_index = getIndex(text, "{{");
+		var move_index = getIndex(text, "{");
+		
+		var token = false;
+		checkIndex("list", list_index);
+		checkIndex("table", table_index);
+		checkIndex("move", move_index);
+		
+		return {"token": token, "index": index};
+	}
+
+	function splitMarkup(text, split_token) {
+		/*
+			Splits text by the 'split_token'. Text inside token blocks is ignored.
+
+			text (string): Text to split.
+			split_token (string): Token to split string with.
+
+			returns (array): An array of the split text.
+		*/
+
+		if (getIndex(text, split_token) === -1) return [text];
+
+		var tokens = {
+			"list": ["<<", ">>"],
+			"table": ["{{", "}}"],
+			"move": ["{", "}"]
+		}
+
+		var match, offset;
+		var items = [];
+		var before = "";
+		var a, split_index, temp, script;
+
+		// 1000 loops as a safety measure. It should break the loop before that.
+		for (a = 0; a < 1000; ++a) {
+			temp = getToken(text);
+
+			split_index = getIndex(text, split_token);
+			
+			if (split_index !== -1 && split_index < temp.index) {
+				items.push(before + text.substring(0, split_index))
+				before = "";
+				text = text.substring(split_index + split_token.length);
+				continue;
+			}
+
+			if (!temp.token) {
+				before += text;
+				text = "";
+				items.push(before);
+				break;
+			}
+
+			script = getMarkup(text, tokens[temp.token][0], tokens[temp.token][1]);
+			before += text.substring(0, temp.index + script.markup.length);
+			text = text.substring(temp.index + script.markup.length);
+		}
+
+		return items;
+	}
 
 	function display(text) {
 		removeClass("display", "full-width");
 		scrollToTop();
-		
-		//$("#display").innerHTML = text;
 		fadeIn("#display", 0, text);
 		return true;
 	}
@@ -887,7 +1108,7 @@
 		if (isArray(arguments[0])) arguments = arguments[0];
 		
 		for (a = 0; a < arguments.length; ++a) {
-			if (/^<[uo]l>/.test(arguments[a])) output += arguments[a];
+			if (/^<([uo]l|div|table|details|h\d+) /.test(arguments[a])) output += arguments[a];
 			else output += "<p>" + arguments[a] + "</p>";
 		}
 		
@@ -901,7 +1122,7 @@
 		if (isArray(arguments[0])) arguments = arguments[0];
 		
 		for (a = 0; a < arguments.length; ++a) {
-			if (/^<[uo]l>/.test(arguments[a])) output += arguments[a];
+			if (/^<([uo]l|div|table|details|h\d+) /.test(arguments[a])) output += arguments[a];
 			else output += "<p>" + arguments[a] + "</p>" ;
 		}
 		
@@ -962,18 +1183,39 @@
 
 	function showPage(page, section) {
 		var getPbtAPage = function(page, game) {
-			if (RegExp("^" + game + "\\-oracle\\-list:").test(page)) return showPbtAOracleList(game, page.replace(RegExp("^" + game + "\\-oracle\\-list:(.+)"), "$1"));
+			// moves
+			if (RegExp("^" + game + "\\-move\\-list:").test(page)) {
+				pbta_menu = page;
+				return showPbtAMoveList(game, page.replace(RegExp("^" + game + "\\-move\\-list:(.)"), "$1"));
+			}
+			else if (RegExp("^" + game + "\\-move:").test(page)) return showPbtAMove(game, page.replace(RegExp("^" + game + "\\-move:(.+)"), "$1"));
+			
+			// custom moves
+			else if (RegExp("^" + game + "\\-custom\\-move\\-list").test(page)) {
+				pbta_menu = page;
+				return showPbtACustomMoveList(game, /:save$/.test(page));
+			}
+			else if (RegExp("^" + game + "\\-edit\\-custom\\-moves").test(page)) return editPbtACustomMoves(game);
+			else if (RegExp("^" + game + "\\-custom\\-move:").test(page)) return showPbtAMove(game, page.replace(RegExp("^" + game + "\\-custom\\-move:(.+)"), "$1"), true);
+
+			// oracles
+			else if (RegExp("^" + game + "\\-oracle\\-list:").test(page)) {
+				pbta_menu = page;
+				return showPbtAOracleList(game, page.replace(RegExp("^" + game + "\\-oracle\\-list:(.+)"), "$1"));
+			}
 			else if (RegExp("^" + game + "\\-oracle:").test(page)) {
 				page = page.match(RegExp("^" + game + "\\-oracle:([^:]+):(.+)"));
 				return showPbtAOracle(game, page[1], page[2]);
 			}
-			else if (RegExp("^" + game + "\\-move\\-list:").test(page)) {
-				pbta_move_type = page;
-				return showPbtAMoveList(game, page.replace(RegExp("^" + game + "\\-move\\-list:(.+)"), "$1"));
+			
+			// generators
+			else if (RegExp("^" + game + "\\-generator\\-list:").test(page)) {
+				pbta_menu = page;
+				return showPbtAGeneratorList(game, page.replace(RegExp("^" + game + "\\-generator\\-list:(.+)"), "$1"));
 			}
-			else if (RegExp("^" + game + "\\-move:").test(page)) return showPbtAMove(game, page.replace(RegExp("^" + game + "\\-move:(.+)"), "$1"));
+			else if (RegExp("^" + game + "\\-generator:").test(page)) return showPbtAGenerator(game, page.replace(RegExp("^" + game + "\\-generator:(.+)"), "$1"));
 
-			if (RegExp("^" + game).test(page)) pbta_move_type = "";
+			if (RegExp("^" + game).test(page)) pbta_menu = "";
 			
 			return false;
 		};
@@ -1000,9 +1242,7 @@
 		}
 
 		// PbtA
-		else if (getPbtAPage(page, "city_of_mist")) return;
-		else if (getPbtAPage(page, "starforged")) return;
-		else if (getPbtAPage(page, "masks")) return;
+		else if (/^(city_of_mist|starforged|masks)/.test(page) && getPbtAPage(page, page.replace(/^(city_of_mist|starforged|masks).+/, "$1"))) return;
  
 		else if (/^motif/.test(page)) return showMotif(/:roll$/.test(page));
 		else if (page === "scene") return showScene();
@@ -1022,6 +1262,8 @@
 			if (page[1] === "discussion") return showUneDiscussion(page[2]);
 		}
 		else if (/^calypso:/.test(page)) return showMeaning("Motif", "calypso", page.replace(/^calypso:(.+)/, "$1"));
+
+		pbta_menu = "";
 
 		var links = {
 			mythic: [
@@ -1056,7 +1298,11 @@
 				]]
 			],
 			starforged: [
-				["Chance", [["Dice", "dice"]]],
+				["Rolls", [
+					["Standard", "starforged-move:Standard Roll"],
+					["Progress", "starforged-move:Progress Roll"],
+					["Custom", "starforged-custom-move-list"]
+				]],
 				["Moves", getPbtAMoveTypes("starforged")],
 				["Oracles", [
 					["Core", "starforged-oracle-list:core"],
@@ -1067,14 +1313,22 @@
 				]]
 			],
 			"city of mist": [
-				["Chance", [["Dice", "dice"]]],
+				["Rolls", [
+					["Standard", "masks-move:Standard Roll"],
+					["Custom", "city_of_mist-custom-move-list"]
+				]],
 				["Moves", getPbtAMoveTypes("city_of_mist")],
-				["Oracles", [
-					["Dilemmas", "city_of_mist-oracle-list:dilemmas"]
+				["Oracles", [["Dilemmas", "city_of_mist-oracle-list:dilemmas"]]],
+				["Generators", [
+					["Rift NPC", "city_of_mist-generator:npc"],
+					["Case Concept", "city_of_mist-generator-list:case"]
 				]]
 			],
 			masks: [
-				["Chance", [["Dice", "dice"]]],
+				["Rolls", [
+					["Standard", "masks-move:Standard Roll"],
+					["Custom", "masks-custom-move-list"]
+				]],
 				["Moves", getPbtAMoveTypes("masks")]
 			],
 			misc: [
@@ -1110,7 +1364,7 @@
 			]
 		};
 		
-		var toc = Object.keys(links);
+		toc = Object.keys(links);
 		links = links[current_menu];
 
 		var a, b, id, list;
@@ -1154,10 +1408,12 @@
 			});
 		}
 		
-		$("#menu-options").addEventListener("change", function() { 
+		$("#menu-options").addEventListener("change", function() {
 			current_menu = this.value;
 			current_page = "";
 			current_section = "";
+			pbta_custom_moves = {};
+			pbta_custom_tables = {};
 			saveSettings(soloData.current_menu = current_menu);
 			showPage();
 		});
@@ -1216,26 +1472,30 @@
 			console.log("{" + output + "},");
 		}
 
+		var defineSettings = function() {
+			checkLocalStorage();
+			loadSettings();
+			chaos = (soloData.chaos || 5);
+			focus = (soloData.focus || "random event");
+			progress = (soloData.progress || 0);
+			current_menu = (soloData.current_menu || "mythic");
+			color_theme = (soloData.color_theme || "dark");
+			drawn_card = (soloData.drawn_card || []);
+			playing_cards = (soloData.playing_cards || shuffleCards());
+			twist_counter = (soloData.twist_counter || 0);
+			acting_rank = (soloData.acting_rank || "Average");
+			difficulty_rank = (soloData.difficulty_rank || "Average");
+			quick_rolls_text = (soloData.quick_rolls || "");
+			pbta_custom_move_text = (soloData.pbta_custom_moves || {});
+			parseQuickRolls();
+
+			if (inIframe()) addClass($("html")[0], "iframe");
+			setColorTheme(color_theme);
+		};
+
 		// findUniques(muse.meanings.adjective, 20000)
 		
-		checkLocalStorage();
-		loadSettings();
-		chaos = (soloData.chaos || 5);
-		focus = (soloData.focus || "random event");
-		progress = (soloData.progress || 0);
-		current_menu = (soloData.current_menu || "mythic");
-		color_theme = (soloData.color_theme || "dark");
-		drawn_card = (soloData.drawn_card || []);
-		playing_cards = (soloData.playing_cards || shuffleCards());
-		twist_counter = (soloData.twist_counter || 0);
-		acting_rank = (soloData.acting_rank || "Average");
-		difficulty_rank = (soloData.difficulty_rank || "Average");
-		quick_rolls_text = (soloData.quick_rolls_text || "");
-		quick_rolls = (soloData.quick_rolls || []);
-
-		if (inIframe()) addClass($("html")[0], "iframe");
-		setColorTheme(color_theme);
-		
+		defineSettings();
 		showPage();
 	};
 
@@ -1273,18 +1533,23 @@
 		}
 	}
 
-	function showPbtAMove(game, name) {
+	function showPbtAMove(game, name, custom) {
 		var insertTable = function(table) {
-			if (!(table in muse[game].moves_tables)) return "<table class='move-table'><tr><td><s>table:" + table + "</s></td></tr></table>";
+			if (custom && (table in pbta_custom_tables)) table = pbta_custom_tables[table];
+			else if (("move_tables" in muse[game]) && (table in muse[game].move_tables)) table = muse[game].move_tables[table];
+			else return "<table class='move-table'><tr><td><s>table:" + table + "</s></td></tr></table>";
 
-			table = muse[game].moves_tables[table];
 			var a, b, output;
 			var list = [];
 			var rolled = (table.rolled) ? " rolled" : "";
 			var header = (table.header) ? "<th>" + table.header.join("</th><th>") + "</th>" : "";
 			
 			for (a = 0; a < table.rows.length; ++a) {
-				list.push("<td>" + table.rows[a].join("</td><td>") + "</td>");
+				output = "";
+				for (b = 0; b < table.rows[a].length; ++b) {
+					output += "<td>" + replaceMarkup(table.rows[a][b]) + "</td>";
+				}
+				list.push(output);
 			}
 
 			return "<table class='move-table" + rolled + "'>" + header + "<tr>" + list.join("</tr><tr>") + "</tr></table>";
@@ -1306,6 +1571,11 @@
 			}
 			else if (type === "pbta") output += "<td class='label'>d6</td>" + getDieLink(1, 6) + getDieLink(1, 6);
 			else if (type === "progress") output += "<td class='label'>d10</td>" + getDieLink(1, 10) + getDieLink(1, 10);
+			else if (type === "d6") output += "<td class='label'>d6</td>" + getDieLink(1, 6);
+			else if (type === "d8") output += "<td class='label'>d8</td>" + getDieLink(1, 8);
+			else if (type === "d10") output += "<td class='label'>d10</td>" + getDieLink(1, 10);
+			else if (type === "d12") output += "<td class='label'>d12</td>" + getDieLink(1, 12);
+			else if (type === "d20") output += "<td class='label'>d20</td>" + getDieLink(1, 20);
 			else if (type === "d100") output += "<td class='label'>d100</td>" + getDieLink(1, 100);
 			else output += "<td><s>dice:" + type + "</s></td>";
 
@@ -1315,39 +1585,175 @@
 		};
 
 		var replaceMarkup = function(text) {
-			text = text.replace(/\<\</g, "<ul class='move-list'><li>");
-			text = text.replace(/\>\>/g, "</li></ul>");
-			text = text.replace(/\|\|/g, "</p><p>");
-			text = text.replace(/\|/g, "</li><li>");
-			text = text.replace(/\[\[/g, "<i>");
-			text = text.replace(/\]\]/g, "</i>");
-			text = text.replace(/\[/g, "<b>");
-			text = text.replace(/\]/g, "</b>");
-			text = text.replace(/\(\(([^)]+)\)\)/g, function(m, p1) { return getDice(p1); });
-			text = text.replace(/\{\{([^}]+)\}\}/g, function(m, p1) { return insertTable(p1); });
-			text = text.replace(/\{([^}]+)\}/g, function(m, p1) {
-				if (!(p1 in muse[game].moves)) return "<s>&lt;move:" + p1 + "&gt;</s>";
-				return "<a onclick='solo.showPage(\"" + game + "-move:" + p1 + "\")'>" + p1 + "</a>";
+			text = parseMarkup(text, "<<", ">>", function(el) {
+				return "<ul class='move-list'><li>" + replaceMarkup(el.inner).replace(/(?<!\\)\|/g, "</li><li>") + "</li></ul>";
 			});
-			text = text.replace(/<p><ul/g, "<ul");
-			text = text.replace(/<\/ul><\/p>/g, "</ul>");
-			text = text.replace(/<p><table/g, "<table");
-			text = text.replace(/<\/table><\/p>/g, "</table>");
-			text = text.replace(/\*\*\*/g, spacer);
+			text = parseMarkup(text, "((", "))", function(el) { return getDice(el.inner); });
+			text = parseMarkup(text, "{{", "}}", function(el) { return insertTable(el.inner); });
+			
+			text = parseMarkup(text, "{", "}", function(el) {
+				el = el.inner.split(/(?<!\\)\|/);
+				var p1 = el.shift();
+				var p2 = (el.length) ? el.join("|") : p1;
+				
+				if (custom && (p1 in pbta_custom_moves)) return "<a onclick='solo.showPage(\"" + game + "-custom-move:" + p1 + "\")'>" + (p2 || p1) + "</a>";
+				if (p1 in muse[game].moves) return "<a onclick='solo.showPage(\"" + game + "-move:" + p1 + "\")'>" + (p2 || p1) + "</a>";
+				return "<s>&lt;move:" + p1 + "&gt;</s>";
+			});
+			
+			text = text.replace(/(?<!\\)\|\|/g, "</p><p>");
+			text = text.replace(/(?<!\\)\[\[/g, "<i>");
+			text = text.replace(/(?<!\\)\]\]/g, "</i>");
+			text = text.replace(/(?<!\\)\[/g, "<b>");
+			text = text.replace(/(?<!\\)\]/g, "</b>");
+			text = text.replace(/<p>\s*<ul/g, "<ul");
+			text = text.replace(/<\/ul>\s*<\/p>/g, "</ul>");
+			text = text.replace(/<p>\s*<table/g, "<table");
+			text = text.replace(/<\/table>\s*<\/p>/g, "</table>");
+			text = text.replace(/(?<!\\)\*\*\*/g, "<div class='move-spacer'></div>");
 			text = text.replace(/(?<!^)(?<!:\n|\/p>|\/ul>|\/table>|\/div>|\/h\d>)(<(?:ul|table|div|h\d))/g, "</p>$1");
-			text = text.replace(/(\/(?:ul|table|div|h\d)>)(?!$)(?!:\n|<p|<ul|<table|<div|<h\d)/g, "$1<p>");
+			text = text.replace(/(\/(?:ul|table|div|h\d)>)\s*(?!$)(?!:\n|<p|<ul|<table|<div|<h\d)/g, "$1<p>");
+			text = text.replace(/\\([\[\](){}<>|*])/g, "$1");
 			return text;
 		};
 
 		var die_count = 0;
+		var move = (custom) ? pbta_custom_moves[name] : muse[game].moves[name];
 		
 		return display(
-			"<h2>" + name + "</h2>" + getBackLink(false, pbta_move_type) + 
-			"<p>" + replaceMarkup(muse[game].moves[name]) + "</p>"
+			getDataHeader("<h2>" + name + "</h2>" + getBackLink(false, pbta_menu)) + 
+			getDataFooter(replaceMarkup(move))
 		);
 	}
 
-	function showPbtAOracle(game, label, oracle) {
+	function showPbtACustomMoveList(game, save) {
+		var saveMoves = function() {
+			pbta_custom_move_text[game] = $("#custom-moves").value || "";			
+			soloData.pbta_custom_moves[game] = pbta_custom_move_text[game];
+			pbta_menu = pbta_menu.replace(/(.+):save$/, "$1");
+			saveSettings();
+		};
+
+		var parseMoves = function() {
+			if (!(game in pbta_custom_move_text)) pbta_custom_move_text[game] = "";
+
+			var input = pbta_custom_move_text[game].replace("'", "");
+			input = input.replace('"', '');
+
+			var move_text = input;
+			var table_text = input;
+			var a, row, rows, match;
+
+			pbta_custom_moves = {};
+			pbta_custom_tables = {};
+
+			while ((match = move_text.match(/(?<!\\)\s*##\s*((?:(?!##|\n|\|)[\w\W])+)\s*(?:##|\n)\a*((?:(?!@@|##)[\w\W])+)/)) !== null) {
+				move_text = move_text.substr(match[0].length);
+				pbta_custom_moves[match[1]] = match[2];
+			}
+
+			while ((match = table_text.match(/(?<!\\)\s*@@\s*((?:(?!@@|\n|\|)[\w\W])+)\s*(?:\|((?:(?!@@|\n)[\w\W])+)\s*)?(?:@@|\n)\s*((?:(?!@@|##)[\w\W])+)/)) !== null) {
+				table_text = table_text.substr(match[0].length);
+
+				rows = [];
+				row = splitMarkup(match[3], "<>");
+				for (a = 0; a < row.length; ++a) {
+					rows.push(splitMarkup(row[a], "|"));
+				}
+
+				pbta_custom_tables[match[1]] = { rows: rows };
+				if (/rolled/.test(match[2])) pbta_custom_tables[match[1]].rolled = true;
+				if (/headered/.test(match[2])) pbta_custom_tables[match[1]].header = pbta_custom_tables[match[1]].rows.shift();
+			}
+		};
+
+		if (save) saveMoves();
+		if (save || !Object.keys(pbta_custom_moves).length) parseMoves();
+
+		var item, list, backlink;
+		var links = "<ul><li>No Custum Moves Defined</li></u>";
+
+		if (Object.keys(pbta_custom_moves).length) {
+			list = [];
+			for (item in pbta_custom_moves) {
+				list.push([item, "solo.showPage('" + game +'-custom-move:' + item + "')"]);
+			}
+			links = getLinksList(list);
+		}
+
+		backlink =
+			"<hr><div id='back-links'><p>" +
+			"<a onclick='solo.showPage(\"" + game + "-edit-custom-moves\")'>Edit</a>" +
+			"<a onclick='solo.showPage(	)'>Back</a></p></div>";
+
+		return display(getDataHeader(links) + backlink);
+	}
+
+	function editPbtACustomMoves(game) {
+		var getMarkupTable = function(list) {
+			var a;
+			var output = "";
+			for (a = 0; a < list.length; ++a) {
+				output += "<tr" + (!(a % 2) ? " class='odd'" : "") + "><td>" + list[a].join("</td><td>") + "</td></tr>";
+			}
+			return "<table>" + output + "</table>";
+		}
+
+		var moves = pbta_custom_move_text[game] || "";
+
+		return display(
+			getDataHeader(
+				"<textarea id='custom-moves' spellcheck='false'>" + moves + "</textarea>",
+				"<div id='dice-buttons'><div id='save-button'><p>" + 
+					"<a onclick='solo.showPage(\"" + game + "-custom-move-list:save\")'>Save</a>" + 
+					"<a onclick='solo.showPage(\"" + game + "-custom-move-list\")'>Back</a></p></div></div>"
+			) +
+			getDataFooter(
+				"<div id='move-markup'><details><summary>Moves Markup</summary><br>" + 
+					getMarkupTable([
+						["##", "declare move name (eg. <code>##Face Danger</code>). end name with <code>##</code> again or a line break."],
+						["||", "break two blocks of text up"],
+						["((dice))", "insert dice roller. options are: <code>d100</code>, <code>pbta</code> (2d6), <code>progress</code> (2d10), and <code>ironsworn</code> (2d10,d6)"],
+						["{move}", "create link to another move"],
+						["{move|name}", "create a link to another move but with a different name"],
+						["{{table}}", "insert table from move_tables"],
+						["[bold]", "bold the text"],
+						["[[italic]]", "italicize the text"],
+						["&lt;&lt;item|item&gt;&gt;", "create a bullet list with items separated by <code>|</code>"],
+						["***", "insert a spacer"],
+						["\\", "prevent the markup following it from being rendered"]
+					]) + "</details><br>" +
+				"<details><summary>Tables Markup</summary><br>" + 
+					getMarkupTable([
+						["@@", "declare move name (eg. <code>@@Discoveries</code>). end name with <code>@@</code> again or a line break.<br"],
+						["@@name|rolled|headered", "same as above, but <code>rolled</code> and <code>headered</code> are special flags:</p><p>" +
+						"<code>rolled</code>: first column of the table will be displayed to represent a number range </p><p>" +
+						"<code>headered</code>: first row of the table will be assigned as column headings"],
+						["<>", "divides the line into table rows"]
+					]) + "<p>All move markup also applies to tables, including embedding tables within tables.</p></details><br>" +
+				"<details><summary>Example Move</summary><br><pre><code>" +
+					"##Example\n[When you do something], roll+stat.\n((pbta))\n" +
+					"On a [weak hit], choose one. On [strong hit], do both.\n" +
+					"<<\n  do what you want|\n  don't get hurt\n>>\n" +
+					"On a [miss], roll on the following table.\n((d10))\n{{table}}\n\n" +
+					"@@table|rolled|headered\n|a|b\n1-5|item 1|item 2<>6-10|item 3|item 4\n" +
+				"</code></pre></details></div>"
+			));
+	}
+
+	function getPbtAOracle(game, oracle) {
+		var replaceMarkup = function(text) {
+			text = text.replace(/(?<!\\)\|(?<!\\)\|/g, "</p><p>");
+			text = text.replace(/(?<!\\)\[(?<!\\)\[/g, "<i>");
+			text = text.replace(/(?<!\\)\](?<!\\)\]/g, "</i>");
+			text = text.replace(/(?<!\\)\[/g, "<b>");
+			text = text.replace(/(?<!\\)\]/g, "</b>");
+			text = text.replace(/(?<!\\)\*(?<!\\)\*(?<!\\)\*/g, "<div class='move-spacer'></div>");
+			text = text.replace(/(?<!^)(?<!:\n|\/p>|\/ul>|\/table>|\/div>|\/h\d>)(<(?:ul|table|div|h\d))/g, "</p>$1");
+			text = text.replace(/(\/(?:ul|table|div|h\d)>)\s*(?!$)(?!:\n|<p|<ul|<table|<div|<h\d)/g, "$1<p>");
+			return text;
+		};
+		
 		var getRolls = function(oracle) {
 			depth += 1;
 
@@ -1372,7 +1778,7 @@
 					roll = (is_array) ? randomItem(list) : getRolledItem(random(1, 100), list);
 
 					// oracle    example: {Label|oracle group}
-					roll = roll.replace(/{([^}|]+)(?:\|([^}]+))?}/g, function(m, p1, p2) {
+					roll = roll.replace(/\{([^}|]+)(?:\|([^}]+))?\}/g, function(m, p1, p2) {
 						return "<a onclick='solo.showPage(\"" + game + "-oracle-list:" + (p2 || p1).trim() + "\")'>" + p1.trim() + "</a>";
 					});
 
@@ -1399,8 +1805,8 @@
 						}
 						else roll = getRolls(roll.substring(1).trim());
 					}
-
-					rolls.push(roll);
+					
+					rolls.push(replaceMarkup(roll));
 					roll_count += 1;
 				}
 				while (roll_count < reroll);
@@ -1408,7 +1814,7 @@
 
 			depth -= 1;
 			return rolls.join("; ");
-		}
+		};
 
 		var a, roll, temp;
 		var rolls = [];
@@ -1423,7 +1829,11 @@
 		}
 		else roll = getRolls(oracle);
 
-		return display(getDataTable([label, roll]) + getBackLink(true));
+		return roll;
+	}
+
+	function showPbtAOracle(game, label, oracle) {
+		return display(getDataTable([label, getPbtAOracle(game, oracle)]) + getBackLink(true, pbta_menu));
 	}
 	
 	function showPbtAOracleList(game, type) {
@@ -1437,10 +1847,81 @@
 				list.push([oracle_list[a]]);
 				continue;
 			}
-			list.push([temp[1], "solo.showPage('" + game + "-oracle:" + temp[2] + "')"]);
+
+			if (/^>/.test(temp[2])) list.push([temp[1], "solo.showPage('" + game + "-oracle-list:" + temp[2].replace(/^>\s*/,"") + "')"]);
+			else list.push([temp[1], "solo.showPage('" + game + "-oracle:" + temp[2] + "')"]);
 		}
 
 		return display(getDataLinksList(list) + getBackLink());
+	}
+
+	function showPbtAGenerator(game, type) {
+		var getList = function() {
+			var a, temp;
+			var list = [];
+
+			if (isArray(arguments[0])) arguments = arguments[0];
+
+			for (a = 0; a < arguments.length; ++a) {
+				temp = arguments[a].match(/([^:]+):(.+)/);
+				list.push([temp[1], getPbtAOracle(game, temp[2])]);
+			}
+
+			return list;
+		};
+
+		var getGenerator = function(game, type) {
+			var list, output;
+
+			if (game === "city_of_mist") {
+				if (type === "npc") {
+					list = [["How Awakened They Are", getPbtAOracle(game, "npcs:how awakened they are")]];
+					// remove note to not generate mythos
+					if (/Sleeper:/.test(list[0][1])) list[0][1] = list[0][1].replace(/(<\/p><p>[^<]+)/, "");
+					else list.push(["Their Mythos", getPbtAOracle(game, "npcs:their mythos")]);
+
+					return getDataTable(list.concat(getList(
+						"Their Logos:npcs:their logos", "How They Awakened:npcs:how they awakened", 
+						"Their Mythos Motivation:npcs:their mythos motivation", "Their Logos Motivation:npcs:their logos motivation"
+					)));
+				}
+
+				else if (type === "crime") return getDataTable(getList("The Crime:crimes:the crime", "The Wrong:crimes:the wrong", "The Problem:crimes:the problem", "The Rift's Involvement:crimes:the rifts involvement"));
+				else if (type === "scope") return getDataTable(getList("The Scope:scope:the scope", "The Theme:scope:the theme", "The Format:scope:the format"));
+				else if (type === "hook") return getDataTable(getList("How the Crew Hears About the Case:hooks:how the crew hears about the case", "When the Crew Comes In:hooks:when the crew comes in"));
+				else if (type === "backstory") return getDataTable(getList("Unexpected Development:backstory:unexpected developments"));
+				else if (type === "case") {
+					output = 
+						"<h2>Who (or What) Is the Source of the Problem in Your Case?</h2>" + getGenerator(game, "npc") +
+						"<h2>What Wrong Did They Commit or Cause?</h2>" + getGenerator(game, "crime") +
+						"<h2>What Type of Story Will This Be?</h2>" + getGenerator(game, "scope") +
+						"<h2>How Is the Crew Involved?</h2>" + getGenerator(game, "hook") +
+						"<h2>Developing the Backstory</h2>" + getGenerator(game, "backstory")
+					return output;
+				}
+			}
+		};
+
+		return display(getGenerator(game, type) + getBackLink(true, pbta_menu));
+	}
+
+	function showPbtAGeneratorList(game, type) {
+		var output;
+		if (game === "city_of_mist") {
+			if (type === "case") {
+				output = getDataLinksList(
+					["Case Concept", "solo.showPage('city_of_mist-generator:case')"],
+					["<spacer>"],
+					["Who (or What) Is the Source of the Problem in Your Case?", "solo.showPage('city_of_mist-generator:npc')"],
+					["What Wrong Did They Commit or Cause?", "solo.showPage('city_of_mist-generator:crime')"],
+					["What Type of Story Will This Be?", "solo.showPage('city_of_mist-generator:scope')"],
+					["How Is the Crew Involved?", "solo.showPage('city_of_mist-generator:hook')"],
+					["Developing the Backstory", "solo.showPage('city_of_mist-generator:backstory')"]
+				);
+			}
+		}
+
+		return display(output + getBackLink(false));
 	}
 
 
@@ -1860,14 +2341,12 @@
 		});
 	}
 
-	function saveQuickRolls() {
-		quick_rolls_text = $("#quick-rolls").value;
-
+	function parseQuickRolls() {
 		var input = quick_rolls_text.replace("'", "");
 		input = input.replace('"', '');
-
+		
 		var lines = input.split("\n");
-
+		
 		quick_rolls = [];
 
 		var a, temp;
@@ -1876,9 +2355,13 @@
 			temp = lines[a].split(":");
 			quick_rolls.push("<a onclick='solo.showDice(\"" + (temp.length < 2 ? temp[0].trim() : lines[a].substring(temp[0].length + 1).trim()) + "\", true)'>" + temp[0].trim() + "</a>");
 		}
+	}
+
+	function saveQuickRolls() {
+		quick_rolls_text = $("#quick-rolls").value;
+		parseQuickRolls();
 		
-		soloData.quick_rolls_text = quick_rolls_text;
-		soloData.quick_rolls = quick_rolls;
+		soloData.quick_rolls = quick_rolls_text;
 		saveSettings();
 
 		showDiceRoller();
@@ -2817,7 +3300,7 @@
 		margin: 0 auto 0 auto;
 		border: none;
 	}
-	.move-table.rolled td:first-of-type, .move-table .label {
+	.move-table.rolled > tbody > tr > td:first-of-type, .move-table .label {
 		text-align: right;
 		font-family: monospace;
 		color: #aaaaaa;
@@ -2832,7 +3315,7 @@
 		text-align: center;
 	}
 	.move-dice td[id^=die-]:hover { cursor: pointer; }
-
+	.move-spacer { height: 1em; }
 	.move-table td.label, .move-dice td:last-of-type { border: none; }
 	
 	.spacer { height: 3em; }
@@ -2912,6 +3395,16 @@
 	#footer pre { 
 		font-size: 10px;
 		margin: 0 20px 0 20px;
+	}
+
+	#move-markup td { line-height: 1.25em !important; }
+	#move-markup td:first-of-type {
+		font-family:monospace;
+		font-size: 80%;
+		color:#aaaaaa;
+	}
+	#move-markup pre code  {
+		font-size: 80%;
 	}
 
 	@media screen and (max-width: 500px) {
