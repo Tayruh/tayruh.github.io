@@ -1675,7 +1675,7 @@
 		if (save || !Object.keys(pbta_custom_moves).length) parseMoves();
 
 		var item, list, backlink;
-		var links = "<ul><li>No Custum Moves Defined</li></u>";
+		var links = "<ul><li>No Custom Moves Defined</li></u>";
 
 		if (Object.keys(pbta_custom_moves).length) {
 			list = [];
@@ -2338,7 +2338,7 @@
 
 		display($("#dice-roller").innerHTML);
 
-		if (!quick_rolls.length) output = "<li>List is Empty</li>";
+		if (!quick_rolls.length) output = "<li>No Quick Rolls Defined</li>";
 		else output = "<li>" + quick_rolls.join("</li><li>") + "</li>";
 
 		$("#quick-rolls").innerHTML = "<ul>" + output + "</ul>" + getLink("Edit Quick Rolls", "solo.showQuickRolls()");
