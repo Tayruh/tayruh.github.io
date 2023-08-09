@@ -863,7 +863,7 @@
 
 		var before = text.substring(0, firstIndex);
 		var after = text.substring(closeIndex + close.length);
-		var inner = markup.substring(open.length, markup.length - close.length);
+		var inner = markup.substring(open.length, markup.length - close.length).trim();
 
 		return {"before": before, "markup": markup, "inner": inner, "after": after};
 	}
@@ -1566,11 +1566,11 @@
 			
 			if (type === "ironsworn") {
 				output += "<td class='label'>d10</td>" + getDieLink(1, 10) + getDieLink(1, 10) +
-				"<td class='label'></td>" +
-				"<td class='label'>d6</td>" + getDieLink(1, 6);
+				"<td class='label'></td><td class='label'>d6</td>" + getDieLink(1, 6);
 			}
 			else if (type === "pbta") output += "<td class='label'>d6</td>" + getDieLink(1, 6) + getDieLink(1, 6);
 			else if (type === "progress") output += "<td class='label'>d10</td>" + getDieLink(1, 10) + getDieLink(1, 10);
+			else if (type === "d4") output += "<td class='label'>d4</td>" + getDieLink(1, 4);
 			else if (type === "d6") output += "<td class='label'>d6</td>" + getDieLink(1, 6);
 			else if (type === "d8") output += "<td class='label'>d8</td>" + getDieLink(1, 8);
 			else if (type === "d10") output += "<td class='label'>d10</td>" + getDieLink(1, 10);
@@ -1692,6 +1692,11 @@
 	}
 
 	function editPbtACustomMoves(game) {
+		var htmlEncode = function(text) {
+			var chars = {"<":"&lt;", ">":"&gt;"};
+			return text.replace(/([\<])/g, function(m, p1) { return chars[p1]; });
+		};
+		
 		var getMarkupTable = function(list) {
 			var a;
 			var output = "";
@@ -1715,7 +1720,7 @@
 					getMarkupTable([
 						["##", "declare move name (eg. <code>##Face Danger</code>). end name with <code>##</code> again or a line break."],
 						["||", "break two blocks of text up"],
-						["((dice))", "insert dice roller. options are: <code>d100</code>, <code>pbta</code> (2d6), <code>progress</code> (2d10), and <code>ironsworn</code> (2d10,d6)"],
+						["((dice))", "insert dice roller. options are: <code>d4</code>, <code>d6</code>, <code>d8</code>, <code>d10</code>, <code>d12</code>, <code>d20</code>, <code>d100</code>, <code>pbta</code> (2d6), <code>progress</code> (2d10), and <code>ironsworn</code> (2d10,d6)"],
 						["{move}", "create link to another move"],
 						["{move|name}", "create a link to another move but with a different name"],
 						["{{table}}", "insert table from move_tables"],
@@ -1734,14 +1739,15 @@
 						["<>", "divides the line into table rows"]
 					]) + "<p>All move markup also applies to tables, including embedding tables within tables.</p></details><br>" +
 				"<details><summary>Example Move</summary><br><pre><code>" +
-					"##Example\n[When you do something], roll+stat.\n((pbta))\n" +
-					"On a [weak hit], choose one. On a [strong hit], do both.\n" +
+					"##Example Move\n[When you do something], roll+stat.\n((pbta))\n" +
+					"On a [strong hit], you do it.||\nOn a [weak hit], choose one.\n" +
 					"<<\n  do what you want|\n  don't get hurt\n>>\n" +
-					"On a [miss], roll on the following table.\n((d10))\n{{table}}\n\n" +
-					"@@table|rolled|headered\n|a|b<>\n1-5|item 1|item 2<>\n6-10|item 3|item 4\n" +
+					"On a [miss], roll on the following table, or {Suffer} the cost.\n((d10))\n{{table}}\n\n" +
+					"@@table|rolled|headered\n|a|b<>\n1-5|item 1|item 2<>\n6-10|item 3|item 4\n\n" +
+					"##Suffer\nReduce a resource by 1." +
 				"</code></pre><br>" +
 				"<p>Code can also be compressed to save space if you don't need the legibility. The following renders the same as the above.</p>" +
-				"<p><code>##Example##[When you do something], roll+stat.((pbta))On a [weak hit], choose one. On a [strong hit], do both.<<do what you want|don't get hurt>>On a [miss], roll on the following table.((d10)){{table}}@@table|rolled|headered@@|a|b<>1-5|item 1|item 2<>6-10|item 3|item 4</code></p>" +
+				"<p><code>" + htmlEncode("##Example Move##[When you do something], roll+stat.((pbta))On a [strong hit], you do it.||On a [weak hit], choose one.<<do what you want|don't get hurt>>On a [miss], roll on the following table, or {Suffer} the cost.((d10)){{table}}@@table|rolled|headered@@|a|b<>1-5|item 1|item 2<>6-10|item 3|item 4##Suffer##Reduce a resource by 1.") + "</code></p>" +
 				"</details></div>"
 			));
 	}
