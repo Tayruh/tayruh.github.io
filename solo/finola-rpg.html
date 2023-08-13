@@ -4,9 +4,11 @@
 <title>finola-rpg</title>
 <script>
 (function(solo) {
+	"use strict";
+
 	var version = "2023.08.12";
 
-	var current_page, current_section, current_menu, color_theme
+	var current_page, current_section, current_menu, color_theme, localStorage;
 	var toc = [];
 	var spacer = "<div class='spacer'></div>";
 	var soloData = {};
@@ -1018,8 +1020,8 @@
 	}
 
 	function list() {
-		var obj = {};
 		var a;
+		var obj = {};
 		for (a = 0; a < arguments.length; ++a) {
 			obj[arguments[a]] = true;
 		}
@@ -1084,17 +1086,18 @@
 	function getDataTable() {
 		var a, b, start, end;
 		var output = "<div class='data-table'><table>";
+		var args = arguments;
 		
-		if (isArray(arguments[0][0])) arguments = arguments[0];
+		if (isArray(args[0][0])) args = args[0];
 		
-		for (a = 0; a < arguments.length; ++a) {
+		for (a = 0; a < args.length; ++a) {
 			output += "<tr>";
-			for (b = 0; b < arguments[a].length; ++b) {
-				if (b === 1 && arguments[a].length > 2) { start = "<pre>"; end = "</pre>"; }
+			for (b = 0; b < args[a].length; ++b) {
+				if (b === 1 && args[a].length > 2) { start = "<pre>"; end = "</pre>"; }
 				else { start = "<p>"; end = "</p>"; }
 				if (b === 0) { start += "<b>"; end = "</b>" + end; }
 				
-				output += "<td>" + start + arguments[a][b] + end + "</td>";
+				output += "<td>" + start + args[a][b] + end + "</td>";
 			}
 			output += "</tr>" 
 		}
@@ -1105,12 +1108,13 @@
 	function getDataHeader() {
 		var a;
 		var output = "<div class='data-header'>";
+		var args = arguments;
 		
-		if (isArray(arguments[0])) arguments = arguments[0];
+		if (isArray(args[0])) args = args[0];
 		
-		for (a = 0; a < arguments.length; ++a) {
-			if (/^<([uo]l|div|table|details|h\d+) /.test(arguments[a])) output += arguments[a];
-			else output += "<p>" + arguments[a] + "</p>";
+		for (a = 0; a < args.length; ++a) {
+			if (/^<([uo]l|div|table|details|h\d+) /.test(args[a])) output += args[a];
+			else output += "<p>" + args[a] + "</p>";
 		}
 		
 		return output + "</div>";
@@ -1119,12 +1123,13 @@
 	function getDataFooter() {
 		var a;
 		var output = "<div class='data-footer'>";
+		var args = arguments;
 		
-		if (isArray(arguments[0])) arguments = arguments[0];
+		if (isArray(args[0])) args = args[0];
 		
-		for (a = 0; a < arguments.length; ++a) {
-			if (/^<([uo]l|div|table|details|h\d+) /.test(arguments[a])) output += arguments[a];
-			else output += "<p>" + arguments[a] + "</p>" ;
+		for (a = 0; a < args.length; ++a) {
+			if (/^<([uo]l|div|table|details|h\d+) /.test(args[a])) output += args[a];
+			else output += "<p>" + args[a] + "</p>" ;
 		}
 		
 		return output + "</div>";
@@ -1136,37 +1141,38 @@
 	}
 
 	function getLinks() {
-		var a;
+		var a, quote;
 		var output = "";
-		var quote;
+		var args = arguments;
 		
-		if (isArray(arguments[0][0])) arguments = arguments[0];
-		for (a = 0; a < arguments.length; ++a) {
-			quote = (arguments[a].length < 3) ? quote = undefined : arguments[a][2];
-			output += getLink(arguments[a][0], arguments[a][1], quote);
+		if (isArray(args[0][0])) args = args[0];
+		for (a = 0; a < args.length; ++a) {
+			quote = (args[a].length < 3) ? quote = undefined : args[a][2];
+			output += getLink(args[a][0], args[a][1], quote);
 		}
 
 		return output;
 	}
 
 	function getLinksList() {
-		var a;
-		var quote;
+		var a, quote;
 		var output = "<ul class='link-list'>";
+		var args = arguments;
 		
-		if (isArray(arguments[0][0])) arguments = arguments[0];
-		for (a = 0; a < arguments.length; ++a) {
-			quote = (arguments[a].length < 3) ? quote = undefined : arguments[a][2];
-			if (arguments[a][0] === "<spacer>") output += "</ul><div style='height:2em'></div><ul class='link-list'>";
-			else output += "<li>" + getLink(arguments[a][0], arguments[a][1], quote) + "</li>";
+		if (isArray(args[0][0])) args = args[0];
+		for (a = 0; a < args.length; ++a) {
+			quote = (args[a].length < 3) ? quote = undefined : args[a][2];
+			if (args[a][0] === "<spacer>") output += "</ul><div style='height:2em'></div><ul class='link-list'>";
+			else output += "<li>" + getLink(args[a][0], args[a][1], quote) + "</li>";
 		}
 
 		return output + "</ul>";
 	}
 
 	function getDataLinksList() {
-		if (isArray(arguments[0][0])) arguments = arguments[0];
-		return getDataHeader(getLinksList(arguments));
+		var args = arguments;
+		if (isArray(args[0][0])) args = args[0];
+		return getDataHeader(getLinksList(args));
 	}
 	
 	function getBackLink(retry, page) {
@@ -1535,13 +1541,14 @@
 	}
 
 	function showPbtAMove(game, name, custom) {
-		var insertTable = function(table) {
-			if (custom && (table in pbta_custom_tables)) table = pbta_custom_tables[table];
-			else if (("move_tables" in muse[game]) && (table in muse[game].move_tables)) table = muse[game].move_tables[table];
-			else return "<table class='move-table'><tr><td><s>table:" + table + "</s></td></tr></table>";
-
-			var a, b, output;
+		var insertTable = function(name) {
+			var a, b, table, output;
 			var list = [];
+
+			if (custom && (name in pbta_custom_tables)) table = pbta_custom_tables[name];
+			else if (("move_tables" in muse[game]) && (name in muse[game].move_tables)) table = muse[game].move_tables[name];
+			else return "<table class='move-table'><tr><td><s>table:" + name + "</s></td></tr></table>";
+
 			var rolled = (table.rolled) ? " rolled" : "";
 			var header = (table.header) ? "<th>" + table.header.join("</th><th>") + "</th>" : "";
 			
@@ -1591,7 +1598,15 @@
 			});
 			
 			text = parseMarkup(text, "((", "))", function(el) { return getDice(el.inner); });
-			text = parseMarkup(text, "{{", "}}", function(el) {  return insertTable(el.inner); });
+			text = parseMarkup(text, "{{", "}}", function(el) {
+				if (table_children.indexOf(el.inner) !== -1) return "<table class='move-table'><tr><td><s>table:" + el.inner + "</s></td></tr></table>";
+				table_children.push(el.inner);
+
+				var table = insertTable(el.inner);
+				table_children.pop();
+				
+				return table;
+		});
 			
 			text = parseMarkup(text, "{", "}", function(el) {
 				el = el.inner.split(/(?<!\\)\|/);
@@ -1621,6 +1636,7 @@
 
 		var die_count = 0;
 		var move = (custom) ? pbta_custom_moves[name] : muse[game].moves[name];
+		var table_children = [];
 		
 		return display(
 			getDataHeader("<h2>" + name + "</h2>" + getBackLink(false, pbta_menu)) + 
@@ -1727,13 +1743,13 @@
 						["{{table}}", "insert table from move_tables"],
 						["[bold]", "bold the text"],
 						["[[italic]]", "italicize the text"],
-						["&lt;&lt;item|item&gt;&gt;", "create a bullet list with items separated by <code>|</code>"],
+						["&lt;&lt;item|item&gt;&gt;", "create a bullet list with items separated by <code>|</code>. You can also embed lists within lists."],
 						["***", "insert a spacer"],
 						["\\", "prevent the markup following it from being rendered"]
-					]) + "</details><br>" +
+					]) + "<p>Be aware that references to moves, tables, and dice are case sensitve.</p></details><br>" +
 				"<details><summary>Tables Markup</summary><br>" + 
 					getMarkupTable([
-						["@@", "declare move name (eg. <code>@@Discoveries</code>). end name with <code>@@</code> again or a line break.<br"],
+						["@@", "declare table name (eg. <code>@@Discoveries</code>). end name with <code>@@</code> again or a line break.<br"],
 						["@@name|rolled|headered", "same as above, but <code>rolled</code> and <code>headered</code> are special flags:</p><p>" +
 						"<code>rolled</code>: first column of the table will be displayed to represent a number range </p><p>" +
 						"<code>headered</code>: first row of the table will be assigned as column headings"],
@@ -1871,11 +1887,12 @@
 		var getList = function() {
 			var a, temp;
 			var list = [];
+			var args = arguments;
 
-			if (isArray(arguments[0])) arguments = arguments[0];
+			if (isArray(args[0])) args = args[0];
 
-			for (a = 0; a < arguments.length; ++a) {
-				temp = arguments[a].match(/([^:]+):(.+)/);
+			for (a = 0; a < args.length; ++a) {
+				temp = args[a].match(/([^:]+):(.+)/);
 				list.push([temp[1], getPbtAOracle(game, temp[2])]);
 			}
 
@@ -1997,6 +2014,7 @@
 		};
 
 		var getVampire = function(die) {
+			var result;
 			var roll = random(1, 10);
 
 			if (roll === 1 && die === "VH") result = "BF";
@@ -2610,10 +2628,11 @@
 			return;
 		}
 		
+		var result;
 		var mods = [-5, -4, -2, -1, 0, 1, 2, 4, 5];
 
-		acting_rank = $("#acting").value;
-		difficulty_rank = $("#difficulty").value;
+		var acting_rank = $("#acting").value;
+		var difficulty_rank = $("#difficulty").value;
 
 		var mod = muse.mythic.fate.rank.indexOf(difficulty_rank) - muse.mythic.fate.rank.indexOf(acting_rank);
 
@@ -2932,7 +2951,10 @@
 				)
 			);
 			
-			$("#twist-counter").addEventListener("change", function() { saveSettings(soloData.twist_counter = parseInt(this.value)); });
+			$("#twist-counter").addEventListener("change", function() { 
+				twist_counter = parseInt(this.value);
+				saveSettings(soloData.twist_counter = twist_counter); 
+			});
 			return;
 		}
 
@@ -3166,14 +3188,14 @@
 	h1 {
 		padding:.5em;
 		text-align: center;
-		font-size: 1.9em;
+		font-size: 1.5em;
 		text-decoration: underline;
 		text-shadow: 0 0 3px #ff0000;
 	}
 	
 	h2 {
 		text-align: center;
-		font-size: 1.35em !important;
+		font-size: 1.25em !important;
 		text-shadow: 0 0 3px #0000ff;
 	}
 
@@ -3427,7 +3449,7 @@
 		textarea {
 			font-family: monospace;
 			font-size: 80%;
-			line-height: 1.25em:
+			line-height: 1.25em;
 		}
 	}
 	
