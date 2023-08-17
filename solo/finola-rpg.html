@@ -6,7 +6,7 @@
 (function(solo) {
 	"use strict";
 
-	var version = "2023.08.15";
+	var version = "2023.08.16";
 
 	var current_page, current_section, current_menu, color_theme, localStorage;
 	var toc = [];
@@ -30,8 +30,9 @@
 			>roll thrice       roll three items on the table
 			>category:oracle   roll on another oracle
 			>categoryA:oracleA + categoryB:oracleB   combine two or more oracles
-			{oracle}           create a link to a different oracle
-			{oracle|name}      create a link to a different oracle but with a different name
+			{list}             create a link to a different oracle
+			{list|name}        create a link to a different oracle but with a different name
+			((oracle))         insert a roll on another oracle into the text
 			||                 break two blocks of text up
 			[bold]             bold the text
 			[[italic]]         italicize the text
@@ -553,7 +554,7 @@
 					main: [
 						"Location:Location:settlements:location",
 						"Population:>settlements:population",
-						"First Look:First Look:settlements:first look", "Initial Contact:Contact:settlements:initial contact",
+						"First Look:First Look:settlements:first look", "Initial Contact:Initial:settlements:initial contact",
 						"Authority:Authority:settlements:authority", "Settlement Projects:Project:settlements:settlement projects",
 						"Settlement Trouble:Trouble:settlements:settlement trouble", "Settlement Name:Name:>settlements:settlement name + settlements:settlement tag"
 					],
@@ -563,11 +564,18 @@
 						"Expanse:Population:settlements:population-expanse"
 					]
 				},
+				starships: {
+					main: ["Type:Type:starships:type", "Fleet:Fleet:starships:fleet", "Initial Contact:Initial:starships:initial contact", "First Look:First Look:starships:first look", "Starship Mission:>starships:starship mission", "Starship Name:Name:starships:starship name"],
+					"starship mission": ["Terminus:Mission:starships:starship mission-terminus", "Outlands:Mission:starships:starship mission-outlands", "Expanse:Mission:starships:starship mission-expanse"]
+				},
 				characters: [
 					"First Look:First Look:characters:first look", "Initial Disposition:Disposition:characters:initial disposition",
 					"Character Role:Role:characters:character role", "Character Goal:Goal:characters:character goal",
-					"Revealed Character Aspects:Aspect:characters:revealed character aspects"
+					"Revealed Character Aspects:Aspect:characters:revealed character aspects",
+					"Name:Name:>characters:given name + characters:family name",
+					"Callsign:Callsign:characters:callsign"
 				],
+				creatures: ["Environment:Environment:creatures:environment", "Scale:Scale:creatures:scale"],
 				factions: [
 					"Influence:Dominion:factions:influence", "Dominion:Dominion:factions:dominion", "Dominion&colon; Leadership:Leadership:factions:dominion leadership",
 					"Guild:Guild:factions:guild", "Fringe Group:Group:factions:fringe group", "Faction Projects:Project:factions:faction projects",
@@ -705,12 +713,30 @@
 					"settlement name": ["Aegis", "Felicity", "Moirai", "Rockhome", "Altair", "Florin", "Mudd", "Rust", "Altura", "Forlorn", "Neoma", "Sagan", "Amity", "Forsaken", "Nerio", "Sanctity", "Apex", "Freya", "Nova", "Selena", "Apogee", "Glimmer", "Nyx", "Sepulcher", "Argosy", "Gloam", "Osseus", "Sigil", "Astra", "Hearth", "Paradox", "Silvana", "Aurora", "Helia", "Paragon", "Sirius", "Beacon", "Hypatia", "Paxton", "Sisyphus", "Brink", "Hyperion", "Perchance", "Solitude", "Bulwark", "Janus", "Pinnacle", "Spire", "Burnell", "Karma", "Polaris", "Starfall", "Burrow", "Kepler", "Portent", "Summit", "Concord", "Koshiba", "Prism", "Tranquility", "Crux", "Lagrange", "Providence", "Tyson", "Deadrock", "Larissa", "Purgatory", "Unity", "Deception", "Lasthope", "Rampart", "Utopia", "Elysium", "Lastport", "Ramshackle", "Vega", "Enigma", "Legacy", "Redemption", "Vesper", "Erebus", "Lodestar", "Redhaven", "Wayward", "Eris", "Luminus", "Relic", "Welkin", "Evenfall", "Lyra", "Reprise", "Wellspring", "Eventide", "Marrow", "Reverie", "Weyland", "Farpoint", "Meridian", "Rhiannon", "Wreck"],
 					"settlement tag": ["Base", "Citadel", "Depot", "Fortress", "Hold", "Landing", "Outpost", "Port", "Station", "Terminal"]
 				},
+				starships: {
+					type: {2: "Carrier (Launches fighters)", 6: "Corvette (Light attack ship)", 11: "Courier (Fast transport)", 14: "Cruiser (Medium attack ship)", 16: "Dreadnought (Heavy attack ship)", 19: "Escape pod (Survival craft)", 22: "Foundry (Mobile construction platform)", 27: "Harvester (Fuel or energy excavator)", 33: "Hauler (Heavy transport)", 36: "Hunter (Stealthy attack ship)", 38: "Ironhome (Habitat)", 42: "Mender (Utility or repair)", 47: "Outbounder (Remote survey or research)", 50: "Pennant (Command ship)", 56: "Prospector (Mineral excavator)", 61: "Reclaimer (Salvage or rescue)", 64: "Shuttle (Short-range transport)", 67: "Snub fighter (Small attack craft)", 82: "Multipurpose ({starships:starship mission|Starship Mission})", 84: "Unusual or unknown", 94: "Fleet: ((starships:fleet))", 100: "Ships in conflict: ((starships:type)) and ((starships:type))"},
+					fleet: {10: "Battle fleet ", 25: "Pirate wing ", 35: "Raider horde ", 50: "Salvager hive ", 60: "Settler caravan", 70: "Trade caravan", 90: "Transport and escorts", 100: "{starships:starship mission|Starship Mission}"},
+					"initial contact": {3: "Familiar ", 15: "Friendly ", 25: "Neutral / automated ", 35: "Wary ", 40: "Dismissive ", 50: "Uncooperative ", 65: "Hostile", 80: "Asking for help", 85: "In battle", 90: "Unresponsive", 95: "Destroyed", 100: "{Derelict}"},
+					"first look": {4: "Abnormal sensor readings ", 8: "Brightly painted ", 13: "Bristling with weapons ", 18: "Dark or stealthy ", 23: "Heavy armor ", 28: "Immobile ", 33: "Intimidating profile ", 37: "Large sensor arrays ", 41: "Leaking radiation ", 45: "Low-profile or disguised ", 49: "Modern or advanced design ", 54: "Obsolete design", 59: "Obvious damage", 63: "Biological components", 67: "Ornate markings", 71: "Oversized engines", 75: "Prominent guild emblem", 80: "Refitted or repurposed hull", 85: "Scarred hull", 90: "Built from scrap", 94: "Towing or linked", 100: ">core:descriptor + core:focus"},
+					"starship mission-terminus": {3: "Blockade a location", 6: "Break a blockade", 9: "Collect a resource", 11: "Command others", 14: "Conduct diplomacy", 17: "Conduct espionage", 20: "Conduct piracy", 23: "Conduct research", 26: "Defend against an attack", 29: "Deliver messages or data", 32: "Establish a settlement", 35: "Evacuate a location", 37: "Explore a region", 39: "Hold prisoners", 42: "Hunt down another ship", 45: "Launch an attack", 48: "Patrol an area", 51: "Provide medical aid", 54: "Provide repairs", 57: "Provide shelter", 59: "Quarantine a danger", 62: "Raid a settlement", 65: "Resupply a settlement", 68: "Retrieve salvage", 71: "Search and rescue", 74: "Smuggle cargo", 77: "Survey a site", 79: "Test a technology", 82: "Transport cargo", 85: "Transport passengers", 90: ">core:action + core:theme", 100: ">roll twice"},
+					"starship mission-outlands": {2: "Blockade a location", 4: "Break a blockade", 7: "Collect a resource", 9: "Command others", 11: "Conduct diplomacy", 13: "Conduct espionage", 16: "Conduct piracy", 20: "Conduct research", 24: "Defend against an attack", 28: "Deliver messages or data", 32: "Establish a settlement", 36: "Evacuate a location", 40: "Explore a region", 42: "Hold prisoners", 45: "Hunt down another ship", 48: "Launch an attack", 50: "Patrol an area", 53: "Provide medical aid", 56: "Provide repairs", 59: "Provide shelter", 61: "Quarantine a danger", 64: "Raid a settlement", 68: "Resupply a settlement", 71: "Retrieve salvage", 73: "Search and rescue", 75: "Smuggle cargo", 78: "Survey a site", 80: "Test a technology", 83: "Transport cargo", 85: "Transport passengers", 90: ">core:action + core:theme", 100: ">roll twice"},
+					"starship mission-expanse": {2: "Blockade a location", 4: "Break a blockade", 8: "Collect a resource", 10: "Command others", 12: "Conduct diplomacy", 14: "Conduct espionage", 16: "Conduct piracy", 22: "Conduct research", 25: "Defend against an attack", 29: "Deliver messages or data", 35: "Establish a settlement", 39: "Evacuate a location", 45: "Explore a region", 47: "Hold prisoners", 49: "Hunt down another ship", 51: "Launch an attack", 53: "Patrol an area", 55: "Provide medical aid", 57: "Provide repairs", 61: "Provide shelter", 63: "Quarantine a danger", 65: "Raid a settlement", 69: "Resupply a settlement", 71: "Retrieve salvage", 73: "Search and rescue", 75: "Smuggle cargo", 77: "Survey a site", 79: "Test a technology", 83: "Transport cargo", 85: "Transport passengers", 90: ">core:action + core:theme", 100: ">roll twice"},
+					"starship name": ["Arclight", "Implicit", "Royal Signet", "Argent Arrow", "Inferno", "Rubicon", "Artemis", "Invictus", "Sareea’s Tribute", "Astral Explorer", "Iron Cairn", "Second Chance", "Atlas", "Karena’s Reverie", "Shard of the Sun", "Aurora", "Kraken", "Shattered Siege", "Avari’s Wake", "Kuno’s Hammer", "Shattered Star", "Banshee’s Cry", "Lightline", "Silver Talon", "Beowulf", "Lodestar", "Smoldering Flame", "Bloody Jaw", "Long Haul", "Sovereign Skies", "Broken Sword", "Lost Fortune", "Sparrowhawk", "Buccaneer", "Luminous Sorrow", "Stardust", "Cerelis Nine", "Manta", "Starfall", "Clarion Call", "Mercy", "Stellar Hawk", "Dawn’s Herald", "Mutara", "Stormswept", "Dead Reckoning", "Nebula Prowler", "Sundered Aegis", "Drift Runner", "Newton’s Folly", "Sundown", "Eclipse", "Nightfall", "Sureshot", "Elara Five", "Nomad", "Terminus Clipper", "Enchantress", "Obsidian Trident", "Terrapin", "Endurance", "Onslaught", "Timber Wolf", "Excalibur", "Orca", "Tip of the Spear", "Eye of the Void", "Outward Bound", "Titan", "Fall of Icarus", "Phantom", "Tormentor", "Fallen Light", "Photon", "Trithia Six", "False Hope", "Poltergeist", "Ultraviolet", "Firebreak", "Profit Margin", "Valora’s Comet", "First Light", "Raven’s Call", "Vengeance", "Forge Flier", "Raya’s Promise", "Venture", "Fortune’s Favor", "Reaper", "Vigilant", "Freya’s Wrath", "Reforged Hope", "Voidtreader", "Ghost", "Relentless", "Vulture", "Guiding Star", "Hand of Fate", "Herald of Doom", "Implacable"],
+				},
 				characters: {
 					"first look": {3: "Accented", 6: "Accompanied", 8: "Adorned", 11: "Aged", 13: "Alluring", 15: "Armed", 17: "Armored", 20: "Athletic", 23: "Attractive", 25: "Augmented", 27: "Concealed", 30: "Distracted", 33: "Eccentric", 35: "Energetic", 37: "Flashy", 40: "Graceful", 43: "Grim", 46: "Haggard", 49: "Ill-equipped", 52: "Imposing", 55: "Large", 57: "Mutated", 60: "Plain", 62: "Poised", 65: "Scarred", 68: "Scruffy", 71: "Shifty", 73: "Sickly", 76: "Slight", 78: "Swaggering", 81: "Tattooed", 83: "Threatened", 85: "Uncanny", 87: "Visibly disabled", 90: "Weathered", 92: "Well-equipped", 95: "Wiry", 97: "Wounded", 100: "Youthful"},
 					"initial disposition": {6: "Helpful", 14: "Friendly", 22: "Cooperative", 30: "Curious", 40: "Indifferent", 50: "Suspicious", 60: "Wanting", 70: "Desperate", 78: "Demanding", 86: "Unfriendly", 94: "Threatening", 100: "Hostile"},
 					"character role": {2: "Agent", 4: "AI", 6: "Artisan", 8: "Assassin", 10: "Bounty Hunter", 12: "Courier", 14: "Crew", 16: "Criminal", 18: "Cultist", 20: "Diplomat", 22: "Engineer", 24: "Entertainer", 26: "Explorer", 28: "Farmer", 30: "Fugitive", 32: "Guard", 34: "Guide", 36: "Healer", 38: "Historian", 40: "Hunter", 42: "Investigator", 44: "Laborer", 46: "Lawkeeper", 48: "Leader", 50: "Mercenary", 52: "Merchant", 54: "Miner", 56: "Mystic", 58: "Navigator", 60: "Outcast", 62: "Pilgrim", 64: "Pilot", 66: "Pirate", 68: "Preacher", 70: "Prophet", 72: "Raider", 74: "Researcher", 76: "Scavenger", 78: "Scholar", 80: "Scout", 82: "Shipwright", 84: "Smuggler", 86: "Soldier", 88: "Spacer", 90: "Technician", 92: "Thief", 95: ">core:action + core:theme", 100: ">roll twice"},
 					"character goal": {2: "Avenge a wrong", 4: "Build a home", 7: "Build a relationship", 10: "Claim a resource", 12: "Collect a debt", 14: "Craft an object", 16: "Cure an ill", 18: "Defeat a rival", 20: "Defend a person", 23: "Defend a place", 25: "Discover a truth", 27: "End a conflict", 29: "Escape a captor", 31: "Fight injustice", 33: "Find a person", 35: "Forge an alliance", 37: "Gain knowledge", 39: "Gain riches", 41: "Maintain order", 43: "Make an agreement", 45: "Obtain an object", 47: "Pay a debt", 49: "Protect a lifeform", 51: "Protect a secret", 53: "Prove worthiness", 55: "Rebel against power", 57: "Refute a falsehood", 59: "Repair a technology", 61: "Resolve a dispute", 63: "Restore a relationship", 65: "Sabotage a technology", 68: "Secure a resource", 70: "Seek redemption", 72: "Seize power", 74: "Solve a mystery", 76: "Spread faith", 78: "Travel to a place", 80: "Undermine a relationship", 90: ">core:action + core:theme", 100: ">roll twice"},
-					"revealed character aspects": ["Addicted", "Generous", "Quiet", "Adventurous", "Gifted", "Quirky", "Afflicted", "Greedy", "Rebellious", "Aggressive", "Grief-stricken", "Reclusive", "Ambitious", "Handy", "Relaxed", "Angry", "Hardhearted", "Remorseful", "Anxious", "Haunted", "Resourceful", "Apathetic", "Honorable", "Secretive", "Bitter", "Hot-tempered", "Selfish", "Boastful", "Impulsive", "Sociable", "Boisterous", "Incompetent", "Stealthy", "Bold", "Independent", "Stern", "Brave", "Infamous", "Stingy", "Careless", "Influential", "Stoic", "Cautious", "Insensitive", "Strong", "Charismatic", "Insightful", "Stubborn", "Clever", "Intelligent", "Successful", "Conceited", "Intolerant", "Suspicious", "Confident", "Ironsworn", "Talented", "Confused", "Kind", "Technical", "Connected", "Law-abiding", "Timid", "Corrupted", "Lonely", "Tolerant", "Cowardly", "Loving", "Tough", "Creative", "Loyal", "Vengeful", "Critical", "Manipulative", "Violent", "Cruel", "Oblivious", "Wary", "Cunning", "Obsessed", "Watchful", "Dangerous", "Oppressed", "Weak", "Deceitful", "Passive", "Weary", "Defiant", "Powerful", "Wild", "Determined", "Proud", "Wise", "Disabled", "Doomed", "Driven", "Dying", "Envious", "Experienced", "Faithful"]
+					"revealed character aspects": ["Addicted", "Generous", "Quiet", "Adventurous", "Gifted", "Quirky", "Afflicted", "Greedy", "Rebellious", "Aggressive", "Grief-stricken", "Reclusive", "Ambitious", "Handy", "Relaxed", "Angry", "Hardhearted", "Remorseful", "Anxious", "Haunted", "Resourceful", "Apathetic", "Honorable", "Secretive", "Bitter", "Hot-tempered", "Selfish", "Boastful", "Impulsive", "Sociable", "Boisterous", "Incompetent", "Stealthy", "Bold", "Independent", "Stern", "Brave", "Infamous", "Stingy", "Careless", "Influential", "Stoic", "Cautious", "Insensitive", "Strong", "Charismatic", "Insightful", "Stubborn", "Clever", "Intelligent", "Successful", "Conceited", "Intolerant", "Suspicious", "Confident", "Ironsworn", "Talented", "Confused", "Kind", "Technical", "Connected", "Law-abiding", "Timid", "Corrupted", "Lonely", "Tolerant", "Cowardly", "Loving", "Tough", "Creative", "Loyal", "Vengeful", "Critical", "Manipulative", "Violent", "Cruel", "Oblivious", "Wary", "Cunning", "Obsessed", "Watchful", "Dangerous", "Oppressed", "Weak", "Deceitful", "Passive", "Weary", "Defiant", "Powerful", "Wild", "Determined", "Proud", "Wise", "Disabled", "Doomed", "Driven", "Dying", "Envious", "Experienced", "Faithful"],
+					"given name": ["Akim", "Alex", "Alexis", "Alisa", "Althea", "Amari", "Aparna", "Argus", "Arnav", "Ash", "Asha", "Astrid", "Aurora", "Ayako", "Azriel", "Blake", "Brennan", "Brianna", "Bruna", "Bruno", "Cassidy", "Christa", "Cole", "Corey", "Creed", "Derya", "Dex", "Doran", "Echo", "Eren", "Erim", "Esana", "Eveline", "Faye", "Fletcher", "Flint", "Florian", "Gavin", "Halia", "Ike", "Isaac", "James", "Janya", "Jihun", "Jorunn", "Juliana", "Juro", "Kaisa", "Karthik", "Kayla", "Kei", "Kiana", "Kieran", "Kierra", "Kimora", "Kiri", "Kirsa", "Kwan", "Kylar", "Landry", "Logan", "Lowell", "Lucas", "Curtis", "Luna", "Lux", "Mae", "Magnus", "Mave", "Merrick", "Mina", "Nashida", "Nassar", "Ostara", "Qasira", "Quinn", "Ragnar", "Raven", "Ria", "Rokuro", "Roland", "Rowena", "Sage", "Saren", "Annora", "Severinus", "Shen", "Talia", "Tomiko", "Ulan", "Valda", "Venri", "Vesper", "Vuldar", "William", "Yelena", "Zakia", "Zari", "Zev", "Zoya"],
+					"family name": ["Kuzmin", "Durant", "Jefferies", "Velez", "Lontoc", "Wade", "Kade", "Thorn", "Khosla", "Hendrix", "Okiro", "Ripley", "Talin", "Jin", "Finn", "Solas", "Quint", "Keelan", "Silva", "Valk", "O’Brien", "Ruiz", "Stallard", "Mackenson", "Jensen", "Sakir", "Tolari", "Kain", "Carr", "Valenus", "Kaan", "Taylan", "Legrand", "Jemison", "Arden", "Sayer", "Kai", "Slater", "Edris", "Sutton", "Savarin", "Bridger", "Mital", "Shin", "Nadir", "Santos", "Mihara", "Buhari", "Salvi", "Adler", "Takara", "Shelton", "Vandu", "Vega", "Zhang", "Savela", "Hawking", "Jen", "Hobbs", "Holland", "Silvius", "Freeman", "Barbosa", "Winter", "Hammond", "Archer", "Barlowe", "Shepherd", "Griffin", "Frost", "Quon", "Malek", "Murad", "Becker", "Ammar", "Braddock", "Blackstone", "Hadley", "Farin", "Kobayashi", "Duval", "Hunter", "Beckett", "Dykstra", "Gray", "Sedano", "Bai", "Booker", "Sato", "Vayan", "Bond", "Stark", "Stirling", "Wolfe", "O’Niel", "Petrov", "Nazari", "Darwin", "Pearson", "Volkov"],
+					"callsign": ["Albatross", "Angler", "Anvil", "Badger", "Bandit", "Bash", "Basilisk", "Bingo", "Blackbird", "Blade", "Bloodshot", "Bluewing", "Bonfire", "Book", "Breaker", "Brick", "Buzz", "Buzzard", "Centurion", "Chimera", "Circuit", "Clank", "Cleric", "Crash", "Cutter", "Cutthroat", "Cypher", "Dagger", "Dancer", "Dash", "Deadeye", "Deuce", "Failsafe", "Farseer", "Fidget", "Firestarter", "Fixer", "Flatline", "Ghost", "Grudge", "Gutshot", "Harrow", "Havoc", "Hellhound", "Hellion", "Hex", "Hush", "Ironclad", "Jackal", "Jackpot", "Jester", "Link", "Longshot", "Mainframe", "Mantis", "Mimic", "Mole", "Monarch", "Mongoose", "Nails", "Ogre", "Omega", "Overload", "Packrat", "Paladin", "Phantom", "Phoenix", "Pyro", "Quickdraw", "Razor", "Rogue", "Rook", "Rover", "Scout", "Shadow", "Shark", "Shutdown", "Slack", "Slash", "Snipe", "Spider", "Splinter", "Static", "Stinger", "Straggler", "Swindle", "Tinker", "Touchdown", "Tycoon", "Vagabond", "Valkyrie", "Vanguard", "Vertigo", "Warden", "Watchdog", "Wayfinder", "Whisper", "Wraith", "Wrongway", "Zephyr"]
+				},
+				creatures: {
+					environment: {5: "Space", 15: "Interior", 55: "Land", 80: "Liquid", 100: "Air"},
+					scale: {3: "Minuscule (bug-sized)", 10: "Tiny (rodent-sized)", 25: "Small (dog-sized)", 60: "Medium (person-sized)", 90: "Large (vehicle-sized)", 99: "Huge (whale-sized)", 100: ">creatures:ultra scale"},
+					"ultra scale": {89: "Titanic (hill-sized)", 99: "Colossal (mountain-sized)", 100: "Vast (planet-sized)"}
 				},
 				factions: {
 					"influence": {10: "Forsaken", 30: "Isolated", 50: "Localized", 70: "Established", 85: "Notable", 95: "Dominant", 100: "Inescapable"},
@@ -1471,7 +1497,9 @@
 					["Space Encounters", "starforged-oracle-list:space encounters:main"],
 					["Planets", "starforged-oracle-list:planets:main"],
 					["Settlements", "starforged-oracle-list:settlements:main"],
+					["Starships", "starforged-oracle-list:starships:main"],
 					["Characters", "starforged-oracle-list:characters"],
+					["Creatures", "starforged-oracle-list:creatures"],
 					["Factions", "starforged-oracle-list:factions"],
 					["Miscellaneous", "starforged-oracle-list:miscellaneous"],
 				]]
@@ -1943,6 +1971,9 @@
 
 				if (!pass) return "<s>&lt;" + p1 + "&gt;</s>";
 				return "<a onclick='solo.showPage(\"" + game + "-oracle-list:" + p1 + "\")'>" + (p2 || p1).trim() + "</a>";
+			});
+			text = parseMarkup(text, "((", "))", function(el) {
+				return getRolls(el.inner);
 			});
 			text = text.replace(/(?<!\\)\|(?<!\\)\|/g, "</p><p>");
 			text = text.replace(/(?<!\\)\[(?<!\\)\[/g, "<i>");
