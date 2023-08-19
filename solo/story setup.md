@@ -2,22 +2,22 @@
 
 When you begin a new story, start by answering these questions to create a strong narrative backbone.
 
-- **Premise:** What is the initial concept and expectation of this story, and what do you find engaging about it?
+- **Premise:** What is the initial concept and expectation of this story, and what do you find engaging about it?  
 	*Be honest about the reasons for wanting to use this premise—include embarrassing reasons and exclude reasons of obligation.*
 
-+ **Problem:** What past event still follows the character, and how does it directly influence their actions or environment in a way that threatens to make their life untenable?
++ **Problem:** What past event still follows the character, and how does it directly influence their actions or environment in a way that threatens to make their life untenable?  
 	*The event doesn't need to be one that the character was involved in, but it must currently affect them. It's okay if the description of the past event is vague, but it should be clear in how its influence will likely unravel the character's life unless it is addressed.*
 
-- **Catalyst:** What new event prevents the character from returning to life as normal, and how does it achieve that?
+- **Catalyst:** What new event prevents the character from returning to life as normal, and how does it achieve that?  
 	*Event examples are: entering a new world (literally or figuratively), a mystery, a desire for personal growth, or disruption by outside forces.*
 
-+ **Conflict:** What does the hero hope to accomplish, and what is stopping them? 
++ **Conflict:** What does the hero hope to accomplish, and what is stopping them?  
 	*The goal refers to what the hero intends to do within the scope of this setup (story, arc, scene), not their overall goal in life. This goal must be achievable with a definitive stopping point.*
 
-- **Stakes:** What does the hero risk in striving for their goal, and what would they risk by doing nothing? 
+- **Stakes:** What does the hero risk in striving for their goal, and what would they risk by doing nothing?  
 	*Low stakes for not acting are boring and deprive the character of motivation. It's expected that there be little to no risk for acting (low risk, high reward) when the story, arc, or scene starts, but it should increase to heights comparable to the risk of not acting (high risk, high reward) as it reaches the climax.*
 
-+ **Urgency:** How long does the character have to achieve their goal, and is the deadline something that can be postponed or eliminated?
++ **Urgency:** How long does the character have to achieve their goal, and is the deadline something that can be postponed or eliminated?  
 	*Regardless of how high the risk for not acting is, there is no tension without an impending deadline. Likewise, the tension increases dramatically as the deadline draws closer and the risk for acting increase.*
 
 # Story Tips
