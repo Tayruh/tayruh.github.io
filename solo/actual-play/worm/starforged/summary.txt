@@ -1,0 +1,68 @@
+			CAMPAIGN
+==============================================
+
+[Campaign Elements]
+1-10: (theme) Do the ends justify the means?
+11-20: (situation) Slaughterhouse Nine
+21-30: (situation) End of the world
+31-40: (faction) The Pure
+41-50: (faction) Heroes
+51-60: (vow) Save Dinah
+61-70: (item) Bugs
+71-80: (settlement) My territory
+81-90: (connection) Coil
+91-100: (trouble) The Chosen
+
+[Legacies]
+Quests: 0 • Bonds: 0 • Discoveries: 0
+
+[Background Vow]
+Save Dinah: (epic) 0 
+
+[Vows]
+Remove the Slaughterhouse Nine: (formidable) 1
+
+[Connections]
+Coil: (extreme, resources) 0
+
+[Expeditions] 
+
+[Fights]
+Avoid Shadow Stalker: (formidable) 6
+
+
+
+		SKITTER
+==============================================
+
+[Tactics]
+ • Scout and lay traps/decoys with bugs
+ • Risk life for teammates
+ • Do "the right thing" no matter the cost 
+
+[Stats]
+Edge: 2 • Iron: 1 • Heart: 2
+Shadow: 1 • Wits: 3
+
+[Conditions]
+Health: 4 • Spirit: 3 • Supply: 4
+Momentum: 6/10
+
+[Impacts]
+Misfortunes: Wounded •  Shaken • Unprepared
+Lasting Effects: Permanently Harmed •  Traumatized
+Burdens: Doomed • Tormented • Indebted
+Current Vehicle: Battered • Cursed
+
+[Paths]
+Armored
+ • When you "Face Danger", "React Under Fire", or "Clash" against physical attacks or impacts, you may put trust in your armor's strength. If you do, preset your action die to 4. On a strong hit with match, take +2 momentum as you build confidence, make an impression on your foes, or improve your position.
+
+Empath
+ • When you read the intent, emotions, or memories of a nearby being, roll +heart. On a strong hit, you glimpse a helpful aspect of their inner self. Envision what you learn, take +2 momentum, and add +1 when you make moves to interact with them in this scene. On a weak hit, the visions are murky; take +1 momentum. On a miss, you reveal a troubling motive or secret; Pay the Price. 
+
+[Companions]
+Bugs (sprite): 2/2 health
+ • Your sprite companion alters its delicate, crystalline form to fly, swim, or scurry, and can covertly navigate even the harshest of environments. When you make a move by sending it to perform trickery (such as creating a distraction, sneaking into a protected location, or stealing an object), add +its health.
+ • You are attuned to the resonance of the sprite’s crystalline structure, and can communicate with it at a distance and perceive through its senses. When you Secure an Advantage by observing a situation from its perspective, or remotely Gather Information, add +its health.
+ • With a moment’s rest, the sprite can mend its form and return automatically to max health. 
