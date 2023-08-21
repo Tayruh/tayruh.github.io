@@ -2842,16 +2842,22 @@
 					getOptions("Difficulty Rank", "difficulty", muse.mythic.fate.rank, difficulty_rank)
 			) + "<hr><p id='dice-buttons'><a onclick='solo.showPage(\"resisted-rank:true\")'>Check</a><a onclick='solo.showPage()'>Back</a></p>");
 			
-			$("#acting").addEventListener("change", function() { saveSettings(soloData.acting_rank = this.value); });
-			$("#difficulty").addEventListener("change", function() { saveSettings(soloData.difficulty_rank = this.value); });
+			$("#acting").addEventListener("change", function() { 
+				acting_rank = this.value;
+				saveSettings(soloData.acting_rank = this.value); 
+			});
+			$("#difficulty").addEventListener("change", function() { 
+				difficulty_rank = this.value;
+				saveSettings(soloData.difficulty_rank = this.value); 
+			});
 			return;
 		}
 		
 		var result;
 		var mods = [-5, -4, -2, -1, 0, 1, 2, 4, 5];
 
-		var acting_rank = $("#acting").value;
-		var difficulty_rank = $("#difficulty").value;
+		acting_rank = $("#acting").value;
+		difficulty_rank = $("#difficulty").value;
 
 		var mod = muse.mythic.fate.rank.indexOf(difficulty_rank) - muse.mythic.fate.rank.indexOf(acting_rank);
 
