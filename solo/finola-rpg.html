@@ -6,7 +6,7 @@
 (function(solo) {
 	"use strict";
 
-	var version = "2023.08.16";
+	var version = "2023.08.20";
 
 	var current_page, current_section, current_menu, color_theme, localStorage;
 	var toc = [];
@@ -141,7 +141,11 @@
 				"plot points, tension": ["Betrayal", "Catastrophe", "Choice", "Coercion", "Crime", "Damage", "Death", "Depletion", "Diminishment", "Disappearance", "Enemy", "Escape", "Explore", "Guarded", "Horror", "Impending", "Incapacitation", "Intimidation", "Law", "Location", "Night", "Public", "Pursued", "Recurrence", "Remote", "Repercussion", "Resource", "Revenge", "Risky", "Rural", "Shady", "Strange", "Survivor", "Suspicion", "Threat", "Trapped", "Travel", "Ultimatum", "Unknown", "Urban", "Urgency", "Vulnerability"],
 				"plot points, mystery": ["Alternate", "Behavior", "Clue", "Connected", "Crime", "Cryptic", "Death", "Disappearance", "Discovery", "Duplicitous", "Emergency", "Evidence", "Explore", "Exposed", "Fraud", "Information", "Intercept", "Law", "Lie", "Lucky", "Misled", "Motivation", "Object", "Observer", "Reappearance", "Resource", "Revelation", "Secret", "Solved", "Source", "Stop", "Strange", "Suspicion", "Theft", "Theory", "Threat", "Unexpected", "Unknown", "Unlikely", "Unusual", "Useful", "Vulnerability"],
 				"plot points, social": ["Agreement", "Alliance", "Argument", "Celebration", "Community", "Confrontation", "Disagreement", "Duplicitous", "Enemies", "Fame", "Gathering", "Government", "Headquarters", "Inadequate", "Injustice", "Innocence", "Leader", "Lie", "Meeting", "Misbehave", "Mundane", "Observer", "Organization", "Outcast", "Outside", "Preparation", "Protect", "Reinforcements", "Religion", "Revenge", "Rural", "Savior", "Scapegoat", "Servant", "Special", "Suspicion", "Tension", "Transaction", "Travel", "Trouble", "Urban", "Work"],
-				"plot points, personal": ["Animosity", "Betrayal", "Bribe", "Coercion", "Connection", "Dependent", "Depowered", "Desperate", "Diminishment", "Disarmed", "Duty", "Enemies", "Ethical", "Family", "Flee", "Friend", "Headquarters", "Help", "Home", "Humiliation", "Incapacitation", "Innocence", "Mundane", "Obligation", "Observer", "Offer", "Past", "Personal", "Persuasion", "Possession", "Power", "Preparation", "Protect", "Protected", "Pursued", "Repercussion", "Revenge", "Scapegoat", "Schism", "Servant", "Talk", "Ultimatum"]
+				"plot points, personal": ["Animosity", "Betrayal", "Bribe", "Coercion", "Connection", "Dependent", "Depowered", "Desperate", "Diminishment", "Disarmed", "Duty", "Enemies", "Ethical", "Family", "Flee", "Friend", "Headquarters", "Help", "Home", "Humiliation", "Incapacitation", "Innocence", "Mundane", "Obligation", "Observer", "Offer", "Past", "Personal", "Persuasion", "Possession", "Power", "Preparation", "Protect", "Protected", "Pursued", "Repercussion", "Revenge", "Scapegoat", "Schism", "Servant", "Talk", "Ultimatum"],
+				"crew goal": ["Agreement", "Art", "Assist", "Attack", "Business", "Character", "Control", "Convince", "Criminal", "Crisis", "Damage", "Dangerous", "Debt", "Deception", "Defeat", "Defend", "Delay", "Destroy", "Diminish", "Discover", "Disrupt", "Distract", "Earn", "Enter", "Escape", "Espionage", "Forces", "Fortress", "Goods", "Government", "Group", "Harm", "Help", "Hinder", "Hired", "Impossible", "Incapacitate", "Individual", "Infiltrate", "Information", "Innocent", "Intimidate", "Item", "Justice", "Kill", "Leader", "Legal", "Lethal", "Liberate", "Lie", "Limit", "Location", "Military", "Missing", "Money", "Obligation", "Opportunity", "Oppose", "Overcome", "Partner", "Personal", "Politics", "Power", "Prison", "Protect", "Pursue", "Rare", "Recover", "Reduce", "Replace", "Rescue", "Resource", "Retrieve", "Reveal", "Revenge", "Riches", "Risky", "Robbery", "Sabotage", "Sacrifice", "Save", "Social", "Solution", "Steal", "Stolen", "Stop", "Strange", "Stronghold", "Take", "Transaction", "Trap", "Travel", "Unique", "Unknown", "Urgent", "Vault", "Vehicle", "Villain", "Weapon", "Win"],
+				"crew skill": ["Agility", "Animals", "Art", "Athletic", "Attack", "Attain", "Block", "Bureaucrat", "Business", "Charisma", "Combat", "Communicate", "Competitor", "Conflict", "Control", "Create", "Criminal", "Damage", "Danger", "Deception", "Decrease", "Defense", "Deliverer", "Develop", "Dispute", "Disrupt", "Dominate", "Driver/Pilot", "Elements", "Elite", "Energy", "Enforcer", "Engineer", "Entertainer", "Entry", "Environment", "Executive", "Expert", "Explorer", "Explosives", "Fight", "Finesse", "Fixer", "Gatherer", "Guardian", "Guide", "Harm", "Heal", "Health", "Hunter", "Increase", "Information", "Inspect", "Intellect", "Invade", "Investigate", "Kill", "Knowledge", "Leadership", "Legal", "Lethal", "Mechanical", "Medical", "Mental", "Military", "Mysterious", "Nature", "Official", "Open", "Oppose", "Perception", "Performer", "Power", "Practical", "Protector", "Ranged", "Release", "Religious", "Rogue", "Ruffian", "Scientist", "Scout", "Social", "Soldier", "Specialist", "Start", "Stop", "Strange", "Strength", "Suppress", "Technical", "Theft", "Trader", "Transform", "Travel", "Trick", "Vehicle", "Violence", "Warrior", "Weapon"],
+				"crew personality": ["Adventurous", "Aggressive", "Agreeable", "Ambitious", "Angry", "Annoying", "Anxious", "Arrogant", "Bitter", "Bizarre", "Brave", "Calm", "Careful", "Careless", "Chatty", "Classy", "Cold", "Committed", "Competitive", "Confident", "Controlling", "Creative", "Criticizing", "Crude", "Curious", "Dangerous", "Deceptive", "Desperate", "Determined", "Devoted", "Disagreeable", "Driven", "Empathetic", "Fair", "Fastidious", "Flawless", "Focused", "Follower", "Foolish", "Friendly", "Grateful", "Greedy", "Haunted", "Helpful", "Honest", "Humble", "Humorous", "Independent", "Intelligent", "Intense", "Intolerant", "Irresponsible", "Larcenous", "Leader", "Likable", "Loyal", "Manipulative", "Mercurial", "Naive", "Oblivious", "Obstinate", "Odd", "Optimistic", "Perceptive", "Perfectionist", "Practical", "Prepared", "Principled", "Protective", "Quiet", "Quirky", "Rash", "Rational", "Reckless", "Reliable", "Respectful", "Responsible", "Restless", "Rough", "Rude", "Savvy", "Selfish", "Selfless", "Shallow", "Smooth", "Sociable", "Strange", "Studious", "Suffering", "Tolerant", "Tough", "Trustworthy", "Unreliable", "Untrustworthy", "Unusual", "Vindictive", "Violent", "Wary", "Wild", "Wise"],
+				"crew complications": ["Absence", "Arrival", "Attack", "Barrier", "Betrayal", "Change", "Character", "Conditional", "Conflict", "Connection", "Consequence", "Control", "Crisis", "Damaged", "Danger", "Debt", "Deception", "Delay", "Destroy", "Diminish", "Disaster", "Discover", "Discovered", "Emotion", "Enemy", "Enhance", "Escape", "Failure", "Fight", "Goal", "Group", "Harm", "Help", "Hidden", "Immediate", "Impending", "Important", "Imprisoned", "Improvise", "Incapacitate", "Information", "Leader", "Legal", "Lethal", "Limit", "Location", "Malfunction", "Missing", "Mundane", "Mystery", "Natural", "Necessary", "News", "Object", "Obligation", "Opposition", "Overcome", "Past", "Personal", "Persuade", "Physical", "Plan", "Power", "Prepare", "Problem", "Protect", "Pursue", "Pursued", "Rare", "Remote", "Repair", "Repeat", "Require", "Rescue", "Resource", "Response", "Reveal", "Revenge", "Reversal", "Route", "Security", "Shortage", "Skill", "Social", "Solution", "Strange", "Success", "Surprise", "Technical", "Tension", "Trap", "Travel", "Undone", "Unexpected", "Unknown", "Unlikely", "Unusual", "Urgent", "Useful", "Weather"]
 			}
 		},
 		motif: {
@@ -1478,6 +1482,7 @@
 					["Ambience", "mythic:ambience"],
 					["Animals &amp; Creatures", "mythic:animals and creatures"],
 					["Characters", "mythic:characters"],
+					["Crew", "mythic:crew"],
 					["Entities", "mythic:entities"],
 					["Locations", "mythic:locations"],
 					["Mysteries", "mythic:mysteries"],
@@ -1848,15 +1853,15 @@
 			pbta_custom_moves = {};
 			pbta_custom_tables = {};
 
-			while ((match = move_text.match(/\s*(?<!\\)##\s*((?:(?!##|\n|\|)[^$])+)\s*(?:##|\n)\s*((?:(?!(?<!\\)(?:@@|##))[^$])+)/)) !== null) {
+			while ((match = move_text.match(/\s*(?<!\\)##\s*((?:(?!##|\n|\|)[\w\W])+)\s*(?:##|\n)\s*((?:(?!(?<!\\)(?:@@|##))[\w\W])+)/)) !== null) {
 				move_text = move_text.substr(match[0].length);
 				pbta_custom_moves[match[1]] = match[2];
 			}
 
-			match = table_text.match(/(?<!\\)@@\s*((?:(?!@@|\n|\|)[^$])+)\s*(?:\|((?:(?!@@|\n)[^$])+)\s*)?(?:@@|\n)\s*((?:(?!(?<!\\)(?:@@|##))[^$])+)/g);
+			match = table_text.match(/(?<!\\)@@\s*((?:(?!@@|\n|\|)[\w\W])+)\s*(?:\|((?:(?!@@|\n)[\w\W])+)\s*)?(?:@@|\n)\s*((?:(?!(?<!\\)(?:@@|##))[\w\W])+)/g);
 			if (match !== null) {
 				for (a = 0; a < match.length; ++a) {
-					table = match[a].match(/@@\s*((?:(?!@@|\n|\|)[^$])+)\s*(?:\|((?:(?!@@|\n)[^$])+)\s*)?(?:@@|\n)\s*([^$]+)/);
+					table = match[a].match(/@@\s*((?:(?!@@|\n|\|)[\w\W])+)\s*(?:\|((?:(?!@@|\n)[\w\W])+)\s*)?(?:@@|\n)\s*([\w\W]+)/);
 					
 					rows = [];
 					row = splitMarkup(table[3], "<>");
@@ -3086,6 +3091,14 @@
 				["General Action", "solo.showPage('mythic-table:Action:character actions, general')"],
 				["Combat Action", "solo.showPage('mythic-table:Action:character actions, combat')"],
 				["Conversation", "solo.showPage('mythic-table:Conversation:character conversations')"]
+			];
+		}
+		else if (type === "crew") {
+			list = [
+				["Goal", "solo.showPage('mythic-table:Goal:crew goal')"],
+				["Crew Skill", "solo.showPage('mythic-table:Goal:crew skill')"],
+				["Crew Personality", "solo.showPage('mythic-table:Goal:crew personality')"],
+				["Complications", "solo.showPage('mythic-table:Goal:crew complications')"]
 			];
 		}
 		else if (type == "entities") {

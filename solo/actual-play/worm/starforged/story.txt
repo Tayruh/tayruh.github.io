@@ -1,0 +1,321 @@
+			SCENE 1
+==============================================
+
+---------------------------------------------------------------------
+ • Setting up my background vow to "Save Dinah" (epic).
+ • Swear an Iron Vow: (+2 heart) [7, 6 vs 4] Miss. The quest begins with a significant obstacle.
+ • Action+Theme: [Abandon Hope] Someone is giving up on something?
+ • Descriptor+Focus: [Grim Obstacle] Coil is making me do something before he'll even consider letting Dinah go.
+ • Character Goal: [Make an agreement] Coil requests that I enlist the help of The Pure in the fight against the Nine.
+--------------------------------------------------------------------- 
+ • And now the situational vow to "Remove the Slaughterhouse Nine" (formidable).
+ • Swear an Iron Vow: (+2 heart) [8, 3 vs 5] Weak hit. Take +1 momentum (3).
+--------------------------------------------------------------------- 
+ • For the local connection I choose "Coil", since he's not a companion but does come to my aid when I need stuff.
+ • Make a Connection: (+2 heart) [10, 5 vs 5] Miss. The situation worsens somehow.
+ • Pay the Price: [You are delayed or put at a disadvantage] Coil won't even take my calls until I resolve the initial Dinah task.
+--------------------------------------------------------------------- 
+ • And finally, the trouble in the region. The region being my lair. This will double as the inciting incident.
+ • Settlement Trouble: [Dangerous Discovery] Something dangerous, but what?
+ • Action+Theme: [Serve Home] Someone attacks my employees.
+ • Ask the Oracle: Is it Charlotte that's attacked? Otherwise it's Sierra. [24] Yes, it's Charlotte. And I'm going to say that it's Mannequin attacking.
+ • Ask the Oracle: Does Mannequin attack near my lair? (Likely) Otherwise they attack in town. [65] They attack near the lair.
+--------------------------------------------------------------------- 
+
+Charlotte bursts in through the door to my lair and slams it shut behind her. Seconds later, blades stab through the door from the opposite side. Charlotte screams that it's Mannequin and disappears into the kitchen to hide. I ready my baton and knife.
+
+The hinges to the door are sheared off and the door collapses to the ground. Mannequin steps inside.
+
+--------------------------------------------------------------------- 
+ • Combat start. "Drive Mannequin Away" (formidable).
+ • Enter the Fray: (+2 heart) [6, 6 vs 4] Miss with match. In a bad spot. I start the fight without any bugs prepared.
+--------------------------------------------------------------------- 
+
+I wasn't ready for this and I don't have any bugs near me. Mannequin seizes the opportunity and leaps at me with his blades extended.
+
+--------------------------------------------------------------------- 
+ • I attempt to dodge.
+ • React Under Fire: (+2 edge) [2, 10 vs 8] Weak hit. I avoid the full hit, but I suffer -1 health (4).
+ • Endure Harm: (+4 health) [7, 7 vs 10] Strong hit with match. Take +1 health (5). My armor takes the brunt of it.
+--------------------------------------------------------------------- 
+
+I manage to roll out of the way. Mannequin's blade glances off my armor and is unable to penetrate the fabric of my costume. Mannequin follows my trajectory and swings again. I bring my baton up to block. 
+
+--------------------------------------------------------------------- 
+ • React Under Fire: (+1 iron) [10, 3 vs 5] Weak hit. Suffer -1 supply (4). I drop the baton.
+--------------------------------------------------------------------- 
+
+I manage to block the blade but the impact is enough to make my hands go numb. I lose grip of the baton and it clatters to the floor.
+
+--------------------------------------------------------------------- 
+ • Mannequin tries to grab my face and I try to duck it.
+ • React Under Fire: (+2 edge) [4, 9 vs 7] Weak hit. I dodge, but I suffer -1 health (4).
+ • Endure Harm: (+4 health) [2, 8 vs 8] Weak hit. Suffer -1 momentum (2) but take +1 health (5).
+--------------------------------------------------------------------- 
+
+Mannequin shoots his arm toward my face, trying to grasp my head in its vice-like grasp. I deflect it at the last second with a backhand and stumble back.
+
+---------------------------------------------------------------------
+ • He tries for the leg with his other hand and I attempt to leap for my baton.
+ • React Under Fire: (+2 edge) [2, 9 vs 4] Weak hit. I grab the baton but he also gets my leg. Suffer -1 health (4).
+ • Endure Harm: (+4 health) [8, 2 vs 6] Weak hit. I take the hit.
+---------------------------------------------------------------------
+
+I spot the lost baton and leap for it. Mannequin lashes out with his other hand and grabs me by the ankle. I scream in pain as he lifts me off the ground, my recovered baton gripped tightly in my hand.
+
+---------------------------------------------------------------------
+ • I'm unsure what he's doing in this position.
+ • Combat Action: [Make a cautious or probing attack] He toys with me.
+---------------------------------------------------------------------
+
+Holding me upside down about two feet off the ground, Mannequin tilts his head at me like a confused puppy, taunting me. I struggle and swing at him but he's too far away.
+
+---------------------------------------------------------------------
+ • Ask the Oracle: Have I recovered enough bugs to attack at this point? (Likely) [71] Yes, I now have bugs at my disposal, so I try to use them to free me.
+ • React Under Fire: (+3 wits, +2 bugs health) [5, 5 vs 7] Strong hit with match. Take +1 momentum (3) and in control.
+---------------------------------------------------------------------
+
+With a command, my bugs burst in through every crevice in the room and cover Mannequin. They squeeze their way into gaps in his joints and cover what I assume may be his sensors. He continues to hoist me by my ankle for a moment but inevitably his joints give out and he releases me against his will. I manage to roll into a summersault and recover.
+
+---------------------------------------------------------------------
+ • I'm going to use my bugs to create decoys and draw him away from my lair and Charlotte.
+ • Gain Ground: (+2 edge, +2 bugs health) [3, 10 vs 8] Weak hit. Mark progress (1). He doesn't chase me as much as I'd like.
+---------------------------------------------------------------------
+
+On my feet now, I turn and run, leaving a trail of bug decoys that also run in my direction. Mannequin does not sprint after me, however. He instead stalks slowly and carefully after me. It's unclear whether he is confused by the decoys or not.
+
+---------------------------------------------------------------------
+ • I try to bind him with webbing.
+ • Gain Ground: (+3 wits, +2 bug health) [5, 2 vs 7] Strong hit. Mark progress (2) and take +1 to next move.
+---------------------------------------------------------------------
+
+As he exits the doorway, my bugs descend on him. Wasps carrying spiders with web nets surround him. His movement is slowed as the webbing restricts his limbs.
+
+---------------------------------------------------------------------
+ • I bind him further.
+ • Gain Ground: (+3 wits, +1 forward) [2, 4 vs 5] Strong hit. Mark progress (3) and take +2 momentum (5).
+---------------------------------------------------------------------
+
+I continue wrapping him in webbing, slowing his progress.
+
+---------------------------------------------------------------------
+ • And again..
+ • Gain Ground: (+3 wits, +2 bug health) [1, 9 vs 10] Strong hit. Mark progress (4) and take +2 momentum (7).
+---------------------------------------------------------------------
+
+Mannequin staggers under the stress of the webbing.
+
+---------------------------------------------------------------------
+ • I try to ruin his arm joint with my knife.
+ • Strike: (+1 iron) [7, 6 vs 4] Burn 7 momentum (2) for a weak hit. Mark progress twice (6) but in a bad spot. I ruin his shoulder socket but he counters me.
+---------------------------------------------------------------------
+
+Out of frustration, I jam my knife into one of his arm sockets. There's a grinding sound and the arm dislodges from the shoulder. It no longer functions under his power but is still held against his body by the webbing. In retaliation, Mannequin opens his mouth and prepares to release his gas.
+
+---------------------------------------------------------------------
+ • I try to get clear of it.
+ • React Under Fire: (+2 edge) [6, 1 vs 6] Weak hit. Suffer -1 health (3). I choke on the gas a bit.
+ • Endure Harm: (+3 health) [7, 3 vs 7] Weak hit. Suffer -1 momentum (1) but take +1 health (4).
+---------------------------------------------------------------------
+
+I launch myself backward. I land just beyond the range of the gas, but not before inhaling a bit of it, and I choke. Fighting dizziness, I throw my knife at his feet and the blade creates a spark, igniting the gas.
+
+---------------------------------------------------------------------
+ • Clash: (+2 edge) [8, 1 vs 8] Weak hit. Mark progress (7) but suffer -1 health (3). The blast hits me as well.
+ • Endure Harm: (+3 health) [2, 3 vs 6] Strong hit. Take +1 health (4). My armor saves me again.
+---------------------------------------------------------------------
+
+The blast sends both of us flying. I crash against a dumpster but my armor absorbs most of the impact. I slowly rise to my feet and point my gun at Mannequin.
+
+"Get the fuck out of my territory," I say.
+
+---------------------------------------------------------------------
+ • I'm going to call it. I think that was enough to end the fight.
+ • Take a Decisive Action: (+7 progress) [8, 5] Weak hit. [It's worse than you thought] Suffer -2 spirit (3). Remove the "Drive Away Mannequin" track. Mannequin is driven off but not without shaking my resolve first.
+ • Endure Stress: (+3 spirit) [1, 6 vs 7] Strong hit. Take +1 spirit (4).
+---------------------------------------------------------------------
+
+Mannequin picks himself up and stalks toward me, unflinching. He presses his forehead to the barrel of my gun. He tilts his head in a mocking manner, then turns and walks away.
+
+I slink to the ground, exhausted.
+
+---------------------------------------------------------------------
+ • Reach a Milestone: Mark progress on "Remove the Slaughterhouse Nine" (1).
+---------------------------------------------------------------------
+
+I return to my lair to check on Charlotte. I find her in the kitchen, huddled in the corner.
+
+---------------------------------------------------------------------
+ • Ask the Oracle: Is she okay? [10] Yes.
+ • Hearten: (+2 heart) [2, 6 vs 8] Strong hit. Take +2 spirit (5). I spend time with Charlotte.
+---------------------------------------------------------------------
+
+I try to comfort Charlotte. She's really scared. I put an arm around her and she stiffens. She still sees me as the creepy bug girl, it seems.
+
+I careful remove my arm from her so as not to spook her, then wander over to the cooking area. "Hey. Can I get you anything? I was going to make myself some tea."
+
+"... Tea. Tea will be fine," she says and nods as if to confirm it to herself. I nod in response and turn to make the tea.
+
+---------------------------------------------------------------------
+ • Make a Connection: (+2 heart) [8, 9 vs 7] Miss. The situation gets worse somehow.
+ • Combat Action: [Leverage the advantage of a weapon or ability] Charlotte emphasizes how dangerous this job is.
+---------------------------------------------------------------------
+
+After a long moment of silence while I make the tea, Charlotte speaks up. "Skitter, I'm not sure of I can do this job anymore."
+
+I turn to face her but remain silent.
+
+She continues, "Mannequin was only after me to get to you, but even so, I nearly died."
+
+"I won't let that happen," I say.
+
+"You don't know that. And I wouldn't be the first to die on your watch." After a breath she hurries to add, "No offense. Really. I know you try, but you're still only human."
+
+I frown behind my mask. She's not wrong, but I try so hard to project an image of being untouchable that it's disheartening when my employees see right through it.
+
+"Is there anything that I can do to make you more at ease?" I ask.
+
+---------------------------------------------------------------------
+ • Ask the Oracle: Is there? [18] Yes.
+ • Action+Theme: [Withdraw Honor] She needs to take a step back.
+---------------------------------------------------------------------
+
+Charlotte explains that she needs some time off. I don't know where she'll be going, but apparently she has some people that she can stay with. I tell her that she can call if she needs anything and she accepts the offer gratefully.
+
+With that settled, I decide to go see Tattletale to inform her about Mannequin and discuss the Nine.
+
+---------------------------------------------------------------------
+ • Set a Course: (+4 supply) [7, 2 vs 5] Weak hit. Face a complication at the destination.
+ • Story Complication: [Unexpected enemies appear] Make sense. But who?
+ • Campaign Elements: [Do the ends justify the means?] Shadow Stalker. She wants revenge for what Regent did to her. I'm going to change the canon to say that she opted to run instead of getting arrested.
+---------------------------------------------------------------------
+
+Just a few blocks before reaching Lisa's place, Shadow Stalker steps into the street to block me.
+
+"Skitter," she says, like it left a bad taste in her mouth.
+
+"Shadow Stalker? I thought you left town."
+
+She laughs bitterly. "No teams anywhere would have me. And if I'm going to go solo, I'd rather do it in my home town." She raises her crossbow at me. I can see that she is no longer using the tranquilizer arrows. "I just need to clean it up first."
+
+"You're kidding me. You're practically a villain yourself," I say and begin gathering my bugs.
+
+---------------------------------------------------------------------
+ • Secure an Advantage: (+3 wits) [5, 7 vs 8] Strong hit. Take +2 momentum (3) and take +1 forward. There's a good amount of bugs in the area in addition to what I've brought with me.
+---------------------------------------------------------------------
+ • Begin combat. "Avoid Shadow Stalker" (formidable).
+ • Enter the Fray: (+2 heart, +1 forward) [4, 9 vs 4] Miss. In a bad spot.
+---------------------------------------------------------------------
+
+"Don't compare us!" she growls and fires her crossbow. I'm slow to react, but I move to dodge it.
+
+---------------------------------------------------------------------
+ • React Under Fire: (+2 edge) [2, 5 vs 4] Weak hit. Suffer -1 health (3). She grazes my arm.
+ • Endure Harm: (+3 health) [3, 8 vs 5] Weak hit. Suffer -1 momentum (2) and take +1 health (4). The armor takes it but staggers me.
+---------------------------------------------------------------------
+
+The arrow glances off the armor and makes me take a step back. I quickly head for the cover of a nearby alleyway and Shadow Stalker gives pursuit. Unlike me, she isn't restricted to the narrow passage can travel through the walls.
+
+---------------------------------------------------------------------
+ • React Under Fire: (+2 edge) [1, 1 vs 8] Strong hit with a match. Take +1 momentum and in control.
+---------------------------------------------------------------------
+
+Using a bug barrier to block her view of me, I manage to break her line of sight and I turn right while she turns left. She realizes a few seconds later that she made a mistake, but I've already put a good distance between us.
+
+I quickly duck into a doorway and wait. After a few moments Shadow Stalker passes in front of me. I attempt punch her in the kidney from behind.
+
+---------------------------------------------------------------------
+ • Strike: (+1 iron) [9, 1 vs 4] Weak hit. Mark 2 progress (2) but in a bad spot. 
+---------------------------------------------------------------------
+
+Shadow Stalker lets out a short scream from the blow to her side, then immediately turns into mist and passes through me. I feel her arms wrap around me and she holds the tip of her arrow to my neck. I don't think it'd be enough to pass through the spider-silk of my costume, but it's not an ideal situation regardless.
+
+"Don't you fucking move, bug girl," she growls.
+
+I follow her instruction. However, she said nothing of my bugs. I send a swarm to attack her.
+
+ • React Under Fire: (+3 wits) [1, 2 vs 7] Strong hit. Take control. 
+
+She doesn't have a lot of skin exposed but it barely matters. The bugs crawl into the small gaps in her clothing, biting at her sensitive bits. She turns into mist to avoid them which leaves me unrestrained. I spin around and spray the pepper spray in her general direction.
+
+---------------------------------------------------------------------
+ • Strike: (+2 edge) [4, 3 vs 6] Strong hit. Mark progress twice (4). 
+---------------------------------------------------------------------
+
+Shadow Stalker scatters, possibly in panic but it's difficult to tell while she's in mist form. I follow her with bursts of spray to ward her off. Doing so kills a few of my bugs, but it's worth it.
+
+I pull out my lighter. "If I lit this cloud while it was mixed with your mist, do you think it'd be as effective as electricity?"
+
+---------------------------------------------------------------------
+ • This is a taunt to gain leverage.
+ • Gain Ground: (+3 wits) [6, 2 vs 9] Strong hit. Mark progress (5) and take +2 momentum (4). I definitely scare her off a bit.
+---------------------------------------------------------------------
+
+The mist quickly pulls away from the area around me and reappears further down the alley. Shadow Stalker looks a bit ragged. I form multiple bug clones and talk through them.
+
+"Why are you here, Shadow Stalker?" I ask.
+
+---------------------------------------------------------------------
+ • Action+Theme: [Oppose Phenomenon] She's opposing our takeover.
+---------------------------------------------------------------------
+
+"Your shitty group managed to take over the city while I was gone. I'm here to fix that," she says.
+
+I laugh. "You're an idiot. We're the only thing holding this city together. The heroes aren't doing shit to help, and they're even letting the Nine run wild. We're the only ones trying to save this shithole."
+
+---------------------------------------------------------------------
+ • I'm trying to make her reconsider.
+ • Gain Ground: (+2 heart) [4, 6 vs 6] Weak hit. Mark progress (6). She agrees about the heroes but doesn't think it applies to her.
+---------------------------------------------------------------------
+
+"That's on them. I'm no hero; I'm a fucking vigilante. While the heroes are bogged down in the bureaucratic bullshit, I'll be taking back the city."
+
+"You're going to stop the Nine singlehandedly then?" I ask, my voice full of doubt. When she doesn't respond, I continue, "You know, I'm surprised that the Nine didn't ask you to join. I thought for sure that you'd be a candidate."
+
+--------------------------------------------------------------------- 
+ • I am trying to make her doubt her stance.
+ • Gain Ground: (+3 wits) [6, 8 vs 6] Miss. In a bad spot. She turns it back on me.
+--------------------------------------------------------------------- 
+
+Shadow Stalker shakes her head. "I don't do groups and I don't work with villains. I hurt villains. Villains who hurt innocents. Villains like you, bug girl." She raises her crossbow.
+
+--------------------------------------------------------------------- 
+ • Shadow Stalker attacks and I attempt to dodge.
+ • React Under Fire: (+2 edge, 4 armor) [5, 3 vs 6] Strong hit. Take 1 momentum (5) and in control. The armor deflects the arrow and I hide from Shadow Stalker.
+---------------------------------------------------------------------
+
+I bolt toward the alley just as the arrow fires. It glances off the armor on my back. I enter the alley and continue running.
+
+As I near the end of the alley, I disburse my swarm into multiple clones and position them in different locations: one on the roof, one peering around the corner of the alley entrance, one tucked into a doorway. As for myself, I loop around and enter another alley that leads to Shadow Stalker, hoping to flank her or, even better, attack her from behind.
+
+--------------------------------------------------------------------- 
+ • I attempt to track Shadow Stalker.
+ • Gain Ground: (+3 wits) [9, 9 vs 6] Miss with a match. In a bad spot. She predicted my movement.
+--------------------------------------------------------------------- 
+
+I duck into the shadows of a ruined building and attempt to locate Shadow Stalker with my bugs. Unfortunately, what I discover is her mist only seconds before it enters through the wall behind me. She materializes in a second and kicks me in the spine, sending me sprawling on the ground.
+
+--------------------------------------------------------------------- 
+ • I use my swarm to put distance between us.
+ • React Under Fire: (+2 edge, +2 bug health) [9, 3 vs 6] Weak hit. Suffer -1 spirit (4). I get away but she rattles me a bit.
+ • Endure Stress: (+4 spirit) [7, 6 vs 6] Miss. Suffer -1 spirit (3). It hits me even harder.
+--------------------------------------------------------------------- 
+
+I put up a wall of bugs to block her view of me as I try to scramble away.
+
+Shadow Stalker waves the bugs away while trying to protect her face. She turns to mist and re-enters through the wall and then appears further down the alley, clear of my swarm.
+
+"God, you're so fucking annoying. You remind me of another annoying bitch that I'm forced to deal with on a daily basis because she also refuses to die," she growls. "In fact... If I look closely, you look a lot like her. Same hair, same build."
+
+My heart practically stops. Did she figure out my identity? What would she do if she knew? I say that she'd probably kill me, but I'm pretty sure that's already her plan.
+
+If she's scrutinizing me that closely, then I should probably distract her. I bring the swarms that I had stationed around the alleyways and position them behind her. Through them I say, "You're nothing but a bully, Shadow Stalker."
+
+--------------------------------------------------------------------- 
+ • React Under Fire: (+1 shadow, +2 bug health) [2, 1 vs 9] Strong hit. In control and take +1 momentum. I startle her.
+--------------------------------------------------------------------- 
+
+Shadow Stalker spins around to face my clones. My swarm bodies dissolve into thousands of bugs as they descend on her. She lets out an uncharacteristic shriek and falls backward while desperately trying to get them off of her.
+
+I book it out of there before she composes herself enough to remember that she can just mist right through them.
+
