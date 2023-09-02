@@ -6,9 +6,10 @@
 (function(solo) {
 	"use strict";
 
-	var version = "2023.08.29-alpha";
+	var version = "2023.09.02-alpha";
 
-	// finish delve site theme/domain cards. generate monsters.
+	// finish adding starforged oracles. add whatever generators are needed
+	// merge mythic crew oracles into misc oracles
 
 	var current_page, current_section, current_menu, color_theme, localStorage;
 	var toc = [];
@@ -158,9 +159,9 @@
 				"Combat": ["Enter the Fray", "Strike", "Clash", "Turn the Tide", "End the Fight", "Battle"],
 				"Suffer": ["Endure Harm", "Face Death", "Companion Endure Harm", "Endure Stress", "Face Desolation", "Out of Supply", "Face a Setback"],
 				"Quest": ["Swear an Iron Vow", "Reach a Milestone", "Fulfill Your Vow", "Forsake Your Vow", "Advance"],
-				"Fate": ["Pay the Price", "Ask the Oracle"],
 				"Delve": ["Discover a Site", "Delve the Depths", "Find an Opportunity", "Reveal a Danger", "Check Your Gear", "Locate Your Objective", "Escape the Depths"],
-				"Delve (optional)": ["Reveal a Danger (alternate version)", "Mark Your Failure", "Learn From Your Failures", "Advance a Threat", "Take a Hiatus", "Wield a Rarity"]
+				"Delve (optional)": ["Reveal a Danger (alternate version)", "Mark Your Failure", "Learn From Your Failures", "Advance a Threat", "Take a Hiatus", "Wield a Rarity"],
+				"Fate": ["Pay the Price", "Ask the Oracle"]
 			},
 			moves: {
 				"Standard Roll": "This is a standard roll for checks not covered by the moves.((ironsworn))",
@@ -342,10 +343,11 @@
 			},
 			oracle_lists: {
 				core: ["Action:Action:core:action", "Theme:Theme:core:theme", "<spacer>", "Action + Theme:Action+Theme:>core:action + core:theme"],
-				place: ["Region:Region:place:region", "Location:Location:place:location", "Coastal Waters Location:Location:place:coastal waters location", "Location Descriptors:Descriptor:place:location descriptors"],
+				place: ["Region:Region:place:region", "Location:Location:place:location", "Coastal Waters Location:Location:place:coastal waters location", "Location Descriptor:Descriptor:place:location descriptors"],
 				settlement: ["Settlement Name:Name Origin:settlement:category", "Quick Settlement Name Generator:Name:settlement:name", "Settlement Trouble:Trouble:settlement:trouble"],
 				character: ["Character Role:Role:character:role", "Character Goal:Goal:character:goal", "Character Descriptor:Descriptor:character:descriptor", "Character Disposition:Disposition:character:disposition"],
 				name: ["Ironlander Name:Name:name:ironlander", "Elf Name:Name:name:elf", "Giant Name:Name:name:giant", "Varou Name:Name:name:varou", "Troll Name:Name:name:troll"],
+				"turning point": ["Combat Action:Action:turning point:combat action", "Mystic Backlash:Backlash:turning point:mystic backlash", "Major Plot Twist:Twist:turning point:major plot twist", "<spacer>", "Quest Rank:Rank:turning point:quest rank", "Journey Rank:Rank:turning point:journey rank", "Foe Rank:Rank:turning point:foe rank"],
 
 				feature: ["Aspect:Aspect:feature:aspect", "Focus:Focus:feature:focus", "<spacer>", "Aspect + Focus:Aspect+Focus:>feature:aspect + feature:focus"],
 				"site name": {
@@ -359,8 +361,22 @@
 				"combat event": ["Method:Method:combat event:method", "Target:Target:combat event:target", "<spacer>", "Method + Target:Method+Target:>combat event:method + combat event:target"],
 				threat: ["Category:Category:threat:category", "<spacer>", "Burgeoning Conflict:Action:threat:burgeoning conflict", "Cursed Site:Action:threat:cursed site", "Environmental Calamity:Action:threat:environmental calamity", "Malignant Plague:Action:threat:malignant plague", "Rampaging Creature:Action:threat:rampaging creature", "Ravaging Horde:Action:threat:ravaging horde", "Scheming Leader:Action:threat:scheming leader", "Power-Hungry Mystic:Action:threat:power-hungry mystic", "Zealous Cult:Action:threat:zealous cult"],
 				site: {
-					core: ["Theme Features:>site:theme features"],
-					"theme features": ["Haunted:Feature:theme:haunted-features"]
+					features: ["Theme Features:>site:theme features", "Domain Features:>site:domain features"],
+					dangers: ["Theme Dangers:>site:theme dangers", "Domain Dangers:>site:domain dangers"],
+					"theme features": ["Haunted:Feature:theme:haunted-features", "Infested:Feature:theme:infested-features", "Ravaged:Feature:theme:ravaged-features", "Wild:Feature:theme:wild-features"],
+					"theme dangers": ["Haunted:Danger:theme:haunted-dangers", "Infested:Danger:theme:infested-dangers", "Ravaged:Danger:theme:ravaged-dangers", "Wild:Danger:theme:wild-dangers"],
+					"domain features": [
+						"Barrow:Feature:domain:barrow-features", "Cavern:Feature:domain:cavern-features", "Frozen Cavern:Feature:domain:frozen cavern-features", 
+						"Icereach:Feature:domain:icereach-features", "Mine:Feature:domain:mine-features", "Pass:Feature:domain:pass-features", 
+						"Ruin:Feature:domain:ruin-features", "Sea Cave:Feature:domain:sea cave-features", "Shadow Fen:Feature:domain:shadowfen-features", 
+						"Stronghold:Feature:domain:stronghold-features", "Tanglewood:Feature:domain:tanglewood-features", "Underkeep:Feature:domain:underkeep-features"
+					],
+					"domain dangers": [
+						"Barrow:Danger:domain:barrow-dangers", "Cavern:Danger:domain:cavern-dangers", "Frozen Cavern:Danger:domain:frozen cavern-dangers", 
+						"Icereach:Danger:domain:icereach-dangers", "Mine:Danger:domain:mine-dangers", "Pass:Danger:domain:pass-dangers", 
+						"Ruin:Danger:domain:ruin-dangers", "Sea Cave:Danger:domain:sea cave-dangers", "Shadow Fen:Danger:domain:shadowfen-dangers", 
+						"Stronghold:Danger:domain:stronghold-dangers", "Tanglewood:Danger:domain:tanglewood-dangers", "Underkeep:Danger:domain:underkeep-dangers"
+					],
 				}
 			},
 			oracles: {
@@ -411,8 +427,11 @@
 				},
 				"turning point": {
 					"combat action": {3: "Compel a surrender.", 6: "Coordinate with allies.", 9: "Gather reinforcements.", 13: "Seize something or someone.", 17: "Provoke a reckless response.", 21: "Intimidate or frighten.", 25: "Reveal a surprising truth.", 29: "Shift focus to someone or something else.", 33: "Destroy something, or render it useless.", 39: "Take a decisive action.", 45: "Reinforce defenses.", 52: "Ready an action.", 60: "Use the terrain to gain advantage.", 68: "Leverage the advantage of a weapon or ability.", 78: "Create an opportunity.", 89: "Attack with precision.", 99: "Attack with power.", 100: "Take a completely unexpected action."},
-					"mystic backlist": {4: "Your ritual has the opposite affect.", 8: "You are sapped of strength.", 12: "Your friend, ally, or companion is adversely affected.", 16: "You destroy an important object.", 20: "You inadvertently summon a horror.", 24: "You collapse, and drift into a troubled sleep.", 28: "You undergo a physical torment which leaves its mark upon you.", 32: "You hear ghostly voices whispering of dark portents.", 36: "You are lost in shadow, and find yourself in another place without memory of how you got there.", 40: "You alert someone or something to your presence.", 44: "You are not yourself, and act against a friend, ally, or companion.", 48: "You affect or damage your surroundings, causing a disturbance or potential harm.", 52: "You waste resources.", 56: "You suffer the loss of a sense for several hours.", 60: "You lose your connection to magic for a day or so, and cannot perform rituals.", 64: "Your ritual affects the target in an unexpected and problematic way.", 68: "Your ritual reveals a surprising and troubling truth.", 72: "You are tempted by dark powers.", 76: "You see a troubling vision of your future.", 80: "You can't perform this ritual again until you acquire an important component.", 84: "You develop a strange fear or compulsion.", 88: "Your ritual causes creatures to exhibit strange or aggressive behavior. ", 92: "You are tormented by an apparition from your past.", 96: "You are wracked with sudden sickness.", 100: ">roll twice"},
-					"plot twist": {5: "It was all a diversion.", 10: "A dark secret is revealed.", 15: "A trap is sprung.", 20: "An assumption is revealed to be false.", 25: "A secret alliance is revealed.", 30: "Your actions benefit an enemy.", 35: "Someone returns unexpectedly.", 40: "A more dangerous foe is revealed.", 45: "You and an enemy share a common goal.", 50: "A true identity is revealed.", 55: "You are betrayed by someone who was trusted.", 60: "You are too late.", 65: "The true enemy is revealed.", 70: "The enemy gains new allies.", 75: "A new danger appears.", 80: "Someone or something goes missing.", 85: "The truth of a relationship is revealed.", 90: "Two seemingly unrelated situations are shown to be connected.", 95: "Unexpected powers or abilities are revealed.", 100: ">roll twice"}
+					"mystic backlash": {4: "Your ritual has the opposite affect.", 8: "You are sapped of strength.", 12: "Your friend, ally, or companion is adversely affected.", 16: "You destroy an important object.", 20: "You inadvertently summon a horror.", 24: "You collapse, and drift into a troubled sleep.", 28: "You undergo a physical torment which leaves its mark upon you.", 32: "You hear ghostly voices whispering of dark portents.", 36: "You are lost in shadow, and find yourself in another place without memory of how you got there.", 40: "You alert someone or something to your presence.", 44: "You are not yourself, and act against a friend, ally, or companion.", 48: "You affect or damage your surroundings, causing a disturbance or potential harm.", 52: "You waste resources.", 56: "You suffer the loss of a sense for several hours.", 60: "You lose your connection to magic for a day or so, and cannot perform rituals.", 64: "Your ritual affects the target in an unexpected and problematic way.", 68: "Your ritual reveals a surprising and troubling truth.", 72: "You are tempted by dark powers.", 76: "You see a troubling vision of your future.", 80: "You can't perform this ritual again until you acquire an important component.", 84: "You develop a strange fear or compulsion.", 88: "Your ritual causes creatures to exhibit strange or aggressive behavior. ", 92: "You are tormented by an apparition from your past.", 96: "You are wracked with sudden sickness.", 100: ">roll twice"},
+					"major plot twist": {5: "It was all a diversion.", 10: "A dark secret is revealed.", 15: "A trap is sprung.", 20: "An assumption is revealed to be false.", 25: "A secret alliance is revealed.", 30: "Your actions benefit an enemy.", 35: "Someone returns unexpectedly.", 40: "A more dangerous foe is revealed.", 45: "You and an enemy share a common goal.", 50: "A true identity is revealed.", 55: "You are betrayed by someone who was trusted.", 60: "You are too late.", 65: "The true enemy is revealed.", 70: "The enemy gains new allies.", 75: "A new danger appears.", 80: "Someone or something goes missing.", 85: "The truth of a relationship is revealed.", 90: "Two seemingly unrelated situations are shown to be connected.", 95: "Unexpected powers or abilities are revealed.", 100: ">roll twice"},
+					"quest rank": {20: "Troublesome: A challenging quest with a small number of obstacles", 55: "Dangerous: An involved quest with several tough obstacles", 80: "Formidable: A complex quest with many intimidating obstacles", 93: "Extreme: An overwhelming quest of staggering proportions", 100: "Epic: A life-defining quest of unknowable scope"},
+					"journey rank": {20: "Troublesome: Traveling a moderate distance within a single region", 55: "Dangerous: Traveling a long distance within a single region, or across rough terrain", 80: "Formidable: Traveling from one region to another, or across especially challenging terrain", 93: "Extreme: Traveling through multiple regions", 100: "Epic: Traveling from one end of the Ironlands to another, or to a separate land"},
+					"foe rank": {20: "Troublesome: Common enemies", 55: "Dangerous: Capable fighters and deadly creatures", 80: "Formidable: Exceptional fighters and mighty creatures", 93: "Extreme: Foes of overwhelming skill or power", 100: "Epic: Legendary foes of mythic power"}
 				},
 
 				feature: {
@@ -484,30 +503,30 @@
 					"wild-dangers": {5: "Denizen hunts", 10: "Denizen strikes without warning", 12: "Denizen leverages the environment ", 14: "Denizen wields unexpected abilities", 16: "Denizen guided by a greater threat", 18: "Denizen protects something", 20: "Hazardous terrain", 22: "Weather or environmental threat", 24: "Benign aspect becomes a threat", 26: "Overzealous hunter", 28: "Disturbing evidence of a victim’s fate", 30: "Ill-fated victim in danger"}
 				},
 				domain: {
-					"barrow-features": {43: "Burial chambers", 56: "Maze of narrow passages", 64: "Shrine", 68: "Stately vault", 72: "Offerings to the dead", 76: "Statuary or tapestries", 80: "Remains of a grave robber", 84: "Mass grave", 88: "Exhumed corpses", 98: "Something unusual or unexpected", 99: "You transition into a new theme", 100: "You transition into a new domain"},
-					"barrow-dangers": {33: "Denizen guards this area", 36: "Trap", 39: "Death makes its presence known", 42: "Crumbling architecture", 45: "Grave goods with hidden dangers"},
-					"cavern-features": {43: "Twisting passages", 56: "Cramped caves", 64: "Vast chamber", 68: "Subterranean waterway", 72: "Cave pool", 76: "Natural bridge", 80: "Towering stone formations", 84: "Natural illumination", 88: "Dark pit", 98: "Something unusual or unexpected", 99: "You transition into a new theme", 100: "You transition into a new domain"},
-					"cavern-dangers": {33: "Denizen lairs here", 36: "Cave-in", 39: "Flooding", 42: "Perilous climb or descent", 45: "Fissure or sinkhole"},
-					"frozen cavern-features": {43: "Maze of icy tunnels", 56: "Glistening cave", 64: "Vast chamber", 68: "Frigid waterway", 72: "Icy pools", 76: "Magnificent ice formations", 80: "Frozen waterfall", 84: "Deep crevasses", 88: "Discovery locked in the ice", 98: "Something unusual or unexpected", 99: "You transition into a new theme", 100: "You transition into a new domain"},
-					"frozen cavern-dangers": {33: "Denizen lairs here", 36: "Fracturing ice", 39: "Crumbling chasm ", 42: "Bitter chill", 45: "Disorienting reflections"},
-					"icereach-features": {43: "Plains of ice and snow", 56: "Seawater channel", 64: "Icy highlands", 68: "Crevasse", 72: "Ice floes", 76: "Ship trapped in ice", 80: "Animal herd or habitat", 84: "Frozen carcass", 88: "Camp or outpost", 98: "Something unusual or unexpected", 99: "You transition into a new theme", 100: "You transition into a new domain"},
-					"icereach-dangers": {33: "Denizen hunts", 36: "Fragile ice above watery depths", 39: "Perilous climb or descent", 42: "Avalanche or icefall", 45: "Foul weather"},
-					"mine-features": {43: "Cramped tunnels", 56: "Mine works", 64: "Excavated chamber", 68: "Mineshaft", 72: "Collapsed tunnel", 76: "Cluttered storage", 80: "Housing or common areas", 84: "Flooded chamber", 88: "Unearthed secret", 98: "Something unusual or unexpected", 99: "You transition into a new theme", 100: "You transition into a new domain"},
-					"mine-dangers": {33: "Cave-in", 36: "Flooding", 39: "Unstable platforms or architecture", 42: "Hazardous gas pocket", 45: "Weakened terrain"},
-					"pass-features": {43: "Winding mountain path", 56: "Snowfield or glacial rocks", 64: "River gorge", 68: "Crashing waterfall", 72: "Highland lake", 76: "Forgotten cairn", 80: "Bridge", 84: "Overlook", 88: "Camp or outpost", 98: "Something unusual or unexpected", 99: "You transition into a new theme", 100: "You transition into a new domain"},
-					"pass-dangers": {33: "Denizen lairs here", 36: "Denizen hunts", 39: "Perilous climb or descent", 42: "Avalanche or rockslide", 45: "Foul weather"},
-					"ruin-features": {43: "Crumbling corridors and chambers", 56: "Collapsed architecture", 64: "Rubble-choked hall", 68: "Courtyard", 72: "Archive or library", 76: "Broken statuary or fading murals", 80: "Preserved vault", 84: "Temple to forgotten gods", 88: "Mausoleum", 98: "Something unusual or unexpected", 99: "You transition into a new theme", 100: "You transition into a new domain"},
-					"ruin-dangers": {33: "Ancient mechanism or trap", 36: "Collapsing wall or ceiling", 39: "Blocked or broken passage", 42: "Unstable floor above a new danger", 45: "Ancient secrets best left buried"},
-					"sea cave-features": {43: "Watery tunnels", 56: "Eroded chamber", 64: "Flooded chamber", 68: "Vast chamber", 72: "Dry passages", 76: "Freshwater inlet", 80: "Rocky island", 84: "Waterborne debris", 88: "Shipwreck or boat", 98: "Something unusual or unexpected", 99: "You transition into a new theme", 100: "You transition into a new domain"},
-					"sea cave-dangers": {33: "Denizen strikes without warning", 36: "Denizen lurks below", 39: "Flooding", 42: "Rushing current", 45: "Claustrophobic squeeze"},
-					"shadowfen-features": {43: "Narrow path through a fetid bog", 56: "Stagnant waterway", 64: "Flooded thicket", 68: "Island of dry land", 72: "Submerged discovery", 76: "Preserved corpses", 80: "Overgrown structure", 84: "Tall reeds", 88: "Camp or outpost", 98: "Something unusual or unexpected", 99: "You transition into a new theme", 100: "You transition into a new domain"},
-					"shadowfen-dangers": {33: "Denizen hunts", 36: "Deep water blocks the path", 39: "Toxic environment", 42: "Concealing or disorienting mist", 45: "Hidden quagmire"},
-					"stronghold-features": {43: "Connecting passageways", 56: "Barracks or common quarters", 64: "Large hall", 68: "Workshop or library", 72: "Command center or leadership", 76: "Ladder or stairwell", 80: "Storage", 84: "Kitchen or larder", 88: "Courtyard", 98: "Something unusual or unexpected", 99: "You transition into a new theme", 100: "You transition into a new domain"},
-					"stronghold-dangers": {33: "Blocked or guarded path", 36: "Caught in the open", 39: "Chokepoint", 42: "Trap", 45: "Alarm trigger"},
-					"tanglewood-features": {43: "Dense thicket", 56: "Overgrown path", 64: "Waterway", 68: "Clearing", 72: "Elder tree", 76: "Brambles", 80: "Overgrown structure", 84: "Rocky outcrop", 88: "Camp or outpost", 98: "Something unusual or unexpected", 99: "You transition into a new theme", 100: "You transition into a new domain"},
-					"tanglewood-dangers": {33: "Denizen hunts", 36: "Denizen lairs here", 39: "Trap or snare", 42: "Path leads you astray", 45: "Entangling plant life"},
-					"underkeep-features": {43: "Carved passages", 56: "Hall or chamber", 64: "Stairs into the depths", 68: "Grand doorway or entrance", 72: "Tomb or catacombs", 76: "Rough-hewn cave", 80: "Foundry or workshop", 84: "Shrine or temple", 88: "Imposing architecture or artistry", 98: "Something unusual or unexpected", 99: "You transition into a new theme", 100: "You transition into a new domain"},
-					"underkeep-dangers": {33: "Ancient mechanism or trap", 36: "Crumbling architecture", 39: "Blocked or broken passage", 42: "Artifact with a hidden danger", 45: "Denizen lurks in darkness"}
+					"barrow-features": {23: "Burial chambers", 36: "Maze of narrow passages", 44: "Shrine", 48: "Stately vault", 52: "Offerings to the dead", 56: "Statuary or tapestries", 60: "Remains of a grave robber", 64: "Mass grave", 68: "Exhumed corpses", 78: "Something unusual or unexpected", 79: "You transition into a new theme", 80: "You transition into a new domain"},
+					"barrow-dangers": {3: "Denizen guards this area", 6: "Trap", 9: "Death makes its presence known", 12: "Crumbling architecture", 15: "Grave goods with hidden dangers"},
+					"cavern-features": {23: "Twisting passages", 36: "Cramped caves", 44: "Vast chamber", 48: "Subterranean waterway", 52: "Cave pool", 56: "Natural bridge", 60: "Towering stone formations", 64: "Natural illumination", 68: "Dark pit", 78: "Something unusual or unexpected", 79: "You transition into a new theme", 80: "You transition into a new domain"},
+					"cavern-dangers": {3: "Denizen lairs here", 6: "Cave-in", 9: "Flooding", 12: "Perilous climb or descent", 15: "Fissure or sinkhole"},
+					"frozen cavern-features": {23: "Maze of icy tunnels", 36: "Glistening cave", 44: "Vast chamber", 48: "Frigid waterway", 52: "Icy pools", 56: "Magnificent ice formations", 60: "Frozen waterfall", 64: "Deep crevasses", 68: "Discovery locked in the ice", 78: "Something unusual or unexpected", 79: "You transition into a new theme", 80: "You transition into a new domain"},
+					"frozen cavern-dangers": {3: "Denizen lairs here", 6: "Fracturing ice", 9: "Crumbling chasm ", 12: "Bitter chill", 15: "Disorienting reflections"},
+					"icereach-features": {23: "Plains of ice and snow", 36: "Seawater channel", 44: "Icy highlands", 48: "Crevasse", 52: "Ice floes", 56: "Ship trapped in ice", 60: "Animal herd or habitat", 64: "Frozen carcass", 68: "Camp or outpost", 78: "Something unusual or unexpected", 79: "You transition into a new theme", 80: "You transition into a new domain"},
+					"icereach-dangers": {3: "Denizen hunts", 6: "Fragile ice above watery depths", 9: "Perilous climb or descent", 12: "Avalanche or icefall", 15: "Foul weather"},
+					"mine-features": {23: "Cramped tunnels", 36: "Mine works", 44: "Excavated chamber", 48: "Mineshaft", 52: "Collapsed tunnel", 56: "Cluttered storage", 60: "Housing or common areas", 64: "Flooded chamber", 68: "Unearthed secret", 78: "Something unusual or unexpected", 79: "You transition into a new theme", 80: "You transition into a new domain"},
+					"mine-dangers": {3: "Cave-in", 6: "Flooding", 9: "Unstable platforms or architecture", 12: "Hazardous gas pocket", 15: "Weakened terrain"},
+					"pass-features": {23: "Winding mountain path", 36: "Snowfield or glacial rocks", 44: "River gorge", 48: "Crashing waterfall", 52: "Highland lake", 56: "Forgotten cairn", 60: "Bridge", 64: "Overlook", 68: "Camp or outpost", 78: "Something unusual or unexpected", 79: "You transition into a new theme", 80: "You transition into a new domain"},
+					"pass-dangers": {3: "Denizen lairs here", 6: "Denizen hunts", 9: "Perilous climb or descent", 12: "Avalanche or rockslide", 15: "Foul weather"},
+					"ruin-features": {23: "Crumbling corridors and chambers", 36: "Collapsed architecture", 44: "Rubble-choked hall", 48: "Courtyard", 52: "Archive or library", 56: "Broken statuary or fading murals", 60: "Preserved vault", 64: "Temple to forgotten gods", 68: "Mausoleum", 78: "Something unusual or unexpected", 79: "You transition into a new theme", 80: "You transition into a new domain"},
+					"ruin-dangers": {3: "Ancient mechanism or trap", 6: "Collapsing wall or ceiling", 9: "Blocked or broken passage", 12: "Unstable floor above a new danger", 15: "Ancient secrets best left buried"},
+					"sea cave-features": {23: "Watery tunnels", 36: "Eroded chamber", 44: "Flooded chamber", 48: "Vast chamber", 52: "Dry passages", 56: "Freshwater inlet", 60: "Rocky island", 64: "Waterborne debris", 68: "Shipwreck or boat", 78: "Something unusual or unexpected", 79: "You transition into a new theme", 80: "You transition into a new domain"},
+					"sea cave-dangers": {3: "Denizen strikes without warning", 6: "Denizen lurks below", 9: "Flooding", 12: "Rushing current", 15: "Claustrophobic squeeze"},
+					"shadowfen-features": {23: "Narrow path through a fetid bog", 36: "Stagnant waterway", 44: "Flooded thicket", 48: "Island of dry land", 52: "Submerged discovery", 56: "Preserved corpses", 60: "Overgrown structure", 64: "Tall reeds", 68: "Camp or outpost", 78: "Something unusual or unexpected", 79: "You transition into a new theme", 80: "You transition into a new domain"},
+					"shadowfen-dangers": {3: "Denizen hunts", 6: "Deep water blocks the path", 9: "Toxic environment", 12: "Concealing or disorienting mist", 15: "Hidden quagmire"},
+					"stronghold-features": {23: "Connecting passageways", 36: "Barracks or common quarters", 44: "Large hall", 48: "Workshop or library", 52: "Command center or leadership", 56: "Ladder or stairwell", 60: "Storage", 64: "Kitchen or larder", 68: "Courtyard", 78: "Something unusual or unexpected", 79: "You transition into a new theme", 80: "You transition into a new domain"},
+					"stronghold-dangers": {3: "Blocked or guarded path", 6: "Caught in the open", 9: "Chokepoint", 12: "Trap", 15: "Alarm trigger"},
+					"tanglewood-features": {23: "Dense thicket", 36: "Overgrown path", 44: "Waterway", 48: "Clearing", 52: "Elder tree", 56: "Brambles", 60: "Overgrown structure", 64: "Rocky outcrop", 68: "Camp or outpost", 78: "Something unusual or unexpected", 79: "You transition into a new theme", 80: "You transition into a new domain"},
+					"tanglewood-dangers": {3: "Denizen hunts", 6: "Denizen lairs here", 9: "Trap or snare", 12: "Path leads you astray", 15: "Entangling plant life"},
+					"underkeep-features": {23: "Carved passages", 36: "Hall or chamber", 44: "Stairs into the depths", 48: "Grand doorway or entrance", 52: "Tomb or catacombs", 56: "Rough-hewn cave", 60: "Foundry or workshop", 64: "Shrine or temple", 68: "Imposing architecture or artistry", 78: "Something unusual or unexpected", 79: "You transition into a new theme", 80: "You transition into a new domain"},
+					"underkeep-dangers": {3: "Ancient mechanism or trap", 6: "Crumbling architecture", 9: "Blocked or broken passage", 12: "Artifact with a hidden danger", 15: "Denizen lurks in darkness"}
 				}
 			}
 		},
@@ -1114,6 +1133,83 @@
 				"Playbook Moves": "[The Beacon]<<Draw attention to their inadequacies|Praise their best traits|Make them pay for their audacity|Compare them to the others|Play to their drives>>[The Bull]<<Endanger their love|Bolster their rival|Reveal dark secrets of their past|Attack with someone just like them|Swarm with mundane forces>>[The Delinquent]<<Put them in chains|Give or take an audience|Give them conditional love|Show them the line|Offer a helping hand>>[The Doomed]<<Mark their doom track|Offer a chance to further their cause|Remind them of what they could lose|Push them to the brink|Offer temporary relief with a cost>>[The Janus]<<Bring their obligations to bear|Endanger someone from either life|Make their lives cross over|Put more obligations on them|Take away their mask>>[The Legacy]<<Remind them of their traditions|Compare them to the past|Make them answer their family’s concerns|Raise expectations on them|Honor them>>[The Nova]<<Remind them of past collateral damage|Reveal a terrible truth of their powers|Make their powers flare out of control|Stoke their conditions|Introduce threats only they can tackle>>[The Outsider]<<Draw attention to their differences|Make a request from home|Introduce a monitor from home|Accept and support them in their moments of weakness|Provoke their beliefs and practices in tense situations>>[The Protégé]<<Convey their mistakes|Bestow wisdom, wanted or unwanted|Hold up a mirror to them|Give them exactly what they need at a cost|Endanger their mentor>>[The Transformed]<<Reject them|Show how they are feared or hated|Attack them with unthinking hordes|Remind them of what they’ve lost|See their true self>>[The Innocent]<<Confront them with their future self|Mirror the steps on their future self’s path|Show them an absurdity of the present (their future)|Show them an artifact of the past (their present)|Judge them by their future self’s standard>>[The Joined]<<Offer them, and them alone, opportunities for success or fun|Flaunt the abilities and successes of their other half in front of them|Mistake them and their other half for being each other, or a single entity|Express interest in them, and them alone|Separate them>>[The Newborn]<<Teach them a new lesson|Correct an existing lesson|Push one of their lessons to the brink|Remind them of their fundamental inhumanity|Exert ownership or control over them as a piece of property>>[The Reformed]<<Remind them of what they’ve done|Ask them for a criminal or villainous favor|Doubt them from a position of moral superiority|Offer them solace with a criminal or villainous source|Confront them with a nightmare from their past>>[The Star]<<Reinterpret their actions in the media|Make a demand from their audience|Offer an opportunity for public attention|Offer an opportunity for quiet heroism|Demean their superficiality>>[The Harbinger]<<Center a plot around their “remembered” characters|Undermine what they think they know|Reveal clear future paths|Evoke the pleasures of the present|Show the timeline ripples of their actions>>[The Nomad]<<Introduce bizarre elements from their adventures|Offer them solace, comfort, and the feeling of home|Threaten what anchors they have|Restrain and confine them|Show them how little they really know>>[The Scion]<<Blame them for their parent’s deeds|Grant them respect|Make demands on them|Interrogate their reasons or deeds|Introduce characters tied to their parent>>[The Brain]<<Confront them with their Shame|Complicate their solution or gadget|Present an impossible problem to solve|Judge them for their overconfidence|Show them how they need others>>[The Soldier]<<Give them new orders, active and tense|Endanger their allies in the organization|Reward their faith and commitment|Reveal signs of corruption|Review their performance>>",
 				"Villain Moves": "<h3>Villains in a Fight</h3>Here are the core guidelines that villains follow in fights:<<When a villain gets hit hard, by trading blows or in other situations, they mark a condition as appropriate.|When a villain marks a condition, they make a move from the condition moves list immediately, before the PCs act again.|When you need to say what the villain does next, look to your GM moves, their villain moves, and the condition moves.|When a villain needs to mark a condition but can’t, they are defeated.|Villains can flee or give up long before all their conditions are filled— don’t think they have to fight to the bitter end.>>Villains, and NPCs in general, always try to clear conditions—they always choose to open up after a PC’s successful comfort or support move.||Beyond always seeking to clear conditions as the result of a PC’s successful comfort or support move, villains clear conditions when you think it fictionally appropriate, most likely after time has passed and they’ve had the chance to get over their feelings.***<h3>Conditions</h3>These are GM moves for villains to make immediately after they’ve marked a condition, and any time you’d make a GM move after that.||[Afraid]<<Hide out of harm’s way|Flee from danger or difficulty|Lash out without thought at a threat|Plead for mercy|Throw up blocks and walls>>[Angry]<<Vent through unthinking violence|Break the environment|Shut down conversation|Lash out at any vulnerability|Escalate the situation dangerously>>[Guilty]<<Seek forgiveness|Sacrifice anything or everything for redemption|Turn to the unthinkable|Implicate others in guilt|Reveal the nature of their drive>>[Hopeless]<<Give up without a fight|Burn down the world around them|Seek any light in the dark|Undermine others’ beliefs|Veer toward drastic and terrible action>>[Insecure]<<Double down on broken plans or ideas|Follow the lead of someone else|Doubt and question their own allies and plans|Admit wrongful action|Recede into the background>>"
 			}
+		},
+		motif: {
+			answers: {
+				"Yes/Strength": { 1: "Strong no", 2: "No", 3: "Weak no", 4: "Weak yes", 5: "Yes", 6: "Strong yes" },
+				"Yes/Maybe": { 2: "No", 3: "Maybe not", 4: "Maybe so", 6: "Yes" },
+				"Yes/No": { 3: "No", 6: "Yes" },
+				"Yes/And": { 1: "No, and", 2: "No", 3: "No, but", 4: "Yes, but", 5: "Yes", 6: "Yes, and" },
+				"Strength": { 1: "Very weak", 2: "Weak", 3: "Mediocre", 4: "Moderate", 5: "Strong", 6: "Very strong" },
+				"Scale": { 1: "Not at all", 2: "Hardly", 4: "Moderately", 5: "Quite", 6: "Extremely" }
+			},
+			degrees: {
+				"And/But": { 2: "But", 4: "Plain", 6: "And" }, 
+				"Strength": { 1: "Very weak", 2: "Weak", 3: "Mediocre", 4: "Moderate", 5: "Strong", 6: "Very strong" },
+				"Scale": { 1: "Not at all", 2: "Hardly", 4: "Moderately", 5: "Quite", 6: "Extremely" }
+			},
+			flavors: {
+				"Strength": { 1: "Very weak", 2: "Weak", 3: "Mediocre", 4: "Moderate", 5: "Strong", 6: "Very strong" },
+				"Scale": { 1: "Not at all", 2: "Hardly", 4: "Moderately", 5: "Quite", 6: "Extremely" }
+			},
+			turns: ["A sudden turn in favor of the player character(s) and/or their interests.", "Any useful progress or clues in the scene will be offset by ostacles of delays.", "Helpful non-player characters suddenly arrive.", "Hostile non-player characters suddenly arrive.", "An especially unusual item or well-hidden clue is unlocked within the scene.", "A sudden turn in favor of the Big Bad or other forces aligned against the main characters and their interests."],
+			twists: { 4: "The authorities turn against the PCs OR a major ally betrays them.", 6: "The approach the PCs were taking turns out to be the wrong tactic or insufficient to fix the problem. However, they should be directed or receive clues to help transfer them to the new path and evolving storyline.", 7: "A mixed or neutral high-level NPC appears. It could be anything from a secret agency director to a blazing archangel. Use the main oracle and 3 questions to determine its purpose and attitude.", 9: "The player character actions turn out to be more effective than expected or just flat out lucky, granting them major progress towards their goals. However, the gains should also introduce new problems and puzzles for the characters to solve.", 11: "Hostile authorities make peace with the PCs OR a major opposition figure turns to their side." }
+		},
+		twists: [
+			"Someone is revealed to have an unexpected connection to another character.", "Something that you had taken for granted as a truth is revealed to be false.",
+			"A successful action unexpectedly makes the situation worse.", "A problem that you thought had been resolved returns.",
+			"Information is revealed that alters a perceived truth in an unexpected way.", "Something that you were trying to keep hidden is revealed.",
+			"A character must choose one out of two or more equally positive or equally negative options.", "A threat comes from the environment.",
+			"A character with questionable motives enters the story.", "A character's weakness or mistake is exploited.",
+			"Someone or something is taken from you or becomes broken.", "A character does something contrary to who they are.", "A sacrifice is necessary to succeed.",
+			"A past event or action is revealed that directly affects the current situation.", "Someone or something taken for granted is discovered to be unexpectedly important.",
+			"A strength becomes a momentary weakness.", "A previously unseen weakness or fear is revealed.", "The current path to your goal is closed off unexpectedly."
+		],
+		character: {
+			identities: ["Warrior", "Healer", "Protector", "Assistant", "Dependent", "Ruler", "Administrator", "Victim", "Scholar", "Expert", "Elite", "Investigator", "Criminal", "Supporter", "Helpless", "Outsider", "Mediator", "Entertainer", "Socialite", "Athlete", "Performer", "Representative", "Merchant", "Trader", "Creator", "Artist", "Servant", "Laborer", "Religious", "Hunte r", "Leader", "Fighter", "Crafter", "Thief", "Radical", "Executive", "Thug", "Guard", "Guardian", "Explorer", "Hero", "Villain", "Deceiver", "Engineer", "Scout", "Fixer", "Wanderer", "Subverter", "Soldier", "Law Enforcement", "Exotic", "Scientist", "Gatherer", "Foreigner", "Survivor", "Gambler", "Rogue", "Farmer", "Killer", "Professional", "Driver/Pilot", "Student", "Organizer", "Deliverer", "Lackey", "Teacher", "gypsy", "missionary", "villager", "witch", "outcast", "magus", "crook", "magister", "mercenary", "conscript", "civilian", "serf", "caretaker", "worker", "activist", "brute", "commoner", "hermit", "actor", "inquisitor", "judge", "orator", "herald", "champion", "lord", "ranger", "chieftain", "highwayman", "cleric", "occultist", "pioneer", "fortune-hunter", "slave", "professor", "reverend", "burglar", "governor", "gunman", "vicar", "scrapper", "clairvoyant", "charmer", "drifter", "officer", "monk", "patriarch", "globetrotter", "journeyman", "homemaker", "shopkeeper", "sniper", "statesman", "warden", "recluse", "crone", "courtier", "astrologer", "outlaw", "steward", "adventurer", "priest", "duelist", "adept", "polymath", "tradesman", "jack-of-all-trades", "bum", "magician", "hitman", "aristocrat", "sorcerer", "traveler", "craftsman", "wizard", "preacher", "vagrant", "beggar", "artisan", "master", "apprentice", "ascetic", "ascendant", "politician", "superior", "Antiquarian", "Journalist", "Servant/Butler", "Lawyer", "Librarian", "High Priest", "Author", "Military Commander", "Clergyman", "Assassin", "Musician", "Gravedigger", "Dilletante", "Parapsychologist", "Henchman", "Doctor of Medicine", "Police Detective", "Restauranteur", "Police Patrolman", "Private Investigator", "Foot Soldier", "Revolutionary", "Hobo", "Archaeologist", "Intelligence Agent", "Historian", "Savant", "Cultist", "Abandoned", "Adventurous", "Adversary", "Advisor", "Ally", "Art", "Authority", "Bureaucrat", "Business", "Combatant", "Competitor", "Controller", "Enemy", "Enforcer", "Family", "Friend", "Information", "Innocent", "Inspector", "Intellectual", "Law", "Legal", "Lost", "Mechanical", "Messenger", "Military", "Mundane", "Mystery", "Official", "Persecutor", "Planner", "Pleaser", "Power", "Prisoner", "Public", "Punish", "Represent", "Ruffian", "Hunter"],
+			descriptors: ["Ugly", "Beautiful", "Foul", "Sweet", "Unusual", "Common", "Intelligent", "Ignorant", "Educated", "Skilled", "Trained", "Rude", "Polite", "Fancy", "Rough", "Dirty", "Clean", "Wealthy", "Poor", "Small", "Large", "Quiet", "Loud", "Fast", "Slow", "Exotic", "Uniformed", "Interesting", "Colorful", "Informative", "Dangerous", "Inept", "Clumsy", "Capable", "Intrusive", "Respectful", "Primitive", "Sophisticated", "Elegant", "Armed", "Different", "Young", "Old", "Difficult", "Helpful", "Harmful", "Disciplined", "Erratic", "Wild", "Crazy", "Commanding", "Meek", "Humorous", "Frightened", "Brave", "Strong", "Weak", "Impulsive", "Strategic", "Naive", "Confident", "Surprising", "Passive", "Bold", "Careless", "Cautious", "Sneaky", "Intimidating", "Powerful", "Powerless", "Hurt", "Gentle", "Caring", "Principled", "Arrogant", "Curious", "Supportive", "Heroic", "superfluous", "pleasant", "lethargic", "jovial", "addicted", "banal", "insensitive", "defiant", "shrewd", "conformist", "logical", "titled", "obnoxious", "liberal", "nefarious", "subtle", "inexperienced", "insightful", "compliant", "sensible", "reputable", "prying", "tactless", "destitute", "untrained", "wicked", "oblivious", "fanatic", "conniving", "romantic", "lazy", "refined", "plebeian", "careful", "unreasonable", "pessimistic", "indispensable", "childish", "alluring", "solemn", "scholarly", "pious", "defective", "neglectful", "habitual", "conservative", "uneducated", "optimistic", "lively", "uncouth", "inconsiderate", "affluent", "forthright", "willful", "cultured", "despondent", "idealistic", "unconcerned", "indifferent", "revolting", "mindless", "unsupportive", "generous", "fickle", "passionate", "rational", "docile", "elderly", "touchy", "devoted", "coarse", "cheery", "sinful", "needy", "established", "foolish", "pragmatic", "dignified", "unseemly", "cunning", "serene", "privileged", "pushy", "dependable", "delightful", "thoughtful", "glum", "kind", "righteous", "miserly", "hopeless", "likable", "corrupt", "Suspicious", "Foolhardy", "Egotistical", "Talented", "Brooding", "Deluded", "Artistic", "Dim", "Bad-tempered", "Courageous", "Talkative", "Bossy", "Joyful", "Enigmatic", "Monomaniacal", "Industrious", "Confused", "Aggressive", "Practical", "Anxious", "Devious", "Sympathetic", "Insane", "Introverted", "Ambitious", "Psychopathic", "Extroverted", "Bloodthirsty", "Chatty", "Ruthless", "Casual", "Cheerful", "Asocial", "Blunt", "Timid", "Rigid", "Argumentative", "Gambler", "Greedy", "Methodical", "Whimsical", "Mercurial", "Asexual", "Bully", "Lecherous", "Peacemaker", "Smart", "Flaky", "Restless", "Flamboyant", "Dramatic", "Trouble", "Leader", "Forgetful", "Demanding", "Dedicated", "Democratic", "Competitive", "Free", "Flighty", "Avaricious", "Conventional", "Hoarder", "Spendthrift", "Fighter", "Depressed", "Manic", "Quixotic", "Attentive", "Precise", "Inattentive", "Eidetic", "Chummy", "Louche", "Daredevil", "Sensitive", "Amoral", "Abrupt", "Bad", "Changeable", "Cruel", "Adaptable", "Bashful", "Charismatic", "Adequate", "Belligerent", "Charming", "Cynical", "Adventurous", "Benevolent", "Checkered", "Affable", "Boastful", "Circled", "Deadly", "Affectionate", "Boisterous", "Civil", "Deceitful", "Bone-Idle", "Clever", "Decisive", "Agreeable", "Boring", "Clinging", "Deft", "Alert", "Closed-Minded", "Depressing", "Alive", "Bothersome", "Detached", "Aloof", "Communicative", "Determined", "Amazed", "Bright", "Compassionate", "Devout", "Broad-Minded", "Competent", "Diligent", "Amiable", "Brusque", "Compulsive", "Diplomatic", "Amicable", "Bubbly", "Conscientious", "Discreet", "Amusing", "Calculating", "Dishonest", "Angered", "Callous", "Considerate", "Disorganized", "Angry", "Calm", "Convivial", "Displaced", "Calming", "Cooperative", "Dogmatic", "Apathetic", "Cantankerous", "Domineering", "Aroused", "Carefree", "Courteous", "Dumb", "Cowardly", "Dynamic", "Assertive", "Crabby", "Eager To Please", "Awestruck", "Carved", "Creative", "Easily Impressed", "Awkward", "Creepy", "Easygoing", "Eccentric", "Fussy", "Impolite", "Loving", "Ecstatic", "Important", "Loyal", "Emotional", "Impressive", "Lusty", "Empathetic", "Good", "Machiavellian", "Energetic", "Incompetent", "Materialistic", "Enthusiastic", "Gregarious", "Mean", "Evil", "Grumpy", "Inconsistent", "Excited", "Gullible", "Indecisive", "Exuberant", "Happy", "Independent", "Modest", "Fair-Minded", "Hard", "Indiscreet", "Moody", "Faithful", "Hard-Working", "Inflexible", "Mysterious", "Fearless", "Harrowing", "Innocent", "Narrow-Minded", "Finicky", "Harsh", "Nasty", "Flexible", "Hazardous", "Intellectual", "Nervous", "Flirtatious", "Nice", "Fluffy", "Hilarious", "Interfering", "Normal", "Honest", "Intolerant", "Obsessive", "Horrible", "Intuitive", "Obstinate", "Forceful", "Humble", "Inventive", "Open-Minded", "Forthcoming", "Irresponsible", "Frank", "Icy", "Jealous", "Organized", "Friendly", "Ill-Tempered", "Overcritical", "Frugal", "Imaginative", "Overemotional", "Fun-Loving", "Impartial", "Longing For The Younger Years", "Funny", "Impatient", "Lost In The Past", "Pathetic", "Patient", "Sick", "Patronizing", "Reliable", "Silly", "Tired", "Peaceful", "Resentful", "Sincere", "Persistent", "Reserved", "Sleepy", "Tough", "Perverse", "Resourceful", "Slippery", "Tranquil", "Ridiculous", "Unassuming", "Philosophical", "Understanding", "Pioneering", "Sociable", "Unique", "Soft", "Unkind", "Pig-Headed", "Sad", "Stingy", "Unpredictable", "Placid", "Sarcastic", "Stormy", "Unreliable", "Plucky", "Scary", "Straightforward", "Untrustworthy", "Secretive", "Stubborn", "Pompous", "Self-Centered", "Stupid", "Vague", "Pontificating", "Self-Confident", "Stupified", "Vain", "Possessive", "Self-Disciplined", "Superficial", "Vengeful", "Self-Indulgent", "Versatile", "Selfish", "Tacky", "Vicious", "Preachy", "Violent", "Pro-Active", "Tall", "Vulgar", "Pun-Tastic", "Sermonizing", "Terrible", "Warmhearted", "Quarrelsome", "Sharp", "Terrifying", "Weak-Willed", "Quick-Tempered", "Shocked", "Weird", "Quick-Witted", "Short", "Thoughtless", "Willing", "Shy", "Tidy", "Witty", "Abandoned", "Abnormal", "Ancient", "Aromatic", "Average", "Bizarre", "Classy", "Cold", "Damaged", "Dark", "Defeated", "Delicate", "Graceful", "Healthy", "Heavy", "Historical", "Juvenile", "Lacking", "Lame", "Lavish", "Lean", "Less", "Lethal", "Lonely", "Lovely", "Macabre", "Remarkable", "Rotten", "Ruined", "Rustic", "Simple", "Smelly", "Smooth", "Valuable", "Warlike", "Warm", "Watery", "Disagreeable", "Disgusting", "Drab", "Dry", "Dull", "Empty", "Enormous", "Faded", "Familiar", "Fat", "Feeble", "Feminine", "Festive", "Flawless", "Fresh", "Full", "Glorious", "Magnificent", "Masculine", "Mature", "Messy", "Mighty", "Military", "Modern", "Extravagant", "Mundane", "Natural", "Nondescript", "Odd", "Pale", "Petite", "Quaint", "Rare", "Reassuring", "barring", "befriending", "beginning", "belonging", "blessing", "boasting", "bowing", "breaking", "bringing", "building", "burying", "carrying", "choking", "choosing", "claiming", "closing", "collapsing", "competing", "concentrating", "condemning", "confusing", "connecting", "controlling", "covering", "creating", "crossing", "crushing", "curing", "dancing", "daring", "decaying", "deceiving", "delaying", "delivering", "depending", "deserting", "deserving", "destroying", "digging", "disagreeing", "dividing", "doubting", "drowning", "earning", "embarrassing", "employing", "emptying", "entertaining", "entreating", "entwining", "escaping", "excusing", "expanding", "fading", "failing", "falling", "fearing", "fighting", "filling", "finding", "floating", "flowing", "flying", "foreseeing", "foretelling", "granting", "guarding", "halting", "handling", "harassing", "hating", "healing", "hiding", "holding", "hoping", "hunting", "hurrying", "identifying", "ignoring", "imagining", "including", "informing", "instructing", "intending", "inviting", "judging", "killing", "kneeling", "leaping", "leaving", "lying", "meeting", "moaning", "needing", "observing", "offending", "opening", "owing", "paying", "permitting", "planning", "preaching", "preventing", "protesting", "providing", "pulling", "punishing", "pursuing", "pushing", "reading", "recognizing", "reducing", "reflecting", "refusing", "regretting", "rejoicing", "relaxing", "relying", "remembering", "removing", "repairing", "repeating", "replacing", "reporting", "resolving", "retiring", "riding", "ruining", "ruling", "running", "sailing", "scattering", "scolding", "scorching", "searching", "seeing", "sharing", "shedding", "showing", "signaling", "signing", "slinking", "soothsaying", "speaking", "spilling", "spoiling", "springing", "standing", "staying", "stealing", "stinging", "stirring", "stopping", "strengthening", "striking", "striving", "suggesting", "suspending", "swelling", "taunting", "telling", "tempting", "thawing", "threatening", "thriving", "tracing", "training", "transforming", "traveling", "trusting", "tying", "undertaking", "usurping", "vanishing", "wailing", "waiting", "walking", "wanting", "wasting", "welcoming", "whining", "whirling", "whispering", "whistling", "winning", "withdrawing", "withstanding", "wondering", "wrestling", "writing", "able", "absolute", "accordant", "active", "all", "alone", "alternative", "ample", "anthropological", "apt", "asleep", "available", "aware", "beloved", "broad", "buttressed", "celestial", "certain", "comfortable", "complete", "complex", "consistent", "contrite", "cool", "cordial", "correct", "credible", "critical", "dead", "deceptive", "decree", "demonic", "desperate", "diabolical", "didactic", "direct", "distinct", "draconic", "drunk", "dubious", "due", "durable", "eastern", "edifying", "effective", "elemental", "embarrassed", "enticing", "environmental", "esoteric", "ethereal", "extreme", "fair", "false", "famous", "fascinating", "fearful", "fecund", "feudal", "few", "final", "fine", "fit", "foreign", "furious", "ghostly", "gradual", "grotesque", "guilty", "hearty", "high", "holy", "honed", "hued", "human", "hungry", "ill", "immediate", "impossible", "inferior", "infernal", "inner", "intimate", "joyous", "just", "known", "last", "late", "left", "light", "living", "long", "lost", "lucky", "mad", "main", "massive", "medicinal", "mental", "miserable", "monetary", "nearby", "new", "noble", "northern", "noxious", "obligatory", "obvious", "opposite", "original", "other", "outer", "owned", "painful", "past", "perplexing", "potent", "private", "proper", "public", "pure", "rapid", "ready", "reasonable", "recent", "relevant", "restrained", "rich", "right", "royal", "scarred", "secure", "severe", "significant", "similar", "southern", "stunned", "substantial", "subterranean", "successful", "sudden", "sufficient", "suitable", "superior", "thick", "thin", "traditional", "true", "tyrannical", "ubiquitous", "unable", "uncommon", "undaunted", "undead", "unfair", "unholy", "united", "unlocked", "unnatural", "various", "vast", "virtuous", "visible", "western", "wonderful", "wounded", "wrong"],
+			traits: [
+				"Abrasive", "Abrupt", "Absent-minded", "Abusive", "Accepting", "Accommodating", "Accomplished", "Action oriented", "Adamant", "Adaptable", "Addict", "ADHD", "Adulterer", "Adventurous", "Affable", "Affectionate", "Afraid", "Afraid of commitment", "Afraid of ghosts", "Aggressive", "Agnostic", "Agonized", "Agreeable", "Alcoholic", "Alert", "Alluring", "Aloof", "Altruistic", "Always late", "Amateurish demeanor", "Ambiguous", "Ambitious", "Ambivalent", "Amiable", "Amused", "Amusing", "Analytical", "Angry", "Animated", "Annoyed", "Annoying", "Antagonistic", "Anti-intellectual", "Anti-social", "Anxious", "Apathetic", "Apologetic", "Appreciative", "Apprehensive", "Approachable", "Arbitrary", "Argumentative", "Aristocratic", "Arrogant", "Art collector", "Articulate", "Artistic", "Artless", "Ashamed", "Aspiring", "Assertive", "Astonished", "Astounded", "Astute", "Attentive", "Attentive to others", "Audacious", "Austere", "Authoritarian", "Authoritative", "Autocratic", "Avoids conflict", "Aware of own limitations", "Awed", "Awful", "Awkward", "Babbling", "Babyish", "Backstabber", "Bashful", "Belligerent", "Benevolent", "Betrayed", "Bewildered", "Bewitching", "Biter", "Bitter", "Blames others", "Blasé", "Blissful", "Blowhard", "Boastful", "Boisterous", "Bold", "Boorish", "Bored", "Boring", "Bossy", "Boundless", "Bragging", "Brainy", "Brash", "Bratty", "Brave", "Brazen", "Bright", "Brilliant", "Broad-minded", "Brotherly", "Brutish", "Bubbly", "Bully", "Burdened", "Busy", "Calculating", "Callous", "Calm", "Candid", "Capable", "Capricious", "Captivated", "Carefree", "Careful", "Careless", "Careless of social rules", "Caring", "Caustic", "Cautious", "Changeable", "Charismatic", "Charitable", "Charming", "Chaste", "Chatty", "Cheat", "Cheerful", "Cheerless", "Childish", "Chivalrous", "Civilised", "Classy", "Clean", "Clever", "Close", "Closed", "Clumsy", "Coarse", "Cocky", "Coherent", "Cold", "Cold hearted", "Combative", "Comfortable", "Committed", "Communicative", "Compassionate", "Competent", "Competitive", "Complacent", "Compliant", "Compulsive", "Compulsive liar", "Conceited", "Concerned", "Concrete thinking", "Condemned", "Condescending", "Confident", "Conformist", "Confused", "Congenial", "Connoisseur of good drink", "Connoisseur of good food", "Conscientious", "Conservative", "Considerate", "Consistent", "Conspicuous", "Conspiracy theorist", "Constricting", "Constructive", "Content", "Contented", "Contrarian", "Contrary", "Contrite", "Controlling", "Conventional", "Conversational", "Cool", "Cooperative", "Coquettish", "Cosmopolitan", "Courageous", "Courteous", "Covetous", "Cowardly", "Cowering", "Coy", "Crabby", "Crafty", "Cranky", "Crazy", "Creative", "Credible", "Creepy", "Critical", "Cross", "Crude", "Cruel", "Crushed", "Cuddly", "Culpable", "Cultured", "Cunning", "Curious", "Cutthroat", "Cynical", "Dainty", "Dangerous", "Daredevil", "Daring", "Dark", "Dashing", "Dauntless", "Dazzling", "Debonair", "Deceitful", "Deceiving", "Decent", "Decisive", "Decorous", "Dedicated", "Defeated", "Deferential", "Defiant", "Delegates authority", "Deliberate", "Deliberative", "Delicate", "Delighted", "Delightful", "Delusional about own skills", "Demanding", "Demonic", "Dependable", "Dependent", "Depraved", "Depressed", "Depressive", "Deranged", "Desirous", "Despairing", "Despicable", "Despondent", "Destructive", "Detached", "Detail-oriented", "Determined", "Develops close friendships", "Devilish", "Devious", "Devoted", "Devout", "Dictatorial", "Diffident", "Dignified", "Diligent", "Diminished", "Diplomatic", "Direct", "Directionless", "Disaffected", "Disagreeable", "Discerning", "Disciplined", "Discontented", "Discouraged", "Discreet", "Disgusting", "Dishonest", "Disillusioned", "Disinterested", "Disloyal", "Dismayed", "Disorderly", "Disorganized", "Disparaging", "Disregards rules", "Disrespectful", "Dissatisfied", "Dissident", "Dissolute", "Distant", "Distracted", "Distraught", "Distressed", "Distrustful", "Disturbed", "Divided", "Docile", "Does what is convenient", "Does what is necessary or right", "Dogmatic", "Dominant", "Domineering", "Dorky", "Doubtful", "Dowdy", "Downtrodden", "Draconian", "Dramatic", "Dreamer", "Dreamy", "Dreary", "Driven", "Drug addict", "Drunk", "Dubious", "Dull", "Dumb", "Dutiful", "Dynamic", "Eager", "Easily embarrassed", "Easily led", "Easily upset", "Easygoing", "Eccentric", "Ecstatic", "Educated", "Effervescent", "Efficient", "Egocentric", "Egotistic", "Egotistical", "Elated", "Electrified", "Eloquent", "Elusive", "Embarrassed", "Embittered", "Embraces change", "Eminent", "Emotional", "Emotionally stable", "Empathetic", "Empty", "Enchanted", "Enchanting", "Encouraging", "Enduring", "Energetic", "Engaging", "Enigmatic", "Enjoys a good argument", "Enjoys a good brawl", "Enjoys a little friendly competition", "Enterprising", "Entertaining", "Enthusiastic", "Entrepreneurial", "Envious", "Equable", "Erratic", "Ethical", "Evasive", "Evil", "Exacting", "Exasperated", "Excellent", "Excessive", "Excitable", "Excited", "Exclusive", "Exhausted", "Expansive", "Expedient", "Experimental", "Expert", "Expressive", "Extravagant", "Extraverted", "Extreme", "Exuberant", "Fabulous", "Faces reality", "Facetious", "Faded", "Failure", "Fair", "Faith in oneself", "Faith in others", "Faith in self", "Faithful", "Faithless", "Fake", "Fanatical", "Fanciful", "Fantastic", 
+				"Fascinated", "Fast learner", "Fastidious", "Fatalistic", "Fatigued", "Fawning", "Fearful", "Fearless", "Feisty", "Ferocious", "Fidgety", "Fierce", "Fiery", "Fighter", "Fine", "Finicky", "Fitness fanatic", "Flagging", "Flakey", "Flamboyant", "Flashy", "Fleeting", "Flexible", "Flighty", "Flippant", "Flirtatious", "Flirty", "Flustered", "Focused", "Follower", "Follows rules", "Foolhardy", "Foolish", "Forceful", "Forgetful", "Forgiving", "Formal", "Forthright", "Fortunate", "Foul", "Fragile", "Fragmented", "Frank", "Frantic", "Frazzled", "Free of guilt", "Free thinking", "Fresh", "Fretful", "Friendly", "Frightened", "Frigid", "Frugal", "Frustrated", "Fuddy duddy", "Fun", "Fun loving", "Fun to be around", "Funny", "Furious", "Furtive", "Fussy", "Gabby", "Garrulous", "Gaudy", "Generous", "Genial", "Gentle", "Genuine", "Giddy", "Giggly", "Gives others their freedom", "Gives up easily", "Giving", "Glad", "Glamorous", "Gloomy", "Glorious", "Glum", "Glutton", "Gluttonous", "Goal orientated", "Good", "Good communicator", "Good listener", "Good-natured", "Good-spirited", "Goofy", "Graceful", "Gracious", "Grandiose", "Grateful", "Gratified", "Greedy", "Gregarious", "Grief", "Grieving", "Groovy", "Grotesque", "Grouchy", "Grounded", "Group-oriented", "Growly", "Gruesome", "Gruff", "Grumpy", "Guarded", "Guileless", "Guilt prone", "Guilt ridden", "Guilty", "Gullible", "Haggard", "Haggling", "Handsome", "Happy", "Happy go lucky", "Hard", "Hard working", "Harmonious", "Harried", "Harsh", "Has a vision for the future", "Has achieved many things in life", "Has clear goals", "Has good taste", "Hasn't achieved much in life", "Hassled", "Hateful", "Haughty", "Haunted by a ghost", "Heart broken", "Heartless", "Heavenly", "Heavy hearted", "Hedonistic", "Helpful", "Helpless", "Heroic", "Hesitant", "High", "High energy", "High self esteem", "High social status", "Hilarious", "Hobbyist", "Holy", "Homeless", "Homesick", "Honest", "Honor bound", "Honorable", "Hopeful", "Hopeless", "Horrible", "Hospitable", "Hostile", "Hot headed", "Huffy", "Humble", "Humorous", "Hurt", "Hypocritical", "Hysterical", "Ignorant", "Ignored", "Ill-bred", "Imaginative", "Immaculate", "Immature", "Immobile", "Immodest", "Impartial", "Impatient", "Impeccable", "Imperial", "Impersonal", "Impolite", "Impotent", "Impoverished", "Impractical", "Impressed", "Improves self", "Impudent", "Impulsive", "In harmony", "Inactive", "Incoherent", "Incompetent", "Inconsiderate", "Inconsistent", "Indecisive", "Independent", "Indifferent", "Indiscrete", "Indiscriminate", "Individualistic", "Indolent", "Indulgent", "Industrious", "Inefficient", "Inept", "Infantile", "Infatuated", "Inflexible", "Informed", "Infuriated", "Inherited success", "Inhibited", "Inhumane", "Inimitable", "Innocent", "Inquisitive", "Insane", "Insecure", "Insensitive", "Insightful", "Insincere", "Insipid", "Insistent", "Insolent", "Insouciant", "Inspired", "Instinctive", "Insulting", "Intellectual", "Intelligent", "Intense", "Interested", "Interrupting", "Intimidated", "Intimidating", "Intolerant", "Intrepid", "Introspective", "Introverted", "Intuitive", "Inventive", "Involved", "Irresolute", "Irresponsible", "Irreverent", "Irritable", "Irritating", "Isolated", "Jackass", "Jaded", "Jealous", "Jittery", "Joking", "Jolly", "Jovial", "Joyful", "Joyous", "Judgmental", "Jumpy", "Just", "Keen", "Kenderish", "Kind", "Kind hearted", "Kittenish", "Knowledgeable", "Lackadaisical", "Lacking", "Laconic", "Languid", "Lascivious", "Late", "Lax", "Lazy", "Leader", "Leaves things unfinished", "Lecherous", "Lethargic", "Level", "Lewd", "Liar", "Liberal", "Licentious", "Light-hearted", "Likeable", "Likes people", "Limited", "Lineat", "Lingering", "Lively", "Logical", "Lonely", "Longing", "Loquacious", "Lordly", "Loud", "Loudmouth", "Lovable", "Love", "Lovely", "Lover, not a fighter", "Loves challenge", "Loving", "Low confidence", "Low drive", "Low social status", "Lowly", "Loyal", "Loyal to boss", "Loyal to community", "Loyal to family", "Loyal to friends", "Lucky", "Lunatic", "Lusty", "Lying", "Macho", "Mad", "Malevolent", "Malice", "Malicious", "Maniacal", "Manic", "Manipulative", "Mannered", "Mannerly", "Masochistic", "Materialistic", "Matronly", "Matter-of-fact", "Mature", "Maudlin", "Mean", "Mean-spirited", "Meek", "Megalomaniac", "Melancholy", "Melodramatic", "Mentally slow", "Merciful", "Mercurial", "Messy", "Meticulous", "Mild", "Mischievous", "Miserable", "Miserly", "Mistrusting", "Modern", "Modest", "Moody", "Moping", "Moralistic", "Morbid", "Motherly", "Motivated", "Muddled goals", "Murderer", "Mysterious", "Mystical", "Nagging", "Naive", "Narcissistic", 
+				"Narrow-minded", "Nasty", "Natural leader", "Naughty", "Neat", "Needs social approval", "Needy", "Negative", "Negligent", "Nervous", "Neurotic", "Never gives up", "Never hungry", "Nibbler", "Nice", "Night owl", "Nihilistic", "Nit picker", "No purpose", "No self confidence", "No-nonsense", "Noble", "Noisy", "Non-committing", "Nonchalant", "Nonconforming", "Nostalgic", "Nosy", "Not trustworthy", "Nuanced", "Nuisance", "Nurturing", "Nut", "Obedient", "Obliging", "Oblivious", "Obnoxious", "Obscene", "Obsequious", "Observant", "Obsessed", "Obsessive about something", "Obstinate", "Odd", "Odious", "Open", "Open to change", "Open-minded", "Opinionated", "Opportunistic", "Oppositional", "Optimistic", "Orcish", "Orderly", "Organized", "Ornery", "Ossified", "Ostentatious", "Others can't be relied on", "Outgoing", "Outraged", "Outrageous", "Outspoken", "Over wrought", "Overbearing", "Overconfident", "Overwhelmed", "Overwhelming", "Paces", "Pacifistic", "Painstaking", "Pampered", "Panicked", "Panicky", "Paranoid", "Participating", "Particular", "Passionate", "Passive", "Passive-aggressive", "Pathetic", "Patient", "Patriotic", "Peaceful", "Penitent", "Pensive", "Perceptive", "Perfect", "Perfectionist", "Performer", "Persecuted", "Perserverant", "Perseveres", "Persevering", "Persistent", "Personable", "Persuasive", "Pert", "Perverse", "Perverted", "Pessimistic", "Petrified", "Petty", "Petulant", "Philanthropic", "Picky", "Pious", "Pitiful", "Pity", "Placid", "Playful", "Pleasant", "Pleased", "Pleasing", "Plotting", "Plucky", "Polished", "Polite", "Pompous", "Poor", "Poor communicator", "Poor listener", "Popular", "Positive", "Possessive", "Power-hungry", "Practical", "Precise", "Predictable", "Preoccupied", "Pressured", "Presumptuous", "Pretentious", "Pretty", "Prim", "Primitive", "Private", "Productive", "Profane", "Professional", "Professional demeanor", "Promiscuous", "Proper", "Prosaic", "Prosperous", "Protective", "Proud", "Prudent", "Psychotic", "Puckish", "Punctilious", "Punctual", "Purposeful", "Pushy", "Puzzled", "Quarrelsome", "Queer", "Quick", "Quick tempered", "Quiet", "Quirky", "Quitter", "Quixotic", "Radical", "Raging", "Rambunctious", "Random", "Rapturous", "Rash", "Rational", "Rawboned", "Reactionary", "Realistic", "Reasonable", "Reasoning", "Rebellious", "Recalcitrant", "Receptive", "Reckless", "Reclusive", "Refined", "Reflective", "Refreshed", "Regretful", "Rejected", "Rejects change", "Relaxed", "Relentless", "Relents", "Reliable", "Relieved", "Religious", "Reluctant", "Remorseful", "Remote", "Repugnant", "Repulsive", "Resentful", "Reserved", "Resilient", "Resolute", "Resourceful", "Respected in the community", "Respectful", "Respects experience", "Respects traditional ideas", "Responsible", "Responsive", "Restless", "Restrained", "Results-oriented", "Retiring", "Reverent", "Rewarded", "Rhetorical", "Rich", "Right", "Righteous", "Rigid", "Risk averse", "Risk-taking", "Robust and healthy", "Rogue", "Romantic", "Rough", "Rowdy", "Rude", "Rugged", "Rule-bound", "Rule-conscious", "Ruthless", "Sacrificing", "Sad", "Sadistic", "Safe", "Sagely", "Saintly", "Salient", "Sanctimonious", "Sanguine", "Sarcastic", "Sassy", "Satisfied", "Saucy", "Savage", "Savvy", "Scared", "Scarred", "Scary", "Scattered", "Scheming", "Scornful", "Scrawny", "Screwed up", "Scruffy", "Secretive", "Secure", "Sedate", "Seditious", "Seductive", "Sees the big picture", "Selective", "Self-absorbed", "Self-assured", "Self-blaming", "Self-centered", "Self-confident", "Self-conscious", "Self-controlling", "Self-deprecating", "Self-directed", "Self-disciplined", "Self-doubting", "Self-effacing", "Self-giving", "Self-indulgent", "Self-made", "Self-reliant", "Self-righteous", "Self-satisfied", "Self-serving", "Self-sufficient", "Selfish", "Selfless", "Senile", "Sense of duty", "Sensitive", "Sensual", "Sentimental", "Serene", "Serious", "Servile", "Settled", "Sexual", "Sexy", "Shallow", "Shameless", "Sharp", "Sharp-tongued", "Sharp-witted", "Sheepish", "Shiftless", "Shifty", "Shocked", "Short", "Short-tempered", "Shows initiative", "Shrewd", "Shy", "Silent", "Silky", "Silly", "Simple", "Simple-minded", "Sincere", "Sisterly", "Skeptical", "Skillful", "Sleazy", "Sloppy", "Slovenly", "Slow paced", "Sluggish", "Slutty", "Sly", "Small-minded", "Smart", "Smiling", "Smooth", "Sneaky", "Snob", "Snobbish", "Sociable", "Socially bold", "Socially precise", "Soft", "Soft-hearted", "Soft-spoken", "Solemn", "Solitary", "Solution-oriented", "Sophisticated", "Sore", "Sorrowful", "Sorry", "Sour", "Spendthrift", "Spiritual", "Spiteful", "Splendid", "Spoiled", "Spontaneous", "Sports fan", "Spunky", "Squeamish", "Staid", "Startled", "Stately", "Static", "Steadfast", "Steady", "Stern", "Stimulating", "Stingy", "Stoic", "Stoical", "Stolid", "Straight laced", "Straight-laced", "Straightforward", "Strange", "Stress free", "Stressed out", "Strict", "Strident", "Strong", "Strong nerves", "Strong willed", "Stubborn", "Studious", "Stunned", "Stupefied", "Stupid", "Suave", "Submissive", "Subtle", "Successful", "Successful in school", "Successful in work", "Succinct", "Suffering", "Sulky", "Sullen", "Sultry", "Supercilious", "Superstitious", "Supportive", "Sure", "Surly", "Suspicious", 
+				"Suspicious of strangers", "Sweet", "Sycophantic", "Sympathetic", "Systematic", "Taciturn", "Tacky", "Tactful", "Tactless", "Takes responsibility", "Talented", "Talkative", "Tardy", "Tasteful", "Telepathic", "Temperamental", "Temperate", "Tempted", "Tenacious", "Tender minded", "Tense", "Tentative", "Tenuous", "Terrible", "Terrified", "Testy", "Thankful", "Thankless", "Thick skinned", "Thief", "Thorough", "Thoughtful", "Thoughtless", "Threatened", "Threatening", "Thrifty", "Thrilled", "Thrillseeker", "Thwarted", "Tight", "Time driven", "Timid", "Tired", "Tireless", "Tiresome", "Toadying", "Tolerant", "Tolerates disorder", "Torpid", "Touchy", "Tough", "Tough-minded", "Traditional", "Traitorous", "Tranquil", "Treacherous", "Treasonous", "Tricky", "Tries to do everything", "Trivial", "Troubled", "Truculent", "Trusting", "Trustworthy", "Truthful", "Typical", "Tyrannical", "Unappreciative", "Unapproachable", "Unassuming", "Unaware of own limitations", "Unbending", "Unbiased", "Uncaring", "Uncommitted", "Uncommunicative", "Unconcerned", "Unconditional", "Uncontrolled", "Unconventional", "Uncooperative", "Uncoordinated", "Uncouth", "Undependable", "Understanding", "Undesirable", "Undisciplined", "Uneasy", "Uneducated", "Unenthusiastic", "Unexacting", "Unfeeling", "Unfocused", "Unforgiving", "Unfriendly", "Ungrateful", "Unhappy", "Unhelpful", "Uninhibited", "Unkind", "Unlucky", "Unmotivated", "Unpredictable", "Unprejudiced", "Unpretentious", "Unreasonable", "Unreceptive", "Unreliable", "Unresponsive", "Unrestrained", "Unruly", "Unscrupulous", "Unselfish", "Unsentimental", "Unsettled", "Unshakeable", "Unsure", "Unsuspecting", "Unsuspicious", "Unsympathetic", "Unsystematic", "Unusual", "Unwilling", "Unworried", "Upbeat", "Upset", "Uptight", "Useful", "Utilitarian", "Vacant", "Vague", "Vain", "Valiant", "Valorous", "Values fair competition", "Values family", "Values hard work", "Values honesty", "Values material possessions", "Values money", "Values religion", "Vehement", "Vengeful", "Venomous", "Venturesome", "Verbose", "Versatile", "Veteran", "Vicious", "Vigilant", "Vigorous", "Vindictive", "Violent", "Virtuous", "Visual", "Vital", "Vivacious", "Volatile", "Voracious", "Vulgar", "Vulnerable", "Wanton", "Warlike", "Warm", "Warm hearted", "Wary", "Wasteful", "Watchful", "Weak", "Weak nerves", "Weary", "Weepy", "Weird", "Welcoming", "Well grounded", "Well-groomed", "Whimsical", "Wholesome", "Wicked", "Wild", "Willful", "Willing", "Willpower", "Wise", "Wishy washy", "Withdrawn", "Witty", "Wonderful", "Works well under pressure", "Worldly", "Worried", "Worrying", "Worshipful", "Worships the devil", "Worthless", "Wretched", "Xenophobic", "Youthful", "Zany", "Zealot", "Zealous", "Able", "Accident prone", "Adorable", "Always hungry", "Beautiful", "Dirty", "Diseased", "Filthy", "Hardy", "Weak constitution", "Healthy", "Hormonal", "Ill", "Lean", "Nimble", "Obese", "Overweight", "Plain", "Sterile", "Tall", "Ugly", "Unclean", "Wealthy", "Young", "Abandoned", "Possessed", "Psychopath"
+			],
+			motivations: {
+				verb: ["advise", "shepherd", "take", "work", "manage", "obtain", "abuse", "discover", "accompany", "suppress", "attempt", "indulge", "deter", "offend", "proclaim", "spoil", "chronicle", "acquire", "guide", "operate", "oppress", "fulfill", "damage", "learn", "access", "interact", "drive", "publicize", "persecute", "refine", "create", "review", "burden", "communicate", "compose", "abduct", "aid", "advocate", "process", "undermine", "promote", "follow", "implement", "report", "explain", "conceive", "advance", "understand", "develop", "discourage", "blight", "guard", "collaborate", "steal", "attend", "progress", "conquer", "strive", "suggest", "detect", "distress", "hinder", "complete", "weaken", "execute", "possess", "plunder", "compel", "achieve", "maintain", "record", "construct", "join", "secure", "realize", "embrace", "encourage", "assist", "inform", "convey", "contact", "agonize", "defile", "patronize", "rob", "pursue", "comprehend", "produce", "depress", "establish", "associate", "administer", "institute", "determine", "overthrow", "prepare", "relate", "account", "seek", "support", "Attain", "Change", "Control", "Deceive", "Destroy", "Diminish", "Disrupt", "Escape", "Find", "Free", "Gratify", "Heal", "Help", "Hide", "Imprison", "Increase", "Oppose", "Protect", "Recover", "Reveal", "Search", "Serve", "Start", "Stop", "Transform"],
+				noun: ["wealth", "wealthy", "dreams", "gluttony", "advice", "hardship", "populous", "discretion", "lust", "propaganda", "affluence", "enemies", "love", "envy", "science", "resources", "public", "freedom", "greed", "knowledge", "prosperity", "religion", "pain", "laziness", "communications", "poverty", "poor", "faith", "wrath", "lies", "opulence", "family", "slavery", "pride", "myths", "deprivation", "elite", "enlightenment", "purity", "riddles", "success", "academia", "racism", "moderation", "stories", "distress", "forsaken", "sensuality", "vigilance", "legends", "contraband", "law", "dissonance", "zeal", "industry", "music", "government", "peace", "composure", "new religions", "literature", "oppressed", "discrimination", "charity", "progress", "technology", "friends", "disbelief", "modesty", "animals", "alcohol", "criminals", "pleasure", "atrocities", "ghosts", "medicines", "allies", "hate", "cowardice", "magic", "beauty", "secret societies", "happiness", "narcissism", "nature", "strength", "world", "servitude", "compassion", "old religions", "intelligence", "military", "harmony", "valor", "expertise", "force", "church", "justice", "patience", "spirits", "Adventure", "Adversity", "Ambition", "Anger", "Approval", "Art", "Business", "Change", "Character", "Conflict", "Danger", "Death", "Emotion", "Enemy", "Environment", "Failure", "Fame", "Fear", "Fight", "Friend", "Goal", "Group", "Guilt", "Home", "Help", "Hope", "Idea", "Illness", "Important", "Information", "Innocent", "Intellect", "Intolerance", "Investment", "Jealousy", "Joy", "Leader", "Legal", "Loss", "Loyalty", "Malice", "Misfortune", "Mistrust", "Mundane", "Mysterious", "Object", "Obligation", "Official", "Passion", "Path", "Physical", "Place", "Plan", "Power", "Rare", "Revenge", "Riches", "Strange", "Struggle", "Safety", "Suffering", "Support", "Travel", "the wealthy", "the populous", "the public", "the poor", "the elite", "the forsaken", "the law", "the government", "the oppressed", "the world", "the church"]
+			},
+			goals: ["Obtain an object", "Make an agreement", "Build a relationship", "Undermine a relationship", "Seek a truth", "Pay a debt", "Refute a falsehood", "Harm a rival", "Cure an ill", "Find a person", "Find a home", "Seize power", "Restore a relationship", "Create an item", "Travel to a place", "Secure provisions", "Rebel against power", "Collect a debt", "Protect a secret", "Spread faith", "Enrich themselves", "Protect a person", "Protect the status quo", "Advance status", "Defend a place", "Avenge a wrong", "Fulfill a duty", "Gain knowledge", "Prove worthiness", "Find redemption", "Escape from something", "Resolve a dispute", "Bring law and order", "Serve others", "Protect the innocent", "Bring forth justice", "Feel personal accomplishment", "Advance religion", "Rescue a person", "Make many small impacts", "Get revenge", "Build a better life", "Gain fame and glory", "Collect unique art", "Acquire riches", "Gain power and influence", "Find unique artifacts", "Solve ancient mystery", "Deepen mystic power", "Find safe place to live", "Fight the good fight", "Gain followers", "Explore and discover", "Become an overseer", "Advance a settlement", "Be loved by all", "Unite settlements", "Cure disease", "Leave their mark", "Slay a creature", "Personal development", "Bring balance", "Have food to eat", "Live in relative luxury", "Hedonism", "Feed an addiction", "Raise a family", "Discover the truth of their past", "Help the helpless", "Learn of the Old World", "Voice for the voiceless", "Make contact with First Born", "Raise others from poverty", "Survive the winter", "Seek pleasure", "Change the system", "Destroy an item", "Defeat a foe", "Find a soulmate", "Be the best", "Teach others", "Avoid ridicule", "Be a hero", "Be left alone", "Liberate those in bondage", "Stay true to friends and family", "Bring order to chaos", "Win affection", "Achieve moral perfection", "Defeat romantic rival", "Achieve spiritual enlightenment", "Find settlement resources", "Oppress others", "Seek forgiveness", "Scheme machinations", "Serve the rightful ruler"]
+		},	
+		une: {
+			mood: {
+				"Loved": { 1: "Withdrawn", 6: "Guarded", 16: "Cautious", 31: "Neutral", 70: "Sociable", 85: "Helpful", 100: "Forthcoming" },
+				"Friendly": { 2: "Withdrawn", 8: "Guarded", 20: "Cautious", 40: "Neutral", 76: "Sociable", 89: "Helpful", 100: "Forthcoming" },
+				"Peaceful": { 3: "Withdrawn", 11: "Guarded", 25: "Cautious", 55: "Neutral", 82: "Sociable", 93: "Helpful", 100: "Forthcoming" },
+				"Neutral": { 5: "Withdrawn", 15: "Guarded", 30: "Cautious", 60: "Neutral", 85: "Sociable", 95: "Helpful", 100: "Forthcoming" },
+				"Distrustful": { 7: "Withdrawn", 18: "Guarded", 46: "Cautious", 76: "Neutral", 90: "Sociable", 97: "Helpful", 100: "Forthcoming" },
+				"Hostile": { 11: "Withdrawn", 24: "Guarded", 61: "Cautious", 81: "Neutral", 93: "Sociable", 98: "Helpful", 100: "Forthcoming" },
+				"Hated": { 15: "Withdrawn", 30: "Guarded", 69: "Cautious", 84: "Neutral", 94: "Sociable", 99: "Helpful", 100: "Forthcoming" }
+			},
+			bearing: {
+				"Scheming": ["intent", "bargain", "means", "proposition", "plan", "compromise", "agenda", "arrangement", "negotiation", "plot"],
+				"Insane": ["madness", "fear", "accident", "chaos", "idiocy", "illusion", "turmoil", "confusion", "façade", "bewilderment"],
+				"Friendly": ["alliance", "comfort", "gratitude", "shelter", "happiness", "support", "promise", "delight", "aid", "celebration"],
+				"Hostile": ["death", "capture", "judgment", "combat", "surrender", "rage", "resentment", "submission", "injury", "destruction"],
+				"Inquisitive": ["questions", "investigation", "interest", "demand", "suspicion", "request", "curiosity", "skepticism", "command", "petition"],
+				"Knowing": ["report", "effects", "examination", "records", "account", "news", "history", "telling", "discourse", "speech"],
+				"Mysterious": ["rumor", "uncertainty", "secrets", "misdirection", "whispers", "lies", "shadows", "enigma", "obscurity", "conundrum"],
+				"Prejudiced": ["reputation", "doubt", "bias", "dislike", "partiality", "belief", "view", "discrimination", "assessment", "difference"]
+			},
+			focus: { 3: "Current Scene", 6: "Last Story", 9: "Equipment", 12: "Parents", 15: "History", 18: "Retainers", 21: "Wealth", 24: "Relics", 27: "Last Action", 30: "Skills", 33: "Superiors", 36: "Fame", 39: "Campaign", 42: "Future Action", 45: "Friends", 48: "Allies", 51: "Last Scene", 54: "Contacts", 57: "Flaws", 60: "Antagonist", 63: "Rewards", 66: "Experience", 69: "Knowledge", 72: "Recent Scene", 75: "Community", 78: "Treasure", 81: "Character", 84: "Current Story", 87: "Family", 90: "Power", 93: "Weapons", 96: "Previous Scene", 100: "Enemy" }
+		},
+		meanings: {
+			"verb": ["Attain", "Start", "Neglect", "Recruit", "Triumph", "Persecute", "Increase", "Decrease", "Gratify", "Inquire", "Antagonize", "Waste", "Truce", "Haggle", "Imprison", "Celebrate", "Develop", "Travel", "Block", "Harm", "Debase", "Overindulge", "Adjourn", "Kill", "Disrupt", "Usurp", "Create", "Agree", "Abuse", "Work", "Release", "Befriend", "Judge", "Desert", "Procrastinate", "Praise", "Separate", "Break", "Heal", "Delay", "Stop", "Lie", "Return", "Inform", "Bestow", "Postpone", "Spy", "Attach", "Carry", "Open", "Trick", "Propose", "Divide", "Mistrust", "Trust", "Excite", "Activate", "Assist", "Care", "Negligence", "Attract", "Failure", "Pursue", "Vengeance", "Proceedings", "Dispute", "Punish", "Overthrow", "Scheme", "Clash", "Weaken", "Initiate", "Swear", "Control", "Risk", "Surrender", "Raid", "Deflect", "Threaten", "Leave", "Preserve", "Manipulate", "Remove", "Eliminate", "Withdraw", "Focus", "Uncover", "Breach", "Uphold", "Falter", "Suppress", "Hunt", "Share", "Avoid", "Reject", "Explore", "Bolster", "Seize", "Mourn", "Defy", "Transform", "Persevere", "Serve", "Begin", "Move", "Coordinate", "Await", "Impress", "Take", "Oppose", "Overwhelm", "Acquire", "Finish", "Strengthen", "Restore", "Advance", "Refuse", "Find", "Fortify", "Secure", "Arrive", "Affect", "Change", "Support", "Locate", "Endure", "Reduce", "Escalate", "Distract", "Journey", "Learn", "Communicate", "Depart", "Search", "Charge", "Summon", "Veil", "Conquer", "Vanquish", "Shepherd", "Absorb", "Modify", "Spawn", "Implant", "Echo", "Eclipse", "Resolve", "Splinter", "Design", "Extinguish", "Amplify", "Magnify", "Juxtapose", "Compel", "Expand", "Assail", "Rush", "Reconfigure", "Transfigure", "Position", "Probe", "Embrace", "Revile", "Harden", "Instruct", "Govern", "Engulf", "Imbue", "Guide", "Discern", "Coalesce", "Isolate", "Repulse", "Poison", "Sculpt", "Deter", "Purge", "Dismantle", "Refresh", "Overcome", "Dominate", "Infuse", "Steer", "Intertwine", "Emit", "Immolate", "Engender", "Stifle", "Fuse", "Shame", "Ruin", "Dissolve", "Raise", "Revitalize", "Grow", "Twist", "Deviate", "Amend", "Unravel", "Exacerbate", "Deposit", "Emanate", "Deteriorate", "Embellish", "Corrode", "Scatter", "Incite", "Atone", "Reap", "Desecrate", "Consume", "Advise", "Reposition", "Bury", "Wreck", "Evoke", "Contort", "Lead", "Assert", "Amass", "Kindle", "Insulate", "Inhibit", "Climb", "Subvert", "Unearth", "Drain", "Revere", "Forbid", "Struggle", "Sever", "Stalk", "Suffocate", "Mystify", "Tame", "Sabotage", "Impart", "Retreat", "Rend", "Reconnect", "Detect", "Devastate", "Shake", "Smite", "Spurn", "Dissect", "Ravage", "Prune", "Batter", "Starve", "Pierce", "Augment", "Crush", "Affirm", "Race", "Empower", "Shatter", "Reconcile", "Illuminate", "Soften", "Reflect", "Repel", "Switch", "Fight", "Untangle", "Diminish", "Wrest", "Obtain", "Imitate", "Commune", "Strain", "Hinder", "Refine", "Embolden", "Stretch", "Weave", "Revoke", "Erode", "Boost", "Extract", "Winnow", "Nurture", "Sustain", "Smother", "Coerce", "Catch", "Expel", "Awaken", "abandon", "abolish", "accuse", "address", "aggravate", "agitate", "aid", "aim", "alarm", "alert", "alter", "amaze", "ambush", "amuse", "annihilate", "annoy", "appeal", "applaud", "apprehend", "approach", "argue", "arise", "arouse", "arrange", "arrest", "ask", "assassinate", "assault", "assemble", "astonish", "attack", "attempt", "attend", "auction", "audition", "avenge", "avert", "babble", "badmouth", "bait", "ban", "banish", "baptize", "bargain", "bark", "barricade", "barter", "bash", "bawl", "beautify", "beckon", "beg", "beguile", "belch", "belittle", "bellow", "bemoan", "bequeath", "berate", "besiege", "bet", "betray", "bewilder", "bewitch", "bid", "bite", "blab", "blame", "blast", "bleed", "bless", "blunder", "blurt", "boast", "bother", "bow", "brag", "bribe", "broadcast", "build", "capture", "careen", "caress", "carve", "challenge", "charm", "chase", "cheat", "choke", "claim", "collaborate", "collapse", "collide", "command", "complain", "compliment", "conceal", "concoct", "condemn", "confiscate", "conflict", "confront", "confuse", "congratulate", "congregate", "conjure", "consecrate", "consider", "construct", "contact", "contaminate", "contest", "converse", "cook", "corner", "corrupt", "cremate", "crowd", "crown", "customize", "damage", "dance", "dare", "dash", "dazzle", "deal", "debate", "decay", "deceive", "declare", "decline", "decompose", "decorate", "decree", "dedicate", "deduce", "deface", "defeat", "defend", "defuse", "deliver", "demand", "demolish", "denounce", "deride", "despair", "destroy", "devour", "dig", "disappear", "disarm", "discipline", "discover", "discriminate", "discuss", "disgrace", "disguise", "disgust", "dishonor", "dismount", "dispel", "disperse", "display", "displease", "disrespect", "distill", "distress", "disturb", "divert", "dodge", "drag", "dress", "drink", "drop", "drown", "drum", "dump", "dupe", "duplicate", "earn", "eat", "elude", "employ", "enchant", "end", "endanger", "endear", "endorse", "enforce", "engage", "engineer", "enjoy", "enlarge", "enlighten", "enlist", "enquire", "enrage", "enrich", "enroll", "enshrine", "ensnare", "entangle", "enter", "entertain", "entice", "erect", "escape", "escort", "evacuate", "evade", "evict", "exaggerate", "examine", "excavate", "exchange", "exclaim", "exclude", "execute", "exhibit", "experiment", "explode", "expose", "faint", "fake", "fall", "falsify", "fashion", "flaunt", "flee", "fling", "flirt", "follow", "force", "foresee", "foretell", "forge", "forgive", "fracture", "frame", "free", "freeze", "fret", "frighten", "frustrate", "fumble", "fund", "fuss", "gallop", "gamble", "gather", "gaze", "gesture", "gift", "giggle", "give", "glare", "gleam", "glimpse", "goad", "gob", "goggle", "gossip", "grab", "grapple", "grieve", "guard", "hamper", "harass", "help", "hide", "hit", "hold", "humiliate", "hurry", "hurtle", "ignite", "impede", "implore", "infect", "infest", "inflame", "inflict", "infringe", "infuriate", "injure", "inspect", "inspire", "instigate", "insult", "interfere", "interrogate", "intimidate", "intoxicate", "investigate", "invite", "involve", "irritate", "jaywalk", "jeer", "joke", "jostle", "kick", "kiss", "lament", "laugh", "leap", "lecture", "leer", "look", "loot", "lose", "love", "lunge", "lurk", "maim", "manhandle", "march", "market", "massacre", "meddle", "mesmerize", "mimic", "misspell", "mob", "mock", "murder", "mutate", "mutilate", "nag", "narrate", "near", "notify", "obscure", "observe", "obstruct", "offend", "oppress", "order", "overhear", "overpower", "overturn", "parade", "parley", "patrol", "pelt", "penalize", "perform", "persuade", "petition", "play", "plead", "plunder", "pollute", "pounce", "practice", "preach", "proclaim", "prohibit", "promote", "pronounce", "prophesize", "prosecute", "protect", "protest", "provide", "provoke", "prowl", "pry", "punch", "purchase", "push", "quarrel", "query", "queue", "rage", "ransack", "rebel", "recite", "recount", "rejoice", "remark", "renege", "repair", "research", "rescue", "resist", "restrain", "resurrect", "reveal", "revolt", "reward", "ridicule", "riot", "rob", "run", "salute", "scamper", "scare", "scavenge", "scream", "scrounge", "seduce", "segregate", "sell", "ship", "shout", "shove", "show", "silence", "sing", "slaughter", "sleep", "smash", "sob", "solicit", "speak", "spill", "spit", "stab", "stage", "startle", "steal", "strangle", "strike", "subdue", "suffer", "surround", "suspect", "taunt", "tease", "tempt", "terrify", "terrorize", "thank", "throw", "torment", "torture", "trade", "translate", "transport", "trap", "tug", "unite", "unleash", "unload", "unveil", "vandalize", "vanish", "victimize", "violate", "volunteer", "wait", "warn", "wave", "weep", "welcome", "whittle", "wield", "win", "wink", "witness", "worship", "wound", "wrestle", "write", "yell", "yield", "Accompany", "Close", "Combine", "Continue", "Deny", "Distrust", "Easy", "Energize", "Fail", "Indulge", "Invade", "Lure", "Misuse", "Proceed", "Relinquish", "Strange", "Succeed", "Use", "Plant", "Ready", "Testing", "Hurt", "Prepare", "Crawl", "Combat", "Exile", "Mistake", "Place", "Service", "Group", "Guilt", "Hate", "Home", "Hope", "Fear", "Goal", "Plan", "Pleasure", "Recover", "Tail", "Anger", "Compete", "Balance", "Sense", "Animate", "Armor", "Depower", "Paralyze", "Stun", "Swim", "Telepathy", "Touch", "Limit", "Comfort", "Upgrade", "View", "Encounter", "Constrain", "Deprive", "Elaborate", "Heat", "Trigger", "Compromise", "Leverage", "Conclude", "Incapacitate", "Promise", "Repeat", "Require", "Time", "Rot", "Burn", "Counteract", "Fix", "Contain", "Access", "Lock", "Question", "Solve", "Desire", "Replenish", "Defect", "Curse", "Enhance", "Fly", "Recharge", "Replace", "Survive", "Hard", "Rumor", "Crash", "Intensify", "Object", "Progress", "Misbehave", "Offer", "Talk", "Alternate", "Intercept"],
+			"noun": ["Goals", "Dreams", "Environment", "Outside", "Inside", "Reality", "Allies", "Enemies", "Evil", "Good", "Emotions", "Opposition", "Innocent", "Intellect", "Ideas", "Joy", "Advice", "Prison", "Attention", "Success", "Travel", "Jealousy", "Home", "Investment", "Suffering", "Wishes", "Tactics", "Stalemate", "Randomness", "Normal", "Messages", "Friendship", "Physical", "Project", "Pleasures", "Possessions", "Benefits", "Plans", "Lies", "Expectations", "Legal", "Bureaucracy", "Business", "News", "Exterior", "Intrigues", "Fears", "Ambush", "Wounds", "Representative", "Adversities", "Military", "Mundane", "Trials", "Masses", "Vehicle", "Art", "Status quo", "Technology", "Magic", "Illusions", "Portals", "Weapons", "Animals", "Weather", "Elements", "public", "Leadership", "Information", "wealthy", "gluttony", "hardship", "populous", "discretion", "lust", "propaganda", "affluence", "envy", "science", "prosperity", "laziness", "communications", "poor", "opulence", "slavery", "pride", "myths", "deprivation", "elite", "enlightenment", "purity", "riddles", "academia", "racism", "moderation", "stories", "distress", "forsaken", "sensuality", "vigilance", "legends", "contraband", "law", "dissonance", "zeal", "industry", "music", "government", "composure", "new religions", "literature", "oppressed", "discrimination", "friends", "disbelief", "modesty", "alcohol", "criminals", "pleasure", "atrocities", "ghosts", "medicines", "secret societies", "happiness", "narcissism", "servitude", "old religions", "harmony", "valor", "expertise", "force", "church", "spirits", "adversary", "air", "almanac", "ancestor", "arm", "armor", "assistance", "astrolabe", "authority", "babe", "bargain", "bear", "beauty", "bed", "beggar", "belfry", "blood", "boar", "boat", "bog", "boundary", "bread", "bridge", "bud", "butcher", "calm", "caste", "cauldron", "cave", "cesspool", "chaos", "charlatan", "chest", "child", "chill", "chime", "city", "cloister", "code", "coin", "compassion", "compulsion", "comradeship", "constellation", "craft", "creator", "crocus", "cup", "curio", "damnation", "dark", "day", "death", "den", "descendant", "diagram", "disgust", "dock", "doubter", "drain", "dredger", "drum", "earth", "east", "eave", "emergence", "equivalent", "escape", "estate", "eye", "family", "fear", "fertility", "fire", "fleece", "flood", "flute", "foe", "fool", "fortress", "frustration", "glen", "glut", "goal", "gold", "grasshopper", "grave", "habit", "hatred", "health", "heart", "holiness", "honesty", "house", "icon", "illusion", "imagination", "independence", "infusion", "intuition", "invocation", "keystone", "kick", "kimono", "knight", "knot", "land", "lap", "leisure", "lie", "life", "limit", "lion", "lock", "love", "luck", "malefactor", "man", "meal", "merchant", "message", "meteor", "mind", "minion", "monarchy", "month", "moon", "nobility", "north", "number", "observation", "offer", "opportunity", "orchid", "owner", "ox", "partner", "pass", "passion", "philosophy", "plant", "poem", "populace", "power", "progress", "provisions", "quiet", "reason", "reception", "reduction", "relation", "reliability", "relief", "reminder", "rest", "road", "rod", "room", "rush", "sage", "savior", "scheme", "secret", "shame", "shield", "sibling", "singer", "sitar", "slave", "soldier", "sound", "south", "spear", "spirit", "spouse", "stain", "status", "steed", "step", "storm", "struggle", "sun", "surgeon", "sword", "teacher", "temple", "temporariness", "temptress", "time", "tome", "tool", "touch", "transgression", "trap", "triumph", "trust", "twin", "underground", "vanity", "vice", "virus", "vision", "voyage", "wait", "walker", "war", "water", "west", "will", "wine", "wisdom", "witness", "woman", "Risk", "Ability", "Price", "Ally", "Battle", "Safety", "Survival", "Weapon", "Wound", "Shelter", "Leader", "Duty", "Innocence", "Renown", "Direction", "Honor", "Labor", "Solution", "Balance", "Barrier", "Creation", "Decay", "Trade", "Bond", "Hope", "Superstition", "Peace", "Deception", "History", "World", "Vow", "Protection", "Nature", "Opinion", "Burden", "Vengeance", "Faction", "Danger", "Corruption", "Freedom", "Debt", "Hate", "Possession", "Stranger", "Passage", "Creature", "Disease", "Advantage", "Language", "Rumor", "Weakness", "Greed", "Resource", "Structure", "Dream", "Community", "Portent", "Prize", "Destiny", "Momentum", "Memory", "Ruin", "Mysticism", "Rival", "Problem", "Idea", "Revenge", "Fellowship", "Enemy", "Religion", "Fame", "Desolation", "Strength", "Knowledge", "Truth", "Quest", "Loss", "Path", "Warning", "Relationship", "Wealth", "Strategy", "Supply", "Treasure", "Curse", "Ceremony", "Courage", "Victory", "Charity", "Covenant", "Energy", "Wrath", "Disagreement", "Society", "Connection", "Order", "Friend", "Disruption", "Plot", "Identity", "Growth", "Imitation", "Patience", "Company", "Skill", "Belief", "Intelligence", "Disadvantage", "Conflict", "Blessing", "Devotion", "Dishonor", "Dispute", "Worth", "Cooperation", "Punishment", "Madness", "Failure", "Skirmish", "End", "Violation", "Transformation", "Alliance", "Anger", "Rupture", "Trick", "Degradation", "Miracle", "Warband", "Offense", "Competition", "Exploration", "Plague", "Essence", "Union", "Harm", "Integrity", "Security", "Mystery", "Proposal", "Plan", "Achievement", "Glory", "Change", "Relic", "Desertion", "Oppression", "Dignity", "Intolerance", "Control", "Ancestry", "Misfortune", "Support", "Deceit", "Atonement", "Judgment", "Extravagance", "Redemption", "Payment", "Bias", "Sympathy", "Betrayal", "Fascination", "Illness", "Poverty", "Crime", "Cowardice", "Brilliance", "Penance", "Beast", "Obstacle", "Horror", "Monument", "Monster", "Justice", "Healing", "Rage", "Insecurity", "Distortion", "Duel", "Preparation", "Way", "Machination", "Tangle", "Agreement", "Misuse", "Talent", "Trial", "Submission", "Pain", "Sickness", "Waste", "Cruelty", "Heritage", "Division", "Coup", "Doubt", "Disaster", "Fleet", "Riches", "Aid", "Herd", "Loyalty", "Influence", "Retribution", "Omen", "Ruler", "Arrogance", "Misery", "Discord", "Resources", "Beginning", "Culture", "Solace", "Territory", "Haunting", "Blockade", "Inspiration", "Organization", "Indulgence", "Remains", "Ritual", "Swarm", "Liberty", "Delay", "Heroism", "Worship", "Arrival", "Gratitude", "Grief", "Defense", "Pursuit", "Destruction", "Falsehood", "Artistry", "Tension", "Revolt", "Symbol", "Exchange", "Dominance", "Value", "Disorder", "Defeat", "Artifact", "Supplies", "Negotiation", "Pact", "Mistrust", "Exposure", "Hesitation", "Negligence", "Food", "Mercy", "Zealotry", "Forgiveness", "Faith", "Oversight", "Separation", "Dwelling", "Depravity", "Refusal", "Adversity", "Animal", "Building", "Comfort", "Completion", "Depletion", "Distraction", "Emotion", "Expectation", "Group", "Hindrance", "Individual", "Interior", "Location", "Needs", "Object", "Obscurity", "Official", "People", "Personal", "Portal", "Reassurance", "Surprise", "Tactic", "Vulnerability", "Work", "Action", "Activity", "Attainment", "Familiar", "Intrigue", "Humanoid", "Liquid", "Fight", "Travelers", "Hunt", "Arrive", "Betray", "Block", "Celebrate", "Communicate", "Deceive", "Divide", "Problems", "Truce", "Echo", "Cliff", "Boulder", "Empty", "Exit", "Flora", "Fungus", "Hole", "Minerals", "Mist", "Plants", "Pool", "River", "Rock", "Slope", "Sounds", "Stalactites", "Abuse", "Care", "Clothing", "Equipment", "Eyewear", "Features", "Hair", "Headwear", "Insignia", "Jewelry", "Limbs", "Scar", "Tattoo", "Tools", "Career", "Cheat", "Combat", "Commitment", "Exile", "Experience", "Gifts", "Injury", "Injustice", "Mistake", "Outsider", "Person", "Place", "Prestige", "Privilege", "Seclusion", "Service", "Tradition", "Training", "Trauma", "Youth", "Praise", "Refuse", "Administrator", "Advisor", "Artist", "Assistant", "Athlete", "Bureaucrat", "Combatant", "Competitor", "Controller", "Crafter", "Criminal", "Deceiver", "Deliverer", "Dependent", "Driver/Pilot", "Enforcer", "Engineer", "Entertainer", "Executive", "Expert", "Explorer", "Farmer", "Fighter", "Fixer", "Foreigner", "Gambler", "Gatherer", "Guardian", "Healer", "Hero", "Hunter", "Inspector", "Intellectual", "Investigator", "Judge", "Killer", "Laborer", "Lackey", "Lost", "Mediator", "Messenger", "Organizer", "Performer", "Persecutor", "Planner", "Pleaser", "Prisoner", "Protector", "Radical", "Religious", "Represent", "Rogue", "Ruffian", "Scholar", "Scientist", "Scout", "Servant", "Socialite", "Student", "Subverter", "Supporter", "Survivor", "Thief", "Trader", "Victim", "Villain", "Wanderer", "Warrior", "Adventure", "Ambition", "Approval", "Character", "Guide", "Guilt", "Help", "Malice", "Obligation", "Follower", "Gourmet", "Tail", "Lead", "Powers", "Psychic", "Servitor", "Wings", "Ledge", "Charge", "Damage", "Master", "Motion", "Obstacles", "Perception", "Specialist", "Violence", "Missing", "Rich", "Sense", "Trouble", "Commerce", "Hills", "Lake", "Mountain", "Bite", "Breath", "Contact", "Extra", "Flight", "Element", "Others", "Resistance", "Proximity", "Senses", "Sleep", "Speed", "Stealth", "Summon", "Alien", "Body", "Color", "Extra Limbs", "Fangs", "Horns", "Mandibles", "Movement", "Mutant", "Shape", "Stinger", "Tongue", "Undead", "Instruction", "Legend", "Recipient", "Riddle", "Unknown", "Age", "Fate", "Propose", "Compel", "Condemn", "Storage", "Upgrade", "Valuables", "View", "Chamber", "Door", "Encounter", "Furnishings", "Gate", "Stairs", "Stonework", "Blades", "Ceiling", "Choice", "Cloud", "Heat", "Projectile", "Trigger", "Floor", "Toxin", "Transport", "Wall", "Pond", "Rocks", "Tree", "Cult", "Destroyer", "Night", "Sacrifice", "Caution", "Crisis", "Theft", "Atmosphere", "Entrance", "Spell", "Staff", "Utility", "Wand", "Appearance", "Claws", "Eyes", "Limb", "Surroundings", "Defect", "Services", "Area", "Benefit", "Book", "Communication", "Container", "Gem", "Restore", "Ring", "Rope", "Rune", "Scroll", "Self", "Dimensions", "Orb", "Potion", "Compromise", "Connections", "Headquarters", "Heirloom", "Leverage", "Politics", "Royalty", "Succession", "Clue", "Garbage", "Guidance", "Consequence", "Evidence", "Outcast", "Past", "Promise", "Repair", "Rescue", "Response", "Reversal", "Reward", "Distance", "Electricity", "Emission", "Explosion", "Matter", "Radius", "Abundance", "Switch", "Clothes", "Concealment", "Drink", "Fuel", "Antiseptic", "Cooking", "Rot", "Alarm", "Approach", "Grinding", "Hammering", "Clang", "Construction", "Conversation", "Crash", "Cries", "Drip", "Footsteps", "Growl", "Machinery", "Productivity", "Beep", "Bell", "Burning", "Rip", "Roar", "Rumbling", "Rustling", "Scraping", "Scratching", "Sizzle", "Slam", "Tapping", "Thud", "Traffic", "Whirring", "Whistle", "Wind", "Burn", "Fix", "Ice", "Limitation", "Manipulation", "Soul", "Computer", "Crew", "Engine", "Hall", "Maintenance", "System", "Catastrophe", "Civilization", "Cliffs", "Clouds", "Desert", "Ocean", "Rain", "Ruins", "Trees", "Wonders", "Glow", "Event", "Future", "Hint", "Hurry", "Threat", "Furnishing", "Luxury", "Motive", "Associate", "Negative", "Cities", "Oceans", "Rings", "Star", "Access", "Combination", "Controls", "Countdown", "Precision", "Resolve", "Words", "Answers", "Challenge", "Desire", "Gift", "Key", "Resolution", "Task", "Deliverance", "Mechanism", "Setback", "Walls", "Accident", "Coincidence", "Decision", "Detour", "Discovery", "Fatigue", "Malfunction", "Mishap", "Mutiny", "Scarcity", "Abduction", "Attack", "Chase", "Collateral", "Confrontation", "Culmination", "Emergency", "Intervention", "Turnabout", "Urgency", "Coercion", "Diminishment", "Disappearance", "Incapacitation", "Intimidation", "Recurrence", "Repercussion", "Suspicion", "Ultimatum", "Behavior", "Fraud", "Lucky", "Motivation", "Observer", "Reappearance", "Revelation", "Source", "Theory", "Argument", "Celebration", "Duplicitous", "Gathering", "Inadequate", "Meeting", "Reinforcements", "Scapegoat", "Transaction", "Animosity", "Bribe", "Humiliation", "Persuasion", "Protect", "Schism", "Talk"],
+			"adverb": ["Abnormally", "Adventurously", "Aggressively", "Angrily", "Anxiously", "Awkwardly", "Beautifully", "Bleakly", "Boldly", "Bravely", "Busily", "Calmly", "Carefully", "Carelessly", "Cautiously", "Ceaselessly", "Cheerfully", "Combatively", "Coolly", "Crazily", "Fully", "Generously", "Gently", "Gladly", "Gracefully", "Gratefully", "Happily", "Hastily", "Healthily", "Helpfully", "Helplessly", "Hopelessly", "Innocently", "Intensely", "Interestingly", "Irritatingly", "Jovially", "Joyfully", "Judgementally", "Kindly", "Peacefully", "Perfectly", "Playfully", "Politely", "Positively", "Powerfully", "Quaintly", "Quarrelsomely", "Quietly", "Roughly", "Rudely", "Ruthlessly", "Slowly", "Softly", "Swiftly", "Threateningly", "Very", "Violently", "Wildly", "Yieldingly", "Curiously", "Daintily", "Dangerously", "Defiantly", "Deliberately", "Delightfully", "Dimly", "Efficiently", "Energetically", "Enormously", "Enthusiastically", "Excitedly", "Fearfully", "Ferociously", "Fiercely", "Foolishly", "Fortunately", "Frantically", "Freely", "Frighteningly", "Kookily", "Lazily", "Lightly", "Loosely", "Loudly", "Lovingly", "Loyally", "Majestically", "Meaningfully", "Mechanically", "Miserably", "Mockingly", "Mysteriously", "Naturally", "Neatly", "Nicely", "Oddly", "Offensively", "Officially", "Partially", "Delicately", "Emotionally", "Mildly", "Passively", "Strangely", "Timidly", "Jealously"],
+			"adjective": ["Abandoned", "Abnormal", "Amusing", "Ancient", "Aromatic", "Average", "Beautiful", "Bizarre", "Classy", "Clean", "Cold", "Colorful", "Creepy", "Cute", "Damaged", "Dark", "Defeated", "Delicate", "Delightful", "Dirty", "Graceful", "Hard", "Harsh", "Healthy", "Heavy", "Historical", "Horrible", "Important", "Interesting", "Juvenile", "Lacking", "Lame", "Large", "Lavish", "Lean", "Less", "Lethal", "Lonely", "Lovely", "Macabre", "Remarkable", "Rotten", "Rough", "Ruined", "Rustic", "Scary", "Simple", "Small", "Smelly", "Smooth", "Soft", "Strong", "Tranquil", "Ugly", "Valuable", "Warlike", "Warm", "Watery", "Weak", "Young", "Disagreeable", "Disgusting", "Drab", "Dry", "Dull", "Empty", "Enormous", "Exotic", "Faded", "Familiar", "Fancy", "Fat", "Feeble", "Feminine", "Festive", "Flawless", "Fresh", "Full", "Glorious", "Good", "Magnificent", "Masculine", "Mature", "Messy", "Mighty", "Military", "Modern", "Extravagant", "Mundane", "Mysterious", "Natural", "Nondescript", "Odd", "Pale", "Petite", "Poor", "Powerful", "Quaint", "Rare", "Reassuring", "barring", "befriending", "beginning", "belonging", "blessing", "boasting", "bowing", "breaking", "bringing", "building", "burying", "calming", "caring", "carrying", "charming", "choking", "choosing", "claiming", "closing", "collapsing", "competing", "concentrating", "condemning", "confusing", "connecting", "controlling", "covering", "creating", "crossing", "crushing", "curing", "dancing", "daring", "decaying", "deceiving", "delaying", "delivering", "depending", "deserting", "deserving", "destroying", "digging", "disagreeing", "dividing", "doubting", "drowning", "earning", "embarrassing", "employing", "emptying", "entertaining", "entreating", "entwining", "escaping", "excusing", "expanding", "fading", "failing", "falling", "fearing", "fighting", "filling", "finding", "floating", "flowing", "flying", "foreseeing", "foretelling", "granting", "guarding", "halting", "handling", "harassing", "hating", "healing", "hiding", "holding", "hoping", "hunting", "hurrying", "identifying", "ignoring", "imagining", "including", "informing", "instructing", "intending", "interfering", "inviting", "judging", "killing", "kneeling", "leaping", "leaving", "loving", "lying", "meeting", "moaning", "needing", "observing", "offending", "opening", "owing", "paying", "permitting", "planning", "preaching", "preventing", "protesting", "providing", "pulling", "punishing", "pursuing", "pushing", "reading", "recognizing", "reducing", "reflecting", "refusing", "regretting", "rejoicing", "relaxing", "relying", "remembering", "removing", "repairing", "repeating", "replacing", "reporting", "resolving", "retiring", "riding", "ruining", "ruling", "running", "sailing", "scattering", "scolding", "scorching", "searching", "seeing", "sharing", "shedding", "showing", "signaling", "signing", "slinking", "soothsaying", "speaking", "spilling", "spoiling", "springing", "standing", "staying", "stealing", "stinging", "stirring", "stopping", "strengthening", "striking", "striving", "suggesting", "surprising", "suspending", "swelling", "taunting", "telling", "tempting", "thawing", "threatening", "thriving", "tracing", "training", "transforming", "traveling", "trusting", "tying", "understanding", "undertaking", "usurping", "vanishing", "wailing", "waiting", "walking", "wanting", "wasting", "welcoming", "whining", "whirling", "whispering", "whistling", "winning", "withdrawing", "withstanding", "wondering", "wrestling", "writing", "able", "absolute", "accordant", "active", "aggressive", "all", "alone", "alternative", "amicable", "ample", "anthropological", "anxious", "apt", "asleep", "available", "aware", "beloved", "benevolent", "bright", "broad", "buttressed", "calm", "careful", "celestial", "certain", "comfortable", "common", "competitive", "complete", "complex", "confident", "confused", "consistent", "contrite", "cool", "cordial", "correct", "creative", "credible", "critical", "curious", "dangerous", "dead", "deceptive", "decree", "demonic", "desperate", "diabolical", "didactic", "difficult", "direct", "distinct", "draconic", "drunk", "dubious", "due", "durable", "eastern", "edifying", "effective", "elegant", "elemental", "embarrassed", "enticing", "environmental", "esoteric", "ethereal", "extreme", "fair", "false", "famous", "fascinating", "fearful", "fecund", "feudal", "few", "final", "fine", "fit", "foreign", "free", "furious", "ghostly", "gradual", "grotesque", "guilty", "hearty", "helpful", "high", "holy", "honed", "hued", "human", "hungry", "ill", "immediate", "impossible", "impressive", "independent", "inferior", "infernal", "inner", "intelligent", "intimate", "joyous", "just", "known", "last", "late", "left", "light", "living", "long", "lost", "loud", "lucky", "mad", "main", "massive", "medicinal", "mental", "miserable", "monetary", "nearby", "new", "noble", "northern", "noxious", "obligatory", "obvious", "old", "opposite", "original", "other", "outer", "owned", "painful", "past", "perplexing", "philosophical", "pleasant", "potent", "private", "proper", "public", "pure", "rapid", "ready", "reasonable", "recent", "relevant", "restrained", "rich", "right", "royal", "scarred", "secure", "severe", "sharp", "significant", "similar", "skilled", "southern", "stunned", "substantial", "subterranean", "successful", "sudden", "sufficient", "suitable", "superior", "suspicious", "terrible", "thick", "thin", "traditional", "true", "tyrannical", "ubiquitous", "unable", "uncommon", "undaunted", "undead", "unfair", "unholy", "unique", "united", "unlocked", "unnatural", "various", "vast", "virtuous", "visible", "western", "willing", "wonderful", "wounded", "wrong", "Artificial", "Boring", "Broken", "Colorless", "Comforting", "Extraordinary", "Forlorn", "Fragile", "Fragrant", "Lively", "Normal", "Peaceful", "Plain", "Protective", "Shocking", "Stylish", "Unpleasant", "Vibrant", "Hopeful", "Fierce", "Fortunate", "Frantic", "Frightening", "Exterior", "Crazy", "Emotional", "Energetic", "Epic", "Evil", "Bleak", "Bold", "Busy", "Cheerful", "Combative", "Adventurous", "Intense", "Legal", "Majestic", "Meaningful", "Mechanical", "Personal", "Physical", "Random", "Slow", "Social", "Strange", "Very", "Violent", "Wild", "Advanced", "Agile", "Amphibious", "Aquatic", "Arrogant", "Artistic", "Avian", "Carapace", "Clawed", "Conquering", "Declining", "Defensive", "Destructive", "Dominating", "Emotionless", "Exploitive", "Explorers", "Fast", "Feral", "Ferocious", "Friendly", "Fungal", "Furry", "Generous", "Gentle", "Glowing", "Immortal", "Insectlike", "Insubstantial", "Intimidating", "Levitating", "Mammalian", "Many-eyed", "Militaristic", "Nightmarish", "Oppressive", "Passive", "Perfect", "Powered", "Primitive", "Prosperous", "Psychic", "Reptilian", "Robotic", "Scientific", "Secretive", "Slender", "Suffering", "Tall", "Technological", "Tentacled", "Toothy", "Treacherous", "Wary", "Wormish", "Angry", "Assist", "Careless", "Cautious", "Ceaseless", "Deliberate", "Disinterested", "Disrupt", "Distracted", "Dominate", "Excited", "Hasty", "Helpless", "Ignore", "Imitate", "Implore", "Imprison", "Irritating", "Lazy", "Loyal", "Playful", "Quiet", "Swift", "Tactics", "Defiant", "Disorganized", "Efficient", "Foolish", "Ruthless", "Tired", "Unequipped", "Unexpected", "Untrained", "Blocked", "Closed", "Collapsed", "Cracked", "Cramped", "Crumbling", "Discouraging", "Dripping", "Huge", "Icy", "Occupied", "Open", "Slippery", "Tight", "Unstable", "Untouched", "Windy", "Accompanied", "Armed", "Casual", "Deceitful", "Equipped", "Expected", "Frightened", "Glad", "Happy", "Harmful", "Inactive", "Influential", "Innocent", "Knowledgeable", "Multiple", "Official", "Professional", "Protected", "Protecting", "Questioning", "Resourceful", "Seeking", "Stealthy", "Thieving", "Triumphant", "Unusual", "Vocal", "Antagonize", "Brave", "Cruel", "Enthusiastic", "Expectation", "Rude", "Kind", "Nice", "Athletic", "Attractive", "Bald", "Brutish", "Dainty", "Different", "Expensive", "Frail", "Hairy", "Lithe", "Muscular", "Neat", "Piercing", "Regal", "Scented", "Scholarly", "Short", "Sinister", "Stocky", "Trendy", "Academic", "Bad", "Burden", "Chaotic", "Guided", "Helped", "Heroic", "Humble", "Humiliation", "Imprisonment", "Inherit", "Pursued", "Recruited", "Rural", "Saved", "Sheltered", "Urban", "Awkward", "Grateful", "Hopeless", "Joyful", "Judgmental", "Mocking", "Offensive", "Polite", "Positive", "Quarrelsome", "Agreeable", "Capable", "Clumsy", "Commanding", "Disciplined", "Educated", "Erratic", "Foul", "Humorous", "Ignorant", "Impulsive", "Inept", "Informative", "Intrusive", "Meek", "Naive", "Powerless", "Principled", "Respectful", "Sneaky", "Sophisticated", "Supportive", "Sweet", "Trained", "Uniformed", "Wealthy", "Ambitious", "Annoying", "Bitter", "Collector", "Committed", "Crude", "Determined", "Devoted", "Empathetic", "Fastidious", "Haunted", "Honest", "Honor", "Inconsistent", "Intolerant", "Irresponsible", "Larcenous", "Likable", "Manipulative", "Mercurial", "Nervous", "Oblivious", "Obstinate", "Optimistic", "Perceptive", "Perfectionist", "Practical", "Prepared", "Quirky", "Rash", "Rational", "Responsible", "Restless", "Savvy", "Selfish", "Selfless", "Shallow", "Studious", "Superstitious", "Tolerant", "Vindictive", "Wise", "Agility", "Beginner", "Deceit", "Domestic", "Driving", "Experienced", "Investigative", "Master", "Medical", "Ranged", "Driven", "Focused", "Impaired", "Limited", "Missing", "Multi", "Partial", "Principles", "Resistant", "Specialized", "Technical", "Tough", "Trustworthy", "Bustling", "Dense", "Developed", "Isolated", "Opulence", "Sparse", "Structures", "Troubled", "Agricultural", "Bureaucratic", "Carefree", "Commercial", "Constructive", "Distrustful", "Dominant", "Failed", "Greedy", "Industrial", "Lawful", "Lawless", "Punitive", "Struggling", "Suppressed", "Blunt", "Extra", "Enhanced", "Immune", "Rechargeable", "Self-Sufficient", "Substance", "Vulnerable", "Amorphous", "Armored", "Bony", "Clothed", "Composite", "Constructed", "Decayed", "Filthy", "Gaunt", "Growling", "Inscribed", "Insect-like", "Metallic", "Odorous", "Rooted", "Shifting", "Silent", "Solitary", "Spider-like", "Spiked", "Steaming", "Sticky", "Supernatural", "Transparent", "Tree-like", "Twisted", "Verbal", "Wooden", "Hidden", "Obscured", "Secret", "Unknown", "Incapacity", "Ironic", "Permanent", "Separate", "Temporary", "Cluttered", "Crowded", "Customized", "Desolate", "Neglected", "Opulent", "Organized", "Roomy", "Thoughtful", "Tidy", "Utilitarian", "Foreboding", "Angelic", "Capricious", "Corruption", "Cosmic", "Fallen", "Fertility", "Jealous", "Major", "Minor", "Monstrous", "Underworld", "Worshipped", "Carelessness", "Cataclysm", "Enclosed", "Exclusive", "Exposed", "Intriguing", "Mobile", "Purposeful", "Remote", "Safe", "Immunity", "Requirement", "Spacious", "Useful", "Instant", "Special", "Deformed", "Toxic", "Complicated", "Consumable", "Deactivated", "Desired", "Expended", "Moving", "Ornamental", "Ornate", "Prized", "Stolen", "Useless", "Wet", "Worn", "Conditional", "Impending", "Necessary", "Unlikely", "Urgent", "Chemical", "Cosmetic", "Repairable", "Acrid", "Burnt", "Decrepit", "Delicious", "Earthy", "Electrical", "Evocative", "Faint", "Fetid", "Fishy", "Floral", "Fruity", "Funky", "Grassy", "Gratifying", "Heady", "Herbal", "Humid", "Intoxicating", "Laden", "Malodorous", "Mildew", "Moist", "Mossy", "Musky", "Musty", "Nauseating", "Odorless", "Overpowering", "Perfumed", "Pleasurable", "Pungent", "Putrid", "Rancid", "Reek", "Ripe", "Savory", "Smokey", "Sour", "Stagnant", "Stale", "Stench", "Stuffy", "Sulphuric", "Woody", "Banging", "Beseeching", "Burning", "Creaking", "Distant", "Grinding", "Hammering", "Indistinct", "Muffled", "Near", "Noisy", "Rumbling", "Rustling", "Scraping", "Scratching", "Tapping", "Uncertain", "Whirring", "Automated", "Abundant", "Barren", "Fertile", "Habitable", "Hazy", "Hostile", "Hot", "Mountainous", "Populated", "Rocky", "Sandy", "Bound", "Mindless", "Possessive", "Rotting", "Shambling", "Vengeful", "Future", "Incomplete", "Obscure", "Preventable", "Unsettling", "Descriptive", "Detailed", "Afraid", "Aggrieved", "Argumentative", "Connected", "Conniving", "Corrupt", "Elusive", "Fleeing", "Frivolous", "Involved", "Motivated", "Negligent", "Passionate", "Privileged", "Unhelpful", "Negative", "Unsteady", "Single", "Fixable", "Oversized", "Written", "Gaseous", "Game", "Inscription", "Maze", "Pattern", "Precision", "Timed", "Meager", "Outside", "Revealed", "Stuck", "Frenetic", "Guarded", "Risky", "Shady", "Trapped", "Alternate", "Cryptic", "Duplicitous", "Misled", "Solved", "Dependent", "Depowered", "Disarmed", "Ethical"],
+			"vocal": ["Abuse", "Advice", "Aggressive", "Agree", "Amusing", "Angry", "Anxious", "Assist", "Awkward", "Betray", "Bizarre", "Bleak", "Bold", "Business", "Calm", "Careful", "Careless", "Cautious", "Cheerful", "Classy", "Cold", "Colorful", "Combative", "Crazy", "Creepy", "Curious", "Defiant", "Delightful", "Disagreeable", "Dispute", "Efficient", "Energetic", "Enthusiastic", "Excited", "Fearful", "Fierce", "Foolish", "Frantic", "Frightening", "Generous", "Gentle", "Glad", "Grateful", "Haggle", "Happy", "Harsh", "Hasty", "Helpful", "Helpless", "Hopeless", "Ideas", "Inform", "Innocent", "Inquire", "Intense", "Interesting", "Intolerance", "Irritating", "Joyful", "Judgemental", "Juvenile", "Kind", "Leadership", "Lie", "Loud", "Loving", "Loyal", "Macabre", "Mature", "Meaningful", "Miserable", "Mistrust", "Mocking", "Mundane", "Mysterious", "News", "Nice", "Normal", "Odd", "Offensive", "Official", "Oppose", "Peace", "Plans", "Playful", "Polite", "Positive", "Praise", "Quarrelsome", "Quiet", "Reassuring", "Refuse", "Rude", "Rumor", "Simple", "Threatening", "Truce", "Trust", "Warm", "Wild", "Swear", "Support", "Elude", "Order", "Conceal", "Forgive", "Weak", "Deflect", "Threaten", "Attack", "Manipulate", "Withdraw", "Investigate", "Focus", "Aid", "Falter", "Suppress", "Share", "Reject", "Demand", "Bolster", "Mourn", "Reveal", "Defy", "Resist", "Overwhelm", "Challenge", "Protect", "Command", "Hide", "Defend", "Debate", "Distract", "Communicate", "Terrorize", "Compel", "Instruct", "Deter", "Dominate", "Humiliate", "Engender", "Stifle", "Deceive", "Shame", "Insult", "Exacerbate", "Embellish", "Grieve", "Condemn", "Incite", "Advise", "Subvert", "Forbid", "Provoke", "Impart", "Entice", "Oppress", "Affirm", "Empower", "Frighten", "Imitate", "Blame", "Embolden", "Nurture", "Coerce", "Obscure", "Spurn", "accuse", "aggravate", "alarm", "amaze", "amuse", "annoy", "antagonize", "appeal", "argue", "arouse", "babble", "badmouth", "bait", "bargain", "barter", "bawl", "befriend", "beg", "beguile", "belittle", "berate", "boast", "brag", "bribe", "celebrate", "charm", "complain", "compliment", "dare", "declare", "decline", "despair", "discriminate", "disgrace", "disrespect", "endorse", "enforce", "exaggerate", "evade", "flirt", "fumble", "gamble", "gaze", "giggle", "harass", "guard", "gossip", "irritate", "intimidate", "interrogate", "inspire", "instigate", "joke", "laugh", "lecture", "nag", "mock", "mimic", "overhear", "promote", "preach", "plead", "persuade", "protest", "pry", "quarrel", "rejoice", "remark", "recruit", "recite", "recount", "rebel", "query", "ridicule", "scare", "scream", "sing", "silence", "show", "seduce", "summon", "thank", "taunt", "tease", "tempt", "unload", "volunteer", "warn", "wave", "weep", "welcome", "yell", "Depressed", "Adventurous", "Animated", "Disgusted", "Annoyed", "Carefree", "Blissful", "Fuming", "Casual", "Elated", "Incensed", "Belligerent", "Euphoric", "Bitter", "Content", "Exuberant", "Pissed", "Bored", "Delighted", "Suicidal", "Downhearted", "Devilish", "Gleeful", "Upset", "Flirtatious", "Joyous", "Venomous", "Galled", "Merry", "Wrathful", "Indignant", "Mirthful", "Stinging", "Irritable", "Jubilant", "Ecstatic", "Spiteful", "Peeved", "Lucky", "Rapturous", "Malicious", "Pessimistic", "Mischievous", "Exultant", "Sadistic", "Remote", "Optimistic", "Exhilarated", "Hostile", "Sad", "Triumphant", "Vicious", "Touchy", "Rascally", "Blithe", "Resentful", "Uncaring", "Romantic", "Effervescent", "Hateful", "Unlucky", "Sincere", "Whimsical", "Mean", "Vexed", "Surprised", "Thrilled", "Scornful", "Weary", "Thankful", "Energized", "Judgmental"],
+			"character": ["Aggressive", "Amusing", "Anger", "Anxious", "Bizarre", "Bold", "Calm", "Careful", "Careless", "Change", "Combative", "Control", "Crazy", "Creepy", "Dangerous", "Defiant", "Delay", "Dominate", "Efficient", "Energetic", "Excited", "Exotic", "Fearful", "Feeble", "Fierce", "Fight", "Foolish", "Frantic", "Frightening", "Generous", "Gentle", "Harsh", "Hasty", "Helpful", "Imitate", "Important", "Inspect", "Intense", "Juvenile", "Kind", "Lazy", "Leadership", "Lethal", "Loud", "Loyal", "Mature", "Meaningful", "Messy", "Move", "Mundane", "Mysterious", "Nice", "Normal", "Odd", "Official", "Oppose", "Passion", "Peace", "Playful", "Pleasures", "Possessions", "Release", "Simple", "Slow", "Swift", "Tactics", "Technology", "Threatening", "Violent", "Weapons", "Wild", "Yield", "Scheme", "Weaken", "Risk", "Surrender", "Deflect", "Threaten", "Manipulate", "Withdraw", "Falter", "Suppress", "Share", "Avoid", "Reject", "Explore", "Support", "Distract", "Communicate", "Terrorize", "Compel", "Embrace", "Guide", "Shame", "Advise", "Mourn", "Defy", "Refuse", "Find", "Summon", "Isolate", "Dismantle", "Overcome", "Incite", "Forbid", "Struggle", "Mystify", "Tame", "Spurn", "Repel", "Coerce", "Attain", "Start", "Neglect", "Recruit", "Triumph", "Persecute", "Increase", "Decrease", "Gratify", "Inquire", "Waste", "Truce", "Haggle", "Develop", "Travel", "Block", "Debase", "Overindulge", "Adjourn", "Usurp", "Create", "Agree", "Work", "Judge", "Desert", "Procrastinate", "Praise", "Separate", "Break", "Heal", "Stop", "Lie", "Return", "Postpone", "Spy", "Attach", "Open", "Trick", "Propose", "Divide", "Mistrust", "Trust", "Excite", "Activate", "Assist", "Care", "Negligence", "Attract", "Failure", "Pursue", "Vengeance", "Proceedings", "Punish", "Overthrow", "Depressed", "Angry", "Adventurous", "Animated", "Disgusted", "Annoyed", "Carefree", "Blissful", "Fuming", "Casual", "Elated", "Incensed", "Belligerent", "Cheerful", "Euphoric", "Miserable", "Bitter", "Content", "Exuberant", "Pissed", "Bored", "Delighted", "Suicidal", "Downhearted", "Devilish", "Gleeful", "Upset", "Flirtatious", "Joyous", "Venomous", "Galled", "Grateful", "Merry", "Wrathful", "Indignant", "Happy", "Mirthful", "Stinging", "Irritable", "Jubilant", "Ecstatic", "Spiteful", "Peeved", "Lucky", "Rapturous", "Malicious", "Pessimistic", "Mischievous", "Exultant", "Sadistic", "Remote", "Optimistic", "Exhilarated", "Hostile", "Sad", "Triumphant", "Vicious", "Touchy", "Rascally", "Blithe", "Resentful", "Uncaring", "Romantic", "Effervescent", "Hateful", "Unlucky", "Sincere", "Whimsical", "Mean", "Vexed", "Surprised", "Thrilled", "Scornful", "Weary", "Thankful", "Energized", "abandon", "abolish", "abuse", "accuse", "address", "aggravate", "agitate", "aid", "aim", "alarm", "alert", "alter", "amaze", "ambush", "amuse", "annihilate", "annoy", "antagonize", "appeal", "applaud", "apprehend", "approach", "argue", "arise", "arouse", "arrange", "arrest", "ask", "assassinate", "assault", "assemble", "astonish", "attack", "attempt", "attend", "auction", "audition", "avenge", "avert", "babble", "badmouth", "bait", "ban", "banish", "baptize", "bargain", "bark", "barricade", "barter", "bash", "bawl", "beautify", "beckon", "befriend", "beg", "beguile", "belch", "belittle", "bellow", "bemoan", "bequeath", "berate", "besiege", "bestow", "bet", "betray", "bewilder", "bewitch", "bid", "bite", "blab", "blame", "blast", "bleed", "bless", "blunder", "blurt", "boast", "bother", "bow", "brag", "bribe", "broadcast", "build", "capture", "careen", "caress", "carry", "carve", "catch", "celebrate", "challenge", "charm", "chase", "cheat", "choke", "claim", "climb", "collaborate", "collapse", "collide", "command", "complain", "compliment", "conceal", "concoct", "condemn", "confiscate", "conflict", "confront", "confuse", "congratulate", "congregate", "conjure", "consecrate", "consider", "construct", "contact", "contaminate", "contest", "converse", "cook", "corner", "corrupt", "cremate", "crowd", "crown", "customize", "damage", "dance", "dare", "dash", "dazzle", "deal", "debate", "decay", "deceive", "declare", "decline", "decompose", "decorate", "decree", "dedicate", "deduce", "deface", "defeat", "defend", "defuse", "deliver", "demand", "demolish", "denounce", "deride", "despair", "destroy", "devour", "dig", "disappear", "disarm", "discipline", "discover", "discriminate", "discuss", "disgrace", "disguise", "disgust", "dishonor", "dismount", "dispel", "disperse", "display", "displease", "dispute", "disrespect", "disrupt", "distill", "distress", "disturb", "divert", "dodge", "drag", "dress", "drink", "drop", "drown", "drum", "dump", "dupe", "duplicate", "earn", "eat", "elude", "employ", "enchant", "end", "endanger", "endear", "endorse", "enforce", "engage", "engineer", "enjoy", "enlarge", "enlighten", "enlist", "enquire", "enrage", "enrich", "enroll", "enshrine", "ensnare", "entangle", "enter", "entertain", "entice", "erect", "escape", "escort", "evacuate", "evade", "evict", "exaggerate", "examine", "excavate", "exchange", "exclaim", "exclude", "execute", "exhibit", "experiment", "explode", "expose", "faint", "fake", "fall", "falsify", "fashion", "flaunt", "flee", "fling", "flirt", "follow", "force", "foresee", "foretell", "forge", "forgive", "fracture", "frame", "free", "freeze", "fret", "frighten", "frustrate", "fumble", "fund", "fuss", "gallop", "gamble", "gather", "gaze", "gesture", "gift", "giggle", "give", "glare", "gleam", "glimpse", "goad", "gob", "goggle", "gossip", "grab", "grapple", "grieve", "guard", "hamper", "harass", "harm", "help", "hide", "hit", "hold", "humiliate", "hurry", "hurtle", "ignite", "impede", "implore", "imprison", "infect", "infest", "inflame", "inflict", "inform", "infringe", "infuriate", "injure", "inspire", "instigate", "insult", "interfere", "interrogate", "intimidate", "intoxicate", "investigate", "invite", "involve", "irritate", "jaywalk", "jeer", "joke", "jostle", "kick", "kill", "kiss", "lament", "laugh", "leap", "lecture", "leer", "look", "loot", "lose", "love", "lunge", "lurk", "maim", "manhandle", "march", "market", "massacre", "meddle", "mesmerize", "mimic", "misspell", "mob", "mock", "murder", "mutate", "mutilate", "nag", "narrate", "near", "notify", "obscure", "observe", "obstruct", "offend", "oppress", "order", "overhear", "overpower", "overturn", "parade", "parley", "patrol", "pelt", "penalize", "perform", "persuade", "petition", "play", "plead", "plunder", "pollute", "pounce", "practice", "preach", "proclaim", "prohibit", "promote", "pronounce", "prophesize", "prosecute", "protect", "protest", "provide", "provoke", "prowl", "pry", "punch", "purchase", "push", "quarrel", "query", "queue", "rage", "raid", "ransack", "rebel", "recite", "recount", "rejoice", "remark", "renege", "repair", "research", "rescue", "resist", "restrain", "resurrect", "reveal", "revolt", "reward", "ridicule", "riot", "rob", "run", "rush", "salute", "scamper", "scare", "scavenge", "scream", "scrounge", "search", "secure", "seduce", "segregate", "seize", "sell", "ship", "shout", "shove", "show", "silence", "sing", "slaughter", "sleep", "smash", "sob", "solicit", "speak", "spill", "spit", "stab", "stage", "startle", "steal", "strangle", "strike", "subdue", "suffer", "surround", "suspect", "take", "taunt", "tease", "tempt", "terrify", "thank", "throw", "torment", "torture", "trade", "transform", "translate", "transport", "trap", "tug", "unite", "unleash", "unload", "unveil", "vandalize", "vanish", "victimize", "violate", "volunteer", "wait", "warn", "wave", "weep", "welcome", "whittle", "wield", "win", "wink", "witness", "worship", "wound", "wreck", "wrestle", "write", "yell", "Ally", "Brave", "Cautious", "Charge", "Compete", "Cruel", "Enthusiastic", "Expectation", "Ferocious", "Lead", "Liberty", "Magic", "Mechanical", "Mighty", "Military", "Pain", "Path", "Prepare", "Rough", "Rude", "Ruin", "Ruthless", "Strange", "Vehicle", "Weapon"],
+			"animal": ["Abandon", "Abnormal", "Aggressive", "Angry", "Anxious", "Assist", "Attack", "Befriend", "Bestow", "Bizarre", "Bold", "Break", "Busy", "Calm", "Careful", "Careless", "Cautious", "Ceaseless", "Change", "Combative", "Curious", "Dangerous", "Deliberate", "Disinterested", "Disrupt", "Distracted", "Dominate", "Energetic", "Excited", "Exotic", "Familiar", "Fearful", "Feeble", "Ferocious", "Fierce", "Fight", "Flee", "Follow", "Food", "Frantic", "Friendship", "Frightening", "Generous", "Gentle", "Graceful", "Harm", "Hasty", "Helpful", "Helpless", "Hungry", "Hunt", "Ignore", "Imitate", "Implore", "Imprison", "Inspect", "Intense", "Irritating", "Juvenile", "Lazy", "Leave", "Lethal", "Loud", "Loyal", "Messy", "Mistrust", "Move", "Mundane", "Mysterious", "Natural", "Neglect", "Normal", "Observe", "Odd", "Oppose", "Playful", "Protect", "Pursue", "Quiet", "Reassuring", "Release", "Return", "Scary", "Simple", "Slow", "Strange", "Struggle", "Swift", "Tactics", "Take", "Threatening", "Tranquil", "Transform", "Trick", "Trust", "Violent", "Warn", "Waste", "Wild", "Yield"]
 		}
 	};
 
@@ -1131,7 +1227,11 @@
 	var pbta_custom_move_text = {};
 	var pbta_custom_moves = {};
 	var pbta_custom_tables = {};
-	
+
+	// misc
+	var twist_counter;
+
+
 	/* system */
 
 	function $(id) {
@@ -1655,6 +1755,25 @@
 		// PbtA
 		else if (pbta_games.test(page) && getPbtAPage(page, page.replace(pbta_games, "$1"))) return;
 
+		// misc
+		else if (/^motif/.test(page)) return showMotif(/:roll$/.test(page));
+		else if (page === "scene") return showScene();
+		else if (page === "character") return showCharacter();
+		else if (/^muse:/.test(page)) {
+			page = page.replace(/^muse:(.+)/, "$1");
+			return showMeaning(upperCase(page), "muse", page);
+		}
+		else if (/^muse\-story:/.test(page)) {
+			page = page.replace(/^muse\-story:(.+)/, "$1");
+			return showMeaning(upperCase(page), "muse-story", page);
+		}
+		else if (/^muse\-list:/.test(page)) return showMuseList(page.replace(/^muse\-list:(.+)/, "$1"));
+		else if (/^une:/.test(page)) {
+			page = page.match(/^une:([^:]+)(?:\:(.+))?/);
+			if (page[1] === "mood") return showUneMood(page[2]);
+			if (page[1] === "discussion") return showUneDiscussion(page[2]);
+		}
+
 		pbta_menu = "";
 
 		var links = {
@@ -1703,17 +1822,22 @@
 					["Settlement", "ironsworn-oracle-list:settlement"],
 					["Character", "ironsworn-oracle-list:character"],
 					["Name", "ironsworn-oracle-list:name"],
+					["Turning Point", "ironsworn-oracle-list:turning point"]
 				]],
 				["Delve Oracles", [
 					["Feature", "ironsworn-oracle-list:feature"],
 					["Site Name", "ironsworn-oracle-list:site name:core"],
 					["Site Nature", "ironsworn-oracle-list:site nature"],
+					["Site Features", "ironsworn-oracle-list:site:features"],
+					["Site Dangers", "ironsworn-oracle-list:site:dangers"],
 					["Character", "ironsworn-oracle-list:delve character"],
 					["Monstrosity", "ironsworn-oracle-list:monstrosity"],
 					["Trap", "ironsworn-oracle-list:trap"],
 					["Combat Event", "ironsworn-oracle-list:combat event"],
-					["Threat", "ironsworn-oracle-list:threat"],
-					["Site", "ironsworn-oracle-list:site:core"]
+					["Threat", "ironsworn-oracle-list:threat"]
+				]],
+				["Generators", [
+					["Monstrosity", "ironsworn-generator:monstrosity"]
 				]]
 			],
 			starforged: [
@@ -1753,10 +1877,36 @@
 					["Custom", "masks-custom-move-list"]
 				]],
 				["Moves", getPbtAMoveTypes("masks")]
+			],
+			misc: [
+				["Chance", [
+					["Dice", "dice"],
+					["Cards", "cards"],
+				]],
+				["Tools", [
+					["Motif", "motif"],
+					["Twist", "muse:twist"],
+					["Character", "character"]
+				]],
+				["Muse", [
+					["Action", "muse:action"],
+					["Description", "muse:description"],
+					["Event", "muse:event"],
+					["Thing", "muse:thing"],
+					["Topic", "muse:topic"],
+					["Animate", "muse-list:animate"],
+					["Questions", "muse-list:questions"],
+					["Story", "muse-list:story"]
+				]],
+				["UNE", [
+					["Mood", "une:mood"],
+					["Discusion", "une:discussion"]
+				]]
 			]
 		};
 		
 		toc = Object.keys(links);
+		if (!(current_menu in links)) current_menu = "mythic";
 		links = links[current_menu];
 
 		var a, b, id, list;
@@ -1867,18 +2017,23 @@
 		var defineSettings = function() {
 			checkLocalStorage();
 			loadSettings();
-			chaos = (soloData.chaos || 5);
-			focus = (soloData.focus || "random event");
-			progress = (soloData.progress || 0);
 			current_menu = (soloData.current_menu || "mythic");
 			color_theme = (soloData.color_theme || "dark");
+			// chance
 			drawn_card = (soloData.drawn_card || []);
 			playing_cards = (soloData.playing_cards || shuffleCards());
+			quick_rolls_text = (soloData.quick_rolls || "");
+			parseQuickRolls();
+			// mythic
+			chaos = (soloData.chaos || 5);
+			focus = (soloData.focus || "random event");
 			acting_rank = (soloData.acting_rank || "Average");
 			difficulty_rank = (soloData.difficulty_rank || "Average");
-			quick_rolls_text = (soloData.quick_rolls || "");
+			progress = (soloData.progress || 0);
+			// pbta
 			pbta_custom_move_text = (soloData.pbta_custom_moves || {});
-			parseQuickRolls();
+			// misc
+			twist_counter = (soloData.twist_counter || 0);
 
 			if (inIframe()) addClass($("html")[0], "iframe");
 			setColorTheme(color_theme);
@@ -1891,502 +2046,101 @@
 	};
 
 
-	/* powered by the apocalypse */
-
-	function getPbtAMoveTypes(game) {
-		var move;
-		var list = [];
-		var moves = muse[game].move_lists;
-
-		for (move in moves) {
-			list.push([move, game + "-move-list:" + move])
-		}
-		return list;
-	}
-
-	function showPbtAMoveList(game, type) {
-		var a;
-		var list = [];
-		var group = muse[game].move_lists[type];
-		for (a = 0; a < group.length; ++a) {
-			if (!(group[a] in muse[game].moves)) list.push(["<s>" + group[a] + "</s>", "solo.showPage()"]);
-			else list.push([group[a], "solo.showPage('" + game + "-move:" + group[a].replace(/'/g, "\\'") + "')"]);
-		}
-		return display(getDataLinksList(list) + getBackLink());
-	}
-
-	function rollMoveDie(el, start, end) {
-		if (el !== "all") return fadeIn(el.id, 0, random(start, end));
-		
-		var a;
-		for (a = start; a <= end; ++a) {
-			document.getElementById("die-" + a).click();
-		}
-	}
-
-	function showPbtAMove(game, name, custom) {
-		var insertTable = function(name) {
-			var a, b, table, output;
-			var list = [];
-
-			if (custom && (name in pbta_custom_tables)) table = pbta_custom_tables[name];
-			else if (("move_tables" in muse[game]) && (name in muse[game].move_tables)) table = muse[game].move_tables[name];
-			else return "<table class='move-table'><tr><td><s>table:" + name + "</s></td></tr></table>";
-
-			var rolled = 0;
-			var header = (table.header) ? "<th>" + table.header.join("</th><th>") + "</th>" : "";
-			
-			if (table.rolled) rolled = (table.rolled === true) ? 1 : table.rolled;
-			
-			for (a = 0; a < table.rows.length; ++a) {
-				output = "";
-				for (b = 0; b < table.rows[a].length; ++b) {
-					output += (b < rolled ? "<td class='rolled'>" : "<td>") + replaceMarkup(table.rows[a][b]) + "</td>";
-				}
-				list.push(output);
-			}
-
-			return "<table class='move-table'>" + header + "<tr>" + list.join("</tr><tr>") + "</tr></table>";
-		};
-
-		var getDieLink = function(start, end) {
-			die_count += 1;
-			return "<td id='die-" + die_count + "' onclick='solo.rollMoveDie(this, " + start + ", " + end + ")'>&nbsp;</td>";
-		};
-
-		var getDice = function(type) {
-			var output = "<table class='move-table move-dice'><tr>";
-			var die_start = die_count + 1;
-			
-			if (type === "ironsworn") {
-				output += "<td class='label'>d10</td>" + getDieLink(1, 10) + getDieLink(1, 10) +
-				"<td class='label'></td><td class='label'>d6</td>" + getDieLink(1, 6);
-			}
-			else if (type === "pbta") output += "<td class='label'>d6</td>" + getDieLink(1, 6) + getDieLink(1, 6);
-			else if (type === "progress") output += "<td class='label'>d10</td>" + getDieLink(1, 10) + getDieLink(1, 10);
-			else if (type === "d4") output += "<td class='label'>d4</td>" + getDieLink(1, 4);
-			else if (type === "d6") output += "<td class='label'>d6</td>" + getDieLink(1, 6);
-			else if (type === "d8") output += "<td class='label'>d8</td>" + getDieLink(1, 8);
-			else if (type === "d10") output += "<td class='label'>d10</td>" + getDieLink(1, 10);
-			else if (type === "d12") output += "<td class='label'>d12</td>" + getDieLink(1, 12);
-			else if (type === "d20") output += "<td class='label'>d20</td>" + getDieLink(1, 20);
-			else if (type === "d100") output += "<td class='label'>d100</td>" + getDieLink(1, 100);
-			else output += "<td><s>dice:" + type + "</s></td>";
-
-			return output + "<td class='label'></td>" +
-				"<td><a onclick='solo.rollMoveDie(\"all\", " + die_start + ", " + die_count + ")'>Roll</a></td>" +
-				"</tr></table>";
-		};
-
-		var replaceMarkup = function(text) {
-			text = parseMarkup(text, "<<", ">>", function(el) {
-				return "<ul class='move-list'><li>" + replaceMarkup(el.inner).replace(/(?<!\\)\|/g, "</li><li>") + "</li></ul>";
-			});
-			
-			text = parseMarkup(text, "((", "))", function(el) { return getDice(el.inner); });
-			text = parseMarkup(text, "{{", "}}", function(el) {
-				if (table_children.indexOf(el.inner) !== -1) return "<table class='move-table'><tr><td><s>table:" + el.inner + "</s></td></tr></table>";
-				table_children.push(el.inner);
-
-				var table = insertTable(el.inner);
-				table_children.pop();
-				
-				return table;
-			});
-			
-			text = parseMarkup(text, "{", "}", function(el) {
-				el = el.inner.split(/(?<!\\)\|/);
-				var p1 = el.shift();
-				var p2 = (el.length) ? el.join("|") : p1;
-				
-				if (custom && (p1 in pbta_custom_moves)) return "<a onclick='solo.showPage(\"" + game + "-custom-move:" + p1 + "\")'>" + (p2 || p1) + "</a>";
-				if (p1 in muse[game].moves) return "<a onclick='solo.showPage(\"" + game + "-move:" + p1 + "\")'>" + (p2 || p1) + "</a>";
-				return "<s>&lt;move:" + p1 + "&gt;</s>";
-			});
-			
-			text = text.replace(/(?<!\\)\|\|/g, "</p><p>");
-			text = text.replace(/(?<!\\)\[\[/g, "<i>");
-			text = text.replace(/(?<!\\)\]\]/g, "</i>");
-			text = text.replace(/(?<!\\)\[/g, "<b>");
-			text = text.replace(/(?<!\\)\]/g, "</b>");
-			text = text.replace(/<p>\s*<ul/g, "<ul");
-			text = text.replace(/<\/ul>\s*<\/p>/g, "</ul>");
-			text = text.replace(/<p>\s*<table/g, "<table");
-			text = text.replace(/<\/table>\s*<\/p>/g, "</table>");
-			text = text.replace(/(?<!\\)\*\*\*/g, "<div class='move-spacer'></div>");
-			text = text.replace(/(?<!^)(?<!:\n|\/p>|\/ul>|\/table>|\/div>|\/h\d>)(<(?:ul|table|div|h\d))/g, "</p>$1");
-			text = text.replace(/(\/(?:ul|table|div|h\d)>)\s*(?!$)(?!:\n|<p|<ul|<table|<div|<h\d)/g, "$1<p>");
-			text = text.replace(/\\([\[\](){}<>|*@#])/g, "$1");
-			return text;
-		};
-
-		var die_count = 0;
-		var move = (custom) ? pbta_custom_moves[name] : muse[game].moves[name];
-		var table_children = [];
-		
-		return display(
-			getDataHeader("<h2>" + name + "</h2>" + getBackLink(false, pbta_menu)) + 
-			getDataFooter(replaceMarkup(move))
-		);
-	}
-
-	function showPbtACustomMoveList(game, save) {
-		var saveMoves = function() {
-			pbta_custom_move_text[game] = $("#custom-moves").value || "";			
-			soloData.pbta_custom_moves[game] = pbta_custom_move_text[game];
-			pbta_menu = pbta_menu.replace(/(.+):save$/, "$1");
-			saveSettings();
-		};
-
-		var parseMoves = function() {
-			if (!(game in pbta_custom_move_text)) pbta_custom_move_text[game] = "";
-
-			var input = "" + pbta_custom_move_text[game];
-			var move_text = input;
-			var table_text = input;
-			var a, b, table, row, rows, match, rolled;
-
-			pbta_custom_moves = {};
-			pbta_custom_tables = {};
-
-			while ((match = move_text.match(/\s*(?<!\\)##\s*((?:(?!##|\n|\|)[\w\W])+)\s*(?:##|\n)\s*((?:(?!(?<!\\)(?:@@|##))[\w\W])+)/)) !== null) {
-				move_text = move_text.substr(match[0].length);
-				pbta_custom_moves[match[1]] = match[2];
-			}
-
-			match = table_text.match(/(?<!\\)@@\s*((?:(?!@@|\n|\|)[\w\W])+)\s*(?:\|((?:(?!@@|\n)[\w\W])+)\s*)?(?:@@|\n)\s*((?:(?!(?<!\\)(?:@@|##))[\w\W])+)/g);
-			if (match !== null) {
-				for (a = 0; a < match.length; ++a) {
-					table = match[a].match(/@@\s*((?:(?!@@|\n|\|)[\w\W])+)\s*(?:\|((?:(?!@@|\n)[\w\W])+)\s*)?(?:@@|\n)\s*([\w\W]+)/);
-					
-					rows = [];
-					row = splitMarkup(table[3], "<>");
-					for (b = 0; b < row.length; ++b) {
-						rows.push(splitMarkup(row[b], "|"));
-					}
+	/* muse */
 	
-					pbta_custom_tables[table[1]] = { rows: rows };
-					if (/rolled/.test(table[2])) {
-						rolled = table[2].match(/rolled(?:[\t ]+(\d+))?/);
-						pbta_custom_tables[table[1]].rolled = (rolled[1]) ? rolled[1] : 1;
-					}
-					if (/headered/.test(table[2])) pbta_custom_tables[table[1]].header = pbta_custom_tables[table[1]].rows.shift();
-				}
+	function getMeaning(source, topic) {
+		var checkMeaning = function(source1, source2, capitalize, join) {
+			var meaning1 = randomItem(source1);
+
+			if (source2 === undefined || source2 === false) return (capitalize ? upperCase(meaning1) : meaning1);
+
+			var meaning2;
+
+			do {
+				meaning2 = randomItem(source2);
 			}
+			while (meaning1.toLowerCase() === meaning2.toLowerCase());
+
+			if (capitalize) return upperCase(meaning1) + (join || " ") + upperCase(meaning2);
+			return meaning1 + (join || " ") + meaning2;
 		};
 
-		if (save) saveMoves();
-		if (save || !Object.keys(pbta_custom_moves).length) parseMoves();
+		var meaning, temp, temp2, item, story;
 
-		var item, list, backlink;
-		var links = "<ul><li>No Custom Moves Defined</li></u>";
-
-		if (Object.keys(pbta_custom_moves).length) {
-			list = [];
-			for (item in pbta_custom_moves) {
-				list.push([item, "solo.showPage('" + game +'-custom-move:' + item + "')"]);
-			}
-			links = getLinksList(list);
+		if (source === "mythic") {
+			if (topic === "descriptions") return checkMeaning(muse.mythic.meaning.descriptor1, muse.mythic.meaning.descriptor2);
+			else if (topic === "action") return checkMeaning(muse.mythic.meaning.action1, muse.mythic.meaning.action2);
+			else if (topic === "who") return getMeaning("mythic", "characters");
+			else if (topic === "what") return getMeaning("mythic", "action");
+			else if (topic === "where") return getMeaning("mythic", "locations");
+			else if (topic === "why") return getMeaning("mythic", "action");
+			return checkMeaning(muse.mythic.meaning[topic], muse.mythic.meaning[topic], false, " / ");
 		}
 
-		backlink =
-			"<hr><div id='back-links'><p>" +
-			"<a onclick='solo.showPage(\"" + game + "-edit-custom-moves\")'>Edit</a>" +
-			"<a onclick='solo.showPage(	)'>Back</a></p></div>";
-
-		return display(getDataHeader(links) + backlink);
-	}
-
-	function editPbtACustomMoves(game) {
-		var htmlEncode = function(text) {
-			var chars = {"<":"&lt;", ">":"&gt;"};
-			return text.replace(/([\<])/g, function(m, p1) { return chars[p1]; });
-		};
-		
-		var getMarkupTable = function(list) {
-			var a;
-			var output = "";
-			for (a = 0; a < list.length; ++a) {
-				output += "<tr" + (!(a % 2) ? " class='odd'" : "") + "><td>" + list[a].join("</td><td>") + "</td></tr>";
-			}
-			return "<table>" + output + "</table>";
+		else if (source === "muse") {
+			if (topic === "twist") return randomItem(muse.twists);
+			else if (topic === "description") return checkMeaning(muse.meanings.adverb, muse.meanings.adjective, true);
+			else if (topic === "action") return checkMeaning(muse.meanings.adverb, muse.meanings.verb, true);
+			else if (topic === "thing") return checkMeaning(muse.meanings.adjective, muse.meanings.noun, true);
+			else if (topic === "event") return checkMeaning(muse.meanings.verb, muse.meanings.noun, true);
+			else if (topic === "topic") return checkMeaning(muse.meanings.noun, muse.meanings.noun, true, " of ");
+			else if (topic in list("vocal", "character", "animal")) return checkMeaning(muse.meanings[topic], muse.meanings[topic], true);
 		}
 
-		var moves = pbta_custom_move_text[game] || "";
-
-		return display(
-			getDataHeader(
-				"<textarea id='custom-moves' spellcheck='false'>" + moves + "</textarea>",
-				"<div id='dice-buttons'><div id='save-button'><p>" + 
-					"<a onclick='solo.showPage(\"" + game + "-custom-move-list:save\")'>Save</a>" + 
-					"<a onclick='solo.showPage(\"" + game + "-custom-move-list\")'>Back</a></p></div></div>"
-			) +
-			getDataFooter(
-				"<div id='move-markup'><details><summary>Moves Markup</summary><br>" + 
-					getMarkupTable([
-						["##", "declare move name (eg. <code>##Face Danger</code>). end name with <code>##</code> again or a line break."],
-						["||", "break two blocks of text up"],
-						["((dice))", "insert dice roller. options are: <code>d4</code>, <code>d6</code>, <code>d8</code>, <code>d10</code>, <code>d12</code>, <code>d20</code>, <code>d100</code>, <code>pbta</code> (2d6), <code>progress</code> (2d10), and <code>ironsworn</code> (2d10,d6)"],
-						["{move}", "create link to another move"],
-						["{move|name}", "create a link to another move but with a different name"],
-						["{{table}}", "insert table from move_tables"],
-						["[bold]", "bold the text"],
-						["[[italic]]", "italicize the text"],
-						["&lt;&lt;item|item&gt;&gt;", "create a bullet list with items separated by <code>|</code>. You can also embed lists within lists."],
-						["***", "insert a spacer"],
-						["\\", "prevent the markup following it from being rendered"]
-					]) + "<p>Be aware that references to moves, tables, and dice are case sensitve.</p></details><br>" +
-				"<details><summary>Tables Markup</summary><br>" + 
-					getMarkupTable([
-						["@@", "declare table name (eg. <code>@@Discoveries</code>). end name with <code>@@</code> again or a line break.<br"],
-						["@@name|rolled|headered", "same as above, but <code>rolled</code> and <code>headered</code> are special flags:</p><p>" +
-						"<code>rolled</code>: first column of the table will be displayed to represent a number range </p><p>" +
-						"<code>rolled #</code>: same as above but will do this for columns 1 through number given</p><p>" +
-						"<code>headered</code>: first row of the table will be assigned as column headings"],
-						["<>", "divides the line into table rows"]
-					]) + "<p>All move markup also applies to tables, including embedding tables within tables.</p></details><br>" +
-				"<details><summary>Example Move</summary><br><pre><code>" +
-					"##Example Move\n[When you do something], roll+stat.\n((pbta))\n" +
-					"On a [strong hit], you do it.||\nOn a [weak hit], choose one.\n" +
-					"<<\n  do what you want|\n  don't get hurt\n>>\n" +
-					"On a [miss], roll on the following table, or {Suffer} the cost.\n((d10))\n{{table}}\n\n" +
-					"@@table|rolled|headered\n|a|b<>\n1-5|item 1|item 2<>\n6-10|item 3|item 4\n\n" +
-					"##Suffer\nReduce a resource by 1." +
-				"</code></pre><br>" +
-				"<p>Code can also be compressed to save space if you don't need the legibility. The following renders the same as the above.</p>" +
-				"<p><code>" + htmlEncode("##Example Move##[When you do something], roll+stat.((pbta))On a [strong hit], you do it.||On a [weak hit], choose one.<<do what you want|don't get hurt>>On a [miss], roll on the following table, or {Suffer} the cost.((d10)){{table}}@@table|rolled|headered@@|a|b<>1-5|item 1|item 2<>6-10|item 3|item 4##Suffer##Reduce a resource by 1.") + "</code></p>" +
-				"</details></div>"
-			));
-	}
-
-	function getPbtAOracle(game, oracle) {
-		var replaceMarkup = function(text) {
-			text = parseMarkup(text, "{", "}", function(el) {
-				el = el.inner.split(/(?<!\\)\|/);
-				var p1 = el.shift().trim();
-				var p2 = ((el.length) ? el.join("|") : p1).trim();
-				var list = muse[game].oracle_lists;
-				var list_text = "-oracle-list:";
-				var match = p1.match(/([^:]+):(.+)/);
-				
-				if (/^>/.test(p1)) {
-					p1 = p1.substring(1).trim();
-					list = muse[game].oracles;
-					list_text = "-oracle:";
-					match = match[2].match(/([^:]+):(.+)/);
-				}
-				
-				var pass = true;
-				if (match !== null) {
-					if (!(match[1].trim() in list)) pass = false;
-					else if (!(match[2].trim() in list[match[1].trim()])) pass = false;
-				}
-				else if (!(p1 in list)) pass = false;
-
-				if (!pass) return "<s>&lt;" + p1 + "&gt;</s>";
-				return "<a onclick='solo.showPage(\"" + game + list_text + p1 + "\")'>" + (p2 || p1).trim() + "</a>";
-			});
-			text = parseMarkup(text, "((", "))", function(el) {
-				return getRolls(el.inner);
-			});
-			text = text.replace(/(?<!\\)\|(?<!\\)\|/g, "</p><p>");
-			text = text.replace(/(?<!\\)\[(?<!\\)\[/g, "<i>");
-			text = text.replace(/(?<!\\)\](?<!\\)\]/g, "</i>");
-			text = text.replace(/(?<!\\)\[/g, "<b>");
-			text = text.replace(/(?<!\\)\]/g, "</b>");
-			text = text.replace(/(?<!\\)\*(?<!\\)\*(?<!\\)\*/g, "<div class='move-spacer'></div>");
-			text = text.replace(/(?<!^)(?<!:\n|\/p>|\/ul>|\/table>|\/div>|\/h\d>)(<(?:ul|table|div|h\d))/g, "</p>$1");
-			text = text.replace(/(\/(?:ul|table|div|h\d)>)\s*(?!$)(?!:\n|<p|<ul|<table|<div|<h\d)/g, "$1<p>");
-			return text;
-		};
-		
-		var getRandomItem = function(list) {
-			if (isArray(list)) return randomItem(list);
-
-			var keys = Object.keys(list);
-			keys = keys.sort(function(a, b) { return a - b; });
-
-			return getRolledItem(random(1, parseInt(keys.pop())), list);
-		};
-		
-		var getRolls = function(name, joined) {
-			depth += 1;
-
-			var roll, temp, a, b, type, oracle;
-			var rolls = [];
-			var reroll = 1;
-			var roll_count = 0;
-
-			var loop = 1;
-			if (depth === 1 && muse[game].oracle_rolls && (name in muse[game].oracle_rolls)) loop =  random(1, muse[game].oracle_rolls[name]);
-
-			temp = name.split(/(?<!\\):/);
-			type = temp.shift();
-			oracle = temp.join(":");
-
-			if (!(type in muse[game].oracles) || !(oracle in muse[game].oracles[type])) return "<s>" + name + "</s>";
-
-			var list = muse[game].oracles[type][oracle];
-			
-			for (a = 0; a < loop; ++a) {
-				roll_count = 0;
-				do {
-					roll = getRandomItem(list);
-
-					// reroll    example: > reroll twice
-					if (/^>/.test(roll)) {
-						if ((/^>\s*roll\s+(twice|thrice)\b/.test(roll))) {
-							// only do multiple rerolls if on outer layer
-							if (depth > 1 || reroll > 1) continue;
-
-							// if (reroll) continue;
-							if (/twice/.test(roll)) reroll = 2;
-							else if (/thrice/.test(roll)) reroll = 3;
-							continue;
-						}
-
-						// from another oracle    example: > action + theme
-						if (/\+/.test(roll)) {
-							roll = roll.match(/(?!>|\+)([^+]+)/g);
-							for (b = 0; b < roll.length; ++b) {
-								roll[b] = getRolls(roll[b].trim(), true);
-							}
-							roll = roll.join(" ");
-						}
-						else roll = getRolls(roll.substring(1).trim());
-					}
-					
-					if (rolls.indexOf(roll) !== -1) continue;
-					rolls.push(replaceMarkup(roll));
-					roll_count += 1;
-				}
-				while (roll_count < reroll);
-			}
-
-			depth -= 1;
-			return rolls.join("; ");
-		};
-
-		var a, roll;
-		var rolls = [];
-		var collection = [];
-		var depth = 0;
-		
-		if (/\+/.test(oracle)) {
-			oracle = oracle.match(/(?!>|\+)([^+]+)/g);
-			for (a = 0; a < oracle.length; ++a) {
-				rolls.push(getRolls(oracle[a].trim()));
-			}
-			roll = rolls.join(" ");
+		else if (source === "muse-story") {
+			//      0              1        2        3        4        5
+			temp = ["description", "action", "event", "thing", "topic", "twist"];
+			story = {
+				who: [3, 0], what: [3, 4], where: [3, 0], when: [3, 4], why: [3, 4], how: [1, 4],
+				conflict: [1, 3, 0], catalyst: [5, 0, 4], antagonist: [3, 0, 4], revelation: [5, 3, 4],
+				resolve: [5, 1, 4], confrontation: [5, 5, 3, 0, 3, 4], resolution: [0, 1, 4]
+			};
+			return getMeaning("muse", temp[randomItem(story[topic])]);
 		}
-		else roll = getRolls(oracle);
-
-		return roll;
 	}
 
-	function showPbtAOracle(game, label, oracle) {
-		return display(getDataTable([label, getPbtAOracle(game, oracle)]) + getBackLink(true, pbta_menu));
+	function showNewMeaning(source, focus) {
+		$("#new-meaning").innerHTML = getMeaning(source, focus);
 	}
 	
-	function showPbtAOracleList(game, type) {
-		var temp, temp2, a, oracle_list;
-		var list = [];
-		var output = "<ul class='link-list'>";
-
-		temp = type.match(/([^:]+):(.+)/);
-		oracle_list = (temp === null) ? muse[game].oracle_lists[type] : muse[game].oracle_lists[temp[1]][temp[2]];
-
-		for (a = 0; a < oracle_list.length; ++a) {
-			if (oracle_list[a] === "<spacer>") {
-				output += "</ul><div style='height:2em'></div><ul class='link-list'>";
-				continue;
-			}
-			temp = oracle_list[a].match(/([^:]+):(.+)/);
-			if (temp === null) {
-				output += "<li>" + list.push(getLink(oracle_list[a])) + "</li>";
-				continue;
-			}
-
-			if (/^>/.test(temp[2])) {
-				temp[2] = temp[2].replace(/^>\s*/,"");
-				temp2 = temp[2].match(/([^:]+):(.+)/);
-				if (temp === null || !(temp2[1] in muse[game].oracle_lists) || !(temp2[2] in muse[game].oracle_lists[temp2[1]])) output += "<li><p><s>&lt;" + temp[2] + "&gt;</s></p></li>";
-				else output += "<li>" + getLink(temp[1], "solo.showPage('" + game + "-oracle-list:" + temp[2] + "')") + "</li>";
-			}
-			else output += "<li>" + getLink(temp[1], "solo.showPage('" + game + "-oracle:" + temp[2] + "')") + "</li>";
-		}
-
-		return display(getDataHeader(output + "</li></ul>") + getBackLink());
+	function getCyclingMeaning(source, topic) {
+		return "<span id='new-meaning' class='answer' onclick='solo.showNewMeaning(\"" + source + "\", \"" + topic + "\")'>" +
+				getMeaning(source, topic) + "</span>";
 	}
 
-	function showPbtAGenerator(game, type) {
-		var getList = function() {
-			var a, temp;
-			var list = [];
-			var args = arguments;
-
-			if (isArray(args[0])) args = args[0];
-
-			for (a = 0; a < args.length; ++a) {
-				temp = args[a].match(/([^:]+):(.+)/);
-				list.push([temp[1], getPbtAOracle(game, temp[2])]);
-			}
-
-			return list;
-		};
-
-		var getGenerator = function(game, type) {
-			var list, output;
-
-			if (game === "city_of_mist") {
-				if (type === "npc") {
-					list = [["How Awakened They Are", getPbtAOracle(game, "npcs:how awakened they are")]];
-					// remove note to not generate mythos
-					if (/Sleeper:/.test(list[0][1])) list[0][1] = list[0][1].replace(/(<\/p><p>[^<]+)/, "");
-					else list.push(["Their Mythos", getPbtAOracle(game, "npcs:their mythos")]);
-
-					return getDataTable(list.concat(getList(
-						"Their Logos:npcs:their logos", "How They Awakened:npcs:how they awakened", 
-						"Their Mythos Motivation:npcs:their mythos motivation", "Their Logos Motivation:npcs:their logos motivation"
-					)));
-				}
-
-				else if (type === "crime") return getDataTable(getList("The Crime:crimes:the crime", "The Wrong:crimes:the wrong", "The Problem:crimes:the problem", "The Rift's Involvement:crimes:the rifts involvement"));
-				else if (type === "scope") return getDataTable(getList("The Scope:scope:the scope", "The Theme:scope:the theme", "The Format:scope:the format"));
-				else if (type === "hook") return getDataTable(getList("How the Crew Hears About the Case:hooks:how the crew hears about the case", "When the Crew Comes In:hooks:when the crew comes in"));
-				else if (type === "backstory") return getDataTable(getList("Unexpected Development:backstory:unexpected developments"));
-				else if (type === "case") {
-					output = 
-						"<h2>Who (or What) Is the Source of the Problem in Your Case?</h2>" + getGenerator(game, "npc") +
-						"<h2>What Wrong Did They Commit or Cause?</h2>" + getGenerator(game, "crime") +
-						"<h2>What Type of Story Will This Be?</h2>" + getGenerator(game, "scope") +
-						"<h2>How Is the Crew Involved?</h2>" + getGenerator(game, "hook") +
-						"<h2>Developing the Backstory</h2>" + getGenerator(game, "backstory")
-					return output;
-				}
-			}
-		};
-
-		return display(getGenerator(game, type) + getBackLink(true, pbta_menu));
+	function showCyclingMeaning(label, source, topic) {
+		showMeaning(label, source, topic, true);
 	}
 
-	function showPbtAGeneratorList(game, type) {
-		var output;
-		if (game === "city_of_mist") {
-			if (type === "case") {
-				output = getDataLinksList(
-					["Case Concept", "solo.showPage('city_of_mist-generator:case')"],
-					["<spacer>"],
-					["Who (or What) Is the Source of the Problem in Your Case?", "solo.showPage('city_of_mist-generator:npc')"],
-					["What Wrong Did They Commit or Cause?", "solo.showPage('city_of_mist-generator:crime')"],
-					["What Type of Story Will This Be?", "solo.showPage('city_of_mist-generator:scope')"],
-					["How Is the Crew Involved?", "solo.showPage('city_of_mist-generator:hook')"],
-					["Developing the Backstory", "solo.showPage('city_of_mist-generator:backstory')"]
-				);
-			}
+	function showMeaning(label, source, topic, is_cycling) {
+		var args, meaning;
+
+		var args = '"' + source + '", "' + topic + '"';
+
+		if (is_cycling) meaning = getCyclingMeaning(source, topic);
+		else meaning = getMeaning(source, topic);
+
+		display(getDataTable([label, meaning]) + getBackLink(true));
+	}
+
+	function showAnswer(id, source, focus) {
+		$("#answer-" + id).innerHTML = "<p class='answer'>" + getMeaning(source, focus.toLowerCase()) + "</p>";
+	}
+
+	function showQuestionsTable(source) {
+		var links;
+		
+		var a = 0;
+		var questions = ["Who", "What", "Where", "Why"];
+		var text = "<div id='questions' class='data-table'><table>";
+
+		for (a = 0; a < questions.length; ++a) {
+			text += "<tr><td><b>" + questions[a] + "</b></td>" +
+				"<td id='answer-" + a + "' onclick='solo.showAnswer(" + a + ", \"" + source + "\", \"" + questions[a] + "\")'>" +
+				"<p class='answer'>&nbsp;</p></td></tr>";
 		}
 
-		return display(output + getBackLink(false));
+		return text + "</table></div>";
 	}
 
 
@@ -2911,83 +2665,6 @@
 	}
 
 
-	/* muse */
-	
-	function getMeaning(source, topic) {
-		var checkMeaning = function(source1, source2, capitalize, join) {
-			var meaning1 = randomItem(source1);
-
-			if (source2 === undefined || source2 === false) return (capitalize ? upperCase(meaning1) : meaning1);
-
-			var meaning2;
-
-			do {
-				meaning2 = randomItem(source2);
-			}
-			while (meaning1.toLowerCase() === meaning2.toLowerCase());
-
-			if (capitalize) return upperCase(meaning1) + (join || " ") + upperCase(meaning2);
-			return meaning1 + (join || " ") + meaning2;
-		};
-
-		var meaning, temp, temp2, item, story;
-
-		if (source === "mythic") {
-			if (topic === "descriptions") return checkMeaning(muse.mythic.meaning.descriptor1, muse.mythic.meaning.descriptor2);
-			else if (topic === "action") return checkMeaning(muse.mythic.meaning.action1, muse.mythic.meaning.action2);
-			else if (topic === "who") return getMeaning("mythic", "characters");
-			else if (topic === "what") return getMeaning("mythic", "action");
-			else if (topic === "where") return getMeaning("mythic", "locations");
-			else if (topic === "why") return getMeaning("mythic", "action");
-			return checkMeaning(muse.mythic.meaning[topic], muse.mythic.meaning[topic], false, " / ");
-		}
-	}
-
-	function showNewMeaning(source, focus) {
-		$("#new-meaning").innerHTML = getMeaning(source, focus);
-	}
-	
-	function getCyclingMeaning(source, topic) {
-		return "<span id='new-meaning' class='answer' onclick='solo.showNewMeaning(\"" + source + "\", \"" + topic + "\")'>" +
-				getMeaning(source, topic) + "</span>";
-	}
-
-	function showCyclingMeaning(label, source, topic) {
-		showMeaning(label, source, topic, true);
-	}
-
-	function showMeaning(label, source, topic, is_cycling) {
-		var args, meaning;
-
-		var args = '"' + source + '", "' + topic + '"';
-
-		if (is_cycling) meaning = getCyclingMeaning(source, topic);
-		else meaning = getMeaning(source, topic);
-
-		display(getDataTable([label, meaning]) + getBackLink(true));
-	}
-
-	function showAnswer(id, source, focus) {
-		$("#answer-" + id).innerHTML = "<p class='answer'>" + getMeaning(source, focus.toLowerCase()) + "</p>";
-	}
-
-	function showQuestionsTable(source) {
-		var links;
-		
-		var a = 0;
-		var questions = ["Who", "What", "Where", "Why"];
-		var text = "<div id='questions' class='data-table'><table>";
-
-		for (a = 0; a < questions.length; ++a) {
-			text += "<tr><td><b>" + questions[a] + "</b></td>" +
-				"<td id='answer-" + a + "' onclick='solo.showAnswer(" + a + ", \"" + source + "\", \"" + questions[a] + "\")'>" +
-				"<p class='answer'>&nbsp;</p></td></tr>";
-		}
-
-		return text + "</table></div>";
-	}
-
-
 	/* mythic */
 
 	function showFateChart(odds) {
@@ -3348,18 +3025,756 @@
 	}
 
 
-	solo.rollMoveDie = rollMoveDie;
+	/* powered by the apocalypse */
+
+	function getPbtAMoveTypes(game) {
+		var move;
+		var list = [];
+		var moves = muse[game].move_lists;
+
+		for (move in moves) {
+			list.push([move, game + "-move-list:" + move])
+		}
+		return list;
+	}
+
+	function showPbtAMoveList(game, type) {
+		var a;
+		var list = [];
+		var group = muse[game].move_lists[type];
+		for (a = 0; a < group.length; ++a) {
+			if (!(group[a] in muse[game].moves)) list.push(["<s>" + group[a] + "</s>", "solo.showPage()"]);
+			else list.push([group[a], "solo.showPage('" + game + "-move:" + group[a].replace(/'/g, "\\'") + "')"]);
+		}
+		return display(getDataLinksList(list) + getBackLink());
+	}
+
+	function rollMoveDie(el, start, end) {
+		if (el !== "all") return fadeIn(el.id, 0, random(start, end));
+		
+		var a;
+		for (a = start; a <= end; ++a) {
+			document.getElementById("die-" + a).click();
+		}
+	}
+
+	function showPbtAMove(game, name, custom) {
+		var insertTable = function(name) {
+			var a, b, table, output;
+			var list = [];
+
+			if (custom && (name in pbta_custom_tables)) table = pbta_custom_tables[name];
+			else if (("move_tables" in muse[game]) && (name in muse[game].move_tables)) table = muse[game].move_tables[name];
+			else return "<table class='move-table'><tr><td><s>table:" + name + "</s></td></tr></table>";
+
+			var rolled = 0;
+			var header = (table.header) ? "<th>" + table.header.join("</th><th>") + "</th>" : "";
+			
+			if (table.rolled) rolled = (table.rolled === true) ? 1 : table.rolled;
+			
+			for (a = 0; a < table.rows.length; ++a) {
+				output = "";
+				for (b = 0; b < table.rows[a].length; ++b) {
+					output += (b < rolled ? "<td class='rolled'>" : "<td>") + replaceMarkup(table.rows[a][b]) + "</td>";
+				}
+				list.push(output);
+			}
+
+			return "<table class='move-table'>" + header + "<tr>" + list.join("</tr><tr>") + "</tr></table>";
+		};
+
+		var getDieLink = function(start, end) {
+			die_count += 1;
+			return "<td id='die-" + die_count + "' onclick='solo.rollMoveDie(this, " + start + ", " + end + ")'>&nbsp;</td>";
+		};
+
+		var getDice = function(type) {
+			var output = "<table class='move-table move-dice'><tr>";
+			var die_start = die_count + 1;
+			
+			if (type === "ironsworn") {
+				output += "<td class='label'>d10</td>" + getDieLink(1, 10) + getDieLink(1, 10) +
+				"<td class='label'></td><td class='label'>d6</td>" + getDieLink(1, 6);
+			}
+			else if (type === "pbta") output += "<td class='label'>d6</td>" + getDieLink(1, 6) + getDieLink(1, 6);
+			else if (type === "progress") output += "<td class='label'>d10</td>" + getDieLink(1, 10) + getDieLink(1, 10);
+			else if (type === "d4") output += "<td class='label'>d4</td>" + getDieLink(1, 4);
+			else if (type === "d6") output += "<td class='label'>d6</td>" + getDieLink(1, 6);
+			else if (type === "d8") output += "<td class='label'>d8</td>" + getDieLink(1, 8);
+			else if (type === "d10") output += "<td class='label'>d10</td>" + getDieLink(1, 10);
+			else if (type === "d12") output += "<td class='label'>d12</td>" + getDieLink(1, 12);
+			else if (type === "d20") output += "<td class='label'>d20</td>" + getDieLink(1, 20);
+			else if (type === "d100") output += "<td class='label'>d100</td>" + getDieLink(1, 100);
+			else output += "<td><s>dice:" + type + "</s></td>";
+
+			return output + "<td class='label'></td>" +
+				"<td><a onclick='solo.rollMoveDie(\"all\", " + die_start + ", " + die_count + ")'>Roll</a></td>" +
+				"</tr></table>";
+		};
+
+		var replaceMarkup = function(text) {
+			text = parseMarkup(text, "<<", ">>", function(el) {
+				return "<ul class='move-list'><li>" + replaceMarkup(el.inner).replace(/(?<!\\)\|/g, "</li><li>") + "</li></ul>";
+			});
+			
+			text = parseMarkup(text, "((", "))", function(el) { return getDice(el.inner); });
+			text = parseMarkup(text, "{{", "}}", function(el) {
+				if (table_children.indexOf(el.inner) !== -1) return "<table class='move-table'><tr><td><s>table:" + el.inner + "</s></td></tr></table>";
+				table_children.push(el.inner);
+
+				var table = insertTable(el.inner);
+				table_children.pop();
+				
+				return table;
+			});
+			
+			text = parseMarkup(text, "{", "}", function(el) {
+				el = el.inner.split(/(?<!\\)\|/);
+				var p1 = el.shift();
+				var p2 = (el.length) ? el.join("|") : p1;
+				
+				if (custom && (p1 in pbta_custom_moves)) return "<a onclick='solo.showPage(\"" + game + "-custom-move:" + p1 + "\")'>" + (p2 || p1) + "</a>";
+				if (p1 in muse[game].moves) return "<a onclick='solo.showPage(\"" + game + "-move:" + p1 + "\")'>" + (p2 || p1) + "</a>";
+				return "<s>&lt;move:" + p1 + "&gt;</s>";
+			});
+			
+			text = text.replace(/(?<!\\)\|\|/g, "</p><p>");
+			text = text.replace(/(?<!\\)\[\[/g, "<i>");
+			text = text.replace(/(?<!\\)\]\]/g, "</i>");
+			text = text.replace(/(?<!\\)\[/g, "<b>");
+			text = text.replace(/(?<!\\)\]/g, "</b>");
+			text = text.replace(/<p>\s*<ul/g, "<ul");
+			text = text.replace(/<\/ul>\s*<\/p>/g, "</ul>");
+			text = text.replace(/<p>\s*<table/g, "<table");
+			text = text.replace(/<\/table>\s*<\/p>/g, "</table>");
+			text = text.replace(/(?<!\\)\*\*\*/g, "<div class='move-spacer'></div>");
+			text = text.replace(/(?<!^)(?<!:\n|\/p>|\/ul>|\/table>|\/div>|\/h\d>)(<(?:ul|table|div|h\d))/g, "</p>$1");
+			text = text.replace(/(\/(?:ul|table|div|h\d)>)\s*(?!$)(?!:\n|<p|<ul|<table|<div|<h\d)/g, "$1<p>");
+			text = text.replace(/\\([\[\](){}<>|*@#])/g, "$1");
+			return text;
+		};
+
+		var die_count = 0;
+		var move = (custom) ? pbta_custom_moves[name] : muse[game].moves[name];
+		var table_children = [];
+		
+		return display(
+			getDataHeader("<h2>" + name + "</h2>" + getBackLink(false, pbta_menu)) + 
+			getDataFooter(replaceMarkup(move))
+		);
+	}
+
+	function showPbtACustomMoveList(game, save) {
+		var saveMoves = function() {
+			pbta_custom_move_text[game] = $("#custom-moves").value || "";			
+			soloData.pbta_custom_moves[game] = pbta_custom_move_text[game];
+			pbta_menu = pbta_menu.replace(/(.+):save$/, "$1");
+			saveSettings();
+		};
+
+		var parseMoves = function() {
+			if (!(game in pbta_custom_move_text)) pbta_custom_move_text[game] = "";
+
+			var input = "" + pbta_custom_move_text[game];
+			var move_text = input;
+			var table_text = input;
+			var a, b, table, row, rows, match, rolled;
+
+			pbta_custom_moves = {};
+			pbta_custom_tables = {};
+
+			while ((match = move_text.match(/\s*(?<!\\)##\s*((?:(?!##|\n|\|)[\w\W])+)\s*(?:##|\n)\s*((?:(?!(?<!\\)(?:@@|##))[\w\W])+)/)) !== null) {
+				move_text = move_text.substr(match[0].length);
+				pbta_custom_moves[match[1]] = match[2];
+			}
+
+			match = table_text.match(/(?<!\\)@@\s*((?:(?!@@|\n|\|)[\w\W])+)\s*(?:\|((?:(?!@@|\n)[\w\W])+)\s*)?(?:@@|\n)\s*((?:(?!(?<!\\)(?:@@|##))[\w\W])+)/g);
+			if (match !== null) {
+				for (a = 0; a < match.length; ++a) {
+					table = match[a].match(/@@\s*((?:(?!@@|\n|\|)[\w\W])+)\s*(?:\|((?:(?!@@|\n)[\w\W])+)\s*)?(?:@@|\n)\s*([\w\W]+)/);
+					
+					rows = [];
+					row = splitMarkup(table[3], "<>");
+					for (b = 0; b < row.length; ++b) {
+						rows.push(splitMarkup(row[b], "|"));
+					}
+	
+					pbta_custom_tables[table[1]] = { rows: rows };
+					if (/rolled/.test(table[2])) {
+						rolled = table[2].match(/rolled(?:[\t ]+(\d+))?/);
+						pbta_custom_tables[table[1]].rolled = (rolled[1]) ? rolled[1] : 1;
+					}
+					if (/headered/.test(table[2])) pbta_custom_tables[table[1]].header = pbta_custom_tables[table[1]].rows.shift();
+				}
+			}
+		};
+
+		if (save) saveMoves();
+		if (save || !Object.keys(pbta_custom_moves).length) parseMoves();
+
+		var item, list, backlink;
+		var links = "<ul><li>No Custom Moves Defined</li></u>";
+
+		if (Object.keys(pbta_custom_moves).length) {
+			list = [];
+			for (item in pbta_custom_moves) {
+				list.push([item, "solo.showPage('" + game +'-custom-move:' + item + "')"]);
+			}
+			links = getLinksList(list);
+		}
+
+		backlink =
+			"<hr><div id='back-links'><p>" +
+			"<a onclick='solo.showPage(\"" + game + "-edit-custom-moves\")'>Edit</a>" +
+			"<a onclick='solo.showPage(	)'>Back</a></p></div>";
+
+		return display(getDataHeader(links) + backlink);
+	}
+
+	function editPbtACustomMoves(game) {
+		var htmlEncode = function(text) {
+			var chars = {"<":"&lt;", ">":"&gt;"};
+			return text.replace(/([\<])/g, function(m, p1) { return chars[p1]; });
+		};
+		
+		var getMarkupTable = function(list) {
+			var a;
+			var output = "";
+			for (a = 0; a < list.length; ++a) {
+				output += "<tr" + (!(a % 2) ? " class='odd'" : "") + "><td>" + list[a].join("</td><td>") + "</td></tr>";
+			}
+			return "<table>" + output + "</table>";
+		}
+
+		var moves = pbta_custom_move_text[game] || "";
+
+		return display(
+			getDataHeader(
+				"<textarea id='custom-moves' spellcheck='false'>" + moves + "</textarea>",
+				"<div id='dice-buttons'><div id='save-button'><p>" + 
+					"<a onclick='solo.showPage(\"" + game + "-custom-move-list:save\")'>Save</a>" + 
+					"<a onclick='solo.showPage(\"" + game + "-custom-move-list\")'>Back</a></p></div></div>"
+			) +
+			getDataFooter(
+				"<div id='move-markup'><details><summary>Moves Markup</summary><br>" + 
+					getMarkupTable([
+						["##", "declare move name (eg. <code>##Face Danger</code>). end name with <code>##</code> again or a line break."],
+						["||", "break two blocks of text up"],
+						["((dice))", "insert dice roller. options are: <code>d4</code>, <code>d6</code>, <code>d8</code>, <code>d10</code>, <code>d12</code>, <code>d20</code>, <code>d100</code>, <code>pbta</code> (2d6), <code>progress</code> (2d10), and <code>ironsworn</code> (2d10,d6)"],
+						["{move}", "create link to another move"],
+						["{move|name}", "create a link to another move but with a different name"],
+						["{{table}}", "insert table from move_tables"],
+						["[bold]", "bold the text"],
+						["[[italic]]", "italicize the text"],
+						["&lt;&lt;item|item&gt;&gt;", "create a bullet list with items separated by <code>|</code>. You can also embed lists within lists."],
+						["***", "insert a spacer"],
+						["\\", "prevent the markup following it from being rendered"]
+					]) + "<p>Be aware that references to moves, tables, and dice are case sensitve.</p></details><br>" +
+				"<details><summary>Tables Markup</summary><br>" + 
+					getMarkupTable([
+						["@@", "declare table name (eg. <code>@@Discoveries</code>). end name with <code>@@</code> again or a line break.<br"],
+						["@@name|rolled|headered", "same as above, but <code>rolled</code> and <code>headered</code> are special flags:</p><p>" +
+						"<code>rolled</code>: first column of the table will be displayed to represent a number range </p><p>" +
+						"<code>rolled #</code>: same as above but will do this for columns 1 through number given</p><p>" +
+						"<code>headered</code>: first row of the table will be assigned as column headings"],
+						["<>", "divides the line into table rows"]
+					]) + "<p>All move markup also applies to tables, including embedding tables within tables.</p></details><br>" +
+				"<details><summary>Example Move</summary><br><pre><code>" +
+					"##Example Move\n[When you do something], roll+stat.\n((pbta))\n" +
+					"On a [strong hit], you do it.||\nOn a [weak hit], choose one.\n" +
+					"<<\n  do what you want|\n  don't get hurt\n>>\n" +
+					"On a [miss], roll on the following table, or {Suffer} the cost.\n((d10))\n{{table}}\n\n" +
+					"@@table|rolled|headered\n|a|b<>\n1-5|item 1|item 2<>\n6-10|item 3|item 4\n\n" +
+					"##Suffer\nReduce a resource by 1." +
+				"</code></pre><br>" +
+				"<p>Code can also be compressed to save space if you don't need the legibility. The following renders the same as the above.</p>" +
+				"<p><code>" + htmlEncode("##Example Move##[When you do something], roll+stat.((pbta))On a [strong hit], you do it.||On a [weak hit], choose one.<<do what you want|don't get hurt>>On a [miss], roll on the following table, or {Suffer} the cost.((d10)){{table}}@@table|rolled|headered@@|a|b<>1-5|item 1|item 2<>6-10|item 3|item 4##Suffer##Reduce a resource by 1.") + "</code></p>" +
+				"</details></div>"
+			));
+	}
+
+	function getPbtAOracle(game, oracle, multiples) {
+		var replaceMarkup = function(text) {
+			text = parseMarkup(text, "{", "}", function(el) {
+				el = el.inner.split(/(?<!\\)\|/);
+				var p1 = el.shift().trim();
+				var p2 = ((el.length) ? el.join("|") : p1).trim();
+				var list = muse[game].oracle_lists;
+				var list_text = "-oracle-list:";
+				var match = p1.match(/([^:]+):(.+)/);
+				
+				if (/^>/.test(p1)) {
+					p1 = p1.substring(1).trim();
+					list = muse[game].oracles;
+					list_text = "-oracle:";
+					match = match[2].match(/([^:]+):(.+)/);
+				}
+				
+				var pass = true;
+				if (match !== null) {
+					if (!(match[1].trim() in list)) pass = false;
+					else if (!(match[2].trim() in list[match[1].trim()])) pass = false;
+				}
+				else if (!(p1 in list)) pass = false;
+
+				if (!pass) return "<s>&lt;" + p1 + "&gt;</s>";
+				return "<a onclick='solo.showPage(\"" + game + list_text + p1 + "\")'>" + (p2 || p1).trim() + "</a>";
+			});
+			text = parseMarkup(text, "((", "))", function(el) {
+				return getRolls(el.inner);
+			});
+			text = text.replace(/(?<!\\)\|(?<!\\)\|/g, "</p><p>");
+			text = text.replace(/(?<!\\)\[(?<!\\)\[/g, "<i>");
+			text = text.replace(/(?<!\\)\](?<!\\)\]/g, "</i>");
+			text = text.replace(/(?<!\\)\[/g, "<b>");
+			text = text.replace(/(?<!\\)\]/g, "</b>");
+			text = text.replace(/(?<!\\)\*(?<!\\)\*(?<!\\)\*/g, "<div class='move-spacer'></div>");
+			text = text.replace(/(?<!^)(?<!:\n|\/p>|\/ul>|\/table>|\/div>|\/h\d>)(<(?:ul|table|div|h\d))/g, "</p>$1");
+			text = text.replace(/(\/(?:ul|table|div|h\d)>)\s*(?!$)(?!:\n|<p|<ul|<table|<div|<h\d)/g, "$1<p>");
+			return text;
+		};
+		
+		var getRandomItem = function(list) {
+			if (isArray(list)) return randomItem(list);
+
+			var keys = Object.keys(list);
+			keys = keys.sort(function(a, b) { return a - b; });
+
+			return getRolledItem(random(1, parseInt(keys.pop())), list);
+		};
+		
+		var getRolls = function(name, joined) {
+			depth += 1;
+
+			var roll, temp, a, b, type, oracle;
+			var rolls = [];
+			var reroll = 1;
+			var roll_count = 0;
+
+			var loop = 1;
+			if (depth === 1) {
+				if (multiples) loop = multiples;
+				else if (muse[game].oracle_rolls && (name in muse[game].oracle_rolls)) loop =  random(1, muse[game].oracle_rolls[name]);
+			}
+
+			temp = name.split(/(?<!\\):/);
+			type = temp.shift();
+			oracle = temp.join(":");
+
+			if (!(type in muse[game].oracles) || !(oracle in muse[game].oracles[type])) return "<s>" + name + "</s>";
+
+			var list = muse[game].oracles[type][oracle];
+			
+			for (a = 0; a < loop; ++a) {
+				roll_count = 0;
+				do {
+					roll = getRandomItem(list);
+
+					// reroll    example: > reroll twice
+					if (/^>/.test(roll)) {
+						if ((/^>\s*roll\s+(twice|thrice)\b/.test(roll))) {
+							// only do multiple rerolls if on outer layer
+							if (depth > 1 || reroll > 1) continue;
+
+							// if (reroll) continue;
+							if (/twice/.test(roll)) reroll = 2;
+							else if (/thrice/.test(roll)) reroll = 3;
+							continue;
+						}
+
+						// from another oracle    example: > action + theme
+						if (/\+/.test(roll)) {
+							roll = roll.match(/(?!>|\+)([^+]+)/g);
+							for (b = 0; b < roll.length; ++b) {
+								roll[b] = getRolls(roll[b].trim(), true);
+							}
+							roll = roll.join(" ");
+						}
+						else roll = getRolls(roll.substring(1).trim());
+					}
+					
+					if (rolls.indexOf(roll) !== -1) continue;
+					rolls.push(replaceMarkup(roll));
+					roll_count += 1;
+				}
+				while (roll_count < reroll);
+			}
+
+			depth -= 1;
+			return rolls.join("; ");
+		};
+
+		var a, roll;
+		var rolls = [];
+		var collection = [];
+		var depth = 0;
+		
+		if (/\+/.test(oracle)) {
+			oracle = oracle.match(/(?!>|\+)([^+]+)/g);
+			for (a = 0; a < oracle.length; ++a) {
+				rolls.push(getRolls(oracle[a].trim()));
+			}
+			roll = rolls.join(" ");
+		}
+		else roll = getRolls(oracle, multiples);
+
+		return roll;
+	}
+
+	function showPbtAOracle(game, label, oracle) {
+		return display(getDataTable([label, getPbtAOracle(game, oracle)]) + getBackLink(true, pbta_menu));
+	}
+	
+	function showPbtAOracleList(game, type) {
+		var temp, temp2, a, oracle_list;
+		var list = [];
+		var output = "<ul class='link-list'>";
+
+		temp = type.match(/([^:]+):(.+)/);
+		oracle_list = (temp === null) ? muse[game].oracle_lists[type] : muse[game].oracle_lists[temp[1]][temp[2]];
+
+		for (a = 0; a < oracle_list.length; ++a) {
+			if (oracle_list[a] === "<spacer>") {
+				output += "</ul><div style='height:2em'></div><ul class='link-list'>";
+				continue;
+			}
+			temp = oracle_list[a].match(/([^:]+):(.+)/);
+			if (temp === null) {
+				output += "<li>" + list.push(getLink(oracle_list[a])) + "</li>";
+				continue;
+			}
+
+			if (/^>/.test(temp[2])) {
+				temp[2] = temp[2].replace(/^>\s*/,"");
+				temp2 = temp[2].match(/([^:]+):(.+)/);
+				if (temp === null || !(temp2[1] in muse[game].oracle_lists) || !(temp2[2] in muse[game].oracle_lists[temp2[1]])) output += "<li><p><s>&lt;" + temp[2] + "&gt;</s></p></li>";
+				else output += "<li>" + getLink(temp[1], "solo.showPage('" + game + "-oracle-list:" + temp[2] + "')") + "</li>";
+			}
+			else output += "<li>" + getLink(temp[1], "solo.showPage('" + game + "-oracle:" + temp[2] + "')") + "</li>";
+		}
+
+		return display(getDataHeader(output + "</li></ul>") + getBackLink());
+	}
+
+	function showPbtAGenerator(game, type) {
+		var getList = function() {
+			var a, temp;
+			var list = [];
+			var args = arguments;
+
+			if (isArray(args[0])) args = args[0];
+
+			for (a = 0; a < args.length; ++a) {
+				temp = args[a].match(/([^:]+):(.+)/);
+				list.push([temp[1], getPbtAOracle(game, temp[2])]);
+			}
+
+			return list;
+		};
+
+		var getGenerator = function(game, type) {
+			var list, output, a, temp, temp2;
+
+			if (game === "city_of_mist") {
+				if (type === "npc") {
+					list = [["How Awakened They Are", getPbtAOracle(game, "npcs:how awakened they are")]];
+					// remove note to not generate mythos
+					if (/Sleeper:/.test(list[0][1])) list[0][1] = list[0][1].replace(/(<\/p><p>[^<]+)/, "");
+					else list.push(["Their Mythos", getPbtAOracle(game, "npcs:their mythos")]);
+
+					return getDataTable(list.concat(getList(
+						"Their Logos:npcs:their logos", "How They Awakened:npcs:how they awakened", 
+						"Their Mythos Motivation:npcs:their mythos motivation", "Their Logos Motivation:npcs:their logos motivation"
+					)));
+				}
+
+				else if (type === "crime") return getDataTable(getList("The Crime:crimes:the crime", "The Wrong:crimes:the wrong", "The Problem:crimes:the problem", "The Rift's Involvement:crimes:the rifts involvement"));
+				else if (type === "scope") return getDataTable(getList("The Scope:scope:the scope", "The Theme:scope:the theme", "The Format:scope:the format"));
+				else if (type === "hook") return getDataTable(getList("How the Crew Hears About the Case:hooks:how the crew hears about the case", "When the Crew Comes In:hooks:when the crew comes in"));
+				else if (type === "backstory") return getDataTable(getList("Unexpected Development:backstory:unexpected developments"));
+				else if (type === "case") {
+					output = 
+						"<h2>Who (or What) Is the Source of the Problem in Your Case?</h2>" + getGenerator(game, "npc") +
+						"<h2>What Wrong Did They Commit or Cause?</h2>" + getGenerator(game, "crime") +
+						"<h2>What Type of Story Will This Be?</h2>" + getGenerator(game, "scope") +
+						"<h2>How Is the Crew Involved?</h2>" + getGenerator(game, "hook") +
+						"<h2>Developing the Backstory</h2>" + getGenerator(game, "backstory")
+					return output;
+				}
+			}
+
+			else if (game === "ironsworn") {
+				if (type === "monstrosity") {
+					list = [
+						["Size", getPbtAOracle(game, "monstrosity:size")],
+						["Primary Form", getPbtAOracle(game, "monstrosity:primary form")],
+						["Characteristics", getPbtAOracle(game, "monstrosity:characteristics", random(1, 3))],
+						["Abilities", getPbtAOracle(game, "monstrosity:abilities", random(1, 3))],
+						["Rank", getPbtAOracle(game, "turning point:foe rank")]
+					];
+
+					return getDataTable(list);
+				}
+			}
+		};
+
+		return display(getGenerator(game, type) + getBackLink(true, pbta_menu));
+	}
+
+	function showPbtAGeneratorList(game, type) {
+		var output;
+		if (game === "city_of_mist") {
+			if (type === "case") {
+				output = getDataLinksList(
+					["Case Concept", "solo.showPage('city_of_mist-generator:case')"],
+					["<spacer>"],
+					["Who (or What) Is the Source of the Problem in Your Case?", "solo.showPage('city_of_mist-generator:npc')"],
+					["What Wrong Did They Commit or Cause?", "solo.showPage('city_of_mist-generator:crime')"],
+					["What Type of Story Will This Be?", "solo.showPage('city_of_mist-generator:scope')"],
+					["How Is the Crew Involved?", "solo.showPage('city_of_mist-generator:hook')"],
+					["Developing the Backstory", "solo.showPage('city_of_mist-generator:backstory')"]
+				);
+			}
+		}
+
+		return display(output + getBackLink(false));
+	}
+
+
+	/* misc */
+
+	function showMotif(selected) {
+		if (!selected) {
+			var values = ["+3", "+2", "+1", "0", "-1", "-2", "-3"];
+
+			display(
+				getDataHeader(
+					getOptions("Answer", "answer-mod", values, "0") + "&nbsp;&nbsp;" +
+						getOptions(null, "answer", muse.motif.answers),
+	
+					getOptions("Degree", "degree-mod", values, "0") + "&nbsp;&nbsp;" +
+						getOptions(null, "degree", muse.motif.degrees),
+	
+					getOptions("Flavor", "flavor-mod", values, "0") + "&nbsp;&nbsp;" +
+						getOptions(null, "flavor", muse.motif.flavors, "Scale"),
+					"<div id='dice-buttons'><a onclick='solo.showPage(\"motif:roll\")'>Check</a><a onclick='solo.showPage()'>Back</a></div>"
+				) +
+				getDataFooter("Twist Counter&nbsp;&nbsp;" + getOptions(null, "twist-counter", [0,1,2], twist_counter)) +
+				getDataTable(
+					["Story", "Cool, Costly, Dangerous, Dramatic, Expensive, Favorable, Rare, Rumor, Weird"],
+					["Character", "Aggressive, Cooperative, Curious, Direct, Impulsive, Mischievous, Motivated, Sympathetic, Tactical"]
+				)
+			);
+			
+			$("#twist-counter").addEventListener("change", function() { 
+				twist_counter = parseInt(this.value);
+				saveSettings(soloData.twist_counter = twist_counter); 
+			});
+			return;
+		}
+
+		var result, doubles, roll4, roll5;
+
+		var answer = $("#answer").value;
+		var degree = $("#degree").value;
+		var flavor = $("#flavor").value;
+
+		var roll1 = random(1, 6);
+		var roll2 = random(1, 6);
+		var roll3 = random(1, 6);
+		
+		var turn = (roll1 === roll2 && roll3 % 2) ? roll1 - 1 : null;
+		
+		roll1 += parseInt($("#answer-mod").value);
+		roll2 += parseInt($("#degree-mod").value);
+		roll3 += parseInt($("#flavor-mod").value);
+
+		result = getDataTable(
+			[answer, roll1, getRolledItem(roll1, muse.motif.answers[answer])],
+			[degree, roll2, getRolledItem(roll2, muse.motif.degrees[degree])],
+			[flavor, roll3, getRolledItem(roll3, muse.motif.flavors[flavor])]
+		);
+		
+		if (turn) {
+			doubles = ["<b>Turn:</b> " + muse.motif.turns[turn]];
+			twist_counter += 1;
+			
+			if (twist_counter === 3) {
+				twist_counter = 0;
+				roll4 = random(1, 6);
+				roll5 = random(1, 6);
+			
+				if (roll4 === roll5) doubles.push("<b>Twist:</b> What A Twist! Reveal a new Big Bad or a fresh major story complication in a typical “big twist” way. While this creates new problems, it should also introduce new resources and possibilities for the player characters.");
+				else doubles.push("<b>Twist:</b> " + getRolledItem((roll4 + roll5), muse.motif.twists));
+			}
+			result += getDataFooter(doubles);
+			saveSettings(soloData.twist_counter = twist_counter);
+		}
+		
+		display(result + getBackLink());
+	}
+
+	function showCharacter() {
+		var getTraits = function() {
+			var a, trait;
+			var results = "";
+			var gathered = [];
+
+			while (gathered.length < 3) {
+				trait = randomItem(muse.character.traits);
+				if (gathered.indexOf(trait) !== -1) continue;
+				gathered.push(trait);
+				results += gathered.length + ". " + trait;
+			}
+
+			return gathered.join("; ");
+		};
+
+		var getGoals = function() {
+			var verb, noun, row_count, index, goal;
+			var rows = [];
+			var goals = [];
+			var result = "";
+
+			do {
+				if (!random(0, 2)) {
+					goal = randomItem(muse.character.goals);
+					if (goals.indexOf(goal) !== -1) continue;
+					goals.push(goal);
+				}
+				else {
+					verb = upperCase(randomItem(muse.character.motivations.verb));
+					do {
+						noun = upperCase(randomItem(muse.character.motivations.noun));
+					}
+					while (goals.indexOf(noun) !== -1);
+
+					goals.push(verb + " " + noun);
+				}
+			}
+			while (goals.length < 3);
+
+			return goals.join("; ");
+		};
+
+		var npc = [];
+		var text = upperCase(randomItem(muse.character.identities));
+		if (random(1, 100) < 34) text += " / " + upperCase(randomItem(muse.character.identities));
+		npc.push(["Identity", text]);
+
+		text = upperCase(randomItem(muse.character.descriptors));
+		if (random(1, 100) < 22) text += " / " + upperCase(randomItem(muse.character.descriptors));
+		
+		npc = npc.concat([
+			["Description", text],
+			["Traits", getTraits()],
+			["Goals", getGoals()]
+		]);
+
+		display(getDataTable(npc) + getBackLink(true));
+	}
+
+	function showMuseList(type) {
+		var showStory = function() {
+			var a;
+			var links = ["Conflict", "Catalyst", "Antagonist", "Revelation", "Resolve", "Confrontation", "Resolution"];
+
+			var list = [["Opening", "solo.showPage('muse-list:opening')"]];
+			for (a = 0; a < links.length; ++a) {
+				list.push([links[a], "solo.showPage('muse-story:" + links[a].toLowerCase() + "')"]);
+			}
+
+			display(getDataLinksList(list) + getBackLink());
+		};
+
+		if (type === "animate") return display(getDataLinksList(
+			["Vocal", "solo.showPage('muse:vocal')"],
+			["Character", "solo.showPage('muse:character')"],
+			["Animal", "solo.showPage('muse:animal')"]) + getBackLink()
+		);
+
+		if (type === "questions") return display(getDataLinksList(
+			["Who", "solo.showPage('muse-story:who')"],
+			["What", "solo.showPage('muse-story:what')"],
+			["Where", "solo.showPage('muse-story:where')"],
+			["When", "solo.showPage('muse-story:when')"],
+			["Why", "solo.showPage('muse-story:why')"],
+			["How", "solo.showPage('muse-story:how')"]) + getBackLink()
+		);
+		
+		if (type === "story") return showStory();
+
+		if (type === "opening") return display("<p><b>Opening:</b></p>" + showQuestionsTable("muse-story") + getBackLink());
+	}
+ 
+	function showUneMood(mood) {
+		if (mood) {
+			var relations, bearing;
+			var join = " and ";
+
+			if (mood === "Random") {
+				relations = ["Loved", "Friendly", "Peaceful", "Neutral", "Distrustful", "Hostile", "Hated"];
+				mood = relations[random(1, 4) + random(1, 4) - 2];
+			}
+			
+			bearing = getRolledItem(random(1, 100), muse.une.mood[mood]);
+			if (/Loved|Friendly|Peaceful/.test(mood) && /Withdrawn|Guarded|Cautious/.test(bearing)) join = " but ";
+			else if (/Distrustful|Hostile|Hated/.test(mood) && /Sociable|Helpful|Forthcoming/.test(bearing)) join = " but ";
+
+			return display(getDataTable(["Mood", mood + join + bearing]) + getBackLink(true));
+		}
+
+		display(
+			getDataLinksList(
+				["Loved", "solo.showPage('une:mood:Loved')"],
+				["Friendly", "solo.showPage('une:mood:Friendly')"],
+				["Peaceful", "solo.showPage('une:mood:Peaceful')"],
+				["Neutral", "solo.showPage('une:mood:Neutral')"],
+				["Distrustful", "solo.showPage('une:mood:Distrustful')"],
+				["Hostile", "solo.showPage('une:mood:Hostile')"],
+				["Hated", "solo.showPage('une:mood:Hated')"],
+				["Random", "solo.showPage('une:mood:Random')"]
+			) + getBackLink()
+		);
+	}
+
+	function showUneDiscussion(demeanor) {
+		if (demeanor) {
+			if (demeanor === "Random") demeanor = randomItem(["Scheming", "Insane", "Friendly", "Hostile", "Inquisitive", "Knowing", "Mysterious", "Prejudiced"]);
+			
+			var bearing = upperCase(randomItem(muse.une.bearing[demeanor]));
+			var focus = getRolledItem(random(1, 100), muse.une.focus);
+			
+			return display(getDataTable(["Discussion", "The <i>" + demeanor + "</i> NPC speaks of <i>" + bearing + "</i> regarding the PC's <i>" + focus + "</i>."]) + getBackLink(true));
+		}
+
+		display(
+			getDataLinksList(
+				["Scheming", "solo.showPage('une:discussion:Scheming')"],
+				["Insane", "solo.showPage('une:discussion:Insane')"],
+				["Friendly", "solo.showPage('une:discussion:Friendly')"],
+				["Hostile", "solo.showPage('une:discussion:Hostile')"],
+				["Inquisitive", "solo.showPage('une:discussion:Inquisitive')"],
+				["Knowing", "solo.showPage('une:discussion:Knowing')"],
+				["Mysterious", "solo.showPage('une:discussion:Mysterious')"],
+				["Prejudiced", "solo.showPage('une:discussion:Prejudiced')"],
+				["Random", "solo.showPage('une:discussion:Random')"]
+			) + getBackLink()
+		);
+	}
+
+
+	solo.showPage = showPage;
 	solo.showAnswer = showAnswer;
 	solo.showNewMeaning = showNewMeaning;
 	solo.showDice = showDice;
 	solo.addDice = addDice;
+	solo.showDiceRoller = showDiceRoller;
+	solo.showQuickRolls = showQuickRolls;
+	solo.saveQuickRolls = saveQuickRolls;
 	solo.drawCard = drawCard;
 	solo.shuffleCards = shuffleCards;
-	solo.shuffleCards = shuffleCards;
-	solo.showQuickRolls = showQuickRolls;
-	solo.showDiceRoller = showDiceRoller;
-	solo.saveQuickRolls = saveQuickRolls;
-	solo.showPage = showPage;
+	solo.rollMoveDie = rollMoveDie;
 })(window.solo = window.solo || {});
 </script>
 
