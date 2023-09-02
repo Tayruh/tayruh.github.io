@@ -159,9 +159,11 @@
 				"Combat": ["Enter the Fray", "Strike", "Clash", "Turn the Tide", "End the Fight", "Battle"],
 				"Suffer": ["Endure Harm", "Face Death", "Companion Endure Harm", "Endure Stress", "Face Desolation", "Out of Supply", "Face a Setback"],
 				"Quest": ["Swear an Iron Vow", "Reach a Milestone", "Fulfill Your Vow", "Forsake Your Vow", "Advance"],
-				"Delve": ["Discover a Site", "Delve the Depths", "Find an Opportunity", "Reveal a Danger", "Check Your Gear", "Locate Your Objective", "Escape the Depths"],
-				"Delve (optional)": ["Reveal a Danger (alternate version)", "Mark Your Failure", "Learn From Your Failures", "Advance a Threat", "Take a Hiatus", "Wield a Rarity"],
 				"Fate": ["Pay the Price", "Ask the Oracle"]
+			},
+			delve_move_lists: {
+				"Delve": ["Discover a Site", "Delve the Depths", "Find an Opportunity", "Reveal a Danger", "Check Your Gear", "Locate Your Objective", "Escape the Depths"],
+				"Optional": ["Reveal a Danger (alternate version)", "Mark Your Failure", "Learn From Your Failures", "Advance a Threat", "Take a Hiatus", "Wield a Rarity"]
 			},
 			moves: {
 				"Standard Roll": "This is a standard roll for checks not covered by the moves.((ironsworn))",
@@ -1816,6 +1818,7 @@
 					["Custom", "ironsworn-custom-move-list"]
 				]],
 				["Moves", getPbtAMoveTypes("ironsworn")],
+				["Delve Moves", getPbtAMoveTypes("ironsworn", "delve_move_lists")],
 				["Oracles", [
 					["Action and Theme", "ironsworn-oracle-list:core"],
 					["Place", "ironsworn-oracle-list:place"],
@@ -3027,21 +3030,28 @@
 
 	/* powered by the apocalypse */
 
-	function getPbtAMoveTypes(game) {
+	function getPbtAMoveTypes(game, category) {
 		var move;
 		var list = [];
-		var moves = muse[game].move_lists;
+		if (!category) category = "move_lists";
+		var moves = muse[game][category];
 
 		for (move in moves) {
-			list.push([move, game + "-move-list:" + move])
+			list.push([move, game + "-move-list:" + (category !== "move_lists" ? category + ":" : "") + move])
 		}
 		return list;
 	}
 
 	function showPbtAMoveList(game, type) {
-		var a;
+		var a, temp;
 		var list = [];
-		var group = muse[game].move_lists[type];
+		var category = "move_lists";
+		if (/:/.test(type)) {
+			temp = type.split(":");
+			category = temp.shift();
+			type = temp.join(":");
+		}
+		var group = muse[game][category][type];
 		for (a = 0; a < group.length; ++a) {
 			if (!(group[a] in muse[game].moves)) list.push(["<s>" + group[a] + "</s>", "solo.showPage()"]);
 			else list.push([group[a], "solo.showPage('" + game + "-move:" + group[a].replace(/'/g, "\\'") + "')"]);
