@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #FF6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #DDDDBB;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+
+			a {
+				color: #E1C87D;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			a:visited {
+				color:#dddddd;
+			}
+
+			img {
+				display: block;
+				height:auto;
+				width:325px;
+				margin-right: auto;
+				margin-left: auto;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			i, em, em strong, i b
+			{ color: #FFFF88 !important; }
+
+			b, strong, strong em, b i
+			{ color: #FFBB55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #FF6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4,
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h1 id="characters">Characters</h1>
+		<h2 id="magik">Magik</h2>
+		<p><img src="./images/magik/illyana%20(0).png" alt="illyana (0)" /></p>
+		<blockquote>
+		  <p>Illyana Rasputin</p>
+		  <p><mark>ASPECTS</mark><br>
+		  <strong>High Concept:</strong> Teleporting Sorceress<br>
+		  <strong>Trouble:</strong> Demon Queen<br>
+		  <strong>Relationship:</strong> Kitty Is My Best Friend</p>
+		  <p><mark>SKILLS</mark><br>
+		  <strong>+4:</strong> Magic<br>
+		  <strong>+3:</strong> Athletics, Fight<br>
+		  <strong>+2:</strong> Provoke, Resources (Limbo), Will<br>
+		  <strong>+1:</strong> Lore, Notice, Physique, Stealth</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>VITALS</mark><br>
+		  <strong>Physical:</strong> 0/4 • <strong>Mental:</strong> 0/4<br>
+		  <strong>2: Mild:</strong><br>
+		  <strong>4: Moderate:</strong><br>
+		  <strong>6: Severe:</strong><br>
+		  <strong>Fate Points:</strong> 0/2</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>STUNTS</mark><br>
+		  <strong>Stepping Disc:</strong> Because she can use her portals as part of her fighting style, Illyana gets +2 when using Athletics to defend or Fight to attack while using her portals. <code>(2)</code></p>
+		  <p><strong>Limbo Blast:</strong> Because she can fire large blasts of energy from Limbo using the stepping disc portals, Illyana gets +1 per target when she splits shifts among multiple targets while using Magic to attack using the portals.</p>
+		  <p><strong>Soulsword:</strong> Because it is a piece of her soul, Illyana has weapon:2 when using Fight to attack magical entities with the Soulsword.</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>PERMISSIONS</mark><br>
+		  <strong><a href="./images/magik/illyana%20(16).jpg" rel="noopener noreferrer" target="_blank">Stepping Disc</a>:</strong> Illyana's stepping disc portal can remain open as long as she wants and has been seen to grow large enough to swallow the X-Mansion. The portal opens quickly enough that she can use it as a means of dodging and countering in combat. While Illyana has been known to travel as far as the other side of the globe, traveling so far puts a strain on her ability and she runs the risk of arriving in the wrong place or even the wrong time. Illyana must always travel to Limbo as the final stop before her destination.</p>
+		  <p><strong>Soulsword:</strong> Illyana's sword is formed from a piece of her soul and anyone in possession of the Soulsword is granted basic access to Illyana's abilities--namely magic and creating stepping discs. The Soulsword is not physically real, and therefore can only harm magical creatures.</p>
+		  <p><strong>Eldritch Armor:</strong> Illyana can summon armor through magic, not unlike her brother Collosus's mutant ability. It also grants her increased strength.</p>
+		  <p><strong>Demon Queen:</strong> Illyana is the ruler of Limbo and can summon demons via her stepping disc to fight by her side.</p>
+		  <p><strong><a href="./images/magik/illyana%20(15).jpg" rel="noopener noreferrer" target="_blank">Darkchylde</a>:</strong> When Illyana is overcome with emotions such as anger, she "hulks out" and becomes Darkchylde, which is the form of the demon queen of Limbo. She has difficulty maintaining control over her mind and emotions in this form and basically becomes another personality. While in this form, she denies any attempts of telepathic probing used against her. Illyana will revert to normal when rendered unconscious.</p>
+		</blockquote>
+		<p><br></p>
+		<h2 id="rogue">Rogue</h2>
+		<p><img src="./images/rogue/rogue%20(17).png" alt="rogue (10)" /></p>
+		<blockquote>
+		  <p>Anna Marie LeBeau</p>
+		  <p><mark>ASPECTS</mark><br>
+		  <strong>High Concept:</strong> Flying Tank<br>
+		  <strong>Trouble:</strong> Unstable Absorbsion Powers<br>
+		  <strong>Relationship:</strong> Hitched to Gambit</p>
+		  <p><mark>SKILLS</mark><br>
+		  <strong>+4:</strong> Physique<br>
+		  <strong>+3:</strong> Athletics, Fight<br>
+		  <strong>+2:</strong> Contacts, Investigate, Rapport <br>
+		  <strong>+1:</strong> Empathy, Notice, Resources, Will</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>VITALS</mark><br>
+		  <strong>Physical:</strong> 0/6 • <strong>Mental:</strong> 0/4<br>
+		  <strong>2: Mild:</strong><br>
+		  <strong>4: Moderate:</strong><br>
+		  <strong>6: Severe:</strong><br>
+		  <strong>Fate Points:</strong> 0/3</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>STUNTS</mark><br>
+		  <strong>Super Strength:</strong> Because she has enhanced strength, Rogue has weapon:2 when using Fight with strength-based attacks.</p>
+		  <p><strong>Super Durability:</strong> Because she has enhanced durability, Rogue has armor:4 when using Athletics to defend against physical attacks. <code>(2)</code></p>
+		  <p><strong>Power Absorbsion:</strong> Because she has the ability of power absorbsion, when Rogue is in skin contact with the target and uses Physique to create an advantage, she may spend a fate point to give them a <em>stolen power</em> aspect on success, granting her access to their power (plus related stunts and skills) for the scene.</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>PERMISSIONS</mark><br>
+		  <strong>Flight:</strong> Rogue is able to fly by willing herself to. She does not use an external force like telekinesis.</p>
+		  <p><strong>Touch:</strong> Rogue mostly has control over her energy drain power activating by touch these days, but it can accidentally be triggered when she's scared. </p>
+		</blockquote>
+		<p><br></p>
+		<h2 id="emmafrost">Emma Frost</h2>
+		<p><img src="./images/emma%20frost/emma%20(2).jpg" alt="emma (2)" /></p>
+		<blockquote>
+		  <p>Emma Frost</p>
+		  <p><mark>ASPECTS</mark><br>
+		  <strong>High Concept:</strong> Supreme Telepath<br>
+		  <strong>Trouble:</strong> The White Queen<br>
+		  <strong>Relationship:</strong> Proud Mother of the Stepford Cuckoos<br>
+		  <strong>Other:</strong> Diamonds Are a Girl's Best Friend</p>
+		  <p><strong>Situation:</strong> Boost (read Madelyne's thoughts)</p>
+		  <p><mark>SKILLS</mark><br>
+		  <strong>+4:</strong> Telepathy<br>
+		  <strong>+3:</strong> Resources, Will<br>
+		  <strong>+2:</strong> Deceive, Fight, Provoke<br>
+		  <strong>+1:</strong> Academics, Burglary, Notice, Rapport</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>VITALS</mark><br>
+		  <strong>Physical:</strong> 0/3 • <strong>Mental:</strong> 0/6<br>
+		  <strong>2: Mild:</strong><br>
+		  <strong>4: Moderate:</strong><br>
+		  <strong>6: Severe:</strong><br>
+		  <strong>Fate Points:</strong> 0/2</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>STUNTS</mark><br>
+		  <strong>Mental Manipulation:</strong> Because she is gifted in manipulating the thoughts of others, Emma gets +2 to Telepathy and an additional free invoke on success when creating an advantage by making others believe what she wants. <code>(2)</code></p>
+		  <p><strong>Diamond Form:</strong> Because her diamond form is nearly impervious, while in this form, Emma gets armor:4 when using Fight to defend against physical attacks and weapon:2 when using Fight with strength-based attacks. Her diamond form also prevents the use of her Telepathy skill.</p>
+		  <p><strong>Vast Network:</strong> Because she always knows someone who is able and willing to get her what she wants, Emma can conjure up a convenient connection out of the blue for free once per scene.</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>PERMISSIONS</mark><br>
+		  <strong>Telepathy:</strong> Using her telepathic powers, Emma can transmit thoughts, read thoughts and memories, alter and erase memories, alter emotions, cause visions, and create mental feedback (such as a mind blast).</p>
+		  <p><strong><a href="./images/emma%20frost/emma%20(11).png" rel="noopener noreferrer" target="_blank">Diamond Form</a>:</strong> While in this form, Emma is completely resistant to psychic powers of any kind. She is not able to perform them nor have them performed on her, including standard telepathy. She also has super strength, has limitless stamina, doesn't require oxygen, and doesn't feel emotion. Emma can make the change to diamond form so quickly that she may use it to react to gunshots at close range.</p>
+		  <p><strong>Resources:</strong> Emma and her connections has been one of the best things to happen to the X-Men, especially with Xavier's wishy-washy standings with the government and society as of late. She basically finances the X-Men at this point.</p>
+		</blockquote>
+		<p><br></p>
+		<h2 id="honeybadger">Honey Badger</h2>
+		<p><img src="./images/scout/gabby%20(6).jpg" alt="gabby (0)" /></p>
+		<blockquote>
+		  <p>Gabby Kinney</p>
+		  <p><mark>ASPECTS</mark><br>
+		  <strong>High Concept:</strong> Regenerating Slasher<br>
+		  <strong>Trouble:</strong> Self-Conscious Clone<br>
+		  <strong>Relationship:</strong> Stuck in Big Sister's Shadow<br>
+		  <strong>Other:</strong> Naive and Loveable Assassin</p>
+		  <p><mark>SKILLS</mark><br>
+		  <strong>+4:</strong> Investigate<br>
+		  <strong>+3:</strong> Fight, Notice<br>
+		  <strong>+2:</strong> Athletics, Physique, Stealth<br>
+		  <strong>+1:</strong> Empathy, Provoke, Rapport, Will</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>VITALS</mark><br>
+		  <strong>Physical:</strong> 0/4 • <strong>Mental:</strong> 0/3<br>
+		  <strong>2: Mild:</strong><br>
+		  <strong>4: Moderate:</strong><br>
+		  <strong>6: Severe:</strong><br>
+		  <strong>Fate Points:</strong> 0/2</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>STUNTS</mark><br>
+		  <strong>Superhuman Senses:</strong> Because of her enhanced sense of smell, Gabby gets +2 when using Investigate to overcome while detecting or tracking the smell of others.</p>
+		  <p><strong>Claws:</strong> Because she has adamantium claws, Gabby gets weapon:4 when using Fight to attack in close quarters. <code>(2)</code></p>
+		  <p><strong>Unkillable:</strong> Because her body regenerates at superhuman speed, Gabby may spend a fate point to downgrade the severity of all physical consequences by 1; severe becomes moderate, moderate becomes mild, and mild is removed. Downgraded consequences may share the same slot with an existing mental consequence.</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>PERMISSIONS</mark><br>
+		  <strong>Regeneration:</strong> Gabby has an incredible healing ability on par with Wolverine. She can shrug off wounds like having her guts fall out and get back into the fight in just a few moments.</p>
+		  <p><strong>Clone:</strong> Gabby (aka X-24) is the clone of Laura (aka X-13) who is in turn a clone of Wolverine. The remnants of Weapon X is still hunting both of them.</p>
+		  <p><strong>Painless:</strong> Gabby has a nanite colony running through her veins and it prevents her from feeling any pain at all.</p>
+		</blockquote>
+		<p><br></p>
+		<h2 id="marvelgirl">Marvel Girl</h2>
+		<p><img src="./images/marvel%20girl/jean%20(1).jpg" alt="jean (1)" /></p>
+		<blockquote>
+		  <p>Jean Grey (young)</p>
+		  <p><mark>ASPECTS</mark><br>
+		  <strong>High Concept:</strong> Telekinetic Telepath<br>
+		  <strong>Trouble:</strong> Desperately Avoiding her Fate<br>
+		  <strong>Relationship:</strong> Is Scott Really My Future?<br>
+		  <strong>Other:</strong> Straight-Shooting Problem Solver<br>
+		  <strong>Other:</strong> Stuck in the Present</p>
+		  <p><mark>SKILLS</mark><br>
+		  <strong>+4:</strong> Telekinesis<br>
+		  <strong>+3:</strong> Rapport, Will<br>
+		  <strong>+2:</strong> Athletics, Empathy, Telepathy<br>
+		  <strong>+1:</strong> Contacts, Fight, Notice, Investigate</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>VITALS</mark><br>
+		  <strong>Physical:</strong> 0/3 • <strong>Mental:</strong> 0/6<br>
+		  <strong>2: Mild:</strong><br>
+		  <strong>4: Moderate:</strong><br>
+		  <strong>6: Severe:</strong><br>
+		  <strong>Fate Points:</strong> 0/3</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>STUNTS</mark><br>
+		  <strong>Telekinetic Defense:</strong> Because she is more accustomed to creating defensive fields than lifting objects with her mind, Jean gets +2 to Telekinesis when using a barrier to defend against physical attacks.</p>
+		  <p><strong>Flight:</strong> Because her flight is actually telekinetic manipulation of her own body, Jean may use Telekinesis in place of Athletics for any action while airborne.</p>
+		  <p><strong>Mind Reading:</strong> Because she is more open to reading minds than altering them, Jean gets +2 to Telepathy when creating an advantage by pulling information from the target's mind.</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>PERMISSIONS</mark><br>
+		  <strong>Psionic Powers:</strong> Since Jean manifested telekinesis before telepathy, this Jean is much stronger in the former than the latter. Telepathy is still a new power for her and she often has trouble turning it off or using it to her full potential.</p>
+		  <p><strong>Growing Powers:</strong> Jean is much more powerful than she was at this age than she was in her original timeline. It's uncertain whether these changes came from being taught by teachers more experienced than Xavier was back then, or if it has been brought about by the increased level of combat that present day X-Men face. Either way, her powers are quickly manifesting and it's become a concern for X-Men both from the past and present day.</p>
+		  <p><strong>Past:</strong> Jean was dragged from the past into the present by Beast. Unlike the rest of the team, she has managed to adapt quite quickly--which is good because her future is apparently a nightmare of misery and death, with the silver lining being that she's one of the most powerful people in the galaxy.</p>
+		</blockquote>
+		<p><br></p>
+		<h1 id="npcs">NPCs</h1>
+		<h2 id="mystique">Mystique</h2>
+		<p><img src="./images/others/mystique%20(1).jpg" alt="mystique (1)" /></p>
+		<blockquote>
+		  <p>Raven Darkholme<br>
+		  <strong>Aspects:</strong> Shapeshifting Mercenary • Singularly Focused<br>
+		  <strong>Skills:</strong> +4 Deceive, +3 Shoot, +2 Burglary, +1 Fight<br>
+		  <strong>Physical:</strong> 0/3 • <strong>Mental:</strong> 0/3<br>
+		  <strong>Shapeshift:</strong> Because she can assume any identity, Mystique gets +2 when using Deceive to overcome or create an advantage while in another form. Her Rapport and Provoke will also be set to the same level as her assumed form's (eg. she uses Jean's Rapport skill while disguised as Jean). She cannot emulate powers.</p>
+		</blockquote>
+		<p><br></p>
+		<h2 id="goblinqueen">Goblin Queen</h2>
+		<p><img src="./images/others/madelyne%20(0).jpg" alt="madelyne (0)" /></p>
+		<blockquote>
+		  <p>Madelyne Pryor<br>
+		  <strong>Aspects:</strong> Telekinetic Telepath • Discount Jean Grey • The Goblin Queen<br>
+		  <strong>Skills:</strong> +4 Telepathy,  +3 Telekinesis and Will, +2 Deceive and Rapport (Seduction), +1 Provoke<br>
+		  <strong>Physical:</strong> 0/3 • <strong>Mental:</strong> 3/6<br>
+		  <strong>Mind Blast:</strong> Because she is adept at psionic attacks, Madelyne gets +2 to Telepathy when attacking with mental powers.<br>
+		  <strong>Goblin Queen:</strong> Because she is the queen of the goblins, Madelyne may summon up to three "Demons: +2 at clawing (weapon:2) and magic, +1 dodging and hiding, 2 stress boxes" in a scene for 1 fate point each.</p>
+		</blockquote>
+	</body>
+</html>
