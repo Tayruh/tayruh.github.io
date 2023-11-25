@@ -6,7 +6,7 @@
 (function(solo) {
 	"use strict";
 
-	var version = "2023.11.24";
+	var version = "v20231124";
 
 	var current_page, current_section, current_menu, color_theme, localStorage;
 	var toc = [];
@@ -1327,7 +1327,7 @@
 				"Minion Moves": "<<A burst of sudden, uncontrolled violence|Make a coordinated attack|Capture someone, or steal something|Reveal a secret|Deliver someone or something to the master|Give chase|Make a threat or demand for the master|Run away|Use an unnatural power|Display a hint of conscience or humanity|Disobey the master, in some petty way>>",
 				"Bystander Moves": "<<Go off alone|Argue with the hunters|Get in the way|Reveal something|Confess their fears|Freak out in terror|Try to help the hunters|Try to protect people|Display inability or incompetence|Seek help or comfort>>",
 				"Location Moves": "<<Present a hazard|Reveal something|Hide something|Close a way|Open a way|Reshape itself|Trap someone|Offer a guide|Present a guardian|Something doesn't work properly|Create a particular feeling>>",
-				"Basic Hunter Moves": "<<Act Under Pressure (Cool)|Help Out (Cool)|Investigate A Mystery (Sharp)|Kick Some Ass (Tough)|Manipulate Someone (Charm)|Protect Someone (Tough)|Read A Bad Situation (Sharp)|Use Magic (Weird)>>"
+				"Hunter Basic Moves": "<<Act Under Pressure (Cool)|Help Out (Cool)|Investigate A Mystery (Sharp)|Kick Some Ass (Tough)|Manipulate Someone (Charm)|Protect Someone (Tough)|Read A Bad Situation (Sharp)|Use Magic (Weird)>>"
 			}
 		}
 	};
@@ -2023,7 +2023,7 @@
 		display(
 			output + "</table></div><div id='footer'>" +
 			getOptions(null, "menu-options", toc, current_menu) +
-			"<pre>version: " + version + "</pre>" +
+			"<pre>" + version + "</pre>" +
 			getOptions(null, "color-theme", ["dark", "light"], color_theme) +
 			"</div>"
 		);
