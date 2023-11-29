@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- last updated: 09/17/2023 -->
+<!-- last updated: 11/29/2023 -->
 
 <html lang="en">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
@@ -62,7 +62,7 @@
 				resize: none;
 			}
 
-			#html {
+			#converted, #html {
 				display: none;
 			}
 
@@ -103,6 +103,7 @@
 			<div id="source-wrapper">
 				<textarea id="source"></textarea>
 			</div>
+			<div id="converted"></div>
 		</div>
 
 		<textarea id="html">
@@ -246,6 +247,7 @@
 				margin-left: -0.5em;
 				margin-right: -0.5em;
 			}
+			details :last-child { margin-bottom: 0; }
 
 			@media screen and (min-width: 500px) {
 				html { margin: 1em; }
@@ -315,7 +317,7 @@
 					literalMidWordUnderscores: true,
 					literalMidWordAsterisks: true,
 					splitAdjacentBlockquotes: true,
-					openLinksInNewWindow: true,
+					openLinksInNewWindow: false,
 					extensions: [mark]
 				});
 
@@ -323,15 +325,20 @@
 				html = "\t\t" + html.replace(/\n/g, "\n\t\t").trimEnd();
 				html = html.replace(/<br \/>/gi, "<br>");
 				//html = html.replace(/<p>\s*<br>\s*<\/p>/gi, "<br>");
-				html = html.replace(/(<a.*href\s*=\s*")([^"]+)/gi, function (m, p1, p2) {
-					return p1 + p2.replace(/\.(md|markdown)$/i, ".html");
-				});
 
 				html = document.getElementById("html").value.replace("%data%", html).trim();
+				document.getElementById("converted").innerHTML = html;
+				
+				var link;
+				var links = document.querySelectorAll("#converted a");
+				for (link in links.length) {
+					link.href = link.getAttribute("href").replace(/\.(md|markdown)$/i, ".html");
+				} 
 
-				var bl = new Blob([html], { type: "text/html" });
+				var bl = new Blob([document.getElementById("converted").innerHTML], { type: "text/html" });
 				var a = document.createElement("a");
 				a.href = URL.createObjectURL(bl);
+				
 				a.download = "converted-markdown.html";
 				a.hidden = true;
 				document.body.appendChild(a);
