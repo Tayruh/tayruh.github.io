@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #FF6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+
+			a {
+				color: #E1C87D;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height:auto;
+				width:325px;
+				margin-right: auto;
+				margin-left: auto;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			i, em, em strong, i b
+			{ color: #ffff88 !important; }
+
+			b, strong, strong em, b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details :last-child { margin-bottom: 0; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4,
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h1 id="storysetup">Story Setup</h1>
+		<p>When you begin a new story, start by answering these questions to create a strong narrative backbone.</p>
+		<ul>
+		<li><p><strong>Premise:</strong> What is the initial concept and expectation of this story, and what do you find engaging about it?<br>
+		<em>Be honest about the reasons for wanting to use this premise—include embarrassing reasons and exclude reasons of obligation.</em></p></li>
+		<li><p><strong>Problem:</strong> What past event still follows the character, and how does it directly influence their actions or environment in a way that threatens to make their life untenable?<br>
+		<em>The event doesn't need to be one that the character was involved in, but it must currently affect them. It's okay if the description of the past event is vague, but it should be clear in how its influence will likely unravel the character's life unless it is addressed.</em></p></li>
+		<li><p><strong>Catalyst:</strong> What new event prevents the character from returning to life as normal, and how does it achieve that?<br>
+		<em>Event examples are: entering a new world (literally or figuratively), a mystery, a desire for personal growth, or disruption by outside forces.</em></p></li>
+		<li><p><strong>Conflict:</strong> What does the hero hope to accomplish, and what is stopping them? <br>
+		<em>The goal refers to what the hero intends to do within the scope of this setup (story, arc, scene), not their overall goal in life. This goal must be achievable with a definitive stopping point.</em></p></li>
+		<li><p><strong>Stakes:</strong> What does the hero risk in striving for their goal, and what would they risk by doing nothing? <br>
+		<em>Low stakes for not acting are boring and deprive the character of motivation. It's expected that there be little to no risk for acting (low risk, high reward) when the story, arc, or scene starts, but it should increase to heights comparable to the risk of not acting (high risk, high reward) as it reaches the climax.</em></p></li>
+		<li><p><strong>Urgency:</strong> How long does the character have to achieve their goal, and is the deadline something that can be postponed or eliminated?<br>
+		<em>Regardless of how high the risk for not acting is, there is no tension without an impending deadline. Likewise, the tension increases dramatically as the deadline draws closer and the risk for acting increase.</em></p></li>
+		</ul>
+		<h1 id="storytips">Story Tips</h1>
+		<ul>
+		<li><p>The main character must be the one with the most to lose.</p></li>
+		<li><p>The main character must be proactive, not reactive.</p></li>
+		<li><p>Characters are balanced by things that make them cool and things that make them flawed. Regardless of hardship, coolness can only be effectively balanced against flaws. Coolness may overcome flaws during the climax, but never before that.</p></li>
+		<li><p>To make dialogue style unique for each character, consider the following scales: Verbose vs terse. Casual vs formal. Spontaneous, planned, or rehearsed.</p></li>
+		<li><p>If a conflict arises that is bigger than the main conflict, raise the stakes of the main conflict to match.</p></li>
+		<li><p>When crafting description, present the broad strokes first, details second.</p></li>
+		<li><p>Scenes are about action. They can start shortly before the action (build-up/tense), during the action (in media res/frantic), or shortly after the action (mystery/confusing).</p></li>
+		</ul>
+		<h1 id="twists">Twists</h1>
+		<table>
+		<thead>
+		<tr>
+		<th style="text-align:right;">1D20</th>
+		<th></th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td style="text-align:right;">1</td>
+		<td>Someone is revealed to have an unexpected connection to another character.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">2</td>
+		<td>Something that you had taken for granted as a truth is revealed to be false.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">3</td>
+		<td>A successful action unexpectedly makes the situation worse.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">4</td>
+		<td>A problem that you thought had been resolved returns.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">5</td>
+		<td>Information is revealed that alters a perceived truth in an unexpected way.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">6</td>
+		<td>Something that you were trying to keep hidden is revealed.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">7</td>
+		<td>A character must choose one out of two or more equally positive or equally negative options.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">8</td>
+		<td>A threat comes from the environment.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">9</td>
+		<td>A character with questionable motives enters the story.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">10</td>
+		<td>A character's weakness or mistake is exploited.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">11</td>
+		<td>Someone or something is taken from you or becomes broken.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">12</td>
+		<td>A character does something contrary to who they are.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">13</td>
+		<td>A sacrifice is necessary to succeed.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">14</td>
+		<td>A past event or action is revealed that directly affects the current situation.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">15</td>
+		<td>Someone or something taken for granted is discovered to be unexpectedly important.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">16</td>
+		<td>An ally turns against you and becomes your opposition.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">17</td>
+		<td>A strength becomes a momentary weakness.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">18</td>
+		<td>A previously unseen weakness or fear is revealed.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">19</td>
+		<td>The current path to your goal is closed off unexpectedly.</td>
+		</tr>
+		<tr>
+		<td style="text-align:right;">20</td>
+		<td>An ally becomes the focus of a new or current threat.</td>
+		</tr>
+		</tbody>
+		</table>
+	</body>
+</html>

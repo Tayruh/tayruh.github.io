@@ -129,13 +129,20 @@ div.view-content
 .markdown-preview-section ul, ul,
 .markdown-preview-section ol, ol { padding-inline-start: 24px; }
 
-.markdown-preview-section em, em,
 .markdown-preview-section i, i,
-.cm-em { color: #FFFF88 !important; }
+.markdown-preview-section em, em, .cm-em,
+em strong, i b,
+.markdown-preview-section i b,
+.markdown-preview-section em strong
+{ color: #FFFF88 !important; }
 
-.markdown-preview-section strong, strong,
 .markdown-preview-section b, b,
-.cm-strong, strong { color: #FFBB55 !important; }
+.markdown-preview-section strong, strong, .cm-strong,
+.cm-strong.cm-em, 
+strong em, b i,
+.markdown-preview-section b i,
+.markdown-preview-section strong em
+{ color: #FFBB55 !important; }
 
 .markdown-preview-section code,
 .markdown-preview-section pre
@@ -143,6 +150,12 @@ div.view-content
   color: #dddddd;
   background-color: #000000;
   white-space: pre;
+}
+
+.cm-highlight, mark {
+    color: #FF6666 !important;
+    background-color: unset !important;
+    font-weight: bold;
 }
 
 .markdown-preview-section code { font-size: 0.9em;}
