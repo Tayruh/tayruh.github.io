@@ -183,7 +183,7 @@ strong em, b i,
 .markdown-preview-view, .cm-scroller { padding: 25px !important; }
 
 @media screen and (max-width: 600px) {
-    .markdown-preview-section, .cm-content { font-size: 14px; }
+    .markdown-preview-section, .cm-content { font-size: 13px; }
 	.markdown-preview-section { text-align: left; }
     .markdown-preview-view, .cm-scroller { padding: 10px !important; }
 	.markdown-preview-section ul, ul,
