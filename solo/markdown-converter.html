@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- last updated: 12/19/2023 -->
+<!-- last updated: 12/21/2023 -->
 
 <html lang="en">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
@@ -255,6 +255,8 @@
 				margin-left: -0.5em;
 				margin-right: -0.5em;
 			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    	details summary ~ a img { margin-top: 1em !important; }
 			details :last-child { margin-bottom: 0; }
 
 			@media screen and (min-width: 500px) {
@@ -333,6 +335,10 @@
 				var html = converter.makeHtml(document.getElementById("source").value);
 				html = "\t\t" + html.replace(/\n/g, "\n\t\t").trimEnd();
 				html = html.replace(/<br \/>/gi, "<br>");
+				html = html.replace(/<p>\s*<br>\s*<\/p>/gi, "<br>");
+				
+				html = html.replace(/(?:<p>\s*)?(<(?:details|summary)[^>]*>)(?:\s*<br>)?/gi, "$1")
+				html = html.replace(/<\/(summary|details)>\s*<\/p>/gi, "</$1>");
 
 				document.getElementById("converted").innerHTML = html;
 				
