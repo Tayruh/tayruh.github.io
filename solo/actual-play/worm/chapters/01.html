@@ -81,10 +81,10 @@
 
 			img {
 				display: block;
-				height:auto;
-				width:325px;
-				margin-right: auto;
-				margin-left: auto;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
 			}
 
 			pre {
@@ -112,10 +112,10 @@
 			ul, ol { padding-inline-start: 24px; }
 			ul, ul, ol, ol { margin-left: -0.5em; }
 
-			i, em, em strong, i b
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
 			{ color: #ffff88 !important; }
 
-			b, strong, strong em, b i
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
 			{ color: #ffbb55 !important; }
 
 			code, pre
@@ -145,6 +145,8 @@
 				margin-left: -0.5em;
 				margin-right: -0.5em;
 			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    	details summary ~ a img { margin-top: 1em !important; }
 			details :last-child { margin-bottom: 0; }
 
 			@media screen and (min-width: 500px) {
@@ -161,7 +163,7 @@
 			}
 
 			@media screen and (min-width: 850px) {
-				body > :not(blockquote) { text-align: justify; }
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
 			}
 
 			@media print {
