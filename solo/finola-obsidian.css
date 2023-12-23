@@ -138,19 +138,20 @@ div.view-content
 .markdown-preview-section ul, ul,
 .markdown-preview-section ol, ol { padding-inline-start: 24px; }
 
-.markdown-preview-section i, i,
-.markdown-preview-section em, em, .cm-em,
-em strong, i b,
-.markdown-preview-section i b,
-.markdown-preview-section em strong
+.markdown-preview-section blockquote i, .HyperMD-quote i, blockquote i,
+.markdown-preview-section blockquote em, .HyperMD-quote .cm-em, blockquote em,
+.HyperMD-quote .cm-em.cm-strong,
+blockquote em strong, blockquote i b,
+.markdown-preview-section blockquote i b,
+.markdown-preview-section blockquote em strong
 { color: #FFFF88 !important; }
 
-.markdown-preview-section b, b,
-.markdown-preview-section strong, strong, .cm-strong,
-.cm-strong.cm-em, 
-strong em, b i,
-.markdown-preview-section b i,
-.markdown-preview-section strong em
+.markdown-preview-section blockquote b, .HyperMD-quote b, blockquote b,
+.markdown-preview-section blockquote strong, .HyperMD-quote .cm-strong, blockquote strong,
+.HyperMD-quote .cm-strong.cm-em, 
+blockquote strong em, blockquote b i,
+.markdown-preview-section blockquote b i,
+.markdown-preview-section blockquote strong em
 { color: #FFBB55 !important; }
 
 .markdown-preview-section code,
