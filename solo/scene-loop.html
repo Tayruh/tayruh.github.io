@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+			
+			h5 a, h5 {
+				color: #ffbb55;
+	            font-size: 1em;
+	            font-weight: bold;
+	            margin-top: 0 !important;
+	            margin-block-end: -1em;
+            }
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    	details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h1 id="scene%20loop">Scene Loop</h1>
+		<h2 id="terms">Terms</h2>
+		<h3 id="agenda">Agenda</h3>
+		<p>A character's agenda is what that character believes they need to accomplish in life in order to be satisfied, and most decisions hinge around this. An agenda can be a short term goal like "buy a cake" or "win an argument," or a longer goal like "find my missing brother" or "become king," or it can be a never-ending goal like "protect my sister" or "always stand for justice." Self-preservation is generally an unspoken agenda that is always in play. A character can have multiple agendas with new ones being made and old ones being dropped at a moment's notice--characters are always in flux. It's also entirely possible that a character is conflicted and has two or more agendas that contradict each other.</p>
+		<h3 id="control">Control</h3>
+		<p>Life is a constant tug of war. Every action a character performs is them removing themselves from the role of bystander or victim and attempting to exert control over the situation in order to manipulate it to their benefit.</p>
+		<h3 id="muse">Muse</h3>
+		<p>A muse is anything that sparks an idea, whether it be images, word tables, reaction tables, whatever.</p>
+		<br>
+		<h2 id="loop">Loop</h2>
+		<h3 id="step%201:%20framing">Step 1: Framing</h3>
+		<p>Describe the world surrounding the characters. Describe the characters' situations without initiating new character actions.</p>
+		<p>Answer the questions <em>"what does the situation look like in this moment?"</em> and <em>"how is the situation aiding or obstructing the characters' agendas?"</em></p>
+		<p>If this is the start of a new scene, you must also clearly answer the questions <em>"what am I trying to accomplish in this scene?"</em> and <em>"what event would I like to see happen?"</em>  Your role in solo roleplaying is unique in that you are not only the player, but you also the author <em>and</em> the audience, and that position carries with it hopes for events and story developments that may not align with your characters' agendas. It's important to define this player agenda as separate from character agendas because <em>this</em> is why you are playing the game.</p>
+		<h3 id="step%202:%20preemptive%20action">Step 2: Preemptive Action</h3>
+		<p>The character most likely to take advantage of the situation acts. This can be either an NPC or PC, and an action can be just dialogue.</p>
+		<p>There is only one preemptive action per loop.</p>
+		<p>If there are no characters with a preemptive action, skip to step 3. Otherwise, answer the questions <em>"whose agenda would benefit most from taking action right now?"</em> and <em>"how do they attempt to gain control?"</em></p>
+		<h3 id="step%203:%20reactive%20action">Step 3: Reactive Action</h3>
+		<p>Not all actions are advantageous. Characters whose agenda is being threatened by the situation will have to react in order to regain control. This can be both NPCs and PCs, and a reaction can be just dialogue.</p>
+		<p>If a character has already acted in this step but a reactive action following theirs has caused the situation to change in such a way that would push them to react, they may act again.</p>
+		<p>If there are no characters with a reactive action, skip to step 4. Otherwise, answer the questions <em>"whose agenda is being threatened the most right now?"</em> and <em>"how do they attempt to regain control?"</em></p>
+		<p>Repeat this step until there are no longer characters reacting to the situation or actions described in this loop.</p>
+		<h3 id="step%204:%20resolution">Step 4: Resolution</h3>
+		<p>If at least one action has been taken for this loop, return to step 1.</p>
+		<p>Sometimes it is not obvious as to who should be doing what to further a scene. If the scene has come to a standstill after completing step 1 and you're at a loss as to what step 2 and step 3 should be, there are a few options available:</p>
+		<ul>
+		<li><p>Answer the questions <em>"if this scene continued without character action, what would that look like?"</em> followed by <em>"what character action or event would most likely happen due to this inaction?"</em> and finally <em>"is it possible for that action or event to happen now, perhaps by way of a time skip or generalization of the time spent leading up to it?"</em></p><p></p><p></p></li>
+		<li><p>If you're having a hard time envisioning what could possibly interrupt the scene, try referring to your muse and answer the questions <em>"do you think the muse is referring to an actor or a target?"</em> and <em>"is it a PC or NPC, or is it something in the environment?"</em> There are follow up questions depending on the interpretation of the muse:</p>
+		<ul>
+		<li><p>If you've determined that the muse is referring to an action that an actor is performing, answer the questions <em>"does the action require a target?"</em> and if so, <em>"who or what is the target?"</em></p></li>
+		<li><p>Not all actions require a target, but all targets require an actor. If you've determined that the muse is referring to an action happening to a target, answer the question <em>"who or what is doing this action to the target?"</em></p><p></p><p></p></li></ul></li>
+		<li><p>If still nothing is coming to mind, perhaps you have written yourself into a corner. As a last resort, you can rewind time to get yourself back on track. Go back to the point in the story where a dice roll, a character action, or a world event made the story uninteresting. Change the decision or outcome to something that you're more interested in. Ignore oracle rolls or even game system skill checks and force the event or action, if you have to. Continuing the story takes priority over not cheating.</p></li>
+		</ul>
+		<p>After answering the above questions to determine an action for this loop, return to step 2.<br>
+		<br><br></p>
+	</body>
+</html>
