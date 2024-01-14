@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+			
+			h5 a, h5 {
+				color: #ffbb55;
+	            font-size: 1em;
+	            font-weight: bold;
+	            margin-top: 0 !important;
+	            margin-block-end: -1em;
+            }
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    	details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h2 id="campaign">Campaign</h2>
+		<blockquote>
+		  <p><strong>Chaos Factor:</strong> 5</p>
+		  <p><mark>THREADS</mark><br>
+		  <strong>1-2:</strong> Police Corruption<br>
+		  <code>[_____][_____]</code></p>
+		  <p><mark>CHARACTERS</mark><br>
+		   <strong>1-2:</strong> Enkidu<br>
+		   <strong>3-4:</strong> Excalibur<br>
+		   <strong>5-6:</strong> Scarlet<br>
+		   <strong>7-8:</strong> All-Seeing Eye Investigations</p>
+		</blockquote>
+		<br>
+		<h2 id="det.%20enkidu">Det. Enkidu</h2>
+		<p><img src="./images/enkidu.jpg" alt="ekidu"></p>
+		<blockquote>
+		  <p><mark>MYTHOS</mark><br>
+		  <strong>Wild</strong> (Expression)<br>
+		  "When should I follow my instincts?"<br>
+		  <em>In the dark recesses of her soul, Detective Enkidu harbors a feral creature, the heroic beastman Enkidu of ancient Mesopotamia. Can she trust its animalistic wisdom?</em><br>
+		   &nbsp;&nbsp;• unleash the beast within, thorny tentacles, feral athletics<br>
+		   &nbsp;&nbsp;• uncouth brute</p>
+		  <p><mark>LOGOS</mark><br>
+		  <strong>Hard-Boiled Detective</strong> (Training)<br>
+		  "Never leave a case unsolved."<br>
+		  <em>The detective has seen her fair share of rainy crime scenes surrounded by yellow tape. She knows the job, and she knows she shouldn't get involved, but she always does.</em><br>
+		   &nbsp;&nbsp;• police work, search for evidence, drive with lights and sirens<br>
+		   &nbsp;&nbsp;• don't get too personal</p>
+		  <p><strong>Standard Issue Gear</strong> (Possessions)<br>
+		  "Trust my gun better than I trust anyone here."<br>
+		  <em>A badge and a gun are all a cop needs, according to Detective Enkidu. People may betray you, but well-maintained gear can always be trusted.</em><br>
+		   &nbsp;&nbsp;• police badge, access to police armory, standard issue pistol<br>
+		   &nbsp;&nbsp;• gear screams "police"</p>
+		  <p><strong>Precinct 23</strong> (Turf)<br>
+		  "Mess with Miller's Square, you mess with me."<br>
+		  <em>For the last decade, Enkidu has been a part of Precinct 23, the police station watching over Miller's Square. Anything that happens on the streets of this neighborhood is her business.</em><br>
+		   &nbsp;&nbsp;• streets of miller's square, local small-time crooks, you're in my jurisdiction<br>
+		   &nbsp;&nbsp;• corruption everywhere</p>
+		  <p><mark>COMBOS</mark><br>
+		  <code>2</code> <strong>Study a Crime Scene:</strong> <u>Investigate</u>: police work, search for evidence<br>
+		  <code>2</code> <strong>Go Berserk on Someone:</strong> <u>Go Toe to Toe</u> or <u>Hit With All You've Got</u>: unleash the beast within, thorny tentacles<br>
+		  <code>3</code> <strong>Threaten to Arrest Someone:</strong> <u>Convince</u>: police work, police badge, you're in my jurisdiction<br>
+		  <code>4</code> <strong>Chase Someone Down an Alley:</strong> <u>Go Toe to Toe</u>: streets of miller's square, you're in my jurisdiction, thorny tentacles, feral athleticism</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>BACKGROUND</mark><br>
+		  <strong>Mythos:</strong> Enkidu, the wildling of the epic of Gilgamesh<br>
+		  <strong>Logos:</strong> Police detective<br>
+		  <strong>Abilities:</strong> Standard issue police gear, Feral athletics<br>
+		   Thorny tentacles, Exceptionally self-driven and motivated<br>
+		  <strong>Affiliation:</strong> All-Seeing Eye Investigations, Precinct 23, The people of Miller’s Square<br>
+		  <strong>Home District:</strong> Miller's Square</p>
+		  <p>Detective Enkidu is an experienced police officer and a Hard-Boiled Detective of Miller’s Square’s Precinct 23. For the past few months she has been secretly moonlighting with “All-Seeing Eye Investigations”, trying to get to the bottom of cold cases deemed ‘unworthy’ by her superiors, and re-opening ones that were suspiciously closed due to ‘lack of evidence’. Enkidu believes that a badge and a gun are all a cop needs. People may betray you, but well-maintained Standard Issue Gear can always be trusted. Despite her stone-cold exterior, she harbors inside her a creature of the Wild from Sumerian myth, who pushes her to break the very rules she fights to protect.</p>
+		  <p>“Ever since I was a child on the streets, this urge, it was calling me to rip through all this ‘modern woman’ crap and just surrender to the wild, become a beast. When I answer that call, this facade of normality is not the only thing I tear through - so you better not get in my way…”</p>
+		</blockquote>
+		<br>
+		<h2 id="excalibur">Excalibur</h2>
+		<p><img src="./images/excalibur.jpg" alt="excalibur"></p>
+		<blockquote>
+		  <p><mark>MYTHOS</mark><br>
+		  <strong>The Ultimate Weapon</strong> (Relic)<br>
+		  "Does justice call for violence?"<br>
+		  <em>While searching for old documents in her family's mansion, Excalibur uncovered an elaborate silver bracelet that could transform into any weapon she imagined.</em><br>
+		  (These tags refer to the bracelet, not Excalibur herself.)<br>
+		   &nbsp;&nbsp;• can transform into any weapon, inconspicuous in bracelet form, indestructible<br>
+		   &nbsp;&nbsp;• very conspicuous in weapon form</p>
+		  <p><mark>LOGOS</mark><br>
+		  <strong>Activist for Social Change</strong> (Mission)<br>
+		  "I cannot tolerate injustice."<br>
+		  <em>Excalibur heads a charitable foundation, working to bring better opportunities to the downtrodden populations of the City. She often goes out in disguise to witness life on the street in person.</em><br>
+		   &nbsp;&nbsp;• seasoned negotiator, contacts in every neighborhood, disguise<br>
+		   &nbsp;&nbsp;• unreliable allies</p>
+		  <p><strong>Wealthy and Dysfunctional Family</strong> (Defining Relationship)<br>
+		  "Without my family, I have no power."<br>
+		  <em>Excalibur comes from old money. She is a member of one of the City's oldest and most renowned families whose wealth is only matched by its internal drama and strife.</em><br>
+		   &nbsp;&nbsp;• cushy bank account, family 'friends' in high places, certified accountant<br>
+		   &nbsp;&nbsp;• "the old wo/man will find out.."</p>
+		  <p><strong>Rich Old Dame</strong> (Personality)<br>
+		  "Never show weakness."<br>
+		  <em>Excalibur isn't a spring chicken anymore and she prefers it this way. Life has taught her a lesson or two about how to stay ahead of the game.</em><br>
+		   &nbsp;&nbsp;• tough as a nail, bullshit detector, glamorous<br>
+		   &nbsp;&nbsp;• sore joints</p>
+		  <p><mark>COMBOS</mark><br>
+		  <code>2</code> <strong>Make a Dazzling Party Entrance:</strong> <u>Hit With All You've Got</u>: family 'friends' in high places, glamorous<br>
+		  <code>3</code> <strong>Expose Fishy Business:</strong> <u>Investigate</u>: certified accountant, contacts in every neighborhood, bullshit detector<br>
+		  <code>3</code> <strong>Cut a Deal:</strong> <u>Convince</u>: seasoned negotiator, cushy bank account, family friends' in high places<br>
+		  <code>1</code> <strong>Shape a Weapon and Attack:</strong> <u>Go Toe to Toe</u> or <u>Hit With All You've Got</u>: transform into any weapon</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>BACKGROUND</mark><br>
+		  <strong>Mythos:</strong> Excalibur, the legendary sword of Arthurian legend<br>
+		  <strong>Logos:</strong> Old-money socialite<br>
+		  <strong>Abilities:</strong> The ultimate weapon, Seasoned negotiator, Friends in high places, Cushy bank account<br>
+		  <strong>Affiliation:</strong> Charities throughout the City, her family, the City’s crème de la crème<br>
+		  <strong>Home District:</strong> The Gated Community</p>
+		  <p>Contrary to what many may think, there’s more to Excalibur than just a bitter Rich Old Dame. True, she was born to a Wealthy and Dysfunctional Family if there ever was one, but as a secret Activist for Social Change, she has her own plans for the City: plans that became possible when she found a silver bracelet which turned out to be The Ultimate Weapon in disguise.</p>
+		  <p>“If you want to do good in the world, the first thing you need to worry about is power. That’s right, you heard me correctly. So, if you care about this City, if you want to be able to change things for the better, you need to be able to exert some influence on those who benefit from the status-quo.”</p>
+		</blockquote>
+		<br>
+		<h2 id="scarlet">Scarlet</h2>
+		<p><img src="./images/scarlet.jpg" alt="scarlet"></p>
+		<blockquote>
+		  <p><mark>MYTHOS</mark><br>
+		  <strong>Red Hood</strong> (Relic)<br>
+		  "Why did the Hood choose me?"<br>
+		  <em>On the fateful night when her girlfriend Jill was kidnapped, distraught Scarlet found a red hooded coat hanging in her closet. The Hood gave her the power to hunt down and defeat those who would harm the young and innocent.</em><br>
+		   &nbsp;&nbsp;• protected by the cloak, conjure hunting weapon, "I always find my prey"<br>
+		   &nbsp;&nbsp;• bloodlust</p>
+		  <p><strong>Innocuous Threat</strong> (Subversion)<br>
+		  "Can I ever be innocent again?"<br>
+		  <em>As the chosen of the Hood, Scarlet uses her harmless appearance as the perfect cover from which to pounce at her prey and deliver a deadly blow.</em><br>
+		   &nbsp;&nbsp;• harmless little girl, surprise attack, lurk in hiding (also in Hood)<br>
+		   &nbsp;&nbsp;• "You're just a little girl…"</p>
+		  <p><mark>LOGOS</mark><br>
+		  <strong>Young Love</strong> (Defining Relationship)<br>
+		  "I'd rather die than lose Jill!"<br>
+		  <em>Scarlet and Jill first met in class in their suburbian high-school. Fascinated with each other, their friendship quickly evolved into much more. When Scarlet saved Jill, they became inseparable.</em><br>
+		   &nbsp;&nbsp;• strength to go on, empathetic, cute together<br>
+		   &nbsp;&nbsp;• daydreams</p>
+		  <p><strong>Wall-Flower</strong> (Personality)<br>
+		  "Don't let them see me!"<br>
+		  <em>There's a lot you can learn from just watching people. Shy and introverted, Scarlet prefers to do the watching over being watched.</em><br>
+		   &nbsp;&nbsp;• anonymity, trustworthy, observant<br>
+		   &nbsp;&nbsp;• painfully shy</p>
+		  <p><mark>COMBOS</mark><br>
+		  <code>2</code> <strong>Track Someone:</strong> <u>Investigate</u>: "I always find my prey", observant <br>
+		  <code>3</code> <strong>Strike From the Shadows:</strong> <u>Hit With All You've Got</u>: conjure hunting weapon, surprise attack, lurk in hiding (also in Hood)<br>
+		  <code>3</code> <strong>Blend Into the Crowd:</strong> <u>Sneak Around</u>: harmless little girl, lurk in hiding (also in Hood), anonymity<br>
+		  <code>3</code> <strong>Disarming With Sweetness:</strong> <u>Convince</u>: harmless little girl, empathetic, trustworthy</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>BACKGROUND</mark><br>
+		  <strong>Mythos:</strong> Little Red Riding Hood<br>
+		  <strong>Logos:</strong> Teenage wallflower<br>
+		  <strong>Abilities:</strong> A magical protective Hood, Conjure hunting weapons, Legendary stealth and perception, Harmless appearance<br>
+		  <strong>Affiliation:</strong> Her girlfriend Jill, Her mysterious seemingly-sentient Hood<br>
+		  <strong>Home District:</strong> Happyville (Suburbia)</p>
+		  <p>Scarlet found the Red Hood on one fateful night when her girlfriend, Jill, was kidnapped. She has vowed to never again let anyone separate them. Their Young Love continues to blossom and they’ve become inseparable - it's Jill and Scarlet to the very end! The powers given to her by the Hood help her track and hunt down those who would harm the young and innocent. This teenage Wall-Flower's harmless appearance and dislike for the spotlight give her the edge she needs to pounce on her prey and deal a deadly blow when least expected. Despite her Innocuous Appearance Scarlet is a natural hunter and as deadly as they come.</p>
+		  <p>“When Jill got kidnapped, I thought I would lose myself - instead, I found myself - or did it find me? With this Hood, I became the hunter. We’re now a thing, the Hood and me - oh, and Jill and me, of course! I only hope Jill never, ever finds out how terrible, how… dangerous, I can become.”</p>
+		</blockquote>
+		<br>
+		<h2 id="crew">Crew</h2>
+		<blockquote>
+		  <p><strong>Masked Vigilante Investigations</strong> <br>
+		  "Wherever the law fails to stop crime, we need to step in."<br>
+		  <em>You all agree on one thing the wrongs you've seen cannot be allowed to continue. Whether you met in a street fight or while doing some detective work, you probably have at least one successful team. Investigation under your belt, such as
+		 &nbsp;&nbsp;• Bringing a serial criminal to justice
+		 &nbsp;&nbsp;• Shutting down a crime lord's operation in your district
+		 &nbsp;&nbsp;• Exposing corrupt officials</em><br>
+		   &nbsp;&nbsp;• office space, got each other's back, blow off some steam<br>
+		   &nbsp;&nbsp;• stepping on each other's toes</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>BACKGROUND</mark><br>
+		  A year ago, Enkidu was investigating a cry for help written on a mysterious note, which quickly lead to the discovery of a deep mafia influence backed by persons with supernatural powers. Attempts to investigate further were shut down by her superiors, who were obviously in the pocket of the mob, so she started her own unofficial investigation.</p>
+		  <p>While following up on the rumor of a stylist dating one of the local mob bosses, Enkidu found a woman wearing a mystical bracelet standing outside of a hair salon. The woman was Excalibur and she regularly patroned the establishment while in disguise, gathering local gossip to keep an eye on the district. The salon was not the only victim, and shops across the district had closed under the pressure of the mafia. Excalibur offered to lend her power and financial backing to remove the mafia influence from Miller's Square and Enkidu gratefully accepted.</p>
+		  <p>During the course of their investigation, Enkidu and Excalibur came across Scarlet, a young girl who was out of her mind with worry over the abduction of her girlfriend Jill. It appeared that Jill had caught the eye of the mafia consigliere and he used his supernatural power of suggestion to enamor her, collecting her as a pet to keep in the backroom of his speakeasy.</p>
+		  <p>The group freed Scarlet's girlfriend and discovered the source of the enforcers' supernatural abilities: a yearly feast of Ambrosia, a magical dish that grants godlike powers. They raided the feast and defeated the consigliere and a small army of mafia enforcers. Also present was a crazy shark lady enforcer and an ominous man controlling three dogs, but the pair escaped with a crate of Ambrosia.</p>
+		  <p>Though the Ambrosia supply line had been cut, the shark lady later re-emerged to take the consigliere's place as the one controlling Miller's Square. Enkidu swore to continue her mission of freeing Miller's Square from the mafia influence and removing the corruption from her precinct. This aligned with Excalibur's goals and so she offered to lend her services when she could. Scarlet, grateful for the help in rescuing her girlfriend, also agreed to provide assistance, outside of school hours. The trio set up an informal base of operations in a closed-down office left behind by one of Enkidu's old colleagues. They tentatively named it "All-Seeing Eye Investigations."</p>
+		</blockquote>
+		<br>
+		<h2 id="locations">Locations</h2>
+		<blockquote>
+		  <p>&nbsp;&nbsp;• <strong>Miller's Square:</strong> All-Seeing Eye Investigations - MC Booklet, case setting<br>
+		   &nbsp;&nbsp;• <strong>All-Seeing Eye Investigations:</strong> All-Seeing Eye Investigations - MC Booklet, pg. 13<br>
+		   &nbsp;&nbsp;• <strong>Precinct 23:</strong> All-Seeing Eye Investigations - MC Booklet, pg. 29<br>
+		   &nbsp;&nbsp;• <strong>The Gated Community:</strong> Master of Ceremonies' Toolkit, pg. 46<br>
+		   &nbsp;&nbsp;• <strong>Happyville:</strong> Amnesia Town, case setting</p>
+		</blockquote>
+	</body>
+</html>
