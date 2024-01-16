@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+			
+			h5 a, h5 {
+				color: #ffbb55;
+	            font-size: 1em;
+	            font-weight: bold;
+	            margin-top: 0 !important;
+	            margin-block-end: -1em;
+            }
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    	details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h2 id="city%20of%20mist%20-%20rule%20notes">City of Mist - Rule Notes</h2>
+		<ul>
+		<li><strong>Story Tags:</strong> Temporary story tags expire after a single invocation and cannot be burnt for a hit. Ongoing story tags last until they narratively expire or until they are burnt. Permanent story tags do not expire (and thus can be burnt and recovered). The MC can create story tags whenever they want, including giving the player a temporary story tag for a move (such as "leverage" for Convince) if it was already existing in the narrative without requiring CtG.</li>
+		</ul><ul><li><strong>Power Tags:</strong> Power tags can only be replaced during a moment of evolution (which is only once per character), or when you replace a theme, so be sure that any tags you give your PC are intrinsic to them. It's best to keep the average amount of a new PC's power tags used for a move to only 1 or 2, which results in a 72% to 83% chance of a hit. Alternatively, you can use grit mode which scales down the power: 1 = 1, 2-3 = 2, 4-6 = 3, 7+ = 4. </li>
+		</ul><ul><li><strong>Statuses:</strong> Statuses that players create are harmful by default. You don't create a helpful status on yourself; you give yourself helpful tags and inflict harmful statuses on others. However, there is an optional rule that lets you create boosts and barriers as status filters, which are helpful statuses like those dangers possess. The MC can hit the player with a status whenever they want, but the player can usually FD against it. When a status is reduced, all pips are cleared. (eg. 4.3 - 2 = 2) Tier-5 is the tipping point in which a negative status shuts down your ability to take actions that go against it (eg. encased-in-a-web-5), a beneficial status renders you incapable of performing actions related to that status (eg. focused-3 becomes tunnel-visioned-5), and in both cases the status no longer provide a bonus to anyone's power. Tier-6 status means the PC is dead, close to it, or taken over by the MC. The max tier is always 6, and tier beyond that is reduced to 6.</li>
+		</ul><ul><li><strong>Status Stacking:</strong> A higher-tier status replaces a lower-tier status in the same spectrum. When you stack a lower-tier status with a higher-tier status, the remaining ticks after increasing to the next tier carry over. (eg. 3.2 + 2 = 4.1) The ticks required to increase a status to the next tier is equal to its current tier. (eg. from 2 to 3 is 2 ticks, from 3 to 4 is 3 ticks, etc) When a move reduces a created status, its tier is reduced before being applied to the target. Temporary statuses do not stack with prolonged statuses.</li>
+		</ul><ul><li><strong>Danger Statuses:</strong> When giving a status to a danger, you must assign it one of three uses: 1) the status counts against that danger’s spectrums to promote its defeat, 2) the status applies to player moves against that danger, or 3) the status applies to the danger’s own moves. If you use juice for option 2, be sure to track the method and tags used to create it. For option 3, increase or decrease outgoing statuses from danger moves using standard stacking and reducing rules for statuses.</li>
+		</ul><ul><li><strong>Danger Spectrums:</strong> Any status given to a danger that is on their spectrum cannot be added to your roll against them. A danger is not defeated until a spectrum hits its max tier. You may give them off-spectrum statuses (ie. statuses not given a spectrum in their danger profile), which work just like a PC's status, meaning that they add to your roll and can even take them out if it hits tier-5 or tier-6. Spectrums can only be maxed out with ongoing statuses.</li>
+		</ul><ul><li><strong>Collectives:</strong> The collective size and its size factor are: One member (0), A handful of members (1), Several members (2), Many members (3), and A host of members (4). When a single member of the collective is targeted, track its statuses separate from the collective. When a member is the collective is overcome, the MC decides whether to reduce the collective size by 1. When the collective itself is the target of a status, reduce its incoming statuses by the size factor of the collective, then apply any other defenses it may have.</li>
+		</ul><ul><li><strong>Batches:</strong> Juice is primarily created using CtG, but can also be gained by other moves like HWAYG. Batches of juice exist until they narratively expire, which is usually after just a moment. You may have multiple batches but they do not stack. While a batch exists, any tags or statuses used to create that batch cannot be used in a CtG move, and you cannot CtG doing a similar action.</li>
+		</ul><ul><li><strong>Juice:</strong> You may spend juice at any time by picking options from CtG. Any tag or status created with juice is temporary by default. Tags and statuses created using help and hurt points are also temporary. Tags and statuses created with juice cannot be used with the tags used to create the juice. You cannot spend juice to increase tiers of an existing status, but you may create a status on the same spectrum and stack them.</li>
+		</ul><ul><li><strong>Change the Game:</strong> You don't create tags and statuses with CtG, you create a batch of juice. That juice has a method, which is the action taken to create the juice. Juice can be spent at any time to pick items off the CtG menu as long as the method is still narratively relevant. Tags created with juice cannot be used in moves alongside the tags used to create the juice. While the batch of juice exists, you can't create another batch using a similar method, and you can't CtG with the tags used to create the juice either. </li>
+		</ul><ul><li><strong>Linked Moves:</strong> With the exception of FD, you cannot repeat an action using the same tags, until the conditions have changed. Each tag can only be used once within a set of linked moves, even if the tag is available and relevant to more than one move in the set. (eg. if you use a tag in HWAYG and miss, you cannot use the tag with FD to avoid the incoming status, since HWAYG leads directly into FD.) Moves that have the same purpose are also considered linked moves, even if they don’t follow one another. (eg. you cannot use a "spell book" tag with CtG to create a "fireball" tag or "magical-barrier-1" status and then use "spell book" in any move in which "fireball" or "magical-barrier-1" is used, since the purpose of using the spell book was to cast a fireball or shield from magic.)<br>
+		</li>
+		</ul>
+		<br><br>
+	</body>
+</html>
