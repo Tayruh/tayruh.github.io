@@ -6,7 +6,7 @@
 (function(solo) {
 	"use strict";
 
-	var version = "v20240118";
+	var version = "v20240119";
 
 	var current_page, current_section, current_menu, color_theme, localStorage;
 	var toc = [];
@@ -53,7 +53,6 @@
 	var muse = {
 		mythic: {
 			fate: {
-				rank: ["Superhuman 10", "Superhuman 9", "Superhuman 8", "Superhuman 7", "Superhuman 6", "Superhuman 5", "Superhuman 4", "Superhuman 3", "Superhuman 2", "Superhuman", "Awesome", "Incredible", "Exceptional", "High", "Above Average", "Average", "Below Average", "Low", "Weak", "Miniscule", "Miniscule 2"],
 				odds: ["Certain", "Nearly Certain", "Very Likely", "Likely", "50/50", "Unlikely", "Very Unlikely", "Nearly Impossible", "Impossible"],
 				chart: [
 					[[10, 50, 91], [7, 35, 88], [5, 25, 86], [3, 15, 84], [2, 10, 83], [1, 5, 82], [-100, 1, 81], [-100, 1, 81], [-100, 1, 81]],
@@ -69,15 +68,8 @@
 				focus: { 
 					"random event": { 5: "Remote Event", 10: "Ambiguous Event", 20: "New NPC", 40: "NPC Action", 45: "NPC Negative", 50: "NPC Positive", 55: "Move Toward A Thread", 65: "Move Away From A Thread", 70: "Close A Thread", 80: "PC Negative", 85: "PC Positive", 100: "Current Context" },
 					"prepared adventure": { 20: "Adventure Feature", 40: "NPC Action", 50: "NPC Negative", 55: "NPC Positive", 70: "PC Negative", 80: "PC Positive", 100: "Current Context" },
-					"adventure": { 16: "Action!",24: "Remote Event", 44: "NPC Action", 52: "New NPC", 56: "Move Toward a Thread", 64: "Move Away From a Thread" },
-					"epic": { 12: "Thread Escalates", 16: "Remote Event", 30: "NPC Action", 42: "New NPC", 46: "Move Toward a Thread", 58: "Move Away From a Thread", 72: "PC Negative", 80: "PC Positive", 84: "Ambiguous Event", 92: "NPC Negative", 100: "NPC Positive" },
-					"horror": { 10: "Horror - PC", 23: "Horror - NPC", 30: "Remote Event", 49: "NPC Action", 52: "New NPC", 55: "Move Toward a Thread", 62: "Move Away From a Thread", 72: "PC Negative", 75: "PC Positive", 82: "Ambiguous Event", 97: "NPC Negative", 100: "NPC Positive" },
-					"mystery": { 15: "Clue Element", 30: "Suspect Element", 34: "Remote Event", 38: "Ambiguous Event", 44: "New NPC", 58: "NPC Action", 66: "NPC Negative", 71: "NPC Positive", 79: "Move Toward a Thread", 84: "Move Away From a Thread", 86: "Close a Thread", 94: "PC Negative", 100: "PC Positive" },
-					"personal": { 7: "Remote Event", 24: "NPC Action", 28: "PC NPC Action", 35: "New NPC", 42: "Move Toward a Thread", 45: "Move Toward a PC Thread", 50: "Move Away From a Thread", 52: "Move Away From a PC Thread", 54: "Close Thread", 55: "Close PC Thread", 67: "PC Negative", 75: "PC Positive", 83: "Ambiguous Event", 90: "NPC Negative", 92: "PC NPC Negative", 99: "NPC Positive", 100: "PC NPC Positive" },
-					"social": { 12: "Drop a Bomb!", 24: "Remote Event", 36: "NPC Action", 44: "New NPC", 56: "Move Toward a Thread",  60: "Move Away From a Thread", 64: "Close a Thread", 72: "PC Negative", 80: "PC Positive", 92: "Ambiguous Event", 96: "NPC Negative", 100: "NPC Positive" }
 				},
 				tracks: {
-					"horror": { 4: "Protection +1", 9: "Leverage +2", 10: "Shiver +2", 14: "Track +1", 15: "Protection +2", 17: "Leverage +3", 18: "Shiver +3", 19: "Track +2", 21: "Lose Protection +1", 24: "Strengthen Leverage +1", 26: "Lose Leverage +1", 27: "Strengthen Leverage +2" },
 					"thread": { 9: "Progress +2", 10: "Flashpoint +2", 14: "Track +1", 17: "Progress +3", 18: "Flashpoint +3", 19: "Track +2", 24: "Strengthen Progress +1", 25: "Strengthen Progress +2" }
 			 	}
 			},
@@ -101,7 +93,7 @@
 				"character identity": ["Abandoned", "Administrator", "Adventurous", "Adversary", "Advisor", "Ally", "Art", "Artist", "Assistant", "Athlete", "Authority", "Bureaucrat", "Business", "Combatant", "Competitor", "Controller", "Crafter", "Creator", "Criminal", "Deceiver", "Deliverer", "Dependent", "Driver/Pilot", "Elite", "Enemy", "Enforcer", "Engineer", "Entertainer", "Executive", "Expert", "Explorer", "Family", "Farmer", "Fighter", "Fixer", "Foreigner", "Friend", "Gambler", "Gatherer", "Guardian", "Healer", "Helpless", "Hero", "Hunter", "Information", "Innocent", "Inspector", "Intellectual", "Investigator", "Judge", "Killer", "Laborer", "Lackey", "Law", "Leader", "Legal", "Lost", "Mechanical", "Mediator", "Merchant", "Messenger", "Military", "Mundane", "Mystery", "Official", "Organizer", "Outsider", "Performer", "Persecutor", "Planner", "Pleaser", "Power", "Prisoner", "Professional", "Protector", "Public", "Punish", "Radical", "Religious", "Represent", "Rogue", "Ruffian", "Ruler", "Scholar", "Scientist", "Scout", "Servant", "Socialite", "Soldier", "Student", "Subverter", "Supporter", "Survivor", "Teacher", "Thief", "Trader", "Victim", "Villain", "Wanderer", "Warrior"],
 				"character motivations": ["Adventure", "Adversity", "Ambition", "Anger", "Approval", "Art", "Attain", "Business", "Change", "Character", "Conflict", "Control", "Create", "Danger", "Death", "Deceive", "Destroy", "Diminish", "Disrupt", "Emotion", "Enemy", "Environment", "Escape", "Failure", "Fame", "Family", "Fear", "Fight", "Find", "Free", "Friend", "Goal", "Gratify", "Group", "Guide", "Guilt", "Hate", "Heal", "Help", "Hide", "Home", "Hope", "Idea", "Illness", "Important", "Imprison", "Increase", "Information", "Innocent", "Intellect", "Intolerance", "Investment", "Jealousy", "Joy", "Justice", "Leader", "Legal", "Loss", "Love", "Loyalty", "Malice", "Misfortune", "Mistrust", "Mundane", "Mysterious", "Nature", "Object", "Obligation", "Official", "Oppose", "Pain", "Passion", "Path", "Peace", "Physical", "Place", "Plan", "Pleasure", "Power", "Pride", "Protect", "Pursue", "Rare", "Recover", "Reveal", "Revenge", "Riches", "Safety", "Search", "Serve", "Start", "Stop", "Strange", "Struggle", "Success", "Suffering", "Support", "Take", "Transform", "Travel"],
 				"character personality": ["Active", "Adventurous", "Aggressive", "Agreeable", "Ambitious", "Amusing", "Angry", "Annoying", "Anxious", "Arrogant", "Average", "Awkward", "Bad", "Bitter", "Bold", "Brave", "Calm", "Careful", "Careless", "Classy", "Cold", "Collector", "Committed", "Competitive", "Confident", "Control", "Crazy", "Creative", "Crude", "Curious", "Deceptive", "Determined", "Devoted", "Disagreeable", "Dull", "Emotion", "Empathetic", "Fair", "Fastidious", "Follower", "Foolish", "Friendly", "Good", "Gourmet", "Greed", "Haunted", "Helpful", "Honest", "Honor", "Humble", "Humorous", "Inconsistent", "Independent", "Interesting", "Intolerant", "Irresponsible", "Knowledgeable", "Larcenous", "Leader", "Likable", "Loyal", "Manipulative", "Mercurial", "Naive", "Nervous", "Oblivious", "Obstinate", "Optimistic", "Perceptive", "Perfectionist", "Practical", "Prepared", "Principled", "Protect", "Quiet", "Quirky", "Rash", "Rational", "Respectful", "Responsible", "Restless", "Risk", "Rude", "Savvy", "Searching", "Selfish", "Selfless", "Shallow", "Social", "Strange", "Strong", "Studious", "Superstitious", "Tolerant", "Vindictive", "Vocal", "Wary", "Weak", "Wild", "Wise"],
-				"Character skills": ["Activity", "Adversity", "Agility", "Animals", "Art", "Assist", "Athletic", "Attack", "Attain", "Average", "Balance", "Beginner", "Bestow", "Block", "Business", "Change", "Combat", "Communicate", "Conflict", "Control", "Create", "Criminal", "Damage", "Danger", "Deceit", "Decrease", "Defense", "Develop", "Dispute", "Disrupt", "Domestic", "Dominate", "Driving", "Elements", "Energy", "Environment", "Experienced", "Expert", "Fight", "Free", "Guide", "Harm", "Heal", "Health", "Increase", "Inform", "Information", "Inquire", "Inspect", "Intellect", "Invade", "Investigative", "Knowledge", "Leadership", "Legal", "Lethal", "Lie", "Master", "Mechanical", "Medical", "Mental", "Military", "Motion", "Move", "Mundane", "Mysterious", "Nature", "Normal", "Obstacles", "Official", "Open", "Oppose", "Perception", "Practical", "Professional", "Ranged", "Release", "Rogue", "Ruin", "Simple", "Social", "Specialist", "Start", "Stop", "Strange", "Strength", "Struggle", "Suppress", "Take", "Technology", "Transform", "Travel", "Trick", "Usurp", "Vehicle", "Violence", "Water", "Weapon", "Weather", "Wounds"],
+				"character skills": ["Activity", "Adversity", "Agility", "Animals", "Art", "Assist", "Athletic", "Attack", "Attain", "Average", "Balance", "Beginner", "Bestow", "Block", "Business", "Change", "Combat", "Communicate", "Conflict", "Control", "Create", "Criminal", "Damage", "Danger", "Deceit", "Decrease", "Defense", "Develop", "Dispute", "Disrupt", "Domestic", "Dominate", "Driving", "Elements", "Energy", "Environment", "Experienced", "Expert", "Fight", "Free", "Guide", "Harm", "Heal", "Health", "Increase", "Inform", "Information", "Inquire", "Inspect", "Intellect", "Invade", "Investigative", "Knowledge", "Leadership", "Legal", "Lethal", "Lie", "Master", "Mechanical", "Medical", "Mental", "Military", "Motion", "Move", "Mundane", "Mysterious", "Nature", "Normal", "Obstacles", "Official", "Open", "Oppose", "Perception", "Practical", "Professional", "Ranged", "Release", "Rogue", "Ruin", "Simple", "Social", "Specialist", "Start", "Stop", "Strange", "Strength", "Struggle", "Suppress", "Take", "Technology", "Transform", "Travel", "Trick", "Usurp", "Vehicle", "Violence", "Water", "Weapon", "Weather", "Wounds"],
 				"character traits & flaws": ["Academic", "Adversity", "Animal", "Assist", "Attract", "Beautiful", "Benefits", "Bestow", "Bizarre", "Block", "Burden", "Combat", "Communicate", "Connection", "Control", "Create", "Criminal", "Damaged", "Dangerous", "Decrease", "Defense", "Delicate", "Different", "Dominate", "Driven", "Emotion", "Enemy", "Energy", "Environment", "Failure", "Fame", "Familiar", "Fast", "Feeble", "Flawless", "Focused", "Fortunate", "Friends", "Good", "Healthy", "Illness", "Impaired", "Increase", "Information", "Inspect", "Intellect", "Intense", "Interesting", "Lacking", "Large", "Leadership", "Legal", "Less", "Lethal", "Limited", "Loyal", "Mental", "Military", "Misfortune", "Missing", "Move", "Multi", "Nature", "Object", "Odd", "Old", "Partial", "Passion", "Perception", "Physical", "Poor", "Possessions", "Power", "Principles", "Public", "Rare", "Remarkable", "Resistant", "Resource", "Rich", "Sense", "Skill", "Small", "Social", "Specialized", "Spirit", "Strange", "Strong", "Suffering", "Technical", "Technology", "Tough", "Travel", "Trouble", "Trustworthy", "Unusual", "Very", "Weak", "Weapon", "Young"],
 				"city descriptors": ["Activity", "Aggressive", "Aromatic", "Average", "Beautiful", "Bleak", "Block", "Bridge", "Bustling", "Calm", "Chaotic", "Clean", "Cold", "Colorful", "Commerce", "Conflict", "Control", "Crime", "Dangerous", "Dense", "Developed", "Dirty", "Efficient", "Energy", "Enormous", "Environment", "Extravagant", "Festive", "Flawless", "Frightening", "Government", "Happy", "Harsh", "Healthy", "Helpful", "Hills", "History", "Illness", "Important", "Impressive", "Industry", "Interesting", "Intrigues", "Isolated", "Lacking", "Lake", "Large", "Lavish", "Leadership", "Liberty", "Loud", "Magnificent", "Masses", "Meaningful", "Mechanical", "Messy", "Mighty", "Military", "Miserable", "Misfortune", "Modern", "Mountain", "Mundane", "Mysterious", "Nature", "Odd", "Old", "Oppress", "Opulence", "Peace", "Poor", "Powerful", "Protected", "Public", "Quiet", "Rare", "Reassuring", "Remarkable", "River", "Rough", "Ruined", "Rustic", "Simple", "Small", "Sparse", "Structures", "Struggle", "Success", "Suffering", "Technology", "Tension", "Travel", "Troubled", "Valuable", "Warm", "Water", "Weak", "Weather", "Wild", "Work"],
 				"civilization descriptors": ["Active", "Advanced", "Adventurous", "Aggressive", "Agricultural", "Ancient", "Angry", "Anxious", "Artistic", "Average", "Beautiful", "Bizarre", "Bleak", "Bold", "Bureaucratic", "Carefree", "Careful", "Careless", "Cautious", "Classy", "Clean", "Colorful", "Combative", "Commercial", "Competitive", "Constructive", "Controlling", "Crazy", "Creative", "Creepy", "Cruel", "Curious", "Dangerous", "Declining", "Defiant", "Delightful", "Developed", "Disagreeable", "Distrustful", "Dominant", "Dull", "Efficient", "Expanding", "Failed", "Famous", "Fearful", "Festive", "Free", "Generous", "Greedy", "Happy", "Healthy", "Helpful", "Helpless", "Historical", "Important", "Industrial", "Influential", "Intolerant", "Large", "Lawful", "Lawless", "Magnificent", "Mighty", "Militaristic", "Miserable", "Modern", "Mundane", "Mysterious", "Old", "Open", "Oppressive", "Peaceful", "Polite", "Poor", "Powerful", "Primitive", "Punitive", "Quaint", "Religious", "Ruined", "Rustic", "Ruthless", "Scary", "Simple", "Small", "Strange", "Strong", "Struggling", "Successful", "Suffering", "Suppressed", "Suspicious", "Treacherous", "Warlike", "Weak", "Wealthy", "Welcoming", "Wild", "Young"],
@@ -130,28 +122,6 @@
 				"terrain descriptors": ["Abandoned", "Abundant", "Activity", "Advanced", "Allies", "Ancient", "Animals", "Atmosphere", "Barren", "Beautiful", "Bizarre", "Catastrophe", "Chaotic", "City", "Civilization", "Cliffs", "Clouds", "Cold", "Colorful", "Combative", "Communicate", "Conflict", "Damaged", "Danger", "Defense", "Desert", "Dry", "Dull", "Elements", "Empty", "Energy", "Enormous", "Environment", "Fertile", "Frightening", "Habitable", "Harsh", "Hazy", "Healthy", "Helpful", "Hostile", "Hot", "Intense", "Interesting", "Large", "Lethal", "Life", "Lovely", "Magnificent", "Masses", "Mechanical", "Message", "Mighty", "Misfortune", "Mountainous", "Multiple", "Mundane", "Mysterious", "Natural", "Nature", "Nondescript", "Ocean", "Odd", "Peaceful", "People", "Plants", "Populated", "Powerful", "Primitive", "Rain", "Rare", "Remarkable", "Resourceful", "Riches", "River", "Rocky", "Rough", "Ruined", "Ruins", "Sandy", "Scary", "Simple", "Small", "Strange", "Strong", "Technology", "Threatening", "Toxic", "Tranquil", "Trees", "Unusual", "Valuable", "Violent", "Warm", "Water", "Weak", "Weather", "Wild", "Windy", "Wonders"],
 				"undead descriptors": ["Active", "Aggressive", "Angry", "Animal", "Anxious", "Attract", "Beautiful", "Bestow", "Bizarre", "Bleak", "Bold", "Bound", "Cold", "Combative", "Communicate", "Control", "Create", "Creepy", "Dangerous", "Dark", "Deceive", "Dirty", "Disgusting", "Elements", "Enemies", "Energy", "Environment", "Evil", "Fast", "Fear", "Fight", "Floating", "Friendly", "Frightening", "Glad", "Glow", "Goals", "Good", "Guide", "Harm", "Helpful", "Helpless", "Historical", "Horrible", "Hungry", "Imitate", "Information", "Insubstantial", "Intelligent", "Large", "Leadership", "Lethal", "Light", "Limited", "Lonely", "Love", "Macabre", "Malice", "Message", "Messy", "Mighty", "Mindless", "Miserable", "Misfortune", "Monstrous", "Mundane", "Odd", "Old", "Pain", "Pale", "Passive", "Possessions", "Possessive", "Powerful", "Powers", "Purposeful", "Pursue", "Quiet", "Resistant", "Rotting", "Scary", "Seeking", "Shambling", "Slow", "Small", "Smelly", "Strange", "Strong", "Threatening", "Tough", "Transform", "Travel", "Trick", "Vengeful", "Violent", "Weak", "Weakness", "Weapons", "Wounds", "Young"],
 				"visions & dreams": ["Activity", "Adversity", "Allies", "Assist", "Attainment", "Bizarre", "Bleak", "Catastrophe", "Celebrate", "Change", "Colorful", "Conflict", "Contact", "Control", "Creepy", "Crisis", "Cruelty", "Danger", "Dark", "Death", "Defeat", "Disruption", "Elements", "Emotions", "Enemies", "Energy", "Environment", "Event", "Evil", "Failure", "Fears", "Festive", "Fight", "Friendship", "Frightening", "Future", "Goals", "Good", "Guidance", "Harm", "Helpful", "Helpless", "Hint", "Hope", "Horrible", "Hurry", "Ideas", "Implore", "Important", "Incomplete", "Information", "Instruction", "Liberty", "Lies", "Love", "Malice", "Masses", "Mechanical", "Message", "Messy", "Military", "Misfortune", "Mundane", "Mysterious", "Natural", "Obscure", "Odd", "Oppose", "Path", "Peace", "People", "Place", "Plans", "Plot", "Positive", "Possessions", "Power", "Preventable", "Reassuring", "Riches", "Riddle", "Ruin", "Scary", "Simple", "Strange", "Struggle", "Success", "Suffering", "Suppress", "Tension", "Threat", "Time", "Travel", "Trouble", "Trust", "Uncertain", "Unsettling", "Violence", "Warning", "Weapon"],
-	
-				"clues": ["Abandoned", "Abnormal", "Academic", "Amusing", "Animal", "Aromatic", "Art", "Awkward", "Beautiful", "Bizarre", "Business", "Careless", "Classy", "Clean", "Clothing", "Cold", "Colorful", "Communication", "Complicated", "Container", "Creepy", "Damaged", "Dangerous", "Delicate", "Descriptive", "Detailed", "Dirty", "Disgusting", "Dispute", "Empty", "Exotic", "Extravagant", "Familiar", "Fancy", "Feminine", "Festive", "Food", "Frightening", "Furnishing", "Hard", "Heavy", "Hidden", "Home", "Information", "Intense", "Intrigue", "Investment", "Juvenile", "Large", "Legal", "Lethal", "Lies", "Loud", "Luxury", "Magnificent", "Masculine", "Meaningful", "Mechanical", "Messy", "Military", "Misfortune", "Modern", "Motive", "Mundane", "Mysterious", "Natural", "Neat", "Obscure", "Odd", "Official", "Old", "Partial", "Passion", "Personal", "Plot", "Portal", "Possession", "Powerful", "Quaint", "Rare", "Reassuring", "Ruined", "Rumor", "Scientific", "Simple", "Small", "Soft", "Technology", "Threatening", "Tool", "Travel", "Uncertain", "Valuable", "Vehicle", "Warm", "Waste", "Wealth", "Weapon", "Wet", "Work"],
-				"suspects": ["Afraid", "Aggressive", "Aggrieved", "Angry", "Anxious", "Argumentative", "Assist", "Associate", "Awkward", "Beautiful", "Bizarre", "Bold", "Brave", "Burden", "Business", "Busy", "Calm", "Careful", "Careless", "Classy", "Competition", "Connected", "Conniving", "Corrupt", "Creepy", "Dangerous", "Deceive", "Defiant", "Desperate", "Dispute", "Elusive", "Emotional", "Enemy", "Exotic", "Failure", "Fame", "Family", "Feminine", "Fleeing", "Foolish", "Frantic", "Friend", "Frightening", "Frivolous", "Happy", "Harmful", "Helpful", "Helpless", "Home", "Important", "Information", "Intellect", "Involved", "Jealousy", "Juvenile", "Lazy", "Leadership", "Legal", "Love", "Loyal", "Masculine", "Mature", "Misfortune", "Missing", "Motivated", "Mundane", "Mysterious", "Negligent", "Odd", "Official", "Old", "Passionate", "Poor", "Power", "Privileged", "Professional", "Protective", "Quiet", "Reassuring", "Representative", "Resourceful", "Rough", "Ruthless", "Secretive", "Skilled", "Stealthy", "Strong", "Success", "Suffering", "Suspicious", "Tension", "Threatening", "Unhelpful", "Unknown", "Unusual", "Vengeance", "Wealthy", "Witness", "Work", "Young"],
-				"location descriptors, general": ["Abandoned", "Active", "Amusing", "Ancient", "Aromatic", "Artistic", "Atmosphere", "Average", "Beautiful", "Bizarre", "Bleak", "Bright", "Calm", "Classy", "Clean", "Cluttered", "Cold", "Colorful",  "Confusing", "Creepy", "Cute", "Damaged", "Dangerous", "Dark", "Delightful", "Dirty", "Disgusting", "Domestic", "Drab", "Dry", "Echo", "Empty", "Enclosed", "Enormous", "Exclusive", "Exotic", "Expected",  "Extravagant", "Familiar", "Fancy", "Festive", "Fortunate", "Frightening", "Full", "Harmful", "Harsh", "Helpful", "Horrible", "Important", "Inactive", "Intense", "Intriguing", "Lavish", "Lonely",  "Long", "Loud", "Magnificent", "Majestic", "Meaningful", "Messy", "Military", "Modern", "Moving", "Mundane", "Mysterious", "Natural", "Negative", "New", "Odd", "Official", "Open", "Ornate", "Peaceful",  "Personal", "Positive", "Primitive", "Protection", "Purposeful", "Quaint", "Quiet", "Reassuring", "Resourceful", "Ruined", "Rustic", "Safe", "Simple", "Small", "Smelly", "Sounds", "Spacious",  "Storage", "Strange", "Tall", "Threatening", "Tranquil", "Unexpected", "Unsteady", "Unusual", "Warm", "Watery"],
-				"object descriptors, general": ["Active", "Amusing", "Ancient", "Aromatic", "Artistic", "Average", "Beautiful", "Bizarre", "Bright", "Broken", "Classy", "Clothing", "Cold", "Colorful", "Communication", "Confusing", "Creepy", "Cute",  "Damaged", "Dangerous", "Deliberate", "Delicate", "Delightful", "Desired", "Disgusting", "Domestic", "Empty", "Energy", "Enormous", "Exotic", "Expected", "Extravagant", "Faded", "Familiar", "Fancy",  "Flora", "Food", "Fortunate", "Fragile", "Frightening", "Fuel", "Garbage", "Hard", "Harmful", "Healing", "Heavy", "Helpful", "Hidden", "Horrible", "Important", "Inactive", "Intriguing", "Large", "Lethal",  "Light", "Liquid", "Loud", "Magnificent", "Majestic", "Meaningful", "Mechanical", "Military", "Modern", "Moving", "Multiple", "Mundane", "Mysterious", "Natural", "Negative", "New", "Odd", "Official",  "Old", "Ornate", "Personal", "Positive", "Powerful", "Primitive", "Prized", "Rare", "Reassuring", "Resource", "Ruined", "Single", "Small", "Smelly", "Smooth", "Soft", "Strange", "Threatening", "Tool",  "Travel", "Unexpected", "Unusual", "Useful", "Useless", "Valuable", "Warm", "Watery", "Weapon"],
-				"object descriptors, small items": ["Active", "Aromatic", "Art", "Beautiful", "Bizarre", "Broken", "Business", "Cheerful", "Clean", "Clothing", "Colorful", "Consumable", "Container", "Cool", "Creepy", "Cute", "Damaged", "Dangerous",  "Delicate", "Delightful", "Dirty", "Drab", "Dry", "Dull", "Empty", "Exotic", "Extravagant", "Faded", "Familiar", "Fancy", "Feminine", "Fixable", "Flawless", "Food", "Fragile", "Fresh", "Full", "Good",  "Hard", "Harmful", "Heavy", "Helpful", "Historical", "Important", "Information", "Interesting", "Jewelry", "Juvenile", "Lavish", "Legal", "Lethal", "Light", "Liquid", "Magnificent", "Masculine",  "Meaningful", "Mechanical", "Modern", "Mundane", "Mysterious", "Natural", "New", "Nondescript", "Normal", "Odd", "Official", "Old", "Oversized", "Personal", "Petite", "Playful", "Possession",  "Projectile", "Quaint", "Rare", "Reassuring", "Remarkable", "Riches", "Rotten", "Rough", "Ruined", "Rustic", "Scary", "Sharp", "Simple", "Small", "Small", "Smooth", "Soft", "Technology", "Tool",  "Transparent", "Ugly", "Utility", "Valuable", "Warm", "Watery", "Weapon", "Worn", "Written"],
-				"planet descriptors": ["Abandoned", "Abnormal", "Abundant", "Activity", "Advanced", "Aggressive", "Allies", "Ancient", "Animals", "Atmosphere", "Average", "Barren", "Beautiful", "Bizarre", "Catastrophe", "Cities",  "Civilization", "Clouds", "Cold", "Colorful", "Combative", "Communicate", "Conflict", "Damaged", "Danger", "Death", "Defense", "Desert", "Dry", "Dull", "Elements", "Empty", "Energy", "Enormous",  "Environment", "Exotic", "Frightening", "Gaseous", "Habitable", "Harsh", "Healthy", "Helpful", "Hostile", "Hot", "Intense", "Interesting", "Large", "Lethal", "Life", "Lovely", "Magnificent", "Majestic",  "Masses", "Mature", "Mechanical", "Messages", "Mighty", "Military", "Misfortune", "Modern", "Moon", "Mountainous", "Multi", "Mundane", "Mysterious", "Natural", "Nature", "Nondescript", "Normal",  "Oceans", "Odd", "Peaceful", "People", "Populated", "Powerful", "Primitive", "Rare", "Remarkable", "Riches", "Rings", "Rocky", "Rough", "Ruined", "Ruins", "Scary", "Simple", "Small", "Star", "Strong",  "Suffering", "Technology", "Threatening", "Tranquil", "Valuable", "Violent", "Warm", "Water", "Weak", "Weather", "Wild"],
-				"suspects descriptors": ["Afraid", "Aggressive", "Aggrieved", "Angry", "Anxious", "Argumentative", "Assist", "Associate", "Awkward", "Beautiful", "Bizarre", "Bold", "Brave", "Burden", "Business", "Busy", "Calm", "Careful", "Careless", "Classy", "Competition", "Connected", "Conniving", "Corrupt", "Creepy", "Dangerous", "Deceive", "Defiant", "Desperate", "Dispute", "Elusive", "Emotional", "Enemy", "Exotic", "Failure", "Fame", "Family", "Feminine", "Fleeing", "Foolish", "Frantic", "Friend", "Frightening", "Frivolous", "Happy", "Harmful", "Helpful", "Helpless", "Home", "Important", "Information", "Intellect", "Involved", "Jealousy", "Juvenile", "Lazy", "Leadership", "Legal", "Love", "Loyal", "Masculine", "Mature", "Misfortune", "Missing", "Motivated", "Mundane", "Mysterious", "Negligent", "Odd", "Official", "Old", "Passionate", "Poor", "Power", "Privileged", "Professional", "Protective", "Quiet", "Reassuring", "Representative", "Resourceful", "Rough", "Ruthless", "Secretive", "Skilled", "Stealthy", "Strong", "Success", "Suffering", "Suspicious", "Tension", "Threatening", "Unhelpful", "Unknown", "Unusual", "Vengeance", "Wealthy", "Witness", "Work", "Young"],
-				"issue": ["Abandonment", "Abuse", "Accident", "Accomplishment", "Addiction", "Aid", "Anger", "Answers", "Appreciation", "Betrayal", "Break", "Care", "Careful", "Careless", "Child", "Childhood", "Colleague", "Common", "Connection", "Country", "Death", "Debt", "Deceit", "Dependent", "Despair", "Destination", "Disaster", "Discovery", "Distrust", "Duty", "Ego", "Enemy", "Escape", "Exotic", "Failure", "Fall", "Family", "Flee", "Fortune", "Found", "Free", "Friend", "Goal", "Guilt", "Happiness", "Hardship", "Hatred", "Healing", "Home", "Honor", "Hope", "Humility", "Identity", "Illness", "Independent", "Injury", "Intended", "Lies", "Life", "Location", "Loneliness", "Loss", "Lost", "Love", "Memory", "Mistake", "Mystery", "Object", "Pain", "Parent", "Peace", "Power", "Pride", "Questions", "Reciprocation", "Reliance", "Rely", "Repair", "Rescue", "Resentment", "Responsibility", "Revenge", "Rise", "Seek", "Separation", "Sibling", "Stranger", "Talent", "Tested", "Theft", "Time", "Trapped", "Travel", "Trust", "Truth", "Unknown", "War", "Work", "Yearning", "Youth"],
-				"puzzle descriptors": ["Access", "Active", "Amusing", "Anxious", "Art", "Assist", "Attain", "Balance", "Barrier", "Beautiful", "Bizarre", "Brave", "Careful", "Caution", "Change", "Choice", "Code", "Colorful", "Combination", "Communicate", "Competition", "Complete", "Controls", "Countdown", "Damaged", "Danger", "Delicate", "Disarm", "Dismantle", "Disrupt", "Elements", "Enemy", "Energy", "Environment", "Extravagant", "Fear", "Frantic", "Free", "Frightening", "Game", "Goal", "Harm", "Historical", "Imitate", "Information", "Innocent", "Inquire", "Inscription", "Inside", "Inspect", "Intellect", "Knowledge", "Large", "Lethal", "Lock", "Lure", "Maze", "Mechanical", "Message", "Missing", "Move", "Multiple", "Mundane", "Mysterious", "Normal", "Object", "Obscured", "Official", "Old", "Open", "Oppose", "Pattern", "Personal", "Physical", "Portal", "Power", "Precision", "Problem", "Question", "Release", "Repair", "Resolve", "Reward", "Riddle", "Risk", "Simple", "Skill", "Solve", "Speak", "Start", "Stop", "Strange", "Struggle", "Technology", "Tension", "Threatening", "Timed", "Water", "Weapon", "Words"],
-				"puzzle reward": ["Access", "Advice", "Aid", "Allies", "Answers", "Art", "Assist", "Attain", "Attract", "Befriend", "Benefits", "Bestow", "Betrayal", "Bizarre", "Break", "Calm", "Challenge", "Change", "Clue", "Communicate", "Control", "Defense", "Delay", "Deliverance", "Desire", "Disrupt", "Energy", "Entrance", "Environment", "Equipment", "Escape", "Exit", "Expectation", "Free", "Friendship", "Gift", "Goal", "Good", "Gratify", "Guide", "Help", "Hidden", "Hope", "Ideas", "Important", "Increase", "Information", "Joy", "Key", "Liberty", "Meager", "Mechanical", "Message", "Move", "Mundane", "Mysterious", "News", "Normal", "Object", "Odd", "Official", "Open", "Outside", "Overthrow", "Partial", "Path", "Peace", "Physical", "Portal", "Possessions", "Postpone", "Power", "Progress", "Reassuring", "Release", "Replenish", "Resolution", "Resource", "Return", "Revealed", "Riches", "Safety", "Simple", "Small", "Start", "Stop", "Strange", "Success", "Task", "Tool", "Transform", "Trap", "Travel", "Treasure", "Triumph", "Truce", "Valuable", "Victory", "Weapon", "Wishes"],
-				"puzzle consequence": ["Adversity", "Alarm", "Betray", "Bizarre", "Blades", "Block", "Ceiling", "Change", "Choice", "Cloud", "Conflict", "Consequence", "Constrain", "Control", "Countdown", "Create", "Creature", "Damage", "Danger", "Deceive", "Decrease", "Delay", "Depletion", "Deprive", "Destruction", "Disrupt", "Divide", "Drop", "Elements", "Enemies", "Energy", "Environment", "Escape", "Explode", "Expose", "Failure", "Fall", "Fear", "Fight", "Fire", "Floor", "Frantic", "Free", "Free", "Frightening", "Harm", "Heavy", "Helpless", "Illness", "Illusion", "Imitate", "Imprison", "Increase", "Information", "Injure", "Inside", "Key", "Lethal", "Loss", "Lost", "Mechanism", "Mental", "Message", "Misfortune", "Move", "Mundane", "Mysterious", "Open", "Pain", "Path", "Physical", "Portal", "Possessions", "Postpone", "Power", "Projectile", "Punish", "Release", "Reveal", "Ruin", "Scary", "Setback", "Simple", "Stab", "Start", "Stop", "Strange", "Struggle", "Suffering", "Summon", "Suppress", "Take", "Threaten", "Toxin", "Trigger", "Trouble", "Violent", "Walls", "Water", "Weapon"],
-				"journey events": ["Abandon", "Accident", "Activity", "Adversity", "Aid", "Allies", "Ambush", "Animal", "Arrive", "Assistance", "Attainment", "Betray", "Block", "Break", "Burden", "Bureaucracy", "Business", "Carelessness", "Carry", "Change", "Coincidence", "Communicate", "Conflict", "Danger", "Deceive", "Decision", "Decrease", "Delay", "Depletion", "Detour", "Direction", "Discovery", "Distraction", "Elements", "Enemies", "Environment", "Failure", "Fatigue", "Fears", "Fight", "Food", "Friendship", "Goals", "Guide", "Harm", "Heal", "Help", "Home", "Hope", "Illness", "Increase", "Information", "Injury", "Leadership", "Lost", "Luck", "Malfunction", "Messages", "Mishap", "Mistake", "Move", "Mundane", "Mutiny", "Nature", "Negligence", "News", "Obstacle", "Open", "Oppose", "Path", "Peace", "Physical", "Plans", "Possessions", "Pursue", "Quiet", "Scarcity", "Separate", "Start", "Stop", "Struggle", "Stuck", "Success", "Suffering", "Supplies", "Take", "Technology", "Tension", "Travel", "Trick", "Triumph", "Trouble", "Truce", "Trust", "Unexpected", "Vehicle", "Warning", "Waste", "Weather", "Wishes"],
-				"plot points, action": ["Abduction", "Ambush", "Attack", "Barrier", "Battle", "Catastrophe", "Chase", "Collateral", "Competition", "Conflict", "Confrontation", "Crash", "Culmination", "Damage", "Destroy", "Destruction", "Distraction", "Emergency", "Escape", "Frenetic", "Guarded", "Harm", "Intensify", "Intervention", "Lethal", "Location", "Object", "Peace", "Physical", "Progress", "Protect", "Pursued", "Rescue", "Risky", "Stop", "Strange", "Survivor", "Theft", "Travel", "Turnabout", "Urgency", "Victory"],
-				"plot points, tension": ["Betrayal", "Catastrophe", "Choice", "Coercion", "Crime", "Damage", "Death", "Depletion", "Diminishment", "Disappearance", "Enemy", "Escape", "Explore", "Guarded", "Horror", "Impending", "Incapacitation", "Intimidation", "Law", "Location", "Night", "Public", "Pursued", "Recurrence", "Remote", "Repercussion", "Resource", "Revenge", "Risky", "Rural", "Shady", "Strange", "Survivor", "Suspicion", "Threat", "Trapped", "Travel", "Ultimatum", "Unknown", "Urban", "Urgency", "Vulnerability"],
-				"plot points, mystery": ["Alternate", "Behavior", "Clue", "Connected", "Crime", "Cryptic", "Death", "Disappearance", "Discovery", "Duplicitous", "Emergency", "Evidence", "Explore", "Exposed", "Fraud", "Information", "Intercept", "Law", "Lie", "Lucky", "Misled", "Motivation", "Object", "Observer", "Reappearance", "Resource", "Revelation", "Secret", "Solved", "Source", "Stop", "Strange", "Suspicion", "Theft", "Theory", "Threat", "Unexpected", "Unknown", "Unlikely", "Unusual", "Useful", "Vulnerability"],
-				"plot points, social": ["Agreement", "Alliance", "Argument", "Celebration", "Community", "Confrontation", "Disagreement", "Duplicitous", "Enemies", "Fame", "Gathering", "Government", "Headquarters", "Inadequate", "Injustice", "Innocence", "Leader", "Lie", "Meeting", "Misbehave", "Mundane", "Observer", "Organization", "Outcast", "Outside", "Preparation", "Protect", "Reinforcements", "Religion", "Revenge", "Rural", "Savior", "Scapegoat", "Servant", "Special", "Suspicion", "Tension", "Transaction", "Travel", "Trouble", "Urban", "Work"],
-				"plot points, personal": ["Animosity", "Betrayal", "Bribe", "Coercion", "Connection", "Dependent", "Depowered", "Desperate", "Diminishment", "Disarmed", "Duty", "Enemies", "Ethical", "Family", "Flee", "Friend", "Headquarters", "Help", "Home", "Humiliation", "Incapacitation", "Innocence", "Mundane", "Obligation", "Observer", "Offer", "Past", "Personal", "Persuasion", "Possession", "Power", "Preparation", "Protect", "Protected", "Pursued", "Repercussion", "Revenge", "Scapegoat", "Schism", "Servant", "Talk", "Ultimatum"],
-				"crew goal": ["Agreement", "Art", "Assist", "Attack", "Business", "Character", "Control", "Convince", "Criminal", "Crisis", "Damage", "Dangerous", "Debt", "Deception", "Defeat", "Defend", "Delay", "Destroy", "Diminish", "Discover", "Disrupt", "Distract", "Earn", "Enter", "Escape", "Espionage", "Forces", "Fortress", "Goods", "Government", "Group", "Harm", "Help", "Hinder", "Hired", "Impossible", "Incapacitate", "Individual", "Infiltrate", "Information", "Innocent", "Intimidate", "Item", "Justice", "Kill", "Leader", "Legal", "Lethal", "Liberate", "Lie", "Limit", "Location", "Military", "Missing", "Money", "Obligation", "Opportunity", "Oppose", "Overcome", "Partner", "Personal", "Politics", "Power", "Prison", "Protect", "Pursue", "Rare", "Recover", "Reduce", "Replace", "Rescue", "Resource", "Retrieve", "Reveal", "Revenge", "Riches", "Risky", "Robbery", "Sabotage", "Sacrifice", "Save", "Social", "Solution", "Steal", "Stolen", "Stop", "Strange", "Stronghold", "Take", "Transaction", "Trap", "Travel", "Unique", "Unknown", "Urgent", "Vault", "Vehicle", "Villain", "Weapon", "Win"],
-				"crew skill": ["Agility", "Animals", "Art", "Athletic", "Attack", "Attain", "Block", "Bureaucrat", "Business", "Charisma", "Combat", "Communicate", "Competitor", "Conflict", "Control", "Create", "Criminal", "Damage", "Danger", "Deception", "Decrease", "Defense", "Deliverer", "Develop", "Dispute", "Disrupt", "Dominate", "Driver/Pilot", "Elements", "Elite", "Energy", "Enforcer", "Engineer", "Entertainer", "Entry", "Environment", "Executive", "Expert", "Explorer", "Explosives", "Fight", "Finesse", "Fixer", "Gatherer", "Guardian", "Guide", "Harm", "Heal", "Health", "Hunter", "Increase", "Information", "Inspect", "Intellect", "Invade", "Investigate", "Kill", "Knowledge", "Leadership", "Legal", "Lethal", "Mechanical", "Medical", "Mental", "Military", "Mysterious", "Nature", "Official", "Open", "Oppose", "Perception", "Performer", "Power", "Practical", "Protector", "Ranged", "Release", "Religious", "Rogue", "Ruffian", "Scientist", "Scout", "Social", "Soldier", "Specialist", "Start", "Stop", "Strange", "Strength", "Suppress", "Technical", "Theft", "Trader", "Transform", "Travel", "Trick", "Vehicle", "Violence", "Warrior", "Weapon"],
-				"crew personality": ["Adventurous", "Aggressive", "Agreeable", "Ambitious", "Angry", "Annoying", "Anxious", "Arrogant", "Bitter", "Bizarre", "Brave", "Calm", "Careful", "Careless", "Chatty", "Classy", "Cold", "Committed", "Competitive", "Confident", "Controlling", "Creative", "Criticizing", "Crude", "Curious", "Dangerous", "Deceptive", "Desperate", "Determined", "Devoted", "Disagreeable", "Driven", "Empathetic", "Fair", "Fastidious", "Flawless", "Focused", "Follower", "Foolish", "Friendly", "Grateful", "Greedy", "Haunted", "Helpful", "Honest", "Humble", "Humorous", "Independent", "Intelligent", "Intense", "Intolerant", "Irresponsible", "Larcenous", "Leader", "Likable", "Loyal", "Manipulative", "Mercurial", "Naive", "Oblivious", "Obstinate", "Odd", "Optimistic", "Perceptive", "Perfectionist", "Practical", "Prepared", "Principled", "Protective", "Quiet", "Quirky", "Rash", "Rational", "Reckless", "Reliable", "Respectful", "Responsible", "Restless", "Rough", "Rude", "Savvy", "Selfish", "Selfless", "Shallow", "Smooth", "Sociable", "Strange", "Studious", "Suffering", "Tolerant", "Tough", "Trustworthy", "Unreliable", "Untrustworthy", "Unusual", "Vindictive", "Violent", "Wary", "Wild", "Wise"],
-				"crew complications": ["Absence", "Arrival", "Attack", "Barrier", "Betrayal", "Change", "Character", "Conditional", "Conflict", "Connection", "Consequence", "Control", "Crisis", "Damaged", "Danger", "Debt", "Deception", "Delay", "Destroy", "Diminish", "Disaster", "Discover", "Discovered", "Emotion", "Enemy", "Enhance", "Escape", "Failure", "Fight", "Goal", "Group", "Harm", "Help", "Hidden", "Immediate", "Impending", "Important", "Imprisoned", "Improvise", "Incapacitate", "Information", "Leader", "Legal", "Lethal", "Limit", "Location", "Malfunction", "Missing", "Mundane", "Mystery", "Natural", "Necessary", "News", "Object", "Obligation", "Opposition", "Overcome", "Past", "Personal", "Persuade", "Physical", "Plan", "Power", "Prepare", "Problem", "Protect", "Pursue", "Pursued", "Rare", "Remote", "Repair", "Repeat", "Require", "Rescue", "Resource", "Response", "Reveal", "Revenge", "Reversal", "Route", "Security", "Shortage", "Skill", "Social", "Solution", "Strange", "Success", "Surprise", "Technical", "Tension", "Trap", "Travel", "Undone", "Unexpected", "Unknown", "Unlikely", "Unusual", "Urgent", "Useful", "Weather"]
 			}
 		},
 		ironsworn: {
@@ -1454,7 +1424,7 @@
 	var playing_cards, drawn_card;
 	
 	// mythic
-	var chaos, focus, progress, acting_rank, difficulty_rank;
+	var chaos, focus, progress;
 
 	// pbta
 	var pbta_menu = "";
@@ -1971,12 +1941,10 @@
 		
 		// mythic
 		else if (/^fate\-chart/.test(page)) return showFateChart(page.replace(/^(fate\-chart)(?::(.+))?/, "$2"));
-		else if (/^resisted-rank/.test(page)) return showResistedRank(page.replace(/^(resisted\-rank)(?::(.+))?/, "$2"));
 		else if (/^mythic\-scene/.test(page)) return showMythicScene(page.replace(/^(mythic\-scene)(?::(.+))?/, "$2"));
 		else if (page === "mythic-character") return showMythicCharacter();
 		else if (/^mythic\-discovery/.test(page)) return showDiscoveryCheck(page.replace(/^(mythic\-discovery)(?::(.+))?/, "$2"));
 		else if (page === "mythic-event") return showMythicEvent();
-		else if (/^mythic\-turn/.test(page)) return showMythicTurningPoint(page.replace(/^(mythic\-turn)(?::(.+))?/, "$2"));
 		else if (/^mythic:/.test(page)) return showMythicList(page.replace(/^mythic:(.+)/, "$1"));
 		else if (/^mythic\-table:/.test(page)) {
 			page = page.split(":");
@@ -1989,35 +1957,31 @@
 		pbta_menu = "";
 
 		var links = {
-			mythic: [
+			"mythic 2e": [
 				["Chance", [
 					["Dice", "dice"],
 					["Cards", "cards"],
 				]],
 				["Mythic", [
 					["Fate Chart", "fate-chart"],
-					["Resisted Rank", "resisted-rank"],
 					["Scene Check", "mythic-scene"],
 					["Character", "mythic-character"],
 					["Discovery Check", "mythic-discovery"],
 					["Random Event", "mythic-event"],
 					["First Scene 4W", "mythic:4w"],
-					["Turning Point", "mythic-turn"]
 				]],
 				["Meaning", [
 					["Action", "mythic:action"],
 					["Description", "mythic:descriptions"],
 					["Elements", "mythic:elements"],
 					["<spacer>"],
-					["Adventures", "mythic:adventure"],
-					["Ambience", "mythic:ambience"],
-					["Animals &amp; Creatures", "mythic:animals and creatures"],
-					["Characters", "mythic:characters"],
-					["Crew", "mythic:crew"],
-					["Entities", "mythic:entities"],
+					["Sensory", "mythic:sensory"],
 					["Locations", "mythic:locations"],
-					["Mysteries", "mythic:mysteries"],
-					["Objects", "mythic:objects"],
+					["Characters", "mythic:characters"],
+					["Animals &amp; Creatures", "mythic:animals and creatures"],
+					["Entities", "mythic:entities"],
+					["Discoveries", "mythic:discoveries"],
+					["Adventures", "mythic:adventure"],
 					["Spells &amp; Powers", "mythic:spells and powers"]
 				]]
 			],
@@ -2132,7 +2096,7 @@
 		};
 		
 		toc = Object.keys(links);
-		if (!(current_menu in links)) current_menu = "mythic";
+		if (!(current_menu in links)) current_menu = "mythic 2e";
 		links = links[current_menu];
 
 		var a, b, id, list;
@@ -2149,7 +2113,7 @@
 			output += getLinksList(list) + "</td></tr>";
 		}
 		
-		if (current_menu === "mythic") {
+		if (current_menu === "mythic 2e") {
 			output = getDataHeader(
 				"Chaos Factor&nbsp;&nbsp;" + getOptions(null, "chaos", [1,2,3,4,5,6,7,8,9], chaos),
 				"Event Focus&nbsp;&nbsp;" + getOptions(null, "focus", Object.keys(muse.mythic.fate.focus), focus)
@@ -2165,7 +2129,7 @@
 		);
 		if (current_section) $(current_section).scrollIntoView(true);
 		
-		if (current_menu === "mythic") {
+		if (current_menu === "mythic 2e") {
 			$("#chaos").addEventListener("change", function() { 
 				chaos = parseInt(this.value); 
 				saveSettings(soloData.chaos = chaos);
@@ -2243,7 +2207,7 @@
 		var defineSettings = function() {
 			checkLocalStorage();
 			loadSettings();
-			current_menu = (soloData.current_menu || "mythic");
+			current_menu = (soloData.current_menu || "mythic 2e");
 			color_theme = (soloData.color_theme || "dark");
 			// chance
 			drawn_card = (soloData.drawn_card || []);
@@ -2253,8 +2217,6 @@
 			// mythic
 			chaos = (soloData.chaos || 5);
 			focus = (soloData.focus || "random event");
-			acting_rank = (soloData.acting_rank || "Average");
-			difficulty_rank = (soloData.difficulty_rank || "Average");
 			progress = (soloData.progress || 0);
 			// pbta
 			pbta_custom_move_text = (soloData.pbta_custom_moves || {});
@@ -2868,7 +2830,7 @@
 	}
 
 
-	/* mythic */
+	/* mythic 2e */
 
 	function showFateChart(odds) {
 		if (!odds) {
@@ -2902,61 +2864,6 @@
 		}
 
 		display(output + getBackLink());
-	}
-
-	function showResistedRank(compare) {
-		if (!compare) {
-			display(getDataHeader(
-					getOptions("Acting Rank", "acting", muse.mythic.fate.rank, acting_rank),
-					getOptions("Difficulty Rank", "difficulty", muse.mythic.fate.rank, difficulty_rank)
-			) + "<hr><p id='dice-buttons'><a onclick='solo.showPage(\"resisted-rank:true\")'>Check</a><a onclick='solo.showPage()'>Back</a></p>");
-			
-			$("#acting").addEventListener("change", function() { 
-				acting_rank = this.value;
-				saveSettings(soloData.acting_rank = this.value); 
-			});
-			$("#difficulty").addEventListener("change", function() { 
-				difficulty_rank = this.value;
-				saveSettings(soloData.difficulty_rank = this.value); 
-			});
-			return;
-		}
-		
-		var result;
-		var mods = [-5, -4, -2, -1, 0, 1, 2, 4, 5];
-
-		acting_rank = $("#acting").value;
-		difficulty_rank = $("#difficulty").value;
-
-		var mod = muse.mythic.fate.rank.indexOf(difficulty_rank) - muse.mythic.fate.rank.indexOf(acting_rank);
-
-		var die1 = random(1, 10);
-		var die2 = random(1, 10);
-		var roll = (die1 + die2) + mod;
-
-		var exceptional = false;
-		var event = false;
-
-		if ((roll > 1 && roll < 5) || (roll > 17 && roll < 21)) exceptional = true;
-		if (die1 === die2 && die1 <= chaos) event = true;
-		
-		if (roll > 10) {
-			if (exceptional) result = "<span class='exceptional yes'>Exceptional yes!</span>";
-			else result = "<span class='yes'>Yes</span>";
-		}
-		else {
-			if (exceptional) result = "<span class='exceptional no'>Exceptional no!</span>";
-			else result = "<span class='no'>No</span>";
-		}
-
-		if (mod > 0) mod = "+" + mod;
-		else if (mod === 0) mod = "";
-
-		display(
-			getDataTable(["Compare", (die1 + "," + die2 + mod), result]) +
-			(event ? getDataFooter("<b>Event:</b> " + getCyclingMeaning("mythic", "action")) : "") +
-			getBackLink()
-		);
 	}
 
 	function showMythicScene(adjust) {
@@ -3037,7 +2944,7 @@
 		if (type) {
 			var die = random(1, 10);
 			var mod = parseInt(progress);
-			var result = getRolledItem((die + mod), muse.mythic.fate.tracks[type]);
+			var result = getRolledItem((die + mod), muse.mythic.fate.tracks["thread"]);
 			saveProgress(mod + parseInt(result.match(/(\d+)/)[1]));
 
 			return display(getDataTable(
@@ -3050,12 +2957,9 @@
 			15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, "26+"
 		];
 
-		display("<div class='data-header'>" +
-			"<p>Progress Points&nbsp;&nbsp;" + getOptions(null, "progress", opts, progress) + "</p>" +
-			getLinksList(
-				["Horror", "solo.showPage('mythic-discovery:horror')"],
-				["Thread", "solo.showPage('mythic-discovery:thread')"]
-			) + "</div>" + getBackLink()
+		display(
+			"<div class='data-header'><p>Progress Points&nbsp;&nbsp;" + getOptions(null, "progress", opts, progress) + "</p></div>" +
+			"<hr><div id='back-links'><p><a onclick='solo.showPage(\"mythic-discovery:thread\")'>Check</a><a onclick='solo.showPage()'>Back</a></p></div>"
 		);
 		
 		$("#progress").addEventListener("change", function() { saveProgress(this.value); });
@@ -3067,45 +2971,6 @@
 			["Event", getCyclingMeaning("mythic", "action")]
 		) + getBackLink(true));
 	}
-	
-	function showMythicTurningPoint(theme) {
-		if (!theme) {
-			return display(getDataLinksList(
-					["Action", "solo.showPage('mythic-turn:action')"],
-					["Tension", "solo.showPage('mythic-turn:tension')"],
-					["Mystery", "solo.showPage('mythic-turn:mystery')"],
-					["Social", "solo.showPage('mythic-turn:social')"],
-					["Personal", "solo.showPage('mythic-turn:personal')"],
-					["Random", "solo.showPage('mythic-turn:random')"]
-				) + getBackLink()
-			);
-		}
-		
-		var getTurningPoints = function() {
-			var a, point, concluded, type, roll;
-			var points = [];
-			for (a = 0; a < 5; ++a) {
-				type = (a > 0 || theme === "random") ? randomItem(["action", "tension", "mystery", "social", "personal"]) : theme;
-				roll = random(1, 100);
-				if (roll < 9) {
-					point = concluded ? "None" : "Conclusion";
-					concluded = true;
-				}
-				else if (roll < 17) point = "None";
-				else {
-					do { point = randomItem(muse.mythic.meaning["plot points, " + type]); }
-					while (points.indexOf(point) !== -1);
-				}
-				if (point !== "None") points.push(point);
-			}
-			for (a = 0; a < points.length; ++a) {
-				points[a] = [a + 1, points[a]];
-			}
-			return points;
-		}
-		
-		display(getDataTable(getTurningPoints()) + getBackLink(true));
-	}
 
 	function showMythicList(type) {
 		if (type === "action") return showMeaning("Action", "mythic", type) + getBackLink(true);
@@ -3115,42 +2980,28 @@
 		var list;
 		if (type === "elements") {
 			list = [
-				["Location", "solo.showPage('mythic-table:Location:location descriptors, general')"],
+				["Location", "solo.showPage('mythic-table:Location:locations')"],
 				["Character", "solo.showPage('mythic-table:Character:characters')"],
 				["Object", "solo.showPage('mythic-table:Object:objects')"]
 			];
 		}
-		else if (type === "adventure") {
-			list = [
-				["Tone", "solo.showPage('mythic-table:Tone:adventure tone')"],
-				["Plot Twist", "solo.showPage('mythic-table:Plot Twist:plot twists')"],
-				["Legend", "solo.showPage('mythic-table:Legend:legends')"],
-				["Journey Event", "solo.showPage('mythic-table:Event:journey events')"],
-				["Plot Points", "solo.showPage('mythic:plot points')"]
-			];
-		}
-		else if (type === "plot points") {
-			list = [
-				["Action", "solo.showPage('mythic-table:Plot Point:plot points, action')"],
-				["Tension", "solo.showPage('mythic-table:Plot Point:plot points, tension')"],
-				["Mystery", "solo.showPage('mythic-table:Plot Point:plot points, mystery')"],
-				["Social", "solo.showPage('mythic-table:Plot Point:plot points, social')"],
-				["Personal", "solo.showPage('mythic-table:Plot Point:plot points, personal')"]
-			];
-		}
-		else if (type === "ambience") {
+		else if (type === "sensory") {
 			list = [
 				["Sound", "solo.showPage('mythic-table:Sound:sounds')"],
-				["Smell", "solo.showPage('mythic-table:Smell:smells')"]
+				["Smell", "solo.showPage('mythic-table:Smell:smells')"],
+				["Vision / Dream", "solo.showPage('mythic-table:Vision:visions & dreams')"]
 			];
 		}
-		else if (type === "animals and creatures") {
+		else if (type === "locations") {
 			list = [
-				["Animal Action", "solo.showPage('mythic-table:Action:animal actions')"],
-				["Creature", "solo.showPage('mythic-table:Creature:creature descriptors')"],
-				["Creature Ability", "solo.showPage('mythic-table:Ability:creature abilities')"],
-				["Alien Species", "solo.showPage('mythic-table:Species:alien species descriptors')"],
-				["Undead", "solo.showPage('mythic-table:Undead:undead descriptors')"],
+				["Terrain", "solo.showPage('mythic-table:Terrain:terrain descriptors')"],
+				["Forest", "solo.showPage('mythic-table:Forest:forest descriptors')"],
+				["Cavern", "solo.showPage('mythic-table:Cavern:cavern descriptors')"],
+				["Dungeon", "solo.showPage('mythic-table:Dungeon:dungeon descriptors')"],
+				["City", "solo.showPage('mythic-table:City:city descriptors')"],
+				["Domicile", "solo.showPage('mythic-table:Domicile:domicile descriptors')"],
+				["Noble House", "solo.showPage('mythic-table:House:noble house')"],
+				["Starship", "solo.showPage('mythic-table:Starship:starship descriptors')"]
 			];
 		}
 		else if (type === "characters") {
@@ -3159,22 +3010,24 @@
 				["Appearance", "solo.showPage('mythic-table:Appearance:character appearance')"],
 				["Identity", "solo.showPage('mythic-table:Identity:character identity')"],
 				["Personality", "solo.showPage('mythic-table:Personality:character personality')"],
+				["Skills", "solo.showPage('mythic-table:Skill:character skills')"],
 				["Traits & Flaws", "solo.showPage('mythic-table:Trait / Flaw:character traits & flaws')"],
 				["Motivation", "solo.showPage('mythic-table:Motivation:character motivations')"],
 				["Background", "solo.showPage('mythic-table:Background:character background')"],
-				["Issue", "solo.showPage('mythic-table:Issue:issue')"],
 				["<spacer>"],
 				["General Action", "solo.showPage('mythic-table:Action:character actions, general')"],
 				["Combat Action", "solo.showPage('mythic-table:Action:character actions, combat')"],
 				["Conversation", "solo.showPage('mythic-table:Conversation:character conversations')"]
 			];
 		}
-		else if (type === "crew") {
+		else if (type === "animals and creatures") {
 			list = [
-				["Goal", "solo.showPage('mythic-table:Goal:crew goal')"],
-				["Crew Skill", "solo.showPage('mythic-table:Goal:crew skill')"],
-				["Crew Personality", "solo.showPage('mythic-table:Goal:crew personality')"],
-				["Complications", "solo.showPage('mythic-table:Goal:crew complications')"]
+				["Creature", "solo.showPage('mythic-table:Creature:creature descriptors')"],
+				["Creature Ability", "solo.showPage('mythic-table:Ability:creature abilities')"],
+				["Alien Species", "solo.showPage('mythic-table:Species:alien species descriptors')"],
+				["Undead", "solo.showPage('mythic-table:Undead:undead descriptors')"],
+				["<spacer>"],
+				["Animal Action", "solo.showPage('mythic-table:Action:animal actions')"]
 			];
 		}
 		else if (type == "entities") {
@@ -3184,44 +3037,27 @@
 				["God", "solo.showPage('mythic-table:God:gods')"],
 			];
 		}
-		else if (type === "locations") {
+		else if (type === "spells and powers") {
 			list = [
-				["Cavern", "solo.showPage('mythic-table:Cavern:cavern descriptors')"],
-				["City", "solo.showPage('mythic-table:City:city descriptors')"],
-				["Dungeon", "solo.showPage('mythic-table:Dungeon:dungeon descriptors')"],
-				["Forest", "solo.showPage('mythic-table:Forest:forest descriptors')"],
-				["Planet", "solo.showPage('mythic-table:Planet:planet descriptors')"],
-				["Starship", "solo.showPage('mythic-table:Starship:starship descriptors')"],
-				["Domicile", "solo.showPage('mythic-table:Domicile:domicile descriptors')"],
-				["Noble House", "solo.showPage('mythic-table:House:noble house')"]
+				["Magic Item", "solo.showPage('mythic-table:Magic Item:magic item descriptors')"],
+				["Spell Effect", "solo.showPage('mythic-table:Spell Effect:spell effects')"],
+				["Curse", "solo.showPage('mythic-table:Curse:curses')"],
+				["Power", "solo.showPage('mythic-table:Power:powers')"],
+				["Mutation", "solo.showPage('mythic-table:Mutation:mutation descriptors')"]
 			];
 		}
-		else if (type === "mysteries") {
+		else if (type === "discoveries") {
 			list = [
-				["Clue", "solo.showPage('mythic-table:Clue:clues')"],
-				["Suspect", "solo.showPage('mythic-table:Suspect:suspects descriptors')"],
 				["Cryptic Message", "solo.showPage('mythic-table:Message:cryptic message')"],
-				["Vision / Dream", "solo.showPage('mythic-table:Vision:visions & dreams')"],
-				["Puzzle", "solo.showPage('mythic-table:Puzzle:puzzle descriptors')"],
-				["Puzzle Reward", "solo.showPage('mythic-table:Reward:puzzle reward')"],
-				["Puzzle Consequence", "solo.showPage('mythic-table:Consequence:puzzle consequence')"]
-			];
-		}
-		else if (type === "objects") {
-			list = [
-				["General Object", "solo.showPage('mythic-table:Object:object descriptors, general')"],
-				["Small Object", "solo.showPage('mythic-table:Object:object descriptors, small items')"],
 				["Dungeon Trap", "solo.showPage('mythic-table:Trap:dungeon traps')"],
 				["Scavenging Results", "solo.showPage('mythic-table:Scavenged:scavenging results')"]
 			];
 		}
-		else if (type === "spells and powers") {
+		else if (type === "adventure") {
 			list = [
-				["Magic Item", "solo.showPage('mythic-table:Magic Item:magic item descriptors')"],
-				["Power", "solo.showPage('mythic-table:Power:powers')"],
-				["Mutation", "solo.showPage('mythic-table:Mutation:mutation descriptors')"],
-				["Spell Effect", "solo.showPage('mythic-table:Spell Effect:spell effects')"],
-				["Curse", "solo.showPage('mythic-table:Curse:curses')"]
+				["Tone", "solo.showPage('mythic-table:Tone:adventure tone')"],
+				["Plot Twist", "solo.showPage('mythic-table:Plot Twist:plot twists')"],
+				["Legend", "solo.showPage('mythic-table:Legend:legends')"],
 			];
 		}
 
