@@ -6,7 +6,7 @@
 (function(solo) {
 	"use strict";
 
-	var version = "v20240116";
+	var version = "v20240118";
 
 	var current_page, current_section, current_menu, color_theme, localStorage;
 	var toc = [];
@@ -3002,7 +3002,7 @@
 		var adjustment = "";
 		var roll = random(1, 10);
 		
-		if (roll > chaos) scene = ["Scene", "Expected Scene"];
+		if (roll > chaos) scene = ["Scene", roll, "Expected Scene"];
 		else { 
 			if (focus === "prepared adventure") scene_type = "Expected";
 			else scene_type = (roll % 2) ? "Altered" : "Interrupt";
