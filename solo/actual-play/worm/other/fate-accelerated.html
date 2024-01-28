@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+			
+			h5 a, h5 {
+				color: #ffbb55;
+	            font-size: 1em;
+	            font-weight: bold;
+	            margin-top: 0 !important;
+	            margin-block-end: -1em;
+            }
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    	details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h1 id="characters">Characters</h1>
+		<h2 id="skitter">Skitter</h2>
+		<blockquote>
+		  <p><mark>ASPECTS</mark><br>
+		  Idealistic Bug Controller • Doing the Wrong Thing for the Right Reasons • Lisa Has Faith in Me • Creepy Spider Silk Costume</p>
+		  <p><strong>Situation:</strong> Bug Swarm</p>
+		  <p><mark>APPROACHES</mark><br>
+		  <strong>+3:</strong> Clever • <strong>+2:</strong> Careful, Forceful<br>
+		  <strong>+1:</strong> Quick, Sneaky • <strong>+0:</strong> Flashy</p>
+		  <p><mark>VITALS</mark><br>
+		  <strong>Stress:</strong> <code>[1][2][#]</code><br>
+		  <strong>2: Mild:</strong> … • <strong>4: Moderate:</strong> … • <strong>6: Severe:</strong> …<br>
+		  <strong>Fate Points:</strong> 2/3</p>
+		  <p><mark>STUNTS</mark><br>
+		  <strong>Bug Control:</strong> Because <em>she has fine control over thousands of bugs simultaneously</em>, Skitter gets +2 to cleverly create an advantage by using her bugs to perform tasks (eg. web nets, decoys) or gather information.<br>
+		  <strong>Prescience:</strong> Because <em>she always knows the location of her bugs in relation to herself</em>, Skitter gets +2 to quickly defend when using her swarm sense to inform her of incoming attacks.</p>
+		</blockquote>
+		<br>
+		<h2 id="mannequin">Mannequin</h2>
+		<blockquote>
+		  <p><mark>ASPECTS</mark><br>
+		   Self-Modified Tinker • On a Mission • Family Man</p>
+		  <p><strong>Situation:</strong> Infested</p>
+		  <p><mark>APPROACHES</mark><br>
+		  <strong>+4:</strong> Careful • <strong>+3:</strong> Flashy • <strong>+2:</strong> Sneaky<br>
+		  <strong>+1:</strong> Clever, Forceful • <strong>+0:</strong> Quick</p>
+		  <p><mark>VITALS</mark><br>
+		  <strong>Stress:</strong> <code>[1][2][3]</code><br>
+		  <strong>2: Mild:</strong> … • <strong>4: Moderate:</strong> … • <strong>6: Severe:</strong> …<br>
+		  <strong>Fate Points:</strong> 1/1</p>
+		</blockquote>
+		<hr>
+		<h1 id="scene">Scene</h1>
+		<p>Charlotte bursts in through the door to my base and slams it shut behind her. Seconds later, blades stab through the door from the opposite side. Charlotte screams that it's Mannequin and disappears into the kitchen to hide. I ready my baton and knife.</p>
+		<p>The hinges to the door are sheared off and the door collapses to the ground. Mannequin steps inside. I immediately gather my bugs to form decoys.</p>
+		<blockquote>
+		  <p><strong>Skitter:</strong> +3 Clever (+2 Bug Control) + [-1] = 4<br>
+		  <strong>Difficulty:</strong> +2<br>
+		  <strong>Create an Advantage:</strong> Success. I give myself the <em>Bug Swarm</em> (1) aspect. I create decoys.</p>
+		</blockquote>
+		<p>As the swarms form, Mannequin charges at me with inhuman speed. </p>
+		<blockquote>
+		  <p>I try to dodge.<br>
+		  <strong>Mannequin:</strong> +0 Quick + [3] = 3<br>
+		  <strong>Skitter:</strong> +1 Quick (+2 Prescience), <em>Bug Swarm</em> (0) + [-1] = 4<br>
+		  <strong>Attack:</strong> Fail. I dodge.</p>
+		</blockquote>
+		<p>My swarms and I summersault to the side. Mannequin slashes blindly through the swarms, disbursing the decoys in an attempt to find me.</p>
+		<blockquote>
+		  <p>I attack without mercy.<br>
+		  <strong>Mannequin:</strong> +1 Clever + [3]= 4<br>
+		  <strong>Skitter:</strong> +2 Forceful + [2] = 4<br>
+		  <strong>Attack:</strong> Tie. I lose my baton.</p>
+		</blockquote>
+		<p>I swing as hard as I can at his leg with my baton. It strikes so hard that my hand goes numb and the baton flies from my grasp, but I manage to topple Mannequin. He falls flat on his back and struggles to right himself like a tortoise.</p>
+		<p>Taking advantage of the situation, I bring in one of my premade web nets that I had waiting in the wings.</p>
+		<blockquote>
+		  <p>He attempts to destroy the webs.<br>
+		  <strong>Skitter:</strong> +3 Clever (+2 Bug Control) + [-3] = 2<br>
+		  <strong>Mannequin:</strong> +1 Clever + [3] = 4<br>
+		  <strong>Create an Advantage:</strong> Fail. He avoids it.</p>
+		</blockquote>
+		<p>The net drops on him but at the last second he opens his mouth to release gas. The gas blows the net away in the breeze and also kills the bugs on contact.</p>
+		<p>I decide to try to lead him out and away from Charlotte. I don't really want him destroying my lair either.</p>
+		<blockquote>
+		  <p><strong>Fate Check:</strong> Does he follow? [76] No.<br>
+		  <strong>Meaning:</strong> What does he do instead? [Technology / Calm] He waits me out. That'll be his turn.</p>
+		</blockquote>
+		<p>I run to the doorway but he doesn't follow. Since he doesn't plan on leaving, I gather bugs from the environment and prepare for a drawn out fight.</p>
+		<blockquote>
+		  <p><strong>Skitter:</strong> +2 Careful + [0] = 2<br>
+		  <strong>Difficulty:</strong> +2<br>
+		  <strong>Create an Advantage:</strong> Tie. I get a <em>Boost</em> (1). He attacks before I'm finished.</p>
+		</blockquote>
+		<p>Before I can finish gathering many bugs, Mannequin shoots his arm toward my face. I throw myself out of the way at the last second.</p>
+		<blockquote>
+		  <p>I attempt to dodge.<br>
+		  <strong>Mannequin:</strong> +1 Forceful + [3] = 4<br>
+		  <strong>Skitter:</strong> +1 Quick (+2 Prescience) + [1] = 4<br>
+		  <strong>Attack:</strong> Tie. He gets a <em>Boost</em> (1). I dodge but I'm off balance.  </p>
+		</blockquote>
+		<p>I flop on my back to avoid the arm. It crashes into the wall behind me, but I'm lying prone on my back. Mannequin swipes at me with his other arm while he retracts the first.</p>
+		<blockquote>
+		  <p>I try to avoid it.<br>
+		  <strong>Mannequin:</strong> +1 Forceful, <em>Boost</em> (0) + [2] = 5<br>
+		  <strong>Skitter:</strong> +1 Quick (+2 Prescience) + [-1] = 2<br>
+		  <strong>Attack:</strong> Success with style. 3 shifts. I mark the 3 stress box. He clobbers me while I'm down.</p>
+		</blockquote>
+		<p>He reacts faster than I do and his arm slams into my side. It sends me across the floor, spinning like a top, and I crash into the opposite wall. I hear Charlotte shriek in shock from the kitchen.</p>
+		<p>Mannequin stalks toward me. It's probably a useless gesture, but I send my swarm at him to attack whatever openings they can find.</p>
+		<blockquote>
+		  <p>He is trying to intimidate.<br>
+		  <strong>Skitter:</strong> +2 Forceful, <em>Boost</em> (0) + [0] = 4<br>
+		  <strong>Mannequin:</strong> +3 Flashy + [0] = 3<br>
+		  <strong>Create an Advantage:</strong> Success. I give Mannequin the <em>Infested</em> (1) aspect. The bugs get into his joints.</p>
+		</blockquote>
+		<p>The bugs wedge themselves into whatever nooks and crannies they can find. As expected, they don't find exposed wires or anything that they can tamper with, but they pack themselves into his joints enough to cause slight mobility problems.</p>
+		<p>Mannequin reaches out with his claw and attempts to grab me by the neck.</p>
+		<blockquote>
+		  <p>I try to duck it.<br>
+		  <strong>Mannequin:</strong> +1 Forceful + [2] = 3<br>
+		  <strong>Skitter:</strong> +1 Quick (+2 Prescience), + [-2] = 1<br>
+		  <strong>Create an Advantage:</strong> Success. He gives me the <em>Grabbed</em> (1) aspect. He grabs me by the neck.</p>
+		</blockquote>
+		<p>Mannequin's claw closes around my neck and he hoists me off the ground. I start choking and I grasp for my neck in a futile attempt to pry his claws free. When that fails, I jam my knife into his wrist joint.</p>
+		<blockquote>
+		  <p>He tries to resist.<br>
+		  <strong>Skitter:</strong> +2 Forceful, <em>Bug Swarm</em>, <em>Infested</em> (0) + [-1] = 5 (FP:2)<br>
+		  <strong>Mannequin:</strong> +1 Forceful, <em>Grabbed</em> (0) + [1] = 4<br>
+		  <strong>Overcome:</strong> Success. I use my bugs to break free. Removed <em>Grabbed</em> aspect.</p>
+		</blockquote>
+		<p>My knife alone doesn't have the impact that I desire, and so I call upon my bugs. My swarm tears at Mannequin's joints, inside and out. It's not much, but it is enough to momentarily break his grasp on my neck. I break free and scramble away.</p>
+		<hr>
+		<p>[That's the end of my playtest!]</p>
+		<p><br><br></p>
+	</body>
+</html>
