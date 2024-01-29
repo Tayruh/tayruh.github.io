@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+			
+			h5 a, h5 {
+				color: #ffbb55;
+	            font-size: 1em;
+	            font-weight: bold;
+	            margin-top: 0 !important;
+	            margin-block-end: -1em;
+            }
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    	details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h2 id="scene%201">Scene 1</h2>
+		<blockquote>
+		  <p><strong>Setup:</strong> Sarah's first day of school and she needs to get a class schedule  <br>
+		  <strong>Chaos Rank:</strong> 5  <br>
+		  <strong>Threads:</strong> None   <br>
+		  <strong>NPCs:</strong> None</p>
+		</blockquote>
+		<p>Sarah pulls up to the school in her bright red Supra. She gets some looks, which she finds annoying. Perhaps driving a flashy car isn't the best way to stay out of the spot light.</p>
+		<p>She leaves her car in the lot and heads toward the school.</p>
+		<blockquote>
+		  <p><strong>Q:</strong> Does someone stop her along the way? (Likely)  <br>
+		  <strong>A:</strong> Yes</p>
+		  <p><strong>Complex Q:</strong> Who is it?  <br>
+		  <strong>A:</strong> Partially Scary</p>
+		</blockquote>
+		<p>As Sarah walks up the steps to the school, she hears a set of footsteps moving in time with her own. She turns her head toward the sound and sees her friend April. April beams at her. Her angelic face sends a chill through Sarah.</p>
+		<p>"April," she says under her breath, "what are you doing here?"</p>
+		<blockquote>
+		  <p><strong>Complex Q:</strong> What's her motive?  <br>
+		  <strong>A:</strong> Attainment Benefits</p>
+		</blockquote>
+		<p>"It's your first day of school, right? I want to enjoy it with you."</p>
+		<p>Sarah looks around to make sure no one is watching her. "April, you know it's my first day. I haven't been back to school since… Since I went away. After… you know…"</p>
+		<p>April giggles and bounds off into the school, completely ignoring Sarah's plight.</p>
+		<p>Sarah just sighs and follows her friend inside.</p>
+		<blockquote>
+		  <p><strong>Complex Q:</strong> What happens when she enters?  <br>
+		  <strong>A:</strong> Block Lies</p>
+		  <p><strong>Complex Q:</strong> Who?  <br>
+		  <strong>A:</strong> Hopelessy Lonely</p>
+		</blockquote>
+		<p>"Who were you talking to?"</p>
+		<p>"Wha..?" Sarah blurts out, having been caught off guard by a voice that seemed to come out of nowhere. It apparently belonged the short blond haired girl standing just to the side of the door.</p>
+		<p>"Who were you talking to?" she repeats politely.</p>
+		<p>"… Myself? I was just thinking out loud."</p>
+		<blockquote>
+		  <p>I could have almost earned a plot point here, but the girl made Sarah lie about April, not the past.</p>
+		</blockquote>
+		<p>"Mmmm." She puts a finger to her lips, unconvinced. Changing the subject, she asks "Are you new here?"</p>
+		<p>"Yeah. It's my first day."</p>
+		<p>"Kind of late into the year, don't you think?"</p>
+		<p>"Yeah, well, there were… circumstances."</p>
+		<p>"Oooh. Do tell."</p>
+		<p>"I'd rather not. I should be going anyway."</p>
+		<p>The girl lets out a laugh like a fallen angel. "Oh, I pushed a button. How fun."</p>
+		<p>Sarah just glares at her for a few seconds before she begins to walk away. The girl reaches out for her. "Stop. Do you even know where you're going?"</p>
+		<p>"The principal's office."</p>
+		<p>"That's not even in the right direction. Let me guide you."</p>
+		<p>Sarah gives her a skeptical look. "Why?"</p>
+		<p>"Why not? I'm bored. Let's go."</p>
+		<blockquote>
+		  <p><strong>Q:</strong> Are they interrupted on the way to the office? (Likely)   <br>
+		  <strong>A:</strong> Yes</p>
+		  <p><strong>Q:</strong> Is it a person? (50/50)  <br>
+		  <strong>A:</strong> No</p>
+		  <p><strong>Complex Q:</strong> What is it?  <br>
+		  <strong>A:</strong> Travel Death</p>
+		</blockquote>
+		<p>About halfway into their journey Sarah is stopped in her tracks by a black whisp that darts across the hallway.</p>
+		<p>"What the heck was that? Did you see that?"</p>
+		<blockquote>
+		  <p><strong>Q:</strong> Did she see it? (Very Unlikely)  <br>
+		   <strong>A:</strong> Yes</p>
+		</blockquote>
+		<p>Sarah can see the answer is her eyes. She's like a deer in headlights. "What.. what… what the fuck was that?! Was that a ghost?"</p>
+		<p>"I have no idea. Do you think anyone else saw it?"</p>
+		<blockquote>
+		  <p><strong>Q:</strong> Did anyone else see the apparition? (Somewhat Likely)  <br>
+		  <strong>A:</strong> No</p>
+		</blockquote>
+		<p>The hallway is full of students making they way to their classrooms undisturbed. It seems only Sarah and her new friend saw the apparition.</p>
+		<blockquote>
+		  <p><strong>Thread started:</strong> Is the School Haunted?</p>
+		</blockquote>
+		<p>"How could they not see it?" the girl nearly shouts. "We have to tell someone!" </p>
+		<p>"Tell them what? That the school is haunted? They'll lock you up."</p>
+		<p>"I'm well respected. They'd believe me."</p>
+		<p>Sarah sighs. "Trust me. They won't." And with that she resumes her journey and begins walking away from the girl.</p>
+		<p>"Wait, where are you going? You don't even know the way."</p>
+		<p>"There are signs," she says pointing at a placard posted at a junction, at which she takes a right and disappears from sight.</p>
+		<blockquote>
+		  <p><strong>Q:</strong> Does Sarah get stopped again? (Very Unlikely)  <br>
+		  <strong>A:</strong> No</p>
+		</blockquote>
+		<p>Sarah finally arrives at the principal's office. She steps up to the receptionist.</p>
+		<blockquote>
+		  <p><strong>Identity:</strong> Receptionist  <br>
+		  <strong>Personality:</strong> Abnormally Quaint  <br>
+		  <strong>Action:</strong> Block Environment  <br>
+		  <strong>Theme:</strong> Trying to get schedule  <br>
+		  <strong>Disposition:</strong> (12 + 2) Active  <br>
+		  <strong>Action:</strong> Acts Out of Self Interest</p>
+		</blockquote>
+		<p>"Excuse me, I'm checking in for my first day. My name is Sarah."</p>
+		<p>The receptionist looks up at Sarah through her horn rimmed glasses. "Uh huh. Do you have an appointment?"</p>
+		<p>"Appointment? What? I just need my class schedule so I know what class I'm supposed to be in."</p>
+		<blockquote>
+		  <p><strong>Receptionist action:</strong> Theme Action</p>
+		</blockquote>
+		<p>She sighs. "Okay, dear. No need to get huffy. I think I have your schedule right-- yes, here it is." The receptionist hands Sarah a piece of paper upon which are the time blocks and room numbers of her classes.</p>
+		<p>Sarah thanks her and quickly exits the office.</p>
+		<blockquote>
+		  <p>End of <strong>Scene 1</strong><br>
+		  Increase <strong>Chaos Rank</strong> to <strong>6</strong><br>
+		  <strong>NPC List:</strong> Add unnamed girl, <strong>April</strong><br>
+		  <strong>New Thread:</strong> Is the School Haunted?</p>
+		</blockquote>
+		<br>
+		<h2 id="scene%202">Scene 2</h2>
+		<blockquote>
+		  <p><strong>Setup:</strong> Sarah decides to escape study hall<br>
+		  <strong>Scene:</strong> Unaltered  <br>
+		  <strong>Chaos Rank:</strong> 6  <br>
+		  <strong>Threads:</strong> Is the school haunted?  <br>
+		  <strong>NPCs:</strong> Unnamed girl, April</p>
+		</blockquote>
+		<blockquote>
+		  <p>I'm hoping to have Sarah run into Kristen and Chelsea and they can show her the memorial for Charlotte. Sarah currently doesn't know Chelsea's name or how popular she is.</p>
+		</blockquote>
+		<p>Sarah found her class and the day progressed without incident. However, it is now a study period for Sarah and she wants nothing more than to escape this classroom. So she signs the sign-out and sheet and quickly exits.</p>
+		<blockquote>
+		  <p><strong>Q:</strong> Does she run into anyone on the way out? (Likely)<br>
+		  <strong>A:</strong> Yes</p>
+		  <p><strong>Q:</strong> Is it the unnamed girl again? (50/50)<br>
+		  <strong>A:</strong> Yes</p>
+		  <p><strong>Q:</strong> Is Chelsea with someone? (Likely)<br>
+		  <strong>A:</strong> Yes</p>
+		</blockquote>
+		<blockquote>
+		  <p>These were honest rolls but the questions were favored towards a hopeful outcome. I really wanted the start of this scene to begin with the unnamed friend and her other friend guiding her around. Since I'm also playing the role of the DM, I'm going to say her mystery friend is who I had in mind rather than asking the oracle.</p>
+		</blockquote>
+		<p>As Sarah leaves the classroom she almost immediately crashes into a figure. The girl that she ran into glares up at her before realizing who it was.</p>
+		<p>"Oh! It's the new girl!" says the girl that she met earlier. She takes a step back and smoothes out her clothes. Behind her stands a tall red head, who raises an eyebrow as she appraises Sarah. "Kristen, this is Sarah," the short blonde says over her shoulder to the redhead, "the one that I told you about."</p>
+		<p>"The weird one?" she asks, still looking Sarah up and down.</p>
+		<p>The girl lets out a laugh. "Yeah, the weird one." She turns to Sarah, "I'm Chelsea, by the way. I never introduced myself."</p>
+		<p>Sarah just nods. Her eyes looking for an exit. "Look, I've got to go. It was good seeing you again, Chelsea. Kristen."</p>
+		<blockquote>
+		  <p>Chelsea tries to persuade Sarah to come with them using <strong>Forever Alone</strong> D8 distinction, <strong>Sarah</strong> D6 relationship, <strong>Social</strong> D10 attribute, and <strong>Influence</strong> D10 skill. She gets a 19 with a D8 effect die.</p>
+		  <p>Sarah contests with <strong>Social</strong> D6 attribute, <strong>Chelsea</strong> D6 relationship, and <strong>Influence</strong> D8 skill. Chelsea is definitely much more in her natural habit than Sarah. She gets a 6 with a D8 effect. She's absolutely taken out.</p>
+		  <p>The difference of 13 bumps Chelsea's effect die up to D12. Chelsea gives Sarah the D12 complication <strong>Chelsea's Pet Project</strong>.</p>
+		</blockquote>
+		<p>She tries to squeeze past Chelsea immediately links her arm with Sarah's.</p>
+		<p>"Nope!" Chelsea says with a grin. "You're coming with us."</p>
+		<p>"Yeah, but—"</p>
+		<p>"Shhh! No backtalk," Chelsea says and pulls her down the hall. Kristen just shakes her head and smiles.</p>
+		<ul>
+		<li>Even though she doesn't say much, Kristen leads the way. It seems like she's used to being the one leading the pack. Chelsea practically drags Sarah along.</li>
+		<li>Sarah asks where they're bringing her, and Kristen explains that it's the day of Charlotte's memorial. </li>
+		<li>Charlotte was a classmate who died many years ago. There was a horrible fire in the science lab and she was caught inside and never made it out.</li>
+		<li>Sarah asks Chelsea if she thinks that the thing that they saw was Charlotte.</li>
+		</ul>
+		<blockquote>
+		  <p><strong>Q:</strong> Does she? (50/50)<br>
+		  <strong>A:</strong> Yes</p>
+		</blockquote>
+		<ul>
+		<li>Chelsea agrees. It didn't cross her mind before, but who else could it be?</li>
+		<li>Kristen seems intrigued but doesn't want to look too interested.</li>
+		</ul>
+		<blockquote>
+		  <p>I'm starting to feel like NPC momentum is dwindling, so I'm going to see what Chelsea and Kristen want to do.</p>
+		</blockquote>
+		<blockquote>
+		  <h3 id="chelsea">Chelsea</h3>
+		  <ul>
+		  <li><strong>Detail:</strong> Focus NPC</li>
+		  <li><strong>Disposition:</strong> Moderate (0)</li>
+		  <li><strong>Action:</strong> Acts out of PC interest</li>
+		  <li><strong>Meaning:</strong> Violently exotic</li>
+		  </ul>
+		  <h3 id="kristen">Kristen</h3>
+		  <ul>
+		  <li><strong>Detail:</strong> Disfavors thread</li>
+		  <li><strong>Disposition:</strong> Moderate (0)</li>
+		  <li><strong>Action:</strong> Talks, exposition</li>
+		  <li><strong>Meaning:</strong> Dimly drab</li>
+		  </ul>
+		</blockquote>
+		<ul>
+		<li>Chelsea is getting revved up. She thinks that the three of them should try to exorcise the ghost.</li>
+		<li>Kristen is feining a lack of enthusiasm and goes on about how it sounds dreary and stupid.</li>
+		<li>Sarah asks how they would even attempt such a thing, and Chelsea suggests hitting the library. With no better options, that's what they do.</li>
+		</ul>
+		<blockquote>
+		  <p>I've tried both stream of consciousness writing and bullet points, and while bullet points do leave out a lot of nuance, they get the job done faster and easier. Not only do they allow you to quickly continue with the story before you lose your motivation, but its abstraction alleviates the concern of trying to write well. You can also add finer details to bullet points—like a specific quote from a character—whenever you feel it's necessary.</p>
+		</blockquote>
+		<blockquote>
+		  <p><strong>Complex Q:</strong> Why do they find at the library?<br>
+		  <strong>Detail:</strong> Focus NPC<br>
+		  <strong>Meaning:</strong> Joyfully exotic<br>
+		  <strong>Meaning:</strong> Perfectly horrible</p>
+		</blockquote>
+		<ul>
+		<li>The girls find an old year book with Charlotte and she seems to be with the same boy in every picture. Compared to Charlotte's elegant and proper attire, young man looked like a bad boy. Even just from the posturing in the photos, he looked possessive of her. According to the yearbook photos, his name was Adam.</li>
+		<li>They decide they need to ask if anyone knows anything about the couple. Rather than asking the students, they figured asking their teachers would work better.</li>
+		<li>Study hall is now over and so Sarah needs to go sign back in. After signing in, she approaches her teacher who is getting ready for her next class.</li>
+		</ul>
+		<blockquote>
+		  <p><strong>Identity:</strong> Teacher<br>
+		  <strong>Personality:</strong> Deliberately average<br>
+		  <strong>Activity:</strong> Preparing for class<br>
+		  <strong>Theme:</strong> Asking about Charlotte and Adam<br>
+		  <strong>Disposition:</strong> (0 + 12) Active (+2)<br>
+		  <strong>Action:</strong> Acts out of self interest<br>
+		  <strong>Statistic check:</strong> Expected baseline</p>
+		</blockquote>
+		<ul>
+		<li>Sarah tries getting the teacher's attention but she waves her away, saying that she's too busy to talk right now. Sarah doesn't want to let go and tries to pursuade her further.</li>
+		</ul>
+		<blockquote>
+		  <p>The teacher rolls <strong>Social</strong> D8 and <strong>Influence</strong> D8 and gets a 10.</p>
+		  <p>Sarah rolls the same and gets a 13.</p>
+		</blockquote>
+		<blockquote>
+		  <p><strong>Q:</strong> Does the teacher continue resisting? (50/50)<br>
+		  <strong>A:</strong> No</p>
+		</blockquote>
+		<ul>
+		<li>The teacher sighs and looks up from her paperwork. She asks what Sarah wants and Sarah asks her if she knows anything about Adam.</li>
+		</ul>
+		<blockquote>
+		  <p><strong>Q:</strong> Do I learn anything? (Likely)<br>
+		  <strong>A:</strong> No</p>
+		</blockquote>
+		<ul>
+		<li>The teacher unfortunately doesn't have anything to say about him since he wasn't in any of her classes.</li>
+		<li>Sarah asks about Charlotte instead.</li>
+		</ul>
+		<blockquote>
+		  <p><strong>NPC Action:</strong> Causes harm</p>
+		</blockquote>
+		<ul>
+		<li>The teacher cuts her off. She's annoyed and says that she needs to finish getting ready for the next class since the bell is about to ring.</li>
+		</ul>
+		<p><br><br></p>
+	</body>
+</html>
