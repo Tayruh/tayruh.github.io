@@ -53,7 +53,7 @@
 			}
 
 			h3 a, h3 {
-				color: #FF6666;
+				color: #ff6666;
 				font-size: 1.15em;
 				text-shadow: 0 0 3px #ff0000;
 			}
@@ -63,9 +63,17 @@
 				font-size: 1em;
 				text-shadow: 0 0 3px #ff8800;
 			}
+			
+			h5 a, h5 {
+				color: #ffbb55;
+	            font-size: 1em;
+	            font-weight: bold;
+	            margin-top: 0 !important;
+	            margin-block-end: -1em;
+            }
 
 			a {
-				color: #E1C87D;
+				color: #e1c87d;
 				font-weight: bold;
 				text-decoration: underline;
 				cursor: pointer;
@@ -73,10 +81,10 @@
 
 			img {
 				display: block;
-				height:auto;
-				width:325px;
-				margin-right: auto;
-				margin-left: auto;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
 			}
 
 			pre {
@@ -104,10 +112,10 @@
 			ul, ol { padding-inline-start: 24px; }
 			ul, ul, ol, ol { margin-left: -0.5em; }
 
-			i, em, em strong, i b
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
 			{ color: #ffff88 !important; }
 
-			b, strong, strong em, b i
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
 			{ color: #ffbb55 !important; }
 
 			code, pre
@@ -137,6 +145,8 @@
 				margin-left: -0.5em;
 				margin-right: -0.5em;
 			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    	details summary ~ a img { margin-top: 1em !important; }
 			details :last-child { margin-bottom: 0; }
 
 			@media screen and (min-width: 500px) {
@@ -153,7 +163,7 @@
 			}
 
 			@media screen and (min-width: 850px) {
-				body > :not(blockquote) { text-align: justify; }
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
 			}
 
 			@media print {
@@ -164,11 +174,11 @@
 					text-align: justify;
 				}
 
-				h1, h2, h3, h4,
+				h1, h2, h3, h4, h5, 
 				b, strong,
 				i, em { color: inherit !important; }
 
-				h1, h2, h3, h4 { text-shadow: none; }
+				h1, h2, h3, h4, h5 { text-shadow: none; }
 
 				h3, h4, mark { color: #666666 !important; }
 
@@ -181,33 +191,33 @@
 		</style>
 	</head>
 	<body>
-		<h1 id="storysetup">Story Setup</h1>
-		<p>When you begin a new story, start by answering these questions to create a strong narrative backbone.</p>
+		<h1 id="story%20setup">Story Setup</h1>
+		<p>When you begin a new story or scene, start by answering these questions to create a strong narrative backbone.</p>
 		<ul>
-		<li><p><strong>Premise:</strong> What is the initial concept and expectation of this story, and what do you find engaging about it?<br>
-		<em>Be honest about the reasons for wanting to use this premise—include embarrassing reasons and exclude reasons of obligation.</em></p></li>
-		<li><p><strong>Problem:</strong> What past event still follows the character, and how does it directly influence their actions or environment in a way that threatens to make their life untenable?<br>
-		<em>The event doesn't need to be one that the character was involved in, but it must currently affect them. It's okay if the description of the past event is vague, but it should be clear in how its influence will likely unravel the character's life unless it is addressed.</em></p></li>
-		<li><p><strong>Catalyst:</strong> What new event prevents the character from returning to life as normal, and how does it achieve that?<br>
-		<em>Event examples are: entering a new world (literally or figuratively), a mystery, a desire for personal growth, or disruption by outside forces.</em></p></li>
-		<li><p><strong>Conflict:</strong> What does the hero hope to accomplish, and what is stopping them? <br>
-		<em>The goal refers to what the hero intends to do within the scope of this setup (story, arc, scene), not their overall goal in life. This goal must be achievable with a definitive stopping point.</em></p></li>
-		<li><p><strong>Stakes:</strong> What does the hero risk in striving for their goal, and what would they risk by doing nothing? <br>
-		<em>Low stakes for not acting are boring and deprive the character of motivation. It's expected that there be little to no risk for acting (low risk, high reward) when the story, arc, or scene starts, but it should increase to heights comparable to the risk of not acting (high risk, high reward) as it reaches the climax.</em></p></li>
-		<li><p><strong>Urgency:</strong> How long does the character have to achieve their goal, and is the deadline something that can be postponed or eliminated?<br>
-		<em>Regardless of how high the risk for not acting is, there is no tension without an impending deadline. Likewise, the tension increases dramatically as the deadline draws closer and the risk for acting increase.</em></p></li>
+		<li><p><strong>Premise:</strong> What is the initial concept and expectation of this story or scene, and what do you find engaging about it?<br>
+		<em><span style="color:darkgrey">This story or scene will change as you go, so this description only covers what you think it'll be about when you start. Be honest about the reasons for wanting to use this premise, since these reasons are why you are here. It's okay if you want things that contradict what your character wants.</span></em></p></li>
+		</ul><ul><li><p><strong>Motivation:</strong> What is the hero's overarching mission, and how does the current goal and objective get them closer to accomplishing this?<br>
+		<em><span style="color:darkgrey">Mission, goal, and objective can loosely be mapped to story, arc, and scene. The mission refers to what the hero is trying to accomplish within this story, not just this arc or scene. The current goal is what the hero is attempting to achieve right now by taking action to accomplish an objective. The current goal should logically fit within their strategy to accomplish their mission, and the current objective should logically work towards that goal.</span></em></p></li>
+		</ul><ul><li><p><strong>Stakes:</strong> What does the hero risk in striving for their goal, and what would they risk by doing nothing? <br>
+		<em><span style="color:darkgrey">It's expected that there be little to no risk for acting (low risk, high reward) when the story, arc, or scene starts, but it should increase to heights comparable to the risk of not acting (high risk, high reward) as it reaches the climax. Low stakes for not acting (low reward) are boring and deprive the character of drive.</span></em></p></li>
+		</ul><ul><li><p><strong>Problem:</strong> What obstacle is preventing the character from achieving their current goal or objective, and how long does the hero have to overcome this?<br>
+		<em><span style="color:darkgrey">The obstacle should have a real chance of preventing the characters from succeeding, not just be a nuisance. Regardless of how high the risk for not acting is, there is no tension without an impending deadline, and the tension increases exponentially as the deadline draws nearer.</span></em></p></li>
 		</ul>
-		<h1 id="storytips">Story Tips</h1>
+		<br>
+		<h1 id="story%20tips">Story Tips</h1>
 		<ul>
 		<li><p>The main character must be the one with the most to lose.</p></li>
-		<li><p>The main character must be proactive, not reactive.</p></li>
-		<li><p>Characters are balanced by things that make them cool and things that make them flawed. Regardless of hardship, coolness can only be effectively balanced against flaws. Coolness may overcome flaws during the climax, but never before that.</p></li>
-		<li><p>To make dialogue style unique for each character, consider the following scales: Verbose vs terse. Casual vs formal. Spontaneous, planned, or rehearsed.</p></li>
-		<li><p>If a conflict arises that is bigger than the main conflict, raise the stakes of the main conflict to match.</p></li>
-		<li><p>When crafting description, present the broad strokes first, details second.</p></li>
-		<li><p>Scenes are about action. They can start shortly before the action (build-up/tense), during the action (in media res/frantic), or shortly after the action (mystery/confusing).</p></li>
+		</ul><ul><li><p>The main character must be proactive, not reactive.</p></li>
+		</ul><ul><li><p>A character is driven to attain: Ability, Role, Relationship, or Status. The drive to attain this is rooted in the need for: Safety, Connection, or Empowerment. </p></li>
+		</ul><ul><li><p>Characters are balanced by things that make them awesome and things that make them flawed. Regardless of hardship, awesomeness can only be effectively balanced against flaws—an awesome character without flaws is a Mary Sue, no matter how many problems you throw at them. The character's awesomeness may overcome (ie. defeat or remove) their flaws during the story climax, but never before that.</p></li>
+		</ul><ul><li><p>To make dialogue style unique for each character, consider the following scales: Verbose vs terse. Casual vs formal. Spontaneous, planned, or rehearsed.</p></li>
+		</ul><ul><li><p>If a problem arises that is bigger than the story's main problem, raise the stakes of the main problem to match.</p></li>
+		</ul><ul><li><p>Tension is the worry that something bad may happen. Tension is released when the worry is averted or realized. If the urgency is too low or the character's ability to succeed feels inevitable, the implied tension will feel false.</p></li>
+		</ul><ul><li><p>Scenes are about action. They can start shortly before the action (build-up/tense), during the action (in media res/exciting), or shortly after the action (mystery/intriguing).</p></li>
+		</ul><ul><li><p>When crafting description, present the broad strokes first, details second.</p></li>
 		</ul>
-		<h1 id="twists">Twists</h1>
+		<br>
+		<h1 id="complications">Complications</h1>
 		<table>
 		<thead>
 		<tr>
@@ -298,5 +308,6 @@
 		</tr>
 		</tbody>
 		</table>
+		<p><br><br></p>
 	</body>
 </html>
