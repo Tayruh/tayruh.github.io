@@ -6,7 +6,7 @@
 (function(solo) {
 	"use strict";
 
-	var version = "v20240120";
+	var version = "v20240208";
 
 	var current_page, current_section, current_menu, color_theme, localStorage;
 	var toc = [];
@@ -110,6 +110,7 @@
 				"locations": ["Abandoned", "Active", "Artistic", "Atmosphere", "Beautiful", "Bleak", "Bright", "Business", "Calm", "Charming", "Clean", "Cluttered", "Cold", "Colorful", "Colorless", "Confusing", "Cramped", "Creepy", "Crude", "Cute", "Damaged", "Dangerous", "Dark", "Delightful", "Dirty", "Domestic", "Empty", "Enclosed", "Enormous", "Entrance", "Exclusive", "Exposed", "Extravagant", "Familiar", "Fancy", "Festive", "Foreboding", "Fortunate", "Fragrant", "Frantic", "Frightening", "Full", "Harmful", "Helpful", "Horrible", "Important", "Impressive", "Inactive", "Intense", "Intriguing", "Lively", "Lonely", "Long", "Loud", "Meaningful", "Messy", "Mobile", "Modern", "Mundane", "Mysterious", "Natural", "New", "Occupied", "Odd", "Official", "Old", "Open", "Peaceful", "Personal", "Plain", "Portal", "Protected", "Protection", "Purposeful", "Quiet", "Reassuring", "Remote", "Resourceful", "Ruined", "Rustic", "Safe", "Services", "Simple", "Small", "Spacious", "Storage", "Strange", "Stylish", "Suspicious", "Tall", "Threatening", "Tranquil", "Unexpected", "Unpleasant", "Unusual", "Useful", "Warm", "Warning", "Watery", "Welcoming"],
 				"magic item descriptors": ["Animal", "Animate", "Area", "Armor", "Assist", "Attack", "Attract", "Benefit", "Bestow", "Block", "Book", "Change", "Clothing", "Cloud", "Cold", "Communication", "Container", "Control", "Create", "Curse", "Damage", "Death", "Deceit", "Decrease", "Defense", "Destroy", "Detect", "Dimensions", "Elements", "Emotion", "Energy", "Enhance", "Environment", "Escape", "Evil", "Explode", "Fear", "Fire", "Flight", "Food", "Gem", "Good", "Group", "Harm", "Heal", "Health", "Helpful", "Illness", "Illusion", "Imbue", "Imitate", "Increase", "Information", "Inhibit", "Instant", "Jewelry", "Lethal", "Life", "Light", "Limited", "Liquid", "Mental", "Monster", "Multi", "Nature", "Object", "Orb", "Others", "Physical", "Plants", "Poison", "Potion", "Power", "Ranged", "Resistance", "Restore", "Ring", "Rope", "Rune", "Safety", "Scroll", "Self", "Senses", "Skill", "Special", "Speed", "Spell", "Staff", "Strange", "Summon", "Sword", "Tool", "Transform", "Trap", "Travel", "Useful", "Utility", "Wand", "Water", "Weapon"],
 				"mutation descriptors": ["Agility", "Animal", "Appearance", "Armor", "Assist", "Attach", "Attack", "Benefit", "Bestow", "Bizarre", "Block", "Body", "Change", "Claws", "Color", "Combat", "Communicate", "Conceal", "Constrain", "Control", "Create", "Damage", "Deceive", "Decrease", "Defect", "Defense", "Deformed", "Detect", "Diminish", "Disrupt", "Dominate", "Elements", "Energy", "Enhance", "Environment", "Expose", "Extra", "Eyes", "Fear", "Fight", "Fly", "Free", "Harm", "Heal", "Health", "Heat", "Helpful", "Horrible", "Imitate", "Immunity", "Imprison", "Increase", "Information", "Inspect", "Large", "Learn", "Lethal", "Limb", "Limit", "Mental", "Messy", "Move", "Nature", "Pain", "Partial", "Power", "Projectile", "Protection", "Ranged", "Recharge", "Release", "Replace", "Requirement", "Resistance", "Restore", "Reveal", "Scary", "Senses", "Simple", "Skill", "Stop", "Strange", "Strength", "Strong", "Struggle", "Suffer", "Suppress", "Surroundings", "Survive", "Swim", "Toxic", "Transform", "Travel", "Usurp", "Violence", "Vulnerability", "Warm", "Weak", "Weapon", "Wound"],
+				"names": ["A",  "Action",  "Ah",  "Ahg",  "An",  "Animal",  "Ar",  "As",  "B",  "Bah",  "Be",  "Bih",  "Brah",  "Col",  "Color",  "Cor",  "Dah",  "Deeds",  "Del",  "Drah",  "Eee",  "Eh",  "Ei",  "Ell",  "Elements",  "Emotion",  "Ess",  "Est",  "Et",  "Fah",  "Fer",  "Fi",  "Floral",  "Gah",  "Go",  "Grah",  "Hee",  "Ia",  "Ick",  "In",  "Iss",  "Je",  "Ke",  "Jen",  "Kha",  "Kr",  "Lah",  "Lee",  "Len",  "Lin", "Location",  "Ly",  "Mah",  "Military",  "Misdeed",  "N",  "Nah",  "Nature",  "Nee",  "Nn",  "Number",  "Occupation",  "Oh",  "On",  "Or",  "Orn",  "Oth",  "Ow",  "Ph",  "Pr",  "R",  "Rah",  "Ren",  "Sah",  "Se",  "Sh",  "Sha",  "T",  "Ta",  "Tal",  "Tar",  "Th",  "Thah",  "Thoh",  "Ti",  "Time",  "Tor",  "Uh",  "Va",  "Vah",  "Ve",  "Vice",  "Virtue",  "Wah",  "Wr",  "X",  "Y",  "Yah",  "Yuh",  "Z"],
 				"noble house": ["Aggressive", "Allies", "Anger", "Bestow", "Betray", "Bizarre", "Block", "Break", "Bureaucracy", "Cautious", "Change", "Commerce", "Compromise", "Conflict", "Connections", "Control", "Create", "Crisis", "Cruel", "Dangerous", "Death", "Deceit", "Defeat", "Defiant", "Disrupt", "Enemies", "Extravagant", "Faded", "Fame", "Family", "Headquarters", "Heirloom", "Hero", "History", "Home", "Important", "Imprison", "Increase", "Information", "Intrigue", "Investment", "Land", "Large", "Leadership", "Legal", "Leverage", "Liberty", "Love", "Loyal", "Magnificent", "Malice", "Mighty", "Military", "Misfortune", "Move", "Mysterious", "Neglect", "Old", "Oppose", "Oppress", "Overthrow", "Passion", "Peace", "Persecute", "Plans", "Politics", "Possessions", "Powerful", "Public", "Refuse", "Release", "Remarkable", "Return", "Riches", "Royalty", "Ruthless", "Secret", "Security", "Servant", "Spy", "Strange", "Strong", "Struggle", "Succession", "Suffering", "Suppress", "Tactics", "Tension", "Travel", "Trust", "Usurp", "Valuable", "Vengeance", "Victory", "Violence", "War", "Weak", "Wealth", "Weapon", "Young"],
 				"objects": ["Active", "Artistic", "Average", "Beautiful", "Bizarre", "Bright", "Clothing", "Clue", "Cold", "Colorful", "Communication", "Complicated", "Confusing", "Consumable", "Container", "Creepy", "Crude", "Cute", "Damaged", "Dangerous", "Deactivated", "Deliberate", "Delightful", "Desired", "Domestic", "Empty", "Energy", "Enormous", "Equipment", "Expected", "Expended", "Extravagant", "Faded", "Familiar", "Fancy", "Flora", "Fortunate", "Fragile", "Fragrant", "Frightening", "Garbage", "Guidance", "Hard", "Harmful", "Healing", "Heavy", "Helpful", "Horrible", "Important", "Inactive", "Information", "Intriguing", "Large", "Lethal", "Light", "Liquid", "Loud", "Majestic", "Meaningful", "Mechanical", "Modern", "Moving", "Multiple", "Mundane", "Mysterious", "Natural", "New", "Odd", "Official", "Old", "Ornamental", "Ornate", "Personal", "Powerful", "Prized", "Protection", "Rare", "Ready", "Reassuring", "Resource", "Ruined", "Small", "Soft", "Solitary", "Stolen", "Strange", "Stylish", "Threatening", "Tool", "Travel", "Unexpected", "Unpleasant", "Unusual", "Useful", "Useless", "Valuable", "Warm", "Weapon", "Wet", "Worn"],
 				"plot twists": ["Action", "Attack", "Bad", "Barrier", "Betray", "Business", "Change", "Character", "Conclude", "Conditional", "Conflict", "Connection", "Consequence", "Control", "Danger", "Death", "Delay", "Destroy", "Diminish", "Disaster", "Discover", "Emotion", "Enemy", "Enhance", "Enter", "Escape", "Evidence", "Failure", "Family", "Free", "Friend", "Good", "Group", "Harm", "Headquarters", "Help", "Helpless", "Hidden", "Idea", "Immediate", "Impending", "Important", "Incapacitate", "Information", "Injustice", "Leader", "Legal", "Lethal", "Lie", "Limit", "Location", "Lucky", "Mental", "Missing", "Mundane", "Mystery", "Necessary", "News", "Object", "Oppose", "Outcast", "Overcome", "Past", "Peace", "Personal", "Persuade", "Physical", "Plan", "Power", "Prepare", "Problem", "Promise", "Protect", "Public", "Pursue", "Rare", "Remote", "Repair", "Repeat", "Require", "Rescue", "Resource", "Response", "Reveal", "Revenge", "Reversal", "Reward", "Skill", "Social", "Solution", "Strange", "Success", "Tension", "Trap", "Travel", "Unknown", "Unlikely", "Unusual", "Urgent", "Useful"],
@@ -2264,12 +2265,18 @@
 		}
 	}
 
-	function showNewMeaning(source, focus) {
-		$("#new-meaning").innerHTML = getMeaning(source, focus);
+	function showNewMeaning(id, source, focus) {
+		fadeIn("new-meaning-" + id, 0, getMeaning(source, focus));
 	}
 	
-	function getCyclingMeaning(source, topic) {
-		return "<span id='new-meaning' class='answer' onclick='solo.showNewMeaning(\"" + source + "\", \"" + topic + "\")'>" +
+	function getCyclingMeaning(id, source, topic) {
+		if (topic === undefined) {
+			topic = source;
+			source = id;
+			id = 0;
+		}
+		
+		return "<span id='new-meaning-" + id + "' class='answer' onclick='solo.showNewMeaning(" + id + ", \"" + source + "\", \"" + topic + "\")'>" +
 				getMeaning(source, topic) + "</span>";
 	}
 
@@ -2289,7 +2296,7 @@
 	}
 
 	function showAnswer(id, source, focus) {
-		$("#answer-" + id).innerHTML = "<p class='answer'>" + getMeaning(source, focus.toLowerCase()) + "</p>";
+		fadeIn("answer-" + id, 0, "<p class='answer'>" + getMeaning(source, focus.toLowerCase()) + "</p>");
 	}
 
 	function showQuestionsTable(source) {
@@ -2883,7 +2890,7 @@
 			};
 	
 			do {
-				roll = random(1, 20);
+				roll = random(1, 10);
 				if (roll > 6) {
 					if (result.length + count < 2) count += 1;
 					continue;
@@ -2900,7 +2907,7 @@
 			}
 			while (count);
 
-			$("#scene-adjust").outerHTML = "<ul><li>" + result.join("</li><li>") + "</li></ul>";
+			fadeIn("scene-adjust", 0, "<ul><li>" + result.join("</li><li>") + "</li></ul>");
 			return;
 		};
 
@@ -2911,14 +2918,18 @@
 		
 		if (roll > chaos) scene = ["Scene", roll, "Expected Scene"];
 		else { 
-			if (focus === "prepared adventure") scene_type = "Expected";
-			else scene_type = (roll % 2) ? "Altered" : "Interrupt";
-			scene.push(
-				["Scene", roll, scene_type + " Scene"],
-				["Focus", "", getRolledItem(random(1, 100), muse.mythic.fate.focus[focus])],
-				["Event", "", getCyclingMeaning("mythic", "action")]
-			);
-			if (scene_type === "Altered") adjustment = getDataFooter("<a id='scene-adjust' onclick='solo.showPage(\"mythic-scene:adjust\")'>Adjust Scene</a>");
+			if (focus === "prepared adventure") scene_type = "Random Event";
+			else scene_type = (roll % 2) ? "Altered Scene" : "Interrupt Scene";
+			scene = [["Scene", roll, scene_type]];
+			
+			if (scene_type === "Altered Scene") {
+				scene.push(["Tweak", "", getCyclingMeaning("mythic", "action")]);
+				adjustment = getDataFooter("<div id='scene-adjust' onclick='solo.showPage(\"mythic-scene:adjust\")'><a>Adjust Scene</a></div>");
+			} 
+			else {
+				scene.push(["Focus", "", getRolledItem(random(1, 100), muse.mythic.fate.focus[focus])]);
+				scene.push(["Event", "", getCyclingMeaning("mythic", "action")]);
+			}
 		}
 
 		display(getDataTable(scene) + adjustment + getBackLink());
@@ -2926,11 +2937,11 @@
 
 	function showMythicCharacter() {
 		display(getDataTable(
-			["Identity", getMeaning("mythic", "character identity")],
-			["Appearance", getMeaning("mythic", "character appearance")],
-			["Personality", getMeaning("mythic", "character personality")],
-			["Traits & Flaws", getMeaning("mythic", "character traits & flaws")],
-			["Motivations", getMeaning("mythic", "character motivations")]
+			["Identity", getCyclingMeaning(0, "mythic", "character identity")],
+			["Appearance", getCyclingMeaning(1, "mythic", "character appearance")],
+			["Personality", getCyclingMeaning(2, "mythic", "character personality")],
+			["Traits & Flaws", getCyclingMeaning(3, "mythic", "character traits & flaws")],
+			["Motivations", getCyclingMeaning(4, "mythic", "character motivations")]
 		) + getBackLink(true));
 	}
 
@@ -3008,6 +3019,7 @@
 			list = [
 				["Description", "solo.showPage('mythic-table:Description:character descriptors')"],
 				["Appearance", "solo.showPage('mythic-table:Appearance:character appearance')"],
+				["Name", "solo.showPage('mythic-table:Name:names')"],
 				["Identity", "solo.showPage('mythic-table:Identity:character identity')"],
 				["Personality", "solo.showPage('mythic-table:Personality:character personality')"],
 				["Skills", "solo.showPage('mythic-table:Skill:character skills')"],
