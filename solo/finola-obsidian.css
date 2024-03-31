@@ -1,5 +1,5 @@
 /*
-obsidian 1.4.16
+obsidian 1.5.11
 
 div.view-content
     div.markdown-reading-view
@@ -19,11 +19,11 @@ div.view-content
         div.cm-scroller
             div.cm-sizer
                 div.cm-content
-                    div.HyperMD-header-1    // H1
-                    div.HyperMD-quote       // blockquote
-                    div.HyperMD-list        // list
+                    div.HyperMD-header-1      // H1
+                    div.HyperMD-quote         // blockquote
+                    div.HyperMD-list-line     // list
                         
-                    div.cm-line             // p
+                    div.cm-line               // p
                         span.cm-formatting-strong
                         span.cm-formatting-em
                         span.cm-formatting-strikethrough
@@ -109,6 +109,9 @@ div.view-content
     width: 325px;
 	margin-right: auto;
     margin-left: auto;
+    border-radius: 6px;
+    border: solid 1px #000000;
+    box-shadow: -3px 3px 3px #00000040;
 }
 
 .markdown-preview-section pre {
