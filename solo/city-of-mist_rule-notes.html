@@ -85,6 +85,9 @@
 				margin-right: auto !important;
 				margin-left: auto !important;
 				width: 325px;
+				border-radius: 6px;
+				border: solid 1px #000000;
+				box-shadow: -3px 3px 3px #00000040;
 			}
 
 			pre {
@@ -206,17 +209,45 @@
 		<p>Statuses reflect temporary conditions of all kinds that affect your character, such as physical conditions, psychological conditions, social conditions, supernatural or mystical conditions, and combat situations. (eg. injuries, cheerfulness, humiliated, cursed, or shielded)</p>
 		<p>Statuses always represent transient states. They never represent things (eg. "guns-2"), or permanent qualities (eg. "smart-5"). For things or permanent qualities use tags.</p>
 		<p>The MC can hit the player with a status whenever they want, but the player can usually FD against it.</p>
-		<p>Tier-5 is the tipping point in which a negative status shuts down your ability to take actions that go against it (eg. "encased-in-a-web-5"), a beneficial status renders you incapable of performing actions related to that status (eg. "focused-3" becomes "tunnel-visioned-5"), and in both cases the status no longer provides a bonus to anyone's power.</p>
-		<p>Tier-6 status means the PC is dead, close to it, or taken over by the MC. The max tier is always 6, and any tier beyond that is reduced to 6.</p>
+		<p>When attempting to a remove a status, the status usually doesn't count against the move to reduce it. However the GM may decide that a status is especially difficult to remove and declare that it does count against its removal.</p>
+		<p>The playable tiers are tier-1 (minor), tier-2 (mild), tier-3 (major), and tier-4 (dramatic). You can still act while these are relevant to your action but they will affect the power.</p>
+		<p>Tier-5 (OUT) is the tipping point in which a negative status shuts down your ability to take actions that go against it (eg. "encased-in-a-web-5"), a beneficial status renders you incapable of performing actions related to that status (eg. "focused-3" becomes "tunnel-visioned-5"), and in both cases the status no longer provides a bonus to anyone's power.</p>
+		<p>Tier-6 (MC) status means the PC is dead, close to it, or taken over by the MC. The max tier is always 6, and any tier beyond that is reduced to 6.</p>
 		<p>While you may reduce tiers 1 through 5 with game actions, tier-6 is permanent and unable to be reduced through normal means. When appropriate and with the player’s approval, the MC may choose to trade the tier-6 status for the loss of any number of power tags, the addition or loss of weakness tags, and/or the replacement of an entire theme. This can represent the permanent transformation the character has undergone. The character’s tier-6 status is then reduced to tier 5.</p>
+		<p>When attempting to a remove a status, the status usually doesn't count against the move to reduce it. However the GM may decide that a status is especially difficult to remove and declare that it does count against its removal.</p>
 		<h3 id="status%20stacking%20and%20reducing">Status Stacking and Reducing</h3>
 		<p>A higher-tier status replaces a lower-tier status in the same spectrum. When you stack a lower-tier status with a higher-tier status, the remaining ticks after increasing to the next tier carry over. (eg. 3.2 + 2 = 4.1)</p>
 		<p>Temporary statuses do not stack with prolonged statuses.</p>
 		<p>The ticks required to increase a status to the next tier is equal to its current tier. (eg. from 2 to 3 is 2 ticks, from 3 to 4 is 3 ticks, etc)</p>
 		<p>When a status is reduced, all pips are cleared. (eg. 4.3 - 2 = 2) When a move reduces a created status, its tier is reduced before being applied to the target. </p>
+		<h3 id="juice">Juice</h3>
+		<p>Juice is primarily created using CtG, but can also be gained by other moves like HWAYG. Juice has a method, which is the action taken to create the juice. Juice can be spent at any time to pick items off the CtG menu as long as the method is still narratively relevant. </p>
+		<p>Batches of juice exist until they narratively expire, which is usually after just a moment. You may have multiple batches but they do not stack.</p>
+		<p>While a batch exists, any tags or statuses used to create that batch cannot be used in a CtG move, and you cannot CtG using the same or similar method.</p>
+		<p>Any tag or status created with juice is temporary by default. Tags and statuses created using help and hurt points are also temporary.</p>
+		<p>Tags created by juice must be distinct. You also cannot spend juice to increase tiers of an existing status, but you may create a status on the same spectrum and stack them.</p>
+		<h3 id="themes">Themes</h3>
+		<p>A nascent theme is a newly added theme that begins with only one power tag. When you first mark attention on a nascent theme, it gains another power tag. When you first complete the attention track on a nascent theme, it gains another power tag, making it a standard theme.</p>
+		<p>When the crew has a new overarching goal, it gets a new nascent crew theme. When the crew has achieved its goal, it gets a new nascent extra theme.</p>
+		<h3 id="linked%20moves">Linked Moves</h3>
+		<p>With the exception of FD, you cannot repeat an action using the same tags, until the conditions have changed.</p>
+		<p>Each tag can only be used once within a set of linked moves, even if the tag is available and relevant to more than one move in the set. (eg. if you use a tag in HWAYG and miss, you cannot use the tag with FD to avoid the incoming status, since HWAYG leads directly into FD.)</p>
+		<p>Moves that have the same purpose are also considered linked moves, even if they don’t follow one another. (eg. you cannot use a "spell book" tag with CtG to create a "fireball" tag or "magical-barrier-1" status and then use "spell book" in any move in which "fireball" or "magical-barrier-1" is used, since the purpose of using the spell book was to cast a fireball or shield from magic.)</p>
+		<h3 id="player%20moves">Player Moves</h3>
+		<p><strong>Go Toe to Toe</strong> is the basic opposed roll move. You use it when someone is attempting to do something to you that you don't want, or you're attempting to do something to them that they don't want, and both of you are in a position to fight for what you want.</p>
+		<p><strong>Hit With All You've Got</strong> is like GTtT except you get a free shot, guaranteeing damage on a hit and allowing you to scale it up in area or intensity. The enemy can still react after though.</p>
+		<p><strong>Take the Risk</strong> is when you're attempting to do something dangerous that isn't opposed.</p>
+		<p><strong>Face Danger</strong> is only used in reaction to already receiving a status, whether from an MC hard move or another player. The move is the reflexive attempt to endure or avoid the incoming status. If you're reacting to a soft move rather than a hard move (ie. you still have a chance to avoid or block the harm rather than endure), use GTtT or TtR instead.</p>
+		<h3 id="change%20the%20game">Change the Game</h3>
+		<p>Where GTtT and HWAYG are about giving a status to opposition directly using applicable tags, CtG creates juice which can then be spent to create an advantage by repurposing tags as new story tags or statuses (eg. turning "spell book" into "fireball" or "magical-barrier-1") or removing tags and statuses.</p>
+		<p>If the player is trying to inflict a status and is opposed, they should use GTtT instead. If the player is trying to inflict a status and they are unopposed, they may instead use HWAYG, which provides a much better outcome (eg. ongoing by default with chance to increase tier) but with higher risk (eg.  collateral damage and retaliation on hit).</p>
+		<h3 id="stop.%20holding.%20back.">Stop. Holding. Back.</h3>
+		<p>A "significant" sacrifice befits a significant change: changing a detail that will affect the course of a case/session, permanently defeating a minor danger, temporarily evading or surviving the main danger of a case/session, overcoming or circumventing a significant challenge or circumstance, effecting a change with small repercussions on the entire series, or anything that is not covered by the character’s power tags but is on the same general scale as them.</p>
+		<p>A "no-return" sacrifice befits a change from which there is no return: changing a detail that will affect the course of a season, permanently defeating a major danger, resolving one of the main challenges of a case/session, temporarily evading or surviving the main danger of a season, overcoming or circumventing a major challenge or circumstance, or effecting a change with major repercussions on the entire series.</p>
+		<p>The "ultimate" sacrifice befits the ultimate change: changing a detail that will affect the course of the entire series, permanently defeating a top-tier danger, resolving one of the main challenges of a season, temporarily evading or surviving the main danger of a series, overcoming or circumventing an extreme challenge or circumstance, or effecting a change with dramatic repercussions on the entire series.</p>
 		<h3 id="danger%20statuses">Danger Statuses</h3>
 		<p>When giving a status to a danger, you must choose one of the following applications: 1) the status counts, against that danger’s spectrums to promote its defeat, 2) the status applies to player moves against that danger, or 3) the status applies to the danger’s own moves.</p>
-		<p>Option 1 functions as a health track, so you cannot use it to affect your moves or a danger's moves. Option 2 affects the player's power when applicable, but does not affect the statuses that dangers give or receive. Option 3 increases or decreases the statuses that dangers give or receive using standard stacking and reducing rules for statuses, but does not affect player's power. If you use juice for option 2 or 3, be sure to track the method and tags used to create it.</p>
+		<p>Option 1 functions as a health track, so you cannot use it to affect your moves or a danger's moves. Option 2 affects the player's power when applicable, but does not affect the statuses that dangers give or receive. Option 3 increases or decreases the statuses that dangers give or receive using standard stacking and reducing rules for statuses, but does not affect player's power.</p>
 		<p>While the MC may decide to give a status multiple applications, be aware that doing so may decrease the challenge drastically. (eg. if you pick both option 1 and 2, that status becomes a death spiral.)</p>
 		<h3 id="danger%20spectrums">Danger Spectrums</h3>
 		<p>Any status given to a danger that is on their spectrum cannot be added to your roll against them.</p>
@@ -226,29 +257,6 @@
 		<p>The collective size and its size factor are: One member (0), A handful of members (1), Several members (2), Many members (3), and A host of members (4).</p>
 		<p>When a single member of the collective is targeted, track its statuses separate from the collective. When a member in the collective is overcome, the MC decides whether to reduce the collective size by 1.</p>
 		<p>When the collective itself is the target of a status, reduce its incoming statuses by the size factor of the collective, then apply any other defenses it may have.</p>
-		<h3 id="batches">Batches</h3>
-		<p>Batches of juice exist until they narratively expire, which is usually after just a moment. You may have multiple batches but they do not stack.</p>
-		<p>While a batch exists, any tags or statuses used to create that batch cannot be used in a CtG move, and you cannot CtG using the same or similar method.</p>
-		<h3 id="juice">Juice</h3>
-		<p>Juice is primarily created using CtG, but can also be gained by other moves like HWAYG. Juice has a method, which is the action taken to create the juice. Juice can be spent at any time to pick items off the CtG menu as long as the method is still narratively relevant. </p>
-		<p>Any tag or status created with juice is temporary by default. Tags and statuses created using help and hurt points are also temporary. Tags and statuses created with juice cannot be used with the tags used to create the juice.</p>
-		<p>You cannot spend juice to increase tiers of an existing status, but you may create a status on the same spectrum and stack them.</p>
-		<h3 id="change%20the%20game">Change the Game</h3>
-		<p>You don't create tags and statuses with CtG, you create a batch of juice.</p>
-		<p>Tags created with juice cannot be used in moves alongside the tags used to create the juice.</p>
-		<p>While the batch of juice exists, you can't create another batch using a similar method, and you can't CtG with the tags used to create the juice either.</p>
-		<p>When attempting to a remove a status, the status usually doesn't count against the move to reduce it. However the GM may decide that a status is especially difficult to remove and declare that it does count against its removal.</p>
-		<h3 id="linked%20moves">Linked Moves</h3>
-		<p>With the exception of FD, you cannot repeat an action using the same tags, until the conditions have changed.</p>
-		<p>Each tag can only be used once within a set of linked moves, even if the tag is available and relevant to more than one move in the set. (eg. if you use a tag in HWAYG and miss, you cannot use the tag with FD to avoid the incoming status, since HWAYG leads directly into FD.)</p>
-		<p>Moves that have the same purpose are also considered linked moves, even if they don’t follow one another. (eg. you cannot use a "spell book" tag with CtG to create a "fireball" tag or "magical-barrier-1" status and then use "spell book" in any move in which "fireball" or "magical-barrier-1" is used, since the purpose of using the spell book was to cast a fireball or shield from magic.)</p>
-		<h3 id="themes">Themes</h3>
-		<p>A nascent theme is a newly added theme that begins with only one power tag. When you first mark attention on a nascent theme, it gains another power tag. When you first complete the attention track on a nascent theme, it gains another power tag, making it a standard theme.</p>
-		<p>When the crew has a new overarching goal, it gets a new nascent crew theme. When the crew has achieved its goal, it gets a new nascent extra theme.</p>
-		<h3 id="stop.%20holding.%20back.">Stop. Holding. Back.</h3>
-		<p>A "significant" sacrifice befits a significant change: changing a detail that will affect the course of a case/session, permanently defeating a minor danger, temporarily evading or surviving the main danger of a case/session, overcoming or circumventing a significant challenge or circumstance, effecting a change with small repercussions on the entire series, or anything that is not covered by the character’s power tags but is on the same general scale as them.</p>
-		<p>A "no-return" sacrifice befits a change from which there is no return: changing a detail that will affect the course of a season, permanently defeating a major danger, resolving one of the main challenges of a case/session, temporarily evading or surviving the main danger of a season, overcoming or circumventing a major challenge or circumstance, or effecting a change with major repercussions on the entire series.</p>
-		<p>The "ultimate" sacrifice befits the ultimate change: changing a detail that will affect the course of the entire series, permanently defeating a top-tier danger, resolving one of the main challenges of a season, temporarily evading or surviving the main danger of a series, overcoming or circumventing an extreme challenge or circumstance, or effecting a change with dramatic repercussions on the entire series.</p>
 		<h3 id="optional%20rules">Optional Rules</h3>
 		<p><strong>Grit Mode:</strong> Grit mode scales the power used for moves, including the power used to create juice or apply tiers of a status. The scale is 1 = 1, 2-3 = 2, 4-6 = 3, and 7+ = 4. Negative power scales the same way.</p>
 		<p><strong>Status Filter:</strong> The MC may allow you to set a status filter that decreases incoming statuses on a target, whether as a buff to decrease by negative conditions or a debuff to decreases positive conditions. To accomplish this, roll 10+ on CtG, choose the "Reduce or Remove a Status" option, and then spend another juice to prolong the effect of the created status. While the status filter is active, you cannot attack or defend the target with the tags used to set up the status filter.</p>
