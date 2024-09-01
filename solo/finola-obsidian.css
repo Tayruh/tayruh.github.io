@@ -1,5 +1,5 @@
 /*
-obsidian 1.5.11
+obsidian 1.6. 7
 
 div.view-content
     div.markdown-reading-view
@@ -182,6 +182,11 @@ blockquote strong em, blockquote b i,
 	padding: 0.5em;
 	margin-left: -0.5em;
 	margin-right: -0.5em;
+}
+
+.markdown-preview-section blockquote small, 
+.HyperMD-quote small, blockquote small {
+	opacity: 0.6;
 }
 
 .markdown-preview-view, .cm-scroller { padding: 25px !important; }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- last updated: 03/30/2024 -->
+<!-- last updated: 09/01/2024 -->
 
 <html lang="en">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
@@ -259,8 +259,10 @@
 				margin-right: -0.5em;
 			}
 			details summary ~ ul { margin-top: 1em !important; }
-	    	details summary ~ a img { margin-top: 1em !important; }
+	    details summary ~ a img { margin-top: 1em !important; }
 			details :last-child { margin-bottom: 0; }
+			
+			blockquote small { opacity: 0.6; }
 
 			@media screen and (min-width: 500px) {
 				html { margin: 1em; }
@@ -373,6 +375,7 @@
 				
 				html = html.replace(/(?:<p>\s*)?(<(?:details|summary)[^>]*>)(?:\s*<br>)?/gi, "$1")
 				html = html.replace(/<\/(summary|details)>\s*<\/p>/gi, "</$1>");
+				html = html.replace(/<p>\s*<\/p>/gi, "");
 
 				document.getElementById("converted").innerHTML = html;
 				
