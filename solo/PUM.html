@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+			
+			h5 a, h5 {
+				color: #ffbb55;
+	            font-size: 1em;
+	            font-weight: bold;
+	            margin-top: 0 !important;
+	            margin-block-end: -1em;
+            }
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+				border-radius: 6px;
+				border: solid 1px #000000;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+			
+			blockquote small { opacity: 0.6; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h1 id="pum%20-%20english%208.2">PUM - English 8.2</h1>
+		<h2 id="page%202">Page 2</h2>
+		<p>OLD: The Plot Unfolding Machine (PUM) is a <strong>Game Master Emulator</strong> that allows you to play any tabletop RPG<del>s</del> without a dedicated gamemaster driving the game.<br>
+		NEW: The Plot Unfolding Machine (PUM) is a <strong>Game Master Emulator</strong> that allows you to play any tabletop RPG without a dedicated gamemaster driving the game.</p>
+		<p>OLD: Easier said than done<del>, y</del>ou set the pitch for the game, then take the role of your characters to explore it.<br>
+		NEW: Easier said than done<mark>. Y</mark>ou set the pitch for the game, then take the role of your characters to explore it.</p>
+		<p>OLD: The catch is that certain decisions and outcomes are handed to a GM emulator, so players become <del>subject to surprise and are not taking all</del> responsibility for the development of the game. By asking <strong>questions</strong><del>,</del> and using <strong>beats</strong>, you let PUM <del>hint to you with</del> how the game develops<del>,</del> without any spoilers <del>beforehand</del>.<br>
+		NEW: The catch is that certain decisions and outcomes are handed to a GM emulator, so <mark>that the</mark> players <mark>may be surprised and are not taking full</mark> responsibility for the development of the game. By asking <strong>questions</strong> and using <strong>beats</strong>, you let PUM <mark>suggest</mark> how the game develops without any <mark>future</mark> spoilers.</p>
+		<p>OLD: PUM helps <del>to come up</del> with situations and scenes. Other tools rely on you to define what your PCs see or find, and require more effort to drive the game.<br>
+		NEW: PUM helps <mark>coming</mark> up with situations and scenes. Other tools rely on you to define what your PCs see or find, and require more effort to drive the game.</p>
+		<p>OLD: PUM is more precise than other GM emulators, giving you narrower results that require less effort to interpret. It can for instance, answer how or why.<br>
+		NEW: PUM is more precise than other GM emulators, giving you narrower results that require less effort to interpret. It can==,== for instance, answer how or why.</p>
+		<p>OLD: PUM is rules-light and can be used in any genre, game, or setting. Learn once<del>,</del> and play many. It can also be customized to your <del>play-style</del> preferences.<br>
+		NEW: PUM is rules-light and can be used in any genre, game, or setting. Learn once and play many. It can also be customized to your <mark>play style</mark> preferences.</p>
+		<p>OLD: Either digital<del>,</del> or pen &amp; paper tools are needed to play, plus a set of <strong>d10</strong> dice to roll the random tables.<br>
+		NEW: Either digital or pen &amp; paper tools are needed to play, plus a set of <strong>d10</strong> dice to roll the random tables.</p>
+		<p>OLD: You decide how you play: In your head, writing the game as a novel, voicing it out, or any other method.<br>
+		NEW: You decide how you play: In your head, writing the game as a novel, voicing it out <mark>loud</mark>, or any other method.</p>
+		<p>OLD: PUM is played with two parts: an oracle sheet with random tables for asking questions, and a plot sheet with the essential plot unfolding mechanics. There are <del>different</del> alternative plot sheets <del>you can use, and also</del> an extended list of plot nodes if you like.<br>
+		NEW: PUM is played with two parts: an oracle sheet with random tables for asking questions, and a plot sheet with the essential plot unfolding mechanics. There are <mark>multiple</mark> alternative plot sheets <mark>provided for use, as well as</mark> an extended list of plot nodes==,== if you like.</p>
+		<p>OLD: If you like “playing to find out”, PUM helps you come up with ideas for challenges, locations, characters, and other elements on the fly. It is also capable of answering <del>your, or your main characters’ questions</del>, and trigger plot twists.<br>
+		NEW: If you like “playing to find out”, PUM helps you come up with ideas for challenges, locations, characters, and other elements on the fly. It is also capable of answering <mark>questions for you or your main characters</mark>, and <mark>triggering</mark> plot twists.</p>
+		<p>OLD: The first side is the Oracle Sheet: As you play throughout the game, you may have several questions you <del>decide</del> to delegate to PUM. The oracles in this sheet can answer in yes or no, or openly, by giving you clues to read as answers.<br>
+		NEW: The first side is the Oracle Sheet: As you play throughout the game, you may have several questions <mark>that</mark> you <mark>choose</mark> to delegate to PUM. The oracles in this sheet can answer in yes or no, or openly, by giving you clues to read as answers.</p>
+		<p>OLD: When playing, it all happens in <strong>scene beats</strong>, where you declare what your PCs find, see, hear, or feel, and then you decide what your PCs do about it. What PUM does in between<del>,</del> is answer your questions, bring surprises, and give you ideas for situations and scenes so you never get stuck or unsure as to what happens.<br>
+		NEW: When playing, it all happens in <strong>scene beats</strong>, where you declare what your PCs find, see, hear, or feel, and then you decide what your PCs do about it. What PUM does in between is answer your questions, bring surprises, and give you ideas for situations and scenes so <mark>that</mark> you never get stuck or <mark>are</mark> unsure as to what happens.</p>
+		<p>OLD: To help <del>yourself</del> finish <del>the</del> plots, every time you play a <strong>scene beat</strong>, you cross out a box in a <strong>plot</strong> track; this gives you a reference <del>of</del> where you are <del>relative</del> to the resolution of the plot.<br>
+		NEW: To help finish <mark>your</mark> plots, every time you play a <strong>scene beat</strong>, you cross out a box in a <strong>plot track</strong><mark>. T</mark>his gives you a reference <mark>as to</mark> where you are <mark>in relation</mark> to the resolution of the plot.</p>
+		<p><br><br></p>
+	</body>
+</html>
