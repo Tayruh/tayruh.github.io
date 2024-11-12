@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+			
+			h5 a, h5 {
+				color: #ffbb55;
+	            font-size: 1em;
+	            font-weight: bold;
+	            margin-top: 0 !important;
+	            margin-block-end: -1em;
+            }
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+				border-radius: 6px;
+				border: solid 1px #000000;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+			
+			blockquote small { opacity: 0.6; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h1 id="chapter%201">Chapter 1</h1>
+		<blockquote>
+		  <p><strong>Characters List:</strong> Add <em>Mansion</em>, <em>Erin</em>, <em>Walter</em>, <em>Seoyun</em>, <em>Sera</em>, <em>Finola</em>, <em>Vanessa</em>, <em>Gray</em>, <em>Cami</em>, and <em>Jess</em> characters.<br>
+		  <strong>Chaos Factor:</strong> Set CF to 5.</p>
+		  <p><strong>First Scene:</strong> [PC Positive: Celebrate Work] We're celebrating a year of everyone being together.</p>
+		  <p><strong>Threads List:</strong> Add <em>Host Celebration</em> as focus thread with progress track of 10 points.<br>
+		  <strong>Characters List:</strong> Add <em>Shopping Event</em> and <em>Halloween Event</em> as thematic random events.</p>
+		</blockquote>
+		<p>It had been a full year since Erin and I took the position of housemaster for the mansion converted into a boarding house for monsters. </p>
+		<p>While accurate, the term "monsters" was a crude description of our tenants. The appropriate term was "myths," as in mythological beings. No one was sure which came first, the mythological beings themselves, or the myths describing them, but it was a safe bet that if many people believed in a myth associated with a being that inspired fear, that being was walking our earth somewhere. This horrifying fact was known only by a handful of the world's population, and we intended to keep it that way, which is why we provided a place for the myths to live away from humans other than us.</p>
+		<p>In honor of the year that we have spent living alongside these myths, we had decided to hold a celebration for our residents. My job for the day as the housemaster was to gather all of the residents for the festivities and ensure that everything proceeded smoothly. It was my hope that the lodgers would enjoy themselves and see just how much we appreciate them staying with us.</p>
+		<blockquote>
+		  <p><strong>Location:</strong> Where are we? [Dark / Cramped] In the basement.<br>
+		  <strong>Character Action:</strong> Why? [Harm / Decrease] Warning Hitomi.</p>
+		</blockquote>
+		<p>I began with entering the mansion's basement where Hitomi usually liked to hide out. Hitomi was our resident <em>onryou</em>—a vengeful spirit from Japanese lore. She had issues with big changes or lots of activity, and I was worried that a party would freak her out.</p>
+		<p>I called out her name.</p>
+		<blockquote>
+		  <p><strong>Fate Chart:</strong> Does she respond? (Very Likely) [54] Yes.</p>
+		</blockquote>
+		<p>Hitomi passed through the basement wall and greeted me with a nervous smile. I smiled and returned the greeting while Hitomi fidgeted with her hands.</p>
+		<p>Hitomi held the appearance of a young girl, possibly sixteen or seventeen years old. I had never asked her age, though I did know that she died in her second-to-last last year of high school. In fact, Hitomi still wore her Japanese school uniform, which consisted of a navy blue plaid skirt, a similarly colored blazer over a white dress shirt, and a large red bow at her collar. The state of her uniform changed with her mood, ranging from pristine to ragged, muddy, and bloody. Thankfully, today her outfit looked as though it had been freshly pressed.</p>
+		<p>"Today we'll be having a party to celebrate our one year anniversary of new management. I'm sorry if we get too noisy, but you're welcome to join us," I said.</p>
+		<blockquote>
+		  <p><strong>Fate Chart:</strong> Does she decide to join? (Likely) [54] Yes.</p>
+		</blockquote>
+		<p>Hitomi gave a meek nod, then tucked behind her ear the strands of her long silky black hair that had fallen loose. "I would like that. Thank you." </p>
+		<p>She gave a slight bow and disappeared into the wall before I could say anything further.</p>
+		<p>"Okay, I'll see you upstairs!" I called out to the empty basement. I headed upstairs myself.</p>
+		<blockquote>
+		  <p><strong>Description:</strong> What do I find? [Naturally Boring] Vanessa.<br>
+		  <strong>Character Action:</strong> What is she doing? [Struggle / Strange] She's having trouble with something.<br>
+		  <strong>Description:</strong> What is it? [Happily Faded] Finola is drunk.</p>
+		</blockquote>
+		<p>As I made it to the top of the stairs, Finola zipped by me in a streak of golden light. The mischievous faerie was clearly buzzed and giggled madly.</p>
+		<p>Our shoggoth housemaid appeared from the kitchen holding a cake, looking just as prim and proper as always. Vanessa was outfitted in her typical maid uniform of a black dress beneath a white ruffled apron with a matching headdress. Try as she might, though, Vanessa had never been able to pass for human. Her hair was an odd shape, like she used too much hair gel, and looked wet to the touch. Her pale blue complexion also had a slightly moist sheen.</p>
+		<p>Our maid carefully steadied the cake in one hand as only a shoggoth could, by separating her hand into a mass of tentacles that supported the center of the tray while also firmly gripping all around its edges. Slimy tentacles forming a root system where her feet should be peeked out from below her dress as she made her way toward the dining room.</p>
+		<p>Finola caught sight of the cake and her eyes grew wide like saucers. The tiny faerie dive bombed the cake with a manic laugh.</p>
+		<blockquote>
+		  <p><strong>Finola:</strong> Begin contest. She goes for the cake. (Mischievous d8, Vanessa d4, Flight d10, Move d10) [1, 3, 6 10] =  16 (d4). Take <em>Intoxicated d6</em> complication and gain a PP (2) from hitch.</p>
+		</blockquote>
+		<p>Vanessa saw Finola coming and morphed her hand into something similar to a large fly swatter in an attempt to bat her out of the air.</p>
+		<blockquote>
+		  <p><strong>Vanessa:</strong> She attempts to knock Finola out of the air. (Shoggoth d8, Fionnuala d6, Agility d6, Metamorphosis d10, Intoxicated d6) [1, 2, 1, 7, 5] = 12 (d6). Failure. Incoming d4 stress is stepped down to nothing. Take <em>Caked d8</em> complication and gain a PP (2) from 2 hitches. Finola takes the cake.</p>
+		</blockquote>
+		<p>The drunken faerie laughed like a maniac as she defty dodged the fly swatter hand and plowed into the cake. The cake practically exploded all over Vanessa, but she remained stoic.</p>
+		<p>I frowned at Vanessa. "Do you need help?"</p>
+		<blockquote>
+		  <p><strong>Fate Chart:</strong> Does she? (50/50) [3] Exceptional yes. <br>
+		  <strong>Action:</strong> What does she need help with? [Overthrow Balance] I'm not sure what this is referring to.<br>
+		  <strong>Description:</strong> What does Balance refer to? [Frantically Familiar] Finola. She keeps countering all of Vanessa's attempts to prepare for the celebration.</p>
+		  <p><strong>Seth:</strong> Set <em>Distract Finola d6</em> goal based on Vanessa relationship.</p>
+		</blockquote>
+		<p>Vanessa bowed to me. Caked dripped off her face and onto the floor. "Yes, master. If you could keep Miss Fionnuala distracted, it would be of great help to me."</p>
+		<p>I looked down at Finola. She gazed up at me happily as she mashed the cake like a baby at their first birthday party. Her golden hair and pointy ears were barely visible beneath the mass of chocolate, and her ornate green and white dress was absolutely ruined.</p>
+		<p>"C'mon, Finola." I reached for the miniature girl.</p>
+		<blockquote>
+		  <p><strong>Fate Chart:</strong> Does she try to avoid me? (Very Unlikely) [29] Nope. She lets me pick her up.</p>
+		</blockquote>
+		<p>Finola giggled as I retrieved her from the cake disaster and plopped her on my shoulder. She clung desperately to my shirt as she weebled and wobbled on her perch. With her wings caked in…cake, she wasn't going to be flying any time soon.</p>
+		<p>"Okay, little girl. Who should we check on next?" I asked Finola.</p>
+		<blockquote>
+		  <p><strong>Description:</strong> Who does she suggest? [Combatively Amusing] Cami.</p>
+		</blockquote>
+		<p>"Let's go see the princess!" Finola shouts in my ear, before breaking down into a bout of giggles.</p>
+		<p>I nodded, then turned to Vanessa. "I'll see you later, Vanessa. Thanks for all of your hard work."</p>
+		<p>Vanessa was still bent over in a bow. "Of course, master."</p>
+		<blockquote>
+		  <p><strong>Location:</strong> Where is Cami? [Frantic / Meaningful] She's in the dining room.<br>
+		  <strong>Character Action:</strong> What is she doing? [Bestow / Antagonize] She's hassling Erin.</p>
+		</blockquote>
+		<p>The little faerie and I left our housemaid behind and made our way down the hall. I was about to head upstairs to Cami's room when I heard my sister's exasperated groan of "Camiii!" through the door directly behind us, leading to the dining room. This brought forth another series of giggles from Finola.</p>
+		<blockquote>
+		  <p><strong>Chaos Factor:</strong> Increase CF to 6.<br>
+		  <strong>Focus Thread:</strong> Mark 2 progress on <em>Host Celebration</em> track (2).</p>
+		  <p><strong>Character Action:</strong> How is Cami hassling Erin? [Block / Fierce] She's preventing her from doing something.<br>
+		  <strong>Fate Chart:</strong> Is Cami getting in the way of setting up decorations? (50/50) [4] Exceptional yes. She even has Jess "helping out."</p>
+		  <p><strong>Expected Scene:</strong> Erin is trying to set up decorations, but Cami keeps having Jess "correct" her work. [9] Scene is as expected.</p>
+		</blockquote>
+		<p>I pushed open the door of the dining room and was greeted with an ongoing debate.</p>
+		<p>My sister, Erin, was standing on the top rung of a stepladder with her arms raised above her head as she tried to hang a banner from one end of the room to the other. The banner read "Thank You For Your Patronage!!!" and was decorated with cute but crudely drawn pictures of a Casper-like ghost and what I think was supposed to be a Frankenstein monster with its tongue sticking out.</p>
+		<p>To the right of Erin, Jess was in the process of moving a cardboard cut-out of Dracula. Erin shouted at her from the ladder, "Stop that! I had it right where I wanted it!"</p>
+		<p>Jess narrowed her eyes at Erin, then glanced at Cami. The vampire princess was seated in a chair, spun so that its back faced the dining room table. She sat straight-backed upon the chair, with one leg crossed over the other, her hands folded atop her knee, and her long, cascading raven-black hair nearly touching the floor. She exuded royal elegance, as if the simple chair was a queen's throne. Cami gave Jess a nearly imperceptible nod, and Jess resumed her redecorating. I thought Erin's head was going to pop.</p>
+		<blockquote>
+		  <p><strong>Fate Chart:</strong> Does Cami take notice of me? (50/50) [39][PC Negative: Delay Suffering] Yes. Jess's jealousy promises future trouble.</p>
+		</blockquote>
+		<p>I stepped further into the room, and immediately caught the princess's attention.</p>
+		<p>"Oh!" Cami exclaimed in surprise. "Seth! It's— I mean, umm… W-why are you here?" </p>
+		<p>I smiled at her. "I work here, Cami."</p>
+		<p>"Right, right. Of course." Cami waved a hand in dismissal as she looked away. She was clearly flustered but trying to maintain some sense of dignity.</p>
+		<p>Finola giggled and bounced by my ear. "Cami and Seth, sitting in a tree. K-I-S—Ack!"</p>
+		<p>Finola's childish limerick was cut short by a small projectile originating from Jess's direction, knocking the faerie from my shoulder.</p>
+		<blockquote>
+		  <p><strong>Difficulty:</strong> (2d8, Finola Falling d8) [3, 4, 2] = 7 (d8)<br>
+		  <strong>Cami:</strong> She tries to catch Finola. (Tsundere d4, Finola d4, Agility d10, Supernatural Speed d8, Move d10) [4, 4, 8, 4, 3] =  12 (d10). Heroic success. Gain a PP (2) for hindering distinction. Cami catches her, plus something extra happens.</p>
+		  <p><strong>Action:</strong> What is the extra benefit from the heroic success? [Bestow Distraction] Cami unintentionally but conveniently distracts Erin from Jess.</p>
+		</blockquote>
+		<p>My eyes followed Finola, and Cami's feminine form filled my view, only inches from my face.</p>
+		<p>I blinked in surprise as a shot of adrenaline ran through me. I hadn't even seen her move, and now she was standing so close that I would be able to feel her breath, if she breathed. The strawberry and honey fragrance of her expensive perfume washed over me as the wake of her movement stirred the air around us.</p>
+		<p>Cami stared into my eyes, completely frozen, and looking not unlike a deer caught in headlights. She appeared just as shocked to be in such close proximity  as I was.</p>
+		<blockquote>
+		  <p><strong>Fate Chart:</strong> Does Erin blame Cami for being too close? (Likely) Otherwise she blames me. [82] No. She blames me. Typical.</p>
+		  <p><strong>Fate Chart:</strong> Does Cami act tsundere? (Likely) [4] Exceptional yes. She overcompensates and acts cold toward me.</p>
+		</blockquote>
+		<p>"Seth!" Erin shouted in alarm. "What are you doing? Get away from her!"</p>
+		<p>Cami blinked once, twice, and then her face settled into a mask of superiority. She turned away and held something in front of my face. "You dropped this, housemaster. Take better care of it."</p>
+		<p>I took a step back and saw that Cami was dangling Finola upside down by her foot, pinched between her index finger and thumb, as if the chocolate-covered faerie were a vile creature. I held out my hands and Cami released Finola, letting her fall into my open palms with a quiet "oomph."</p>
+		<p>Cradling Finola in my hands, I looked between Cami and Erin. "Are you two having an argument?"</p>
+		<blockquote>
+		  <p><strong>Fate Chart:</strong> Does Erin speak first? (Very Likely) [95] No. Cami replies first.</p>
+		</blockquote>
+		<p>Cami scoffed and flipped her hair. "The little kitten's haphazard placement of the decorations is an eyesore. The disorganized and unsightly nature of the asymmetrical alignment is wreaking havoc on my sensibilities."</p>
+		<p>"It's <em>supposed</em> to be disorganized and unsightly! They're monsters!" Erin shot back.</p>
+		<p>Predicably, Cami's eyes narrowed into a death glare. Erin ignored it as she hopped down from the ladder, having finished hanging the banner. My sister stomped over to us, her mousy brown hair flowing around her face and shoulders as she picked up speed. Erin was usually so happy and energetic, but she was clearly upset right now. Cami must have pushed the right buttons.</p>
+		<p>I back stepped away from Erin, which placed me close to Cami. The princess's eyes darted from me to Erin and back. Her haughty expression remained, but amusement sparkled in her eyes.</p>
+		<p>Erin stopped in front of us and pointed an accusing finger at Cami, which was far less threatening than I'm sure that she intended, since my sister was a good head shorter than either of us. "You! Tell your pet to move that prop back!"</p>
+		<blockquote>
+		  <p><strong>Erin:</strong> Begin contest. She tries to command Cami. (Housemistress d8, Cami d6, Presence d8, Influence d10) [4, 3, 8, 2] =  12 (d10) </p>
+		</blockquote>
+		<p>"I will not," Cami said in a huff, with her hands on her hips. "It is your duty to provide a pleasant environment for your tenants, and if you are incapable of doing so, then I will simply have my loyal subject compensate for your failings."</p>
+		<blockquote>
+		  <p><strong>Cami:</strong> She counters with an argument. (Fallen Princess d8, Erin d6, Presence d8, Indignant d6) [2, 2, 5, 1] =  9 (d4). Spent a PP (1) to create <em>Indignant d6</em> temporary asset. Spent a PP (0) to keep an extra effort die. Failure.<br>
+		  <strong>Character Action:</strong> How does Erin attempt to get what she wants? [Mature / Inspect] She hits Cami where it hurts, which is her royal facade.<br>
+		  <strong>Cami:</strong> Take <em>Insecure d10</em> stress. Take <em>Ashamed d6</em> complication and gain a PP (1) from hitch. Erin gets Cami to put the prop back, using me and her self-image as weak points.</p>
+		</blockquote>
+		<p>"<em>Princess</em>, this celebration isn't just for you, it's for everyone," Erin spat back at her. "Yes, it's our job to make this a pleasant experience, but I can't do that if <em>Your Highness</em> keeps throwing a temper tantrum like a child and getting in my way. You're just making my job harder." She pointed her finger in my direction this time. "You're making <em>Seth's</em> job harder."</p>
+		<p>I furrowed my brow in concern. My typically cheerful and amiable sister was striking at every one of Cami's insecurities, including using me as ammunition.</p>
+		<p>Cami frowned at me, looking honestly ashamed of her actions, now that they may have affected me as well. The vampire closed her eyes and huffed a sigh, then she straightened her back and looked right at Erin.</p>
+		<p>"Very well, housemistress. You have my apologies." Cami snapped her fingers. "Jessamine."</p>
+		<p>Jess looked up at us from across the room. She had been meticulously attempting to perfectly align the cheap Dracula cut-out with a Wolfman one on the opposite wall. Jess glared at Erin as she released the cut-out, letting Dracula fall to the floor right on his face.</p>
+		<p>Erin growled at them in anger, which was adorable like the roar of a baby lion cub. "Just go!"</p>
+		<p>Jess didn't look at me or my sister as she returned to her mistress's side and awaited further orders. Her sapphire blue eyes glowed from behind the fiery-red bangs of her bobcut, and I could practically feel the anger radiating off of her like heat. Jess and Erin were normally good friends, but it seemed as though Jess placed more value in Cami's pride than her friendship with Erin, which was more than a little disappointing to see. </p>
+		<p>Cami turned to me, and with a polite nod of the head, said, "Housemaster. I am sorry to have troubled you. We will take our leave, but I hope that we meet again soon." She turned to my sister and gave another nod. "Housemistress."</p>
+		<p>With that, Cami quickly but gracefully made her exit, with Jess trailing closely on her heels. The tension drained out of Erin once the pair had vanished and she collapsed in the chair that Cami had been using previously.</p>
+		<p>"It seems like you've been having fun," I commented.</p>
+		<p>"Seth, please, don't start," she replied in exasperation.</p>
+		<p>I shook my head and smiled apologetically. "Is there anything that I can help you with?"</p>
+		<blockquote>
+		  <p><strong>Fate Chart:</strong> Is there? (Very Unlikely) [1] Exceptional yes. Wow, okay.<br>
+		  <strong>Action:</strong> What does she need help with? [Travel Group] She needs me to make a store run with some of others.<br>
+		  <strong>Fate Chart:</strong> Out of the potential characters that could help, only Seoyun and Gray make sense. Seoyun is a given, but does Gray come too? (Unlikely) [62] No. Just Seoyun and Finola.</p>
+		  <p><strong>Seth:</strong> Set <em>Snack Run d8</em> goal based on Erin relationship.</p>
+		</blockquote>
+		<p>"Yeah, actually. Can you make a snack run?" Erin asked. "We're all stocked on standard supplies, but we don't have any soda or chips or whatever for the party."</p>
+		<p>"Yeah, no problem. I'll get Seoyun to help. I'm sure she's been itching to get out of the house anyway."</p>
+		<p>"Great. Thanks." Erin sighed, then forced herself out of her seat. "I should be done here by the time you get back."</p>
+		<p>I nodded to my sister, then looked down at Finola, who had been sleeping peacefully in my hands throughout all of this. I nudged her with my thumb, and she roused awake with a "Huh, wha?"</p>
+		<p>"Come on, little one. Let's get you cleaned up. Then we're off to the store," I told her.</p>
+		<blockquote>
+		  <p><strong>Chaos Factor:</strong> Decrease CF to 5.<br>
+		  <strong>Focus Thread:</strong> Mark 2 progress on <em>Host Celebration</em> track (4).</p>
+		</blockquote>
+		<hr>
+		<p>[That's it for now. Thanks for reading!]</p>
+		<p><br><br></p>
+	</body>
+</html>
