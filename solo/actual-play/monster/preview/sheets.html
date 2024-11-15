@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+			
+			h5 a, h5 {
+				color: #ffbb55;
+	            font-size: 1em;
+	            font-weight: bold;
+	            margin-top: 0 !important;
+	            margin-block-end: -1em;
+            }
+            
+            h6, h6 a {
+	            font-size: 11px;
+	            text-align: center;
+	            margin: 0.25em;
+            }
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+				border-radius: 6px;
+				border: solid 1px #000000;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+			
+			blockquote small { opacity: 0.6; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<p><a href="./index.html">Back to Index</a></p>
+		<hr>
+		<h1 id="mythic">Mythic</h1>
+		<blockquote>
+		  <p><strong>Chaos Factor:</strong> 5</p>
+		  <p><mark>THREADS</mark><br>
+		  <strong>1-2:</strong> Host Celebration<br>
+		  <code>[####_][_____]</code></p>
+		  <p><mark>CHARACTERS</mark><br>
+		  <strong>1-2</strong><br>
+		   &nbsp;&nbsp;• <strong>1-2:</strong> Mansion<br>
+		   &nbsp;&nbsp;• <strong>3-4:</strong> Erin<br>
+		   &nbsp;&nbsp;• <strong>5-6:</strong> Walter<br>
+		   &nbsp;&nbsp;• <strong>7-8:</strong> Seoyun<br>
+		   &nbsp;&nbsp;• <strong>9-10:</strong> Sera<br>
+		  <strong>3-4</strong><br>
+		   &nbsp;&nbsp;• <strong>1-2:</strong> Finola<br>
+		   &nbsp;&nbsp;• <strong>3-4:</strong> Vanessa<br>
+		   &nbsp;&nbsp;• <strong>5-6:</strong> Gray<br>
+		   &nbsp;&nbsp;• <strong>7-8:</strong> Cami<br>
+		   &nbsp;&nbsp;• <strong>9-10:</strong> Jess<br>
+		   <strong>5-6</strong><br>
+		   &nbsp;&nbsp;• <strong>1-2:</strong> Shopping Event<br>
+		   &nbsp;&nbsp;• <strong>3-4:</strong> Halloween Event</p>
+		</blockquote>
+		<br>
+		<h1 id="characters">Characters</h1>
+		<h6><a href="#cami">Cami</a> • <a href="#erin">Erin</a> • <a href="#finola">Finola</a> • <a href="#gray">Gray</a> • <a href="#hitomi">Hitomi</a></h6>
+		<h6><a href="#jess">Jess</a> • <a href="#seoyun">Seoyun</a> • <a href="#seth">Seth</a> • <a href="#vanessa">Vanessa</a></h6>
+		<br>
+		<h2 id="cami">Cami</h2>
+		<blockquote>
+		  <p><small>Princess Camellia Alexandrescu. Romanian. Appears to be 20 at the most. Elegant. Haughty. Entitled. Waist-length cascading raven-black hair. Glowing green eyes. Porcelain skin. </small></p>
+		  <p><strong>Plot Points:</strong> 2</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Vampire</strong> d8<br>
+		  <small>Cami is an ancient vampire. She is always vague about her age, but with age comes power, and Cami's power is great.</small><br>
+		   &nbsp;&nbsp;• <em>Regeneration:</em> When drinking blood, spend a PP to recover your Injured and Exhausted stress and step down your Injured trauma by one.</p>
+		  <p><strong>Tsundere</strong> d8<br>
+		  <small>Cami is overly concerned with portraying the appearance of high status and is never honest with her feelings. She becomes flustered whenever her desire contradicts her royal self-image.</small><br>
+		   &nbsp;&nbsp;• <em>All Eyes on Me:</em> Gain a PP when making a situation about yourself, makes it worse.</p>
+		  <p><strong>Fallen Princess</strong> d8<br>
+		  <small>Once upon a time, Cami was a princess. Her kingdom has fallen long ago but she still clings to her royal status, believing that one day her kingdom will rise again.</small><br>
+		   &nbsp;&nbsp;• <em>Lap of Luxury:</em> When you enjoy the hospitality of others during a recovery scene, choose a stress die to step down twice instead of once.</p>
+		  <p><mark>RELATIONSHIPS</mark><br>
+		   &nbsp;&nbsp;• <strong>Erin</strong> is like an adorable pet d6<br>
+		   &nbsp;&nbsp;• <strong>Jess</strong> is my companion in life and death d10<br>
+		   &nbsp;&nbsp;• I'm <em style="color:unset !important">not</em> jealous of <strong>Seoyun</strong> d8<br>
+		   &nbsp;&nbsp;• It's not that I like <strong>Seth</strong> or anything, okay? d8 <br>
+		   &nbsp;&nbsp;• <strong>Vanessa</strong> knows her place, as she should d6</p>
+		  <p><mark>ATTRIBUTES</mark><br>
+		  <strong>Agility</strong> d10 • <strong>Awareness</strong> d6 • <strong>Intellect</strong> d6<br>
+		  <strong>Presence</strong> d8 • <strong>Spirit</strong> d4 • <strong>Strength</strong> d8</p>
+		  <p><mark>VAMPIRE POWERS</mark><br>
+		  <strong>Mesmerize</strong> d10 • <strong>Supernatural Strength</strong> d8<br>
+		  <strong>Fangs</strong> d6 • <strong>Supernatural Speed</strong> d8</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Fight</strong> d6 • <strong>Know (Lore)</strong> d6<br>
+		  <strong>Move</strong> d10 • <strong>Sneak</strong> d8</p>
+		  <p><mark>STRESS</mark><br>
+		  <strong><del>Afraid</del></strong> • <strong><del>Angry</del></strong> • <strong><del>Exhausted</del></strong><br>
+		  <strong><del>Injured</del></strong> • <strong>Insecure</strong> d12 • <strong><del>Monstrous</del></strong></p>
+		  <p><mark>GOALS</mark> </p>
+		</blockquote>
+		<br>
+		<h2 id="erin">Erin</h2>
+		<blockquote>
+		  <p><small>Erin Kingsley. English American. 17 years old. Shoulder-length mousy brown hair. Honey brown eyes. Short statured. </small></p>
+		  <p><strong>Plot Points:</strong> 1</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Housemistress</strong> d8<br>
+		  <small>Like Seth, the duties of the mansion were dumped on her. Erin's not enthusiastic about her new role, but she does what she can.</small><br>
+		   &nbsp;&nbsp;• <em>Life’s Not Fair:</em> Gain a PP when your vocation makes things particularly difficult or inconvenient for you.</p>
+		  <p><strong>Spunky</strong> d8<br>
+		  <small>Erin is always cheerful and energetic, easily making new friends. While her attitude is endearing to most, she often finds that people won't take her seriously.</small><br>
+		   &nbsp;&nbsp;• <em>Friendly Face:</em> When you first meet a human who is not hostile towards you, you may gain them as a friendly asset for free; if you spend a PP, you may step up the die rating. You may spend this asset to recover your Afraid, Angry, or Insecure stress.<br>
+		   &nbsp;&nbsp;• <em>You Don’t Scare Me:</em> When you would take or step up Afraid stress, spend a PP to step that stress down once.</p>
+		  <p><strong>Mama's Girl</strong> d8<br>
+		  <small>Erin is the daughter of Walter's second wife, Eileen. She spent the majority of her childhood by her mother's side, and aside from Seth, Eileen is the most important person in her life.</small></p>
+		  <p><mark>RELATIONSHIPS</mark><br>
+		   &nbsp;&nbsp;• I am not <strong>Cami</strong>'s play thing d6<br>
+		   &nbsp;&nbsp;• <strong>Gray</strong> needs to leave me alone d8<br>
+		   &nbsp;&nbsp;• <strong>Seth</strong> is the best brother d10<br>
+		   &nbsp;&nbsp;• I won't let <strong>Seoyun</strong> get the better of me d8<br>
+		   &nbsp;&nbsp;• I have a lot to learn from <strong>Vanessa</strong> d6</p>
+		  <p><mark>ATTRIBUTES</mark><br>
+		  <strong>Agility</strong> d6 • <strong>Awareness</strong> d8 • <strong>Intellect</strong> d8 <br>
+		  <strong>Presence</strong> d8 • <strong>Spirit</strong> d8 • <strong>Strength</strong> d4</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Influence</strong> d10 • <strong>Operate</strong> d6<br>
+		  <strong>Notice</strong> d8 • <strong>Treat</strong> d6</p>
+		  <p><mark>STRESS</mark><br>
+		  <strong><del>Afraid</del></strong> • <strong><del>Angry</del></strong> • <strong><del>Exhausted</del></strong><br>
+		  <strong><del>Injured</del></strong> • <strong><del>Insecure</del></strong></p>
+		  <p><mark>GOALS</mark> </p>
+		</blockquote>
+		<br>
+		<h2 id="finola">Finola</h2>
+		<blockquote>
+		  <p><small>Fionnuala Moonspun. Irish. Looks about 15 years old. Short messy golden hair. Black eyes. Pointed ears. Insect-like wings. Ornate green and white dress.</small></p>
+		  <p><strong>Plot Points:</strong> 2</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Faerie</strong> d8<br>
+		  <small>Finola is a beautiful winged girl, small enough to fit in the palm of a hand. Her body exudes magic with a constant faint glow.</small></p>
+		  <p><strong>Mischievous</strong> d8<br>
+		  <small>Finola is a mischievous and sometimes dangerous faerie. She does whatever she wants as long as it entertains her.</small><br>
+		   &nbsp;&nbsp;• <em>Foot in Mouth:</em> Gain a PP when your sarcastic comments land you in a bad situation.<br>
+		   &nbsp;&nbsp;• <em>Gossip:</em> Spend a PP when inflicting Angry or Insecure stress to step up the stress die once.</p>
+		  <p><strong>Unseelie</strong> d8<br>
+		  <small>Finola is a solitary faerie aligning with the autumn side of the Unseelie Court. The Unseelie are considered the dark or chaotic side of the fae.</small> <br>
+		   &nbsp;&nbsp;• <em>Relentless:</em> When you would be stressed out of a scene, spend a PP to step down the affected stress and remain in the scene instead.</p>
+		  <p><mark>RELATIONSHIPS</mark><br>
+		   &nbsp;&nbsp;• I enjoy making <strong>Cami</strong> smile d8<br>
+		   &nbsp;&nbsp;• <strong>Jess</strong> is fun to play with d6<br>
+		   &nbsp;&nbsp;• <strong>Seoyun</strong> is no fun at all d6<br>
+		   &nbsp;&nbsp;• Don't pick on <strong>Sera</strong>! d10<br>
+		   &nbsp;&nbsp;• <strong>Seth</strong> is my favorite toy d8</p>
+		  <p><mark>ATTRIBUTES</mark><br>
+		  <strong>Agility</strong> d10 • <strong>Awareness</strong> d8 • <strong>Intellect</strong> d6<br>
+		  <strong>Presence</strong> d6 • <strong>Spirit</strong> d8 • <strong>Strength</strong> d4</p>
+		  <p><mark>FAERIE POWERS</mark><br>
+		  <strong>Flight</strong> d10 • <strong>Magic</strong> d10</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Move</strong> d10 • <strong>Sneak</strong> d8 • <strong>Trick</strong> d8</p>
+		  <p><mark>STRESS</mark><br>
+		  <strong><del>Afraid</del></strong> • <strong><del>Angry</del></strong> • <strong><del>Exhausted</del></strong><br>
+		  <strong><del>Injured</del></strong> • <strong><del>Insecure</del></strong> • <strong><del>Monstrous</del></strong></p>
+		  <p><strong>Intoxicated</strong> d6</p>
+		  <p><mark>GOALS</mark> </p>
+		</blockquote>
+		<br>
+		<h2 id="gray">Gray</h2>
+		<blockquote>
+		  <p><small>Gray. Last name unknown.</small></p>
+		  <p><strong>Plot Points:</strong> 1</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Bogeyman</strong> d8<br>
+		  <small>Gray is the thing of children's nightmares. He uses his fearmongering abilities to scare children, feeding off their fear—and occasionally feeding on the children themselves.</small><br>
+		   &nbsp;&nbsp;• <em>Crack in the Armor:</em> When you include an opponent’s Afraid or Insecure stress in your dice pool, you can spend a PP to step that stress up.</p>
+		  <p><strong>Frightening</strong> d8<br>
+		  <small>Even when not intentionally scaring children, Gray has an overwhelming presence. Whether it's due to his fear aura or just his body language, one look at Gray promises a bad time if he can get you alone.</small><br>
+		   &nbsp;&nbsp;• <em>Did You Know… :</em> Gain a PP after you reveal a dramatic secret.<br>
+		   &nbsp;&nbsp;• <em>Self-Sufficient:</em> When you are in a test, contest, or challenge against an opponent alone, spend a PP to double this distinction die and keep an extra die in your total.</p>
+		  <p><strong>Mysterious</strong> d8<br>
+		  <small>No one is sure what brought Gray to the mansion or why he continues to reside there. For now at least, the boarding house appears to suit his purpose.</small></p>
+		  <p><mark>RELATIONSHIPS</mark><br>
+		   &nbsp;&nbsp;• Erin doesn't belong to <strong>Cami</strong> d6<br>
+		   &nbsp;&nbsp;• <strong>Erin</strong> is delicious d10<br>
+		   &nbsp;&nbsp;• <strong>Finola</strong> makes a good sidekick d8<br>
+		   &nbsp;&nbsp;• It's too easy to scare <strong>Sera</strong> d6<br>
+		   &nbsp;&nbsp;• <strong>Seth</strong> is a problem d8</p>
+		  <p><mark>ATTRIBUTES</mark><br>
+		  <strong>Agility</strong> d6 • <strong>Awareness</strong> d6 • <strong>Intellect</strong> d6<br>
+		  <strong>Presence</strong> d8 • <strong>Spirit</strong> d10 • <strong>Strength</strong> d6</p>
+		  <p><mark>BOGEYMAN POWERS</mark><br>
+		  <strong>Body Morph</strong> d6 • <strong>Fear Aura</strong> d10<br>
+		  <strong>Shadow Teleport</strong> d8 • <strong>Teeth and Claws</strong> d6</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Influence</strong> d8 • <strong>Sneak</strong> d10 • <strong>Trick</strong> d8</p>
+		  <p><mark>STRESS</mark><br>
+		  <strong><del>Afraid</del></strong> • <strong><del>Angry</del></strong> • <strong><del>Exhausted</del></strong><br>
+		  <strong><del>Injured</del></strong> • <strong><del>Insecure</del></strong> • <strong><del>Monstrous</del></strong></p>
+		  <p><mark>GOALS</mark> </p>
+		</blockquote>
+		<br>
+		<h2 id="hitomi">Hitomi</h2>
+		<blockquote>
+		  <p><small>Nakamura Hitomi (中村仁美). Japanese. 16 or 17 years old. Shy. Polite. Waist-length straight silky black hair. Dark brown eyes. Always wears Japanese school uniform of navy blue plaid skirt, a similarly colored blazer over a white dress shirt, and a large red bow at her collar. Uniform changes from pristine to ragged, muddy, and bloody, depending on mood.</small></p>
+		  <p><strong>Plot Points:</strong> 1</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Onryou</strong> d8<br>
+		  <small>Hitomi is a classic Japanese ghost of vengeance. She can disappear and reappear in an instant, pass through walls, and instill cardiac-arresting levels of fear.</small><br>
+		   &nbsp;&nbsp;• <em>Invulnerable:</em> Spend a PP to ignore Injured stress or trauma unless caused by cold iron.<br>
+		    &nbsp;&nbsp;• <em>Poltergeist:</em> Add a d6 and step up your effect die by one when using Telekinesis to create assets from moved objects.</p>
+		  <p><strong>Unstable</strong> d8<br>
+		  <small>Hitomi is usually a timid girl that shies away from others. However, that mood can flip in an instant and she becomes a vessel of pure murderous rage.</small><br>
+		   &nbsp;&nbsp;• <em>Woe Is Me:</em> Gain a PP when your bad mood lands you in a bad situation.</p>
+		  <p><strong>Murdered</strong> d8<br>
+		  <small>Hitomi was a shy high school girl that managed to catch the eye of her crush. When she and the boy snuck off to a secluded spot, rather than fulfilling her fantasies, he murdered her for sport and dumped her in a ditch. She was so full of rage at the betrayal that her spirit refused to rest.</small></p>
+		  <p><mark>RELATIONSHIPS</mark><br>
+		   &nbsp;&nbsp;• <strong>Cami</strong> is cruel d6<br>
+		   &nbsp;&nbsp;• <strong>Finola</strong> is playing with fire d6<br>
+		   &nbsp;&nbsp;• I enjoy spending time with <strong>Jess</strong> d8<br>
+		   &nbsp;&nbsp;• <strong>Sera</strong> takes care of me d10<br>
+		   &nbsp;&nbsp;• <strong>Seth</strong> reminds me of a past love d8</p>
+		  <p><mark>ATTRIBUTES</mark><br>
+		  <strong>Agility</strong> d10 • <strong>Awareness</strong> d6 • <strong>Intellect</strong> d8<br>
+		  <strong>Presence</strong> d10 • <strong>Spirit</strong> d4 • <strong>Strength</strong> d4</p>
+		  <p><mark>ONRYOU  POWERS</mark><br>
+		  <strong>Fear Aura</strong> d8 • <strong>Manifestation</strong> d10 • <strong>Telekinesis</strong> d8</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Focus</strong> d6 • <strong>Move</strong> d6<br>
+		  <strong>Sneak</strong> d10 • <strong>Trick</strong> d8</p>
+		  <p><mark>STRESS</mark><br>
+		  <strong><del>Afraid</del></strong> • <strong><del>Angry</del></strong> • <strong><del>Exhausted</del></strong><br>
+		  <strong><del>Injured</del></strong> • <strong><del>Insecure</del></strong> • <strong><del>Monstrous</del></strong></p>
+		  <p><mark>GOALS</mark> </p>
+		</blockquote>
+		<br>
+		<h2 id="jess">Jess</h2>
+		<blockquote>
+		  <p><small>Jessamine Verlaine. French. Temperamental. Appears to be in her early 20s. Chin-length fiery red hair in a bob cut. Sapphire blue eyes that glow when angry.</small></p>
+		  <p><strong>Plot Points:</strong> 1</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Thrall</strong> d8<br>
+		  <small>Jess is enthralled to Cami. At least once a week Cami lets Jess drink of her blood, granting her supernatural abilities, preventing aging, and reinforcing their bond.</small><br>
+		   &nbsp;&nbsp;• <em>Resolute:</em> Spend a PP to add one of your stress dice to a test, contest, or challenge. Step down that stress die afterwards.</p>
+		  <p><strong>Yandere</strong> d8<br>
+		  <small>What started as a crush has bloomed into full blown obsession thanks her enthrallment. Jess's devotion to Cami has become murderously overprotective and possessive.</small><br>
+		   &nbsp;&nbsp;• <em>Some Regrets:</em> Gain a PP when your decision-making causes a bad situation.<br>
+		   &nbsp;&nbsp;• <em>I Believe in Us:</em> Spend a PP to step up or double your Spirit attribute in your pool for the duration of a test, contest, or challenge when you use this distinction.</p>
+		  <p><strong>Abandoned</strong> d8<br>
+		  <small>When Cami found her, Jess had been shunned by everyone that she loved and was attempting to take her own life. Jess had nearly succeeded, but Cami discovered her just in time to pull her back from the clutches of death.</small></p>
+		  <p><mark>RELATIONSHIPS</mark><br>
+		   &nbsp;&nbsp;• <strong>Cami</strong> is my everything d10<br>
+		   &nbsp;&nbsp;• I wish <strong>Finola</strong> wouldn't pick on me d6<br>
+		   &nbsp;&nbsp;• <strong>Seoyun</strong> is very intimidating d6<br>
+		   &nbsp;&nbsp;• <strong>Sera</strong> is so friendly d8<br>
+		   &nbsp;&nbsp;• I don't like how Cami looks at <strong>Seth</strong> d8</p>
+		  <p><mark>ATTRIBUTES</mark><br>
+		  <strong>Agility</strong> d8 • <strong>Awareness</strong> d6 • <strong>Intellect</strong> d6<br>
+		  <strong>Presence</strong> d6 • <strong>Spirit</strong> d10 • <strong>Strength</strong> d8</p>
+		  <p><mark>THRALL POWERS</mark><br>
+		  <strong>Supernatural Endurance</strong> d6<br>
+		  <strong>Supernatural Healing</strong> d8 • <strong>Supernatural Speed</strong> d8<br>
+		  <strong>Supernatural Strength</strong> d6 • <strong>Wall Climbing</strong> d8</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Move</strong> d8 • <strong>Notice</strong> d8 • <strong>Shoot</strong> d6<br>
+		  <strong>Sneak</strong> d6 • <strong>Treat</strong> d8</p>
+		  <p><mark>STRESS</mark><br>
+		  <strong><del>Afraid</del></strong> • <strong><del>Angry</del></strong> • <strong><del>Exhausted</del></strong><br>
+		  <strong><del>Injured</del></strong> • <strong><del>Insecure</del></strong> • <strong><del>Monstrous</del></strong></p>
+		  <p><mark>GOALS</mark></p>
+		</blockquote>
+		<br>
+		<h2 id="seoyun">Seoyun</h2>
+		<blockquote>
+		  <p><small>Min Seoyun (민서윤). Korean. Prefers to appear as woman in her early 20s. Charming and seductive. Enigmatic. Auburn hair. Amber eyes. Exceptionally beautiful. Typically maintains human form with fox ears and two large, fluffy fox tails.
+		</small></p>
+		  <p><strong>Plot Points:</strong> 1</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Kumiho</strong> d8<br>
+		  <small>Seoyun is a fabled Korean nine-tailed fox spirit. Kumiho are foxes in their natural form and transform into beautiful women to lure men, whom they kill by consuming their spirit energy.</small><br>
+		   &nbsp;&nbsp;• <em>Mimicry:</em> Spend a PP to mimic a sound, voice, or behavior, giving yourself or an ally a d8 asset for a single test, contest, or challenge.</p>
+		  <p><strong>Sly as a Fox</strong> d8<br>
+		  <small>Seoyun is cunning, and while she always conveys a sense of honesty, one should never fully trust her intentions or believe what she says.</small><br>
+		   &nbsp;&nbsp;• <em>Oath Shattered:</em> Gain a PP when you break a promise.<br>
+		   &nbsp;&nbsp;• <em>Yeah, I Really Do:</em> When trying to mislead someone, spend a PP to double this distinction die in your dice pool and keep an extra die in your total.</p>
+		  <p><strong>On the Run</strong> d8<br>
+		  <small>Although she has never been forthcoming about her past, it's apparent that something nasty went down in Korea, and Seoyun is trying to hide as far away from there as she can.</small></p>
+		  <p><mark>RELATIONSHIPS</mark><br>
+		   &nbsp;&nbsp;• <strong>Erin</strong> is a friendly rival d8<br>
+		   &nbsp;&nbsp;• I can barely tolerate <strong>Finola</strong> d6<br>
+		   &nbsp;&nbsp;• <strong>Sera</strong> is a dear friend d8<br>
+		   &nbsp;&nbsp;• <strong>Seth</strong> and I are just friends, honest d10<br>
+		   &nbsp;&nbsp;• <strong>Cami</strong> needs to be knocked off her high horse d6</p>
+		  <p><mark>ATTRIBUTES</mark><br>
+		  <strong>Agility</strong> d8 • <strong>Awareness</strong> d6 • <strong>Intellect</strong> d8<br>
+		  <strong>Presence</strong> d10 • <strong>Spirit</strong> d6 • <strong>Strength</strong> d4</p>
+		  <p><mark>KUMIHO POWERS</mark><br>
+		  <strong>Canine Senses</strong> d6 • <strong>Spirit Absorption</strong> d8<br>
+		  <strong>Tooth and Claw</strong> d6 • <strong>Transformation</strong> d10</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Influence</strong> d8 • <strong>Move</strong> d6 • <strong>Notice</strong> d8<br>
+		  <strong>Perform</strong> d6 • <strong>Trick</strong> d8</p>
+		  <p><mark>STRESS</mark><br>
+		  <strong><del>Afraid</del></strong> • <strong><del>Angry</del></strong> • <strong><del>Exhausted</del></strong><br>
+		  <strong><del>Injured</del></strong> • <strong><del>Insecure</del></strong> • <strong><del>Monstrous</del></strong></p>
+		  <p><mark>GOALS</mark></p>
+		</blockquote>
+		<br>
+		<h2 id="sera">Sera</h2>
+		<blockquote>
+		  <p><small>Birth name is made up of clicks and chirps.</small></p>
+		  <p><strong>Plot Points:</strong> 1</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Arachne</strong> d8<br>
+		  <small>Sera's upper body is that of a young girl, and conjoins with the body of a large spider starting at her waist. Her body takes up an extraordinary amount of space, but possesses all of the advantages of a spider.</small><br>
+		   &nbsp;&nbsp;• <em>Ally-Oop!:</em> Gain a PP when your lack of coordination or grace creates a bad situation.<br>
+		   &nbsp;&nbsp;• <em>Ensnare:</em> Spend a PP to add a d6 to your dice pool and step up your effect die by one when inflicting a web-based complication on a target.</p>
+		  <p><strong>Ditzy</strong> d8<br>
+		  <small>Sera is a bit of a space cadet. She's not necessarily dumb, just easily distracted or confused.</small><br>
+		   &nbsp;&nbsp;• <em>Free-Spirited:</em> Spend a PP to convert your Insecure or Afraid stress into another kind of stress. If you already had stress of that new type, step up that stress.</p>
+		  <p><strong>Disowned</strong> d8 <br>
+		  <small>Sera was born into a high class family. While she hasn't divulged the reasons, it seems that Sera's parents have disowned and disinherited her.</small></p>
+		  <p><mark>RELATIONSHIPS</mark><br>
+		   &nbsp;&nbsp;• <strong>Cami</strong> is so cool! d10<br>
+		   &nbsp;&nbsp;• I hope <strong>Erin</strong> will be my friend d6<br>
+		   &nbsp;&nbsp;• <strong>Hitomi</strong> is like a little sister d8<br>
+		   &nbsp;&nbsp;• <strong>Seoyun</strong> takes care of me d8<br>
+		   &nbsp;&nbsp;• I really like <strong>Seth</strong> d6</p>
+		  <p><mark>ATTRIBUTES</mark><br>
+		  <strong>Agility</strong> d6 • <strong>Awareness</strong> d4 • <strong>Intellect</strong> d6<br>
+		  <strong>Presence</strong> d8 • <strong>Spirit</strong> d8 • <strong>Strength</strong> d10</p>
+		  <p><mark>ARACHNE POWERS</mark><br>
+		  <strong>Supernatural Strength</strong> d8<br>
+		  <strong>Wall Climbing</strong> d10 • <strong>Webbing</strong> d8</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Labor</strong> d10 • <strong>Move</strong>  d8 • <strong>Survive</strong> d8</p>
+		  <p><mark>STRESS</mark><br>
+		  <strong><del>Afraid</del></strong> • <strong><del>Angry</del></strong> • <strong><del>Exhausted</del></strong><br>
+		  <strong><del>Injured</del></strong> • <strong><del>Insecure</del></strong> • <strong><del>Monstrous</del></strong></p>
+		  <p><mark>GOALS</mark> </p>
+		</blockquote>
+		<br>
+		<h2 id="seth">Seth</h2>
+		<blockquote>
+		  <p><small>Seth Kingsley. English American. Serious.  Driven. Short black hair. Steel blue eyes. Clean cut. Athletic build.</small></p>
+		  <p><strong>Plot Points:</strong> 1</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Housemaster</strong> d8<br>
+		  <small>Although this role was dumped onto him by his father, Seth takes his position seriously. He does whatever it takes to provide a good life for those in his care.</small><br>
+		   &nbsp;&nbsp;• <em>Just Another Day:</em> Spend a PP to convert your Afraid, Angry, or Insecure stress into Exhausted stress. If you already had Exhausted stress, step it up.</p>
+		  <p><strong>Protective</strong> d8<br>
+		  <small>Seth has always been overprotective of his little sister, Erin. After taking on the role of housemaster, this has extended to include the lodgers residing within the mansion.</small><br>
+		   &nbsp;&nbsp;• <em>Get Behind Me:</em> Gain a PP when you put yourself in danger to protect someone else.</p>
+		  <p><strong>Never Enough for Father</strong> d8<br>
+		  <small>While Walter isn't exactly affectionate toward Erin, he always expects something more of Seth. No matter how hard Seth tries, he remains a disappointment to his father.</small><br>
+		   &nbsp;&nbsp;• <em>I Can Do Better:</em> When you fail a roll to beat your opponent in a contest or challenge, spend a PP to reroll your dice pool and try again. You must keep the result of this new roll. If you succeed, step up your effect die by one. If you fail again, step up any stress you take.</p>
+		  <p><mark>RELATIONSHIPS</mark><br>
+		   &nbsp;&nbsp;• I'd die for <strong>Erin</strong> d10<br>
+		   &nbsp;&nbsp;• <strong>Finola</strong> is always good for a laugh d8<br>
+		   &nbsp;&nbsp;• I want to trust <strong>Seoyun</strong> d8<br>
+		   &nbsp;&nbsp;• <strong>Sera</strong> is adorable d6<br>
+		   &nbsp;&nbsp;• <strong>Vanessa</strong> works too hard d6</p>
+		  <p><mark>ATTRIBUTES</mark><br>
+		  <strong>Agility</strong> d8 • <strong>Awareness</strong> d6 • <strong>Intellect</strong> d6 <br>
+		  <strong>Presence</strong> d8 • <strong>Spirit</strong> d8 • <strong>Strength</strong> d6</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Craft</strong> d6 • <strong>Drive</strong> d6 • <strong>Fight</strong> d6<br>
+		  <strong>Fix</strong> d8 • <strong>Focus</strong> d8</p>
+		  <p><mark>STRESS</mark><br>
+		  <strong><del>Afraid</del></strong> • <strong><del>Angry</del></strong> • <strong><del>Exhausted</del></strong><br>
+		  <strong><del>Injured</del></strong> • <strong><del>Insecure</del></strong></p>
+		  <p><mark>GOALS</mark><br>
+		  <strong>Distract Finola</strong> d6 (Vanessa)<br>
+		  <strong>Snack Run</strong> d8 (Erin)</p>
+		</blockquote>
+		<br>
+		<h2 id="vanessa">Vanessa</h2>
+		<blockquote>
+		  <p><small>True name is unpronounceable in human tongue. Appearance of woman in her mid-30s. Prim and proper. Black hair made of tentacles. Glowing, pupil-less yellow eyes. Pale blue complexion. Slimy skin. Tentacles from waist down. Maid uniform of a black dress beneath a white ruffled apron with a matching headdress.</small></p>
+		  <p><strong>Plot Points:</strong> 2</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Shoggoth</strong> d8<br>
+		  <small>Vanessa is an amorphous shapeshifting blob of sentient flesh created by the Elder Things to serve as its protector. She can grow into a mass of eyes, teeth, and tentacles larger than a house, but normally maintains the shape of a demure woman.</small><br>
+		   &nbsp;&nbsp;• <em>Invulnerable:</em> Spend a PP to ignore Injured stress or trauma unless caused by magic.</p>
+		  <p><strong>Subservient</strong> d8<br>
+		  <small>Vanessa is obedient to those in the mansion, especially to those whom she serves. She is reserved, neutral in tone, and polite in speech.</small><br>
+		   &nbsp;&nbsp;• <em>Sit This One Out:</em> Gain a PP when you choose not to engage in a contest after your opponent rolls first.</p>
+		  <p><strong>Legacy of Service</strong> d8<br>
+		  <small>Vanessa has sworn to serve the Kingsley family since Seth's great-grandfather. She serves as both a maid and a protector.</small><br>
+		   &nbsp;&nbsp;• <em>Homecooked Meal:</em> When you spend a recovery scene feeding others, step down their Angry or Exhausted stress an additional time.</p>
+		  <p><mark>RELATIONSHIPS</mark><br>
+		   &nbsp;&nbsp;• Miss <strong>Camellia</strong> is quite demanding d6<br>
+		   &nbsp;&nbsp;• Mistress <strong>Erin</strong> is very respectful d8<br>
+		   &nbsp;&nbsp;• Miss <strong>Fionnuala</strong> is troublesome d6<br>
+		   &nbsp;&nbsp;• Master <strong>Seth</strong> is very kind d10<br>
+		   &nbsp;&nbsp;• Master <strong>Walter</strong> is very stern d6</p>
+		  <p><mark>ATTRIBUTES</mark><br>
+		  <strong>Agility</strong> d6 • <strong>Awareness</strong> d6 • <strong>Intellect</strong> d6<br>
+		  <strong>Presence</strong> d8 • <strong>Spirit</strong> d6 • <strong>Strength</strong> d10</p>
+		  <p><mark>SHOGGOTH POWERS</mark><br>
+		  <strong>Metamorphosis</strong> d10<br>
+		  <strong>Supernatural Strength</strong> d10</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Fight</strong> d8 • <strong>Focus</strong> d8 • <strong>Labor</strong> d10</p>
+		  <p><mark>STRESS</mark><br>
+		  <strong><del>Afraid</del></strong> • <strong>Angry</strong> d6 • <strong><del>Exhausted</del></strong><br>
+		  <strong><del>Injured</del></strong> • <strong><del>Insecure</del></strong> • <strong><del>Monstrous</del></strong></p>
+		  <p><mark>GOALS</mark> </p>
+		</blockquote>
+		<br>
+		<h1 id="cortex%20prime">Cortex Prime</h1>
+		<blockquote>
+		  <p><strong>Traits:</strong> distinctions + sfx, values + statements, attributes, powers, specialities, goals <br>
+		  <strong>Character Creation:</strong>  scratch-built<br>
+		  <strong>Growing Characters:</strong> growth, growth by questioning traits, growth by recovery, growth by completing goals, growth-created relationship asset<br>
+		  <strong>Conflicts:</strong> tests, contests, interfering, challenges, dramatic order, ganging up, urgent assets<br>
+		  <strong>Dice Rolling:</strong> advantage of scale<br>
+		  <strong>Complications:</strong> complications, stress, trauma, pushing stress, last-ditch effort<br>
+		  <strong>Plot Points:</strong> starting plot points: 1<br>
+		  <strong>Game Narrator Characters:</strong> bosses, extras, location GMCs, minor GMCs, catalysts</p>
+		</blockquote>
+		<blockquote>
+		  <p><strong>Distinctions:</strong> The three distinctions are the character's role, personality, and background. Each are d8 and come with the standard SFX of "Hinder: Gain a PP when you switch out this distinction's die for a d4." Assign three more SFX across the three distinctions—ideally one to earn a PP and two that cost a PP. Premade SFX taken from Tales of Xadia.</p>
+		  <p><strong>Relationships:</strong> You are given one d10, two d8s, and two d6s to assigned to relationships. Each has a trait statement. All relationships not assigned a die are assumed to be d4.</p>
+		  <p><strong>Attributes:</strong> You are given three d8s and three d6s to be assigned to the attributes <em>Agility, Awareness, Intellect, Presence, Spirit, and Strength</em>. You may step down an attribute to step up another, but not below d4 or above d10.</p>
+		  <p><strong>Power Sets:</strong> The number of power sets are not fixed—humans usually have none, myths usually have only one, and more powerful myths have two or three. For each set you're given two d10s to be assigned to powers in that set. You may step down a power to add another power to that set at the same size. All power sets come with "Limit: Shut down a power in this set to gain a PP. Restore with an opportunity or in the next scene." If it doesn't make narrative sense to single out a power to be shut down, the entire set is shut down for only 1 PP. Power sets do not have SFX as they will be handled through distinction SFX.</p>
+		  <p><strong>Specialties:</strong> You're given two d10s to be assigned to the specialties <em>Craft, Drive, Fight, Fix, Fly, Focus, Influence, Know, Labor, Move, Notice, Operate, Perform, Shoot, Sneak, Survive, Throw, Treat, and Trick</em>. You may step down a specialty to add another specialty at the same size. Know must have an area of expertise, and requires an additional Know specialty for each additional area. </p>
+		  <p><strong>Stress:</strong> The stress types are <em>Afraid, Angry, Exhausted, Injured, and Insecure</em>. Myths also have <em>Monstrous</em>.</p>
+		  <p><strong>Goals:</strong> You may have up to three goals active at once. Assign a goal by describing what you want to accomplish in connection with a relationship, then give it a die rating between d6 and d12 to represent its difficulty. Its rating cannot be higher than the connected relationship rating or the same as another active goal.</p>
+		  <p><strong>Earning Plot Points:</strong><br>
+		   &nbsp;&nbsp;• Roll a hitch that the GM activates<br>
+		   &nbsp;&nbsp;• Give in during a contest <br>
+		   &nbsp;&nbsp;• Activate an SFX like Hinder<br>
+		   &nbsp;&nbsp;• Engage in remarkable moments of roleplaying </p>
+		  <p><strong>Spending Plot Points:</strong><br>
+		   &nbsp;&nbsp;• Activate SFX <br>
+		   &nbsp;&nbsp;• <del>Add two dice from a trait set instead of one</del><br>
+		   &nbsp;&nbsp;• Activate an opportunity that the GM rolls<br>
+		   &nbsp;&nbsp;• <del>Avoid being taken out</del><br>
+		   &nbsp;&nbsp;• Create a d6 asset for a single test, contest, or challenge<br>
+		   &nbsp;&nbsp;• Keep an asset for the rest of the session<br>
+		   &nbsp;&nbsp;• Include an additional result in your total<br>
+		   &nbsp;&nbsp;• Interfere in a contest<br>
+		   &nbsp;&nbsp;• Keep an extra effect die<br>
+		   &nbsp;&nbsp;• Share an asset with everyone in a scene</p>
+		</blockquote>
+		<hr>
+		<p><a href="./chapters/01.html">Begin Story</a></p>
+		<p><br><br></p>
+	</body>
+</html>
