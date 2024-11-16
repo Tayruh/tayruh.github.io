@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+			
+			h5 a, h5 {
+				color: #ffbb55;
+	            font-size: 1em;
+	            font-weight: bold;
+	            margin-top: 0 !important;
+	            margin-block-end: -1em;
+            }
+            
+            h6, h6 a {
+	            font-size: 11px;
+	            text-align: center;
+	            margin: 0.25em;
+            }
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+				border-radius: 6px;
+				border: solid 1px #000000;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+			
+			blockquote small { opacity: 0.6; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h2 id="emma%20frost">Emma Frost</h2>
+		<p><img src="./images/emma%20frost/emma%20(2).jpg" alt="emma (2)"></p>
+		<blockquote>
+		  <p><strong>Plot Points:</strong> 2</p>
+		  <p><mark>ROLES</mark><br>
+		  <strong>Solo</strong> d6 • <strong>Buddy</strong> d8 • <strong>Team</strong> d10</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Criminal Past</strong> d8<br>
+		  <strong>Icy Confidence</strong> d8<br>
+		  <strong>No Secrets From Me</strong> d8</p>
+		  <p><mark>OMEGA-CLASS TELEPATH</mark><br>
+		  <strong>Mind Control</strong> d10 • <strong>Psychic Blast</strong> d10<br>
+		  <strong>Psychic Resistance</strong> d10 • <strong>Telepathy</strong> d10<br>
+		   &nbsp;&nbsp;• SFX: <em>Area Attack.</em> Add a d6 and keep an additional effect die for each additional target.<br>
+		   &nbsp;&nbsp;• SFX: <em>Multipower.</em> Use two or more <u>Omega-Class Telepath</u> powers in a single dice pool at  -1 step for each additional power.<br>
+		   &nbsp;&nbsp;• SFX: <em>Psychic Healing.</em> Add <u>Telepathy</u> to your dice pool when helping others recover stress. Spend 1 PP to recover your own or another’s mental stress or step back your own or another’s mental trauma.<br>
+		   &nbsp;&nbsp;• Limit: <em>Mutant.</em> When affected by mutant-specific complications or tech, earn 1 PP.</p>
+		  <p><mark>DIAMOND BODY</mark><br>
+		  <strong>Enhanced Strength</strong> d8 • <strong>Godlike Stamina</strong> d12<br>
+		  <strong>Superhuman Durability</strong> d10<br>
+		   &nbsp;&nbsp;• SFX: <em>Invulnerability.</em> Spend 1 PP to ignore physical stress or trauma unless caused by mystical attacks.<br>
+		   &nbsp;&nbsp;• Limit: <em>Mutually Exclusive.</em> Shutdown <u>Diamond Body</u> to activate <u>Omega-Class Telepath</u>. Shutdown <u>Omega-Class Telepath</u> to recover <u>Diamond Body</u>.<br>
+		   &nbsp;&nbsp;• Limit: <em>Mutant.</em> When affected by mutant-specific complications or tech, earn 1 PP.</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Business Master</strong> d10 • <strong>Crime Expert</strong> d8<br>
+		  <strong>Psych Master</strong> d10 • <strong>Science Expert</strong> d8<br>
+		  <strong>Tech Expert</strong> d8</p>
+		  <p><mark>MILESTONES</mark><br>
+		  <strong>Hellfire Legacy</strong><br>
+		   &nbsp;&nbsp;• 1 XP when you give a hero or villain your word.<br>
+		   &nbsp;&nbsp;• 3 XP when you either break your word to that hero or keep your word to that villain.<br>
+		   &nbsp;&nbsp;• 10 XP when you either prove to that hero that breaking your word helped them or prove to that villain that keeping your word hurt them.</p>
+		  <p><strong>Pedagogue</strong><br>
+		   &nbsp;&nbsp;• 1 XP each time you aid a chosen student in using their powers.<br>
+		   &nbsp;&nbsp;• 3 XP when your chosen student betrays or inflicts stress on you.<br>
+		   &nbsp;&nbsp;• 10 XP when you sacrifice or shutdown your powers, wealth, or reputation for a student, or vice versa.</p>
+		</blockquote>
+		<br>
+		<h2 id="gambit">Gambit</h2>
+		<p><img src="images/gambit/remy%20(0).jpg" alt="remy (0)"></p>
+		<blockquote>
+		  <p><strong>Plot Points:</strong> 2</p>
+		  <p><mark>ROLES</mark><br>
+		  <strong>Solo</strong> d6 • <strong>Buddy</strong> d8 • <strong>Team</strong> d10</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Cajun  Casanova</strong> d8<br>
+		  <strong>Master Thief</strong> d8<br>
+		  <strong>Shady Past</strong> d8</p>
+		  <p><mark>ENERGY TAP</mark><br>
+		  <strong>Energy Blast</strong> d10 • <strong>Psychic Resistance</strong> d10<br>
+		  <strong>Enhanced Reflexes</strong>  d8<br>
+		   &nbsp;&nbsp;• SFX: <em>Area Attack.</em> Target multiple opponents. For each additional target, add d6 and keep +1 effect die.<br>
+		   &nbsp;&nbsp;• SFX: <em>Unleashed.</em> Step up <u>Energy Blast</u> for one action. If that action is unsuccessful, add a die to the doom pool equal to the normal rating of <u>Energy Blast</u>.<br>
+		   &nbsp;&nbsp;• SFX: <em>Immunity.</em> Spend 1 PP to ignore mental stress or trauma caused by psychic attacks.<br>
+		   &nbsp;&nbsp;• Limit: <em>Lose Control.</em> Earn 1 PP and change <u>Energy Blast</u> into a complication.</p>
+		  <p><mark>TELESCOPING BO</mark><br>
+		  <strong>Enhanced Durability</strong> d8 • <strong>Weapon</strong> d8<br>
+		  SFX: <em>Focus.</em> In a pool including a <u>Telescoping Bo</u> die, replace two dice of equal steps with one die of +1 step.<br>
+		  Limit: <em>Gear.</em> Shutdown <u>Telescoping Bo</u> and gain 1 PP. Take an action against the doom pool to recover gear.</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Combat Expert</strong> d8 • <strong>Crime Master</strong> d10<br>
+		  <strong>Acrobatic Expert</strong> d8 • <strong>Covert Expert</strong> d8</p>
+		  <p><mark>MILESTONES</mark><br>
+		  <strong>Honor Among Thieves</strong> <br>
+		   &nbsp;&nbsp;• 1 XP when you first use your <u>Master Thief</u> distinction in a scene.<br>
+		   &nbsp;&nbsp;• 3 XP when you seek out, or are contacted by a member of the New Orleans Thieves' Guild.<br>
+		   &nbsp;&nbsp;• 10 XP when you either leave your current group to return to the Thieves' Guild, or help your current group take down the Thieves' Guild.</p>
+		  <p><strong>Bonjour Chérie</strong> <br>
+		   &nbsp;&nbsp;• 1 XP when you choose to flirt with another character, Hero or Watcher.<br>
+		   &nbsp;&nbsp;• 3 XP when you use your charm to change your chosen character's mind.<br>
+		   &nbsp;&nbsp;• 10 XP when you convince your chosen character to abandon their group and run away with you, or you end the relationship because it would never work out between you.</p>
+		</blockquote>
+		<br>
+		<h2 id="magik">Magik</h2>
+		<p><img src="./images/magik/illyana%20(0).jpg" alt="illyana (0)"></p>
+		<blockquote>
+		  <p><strong>Plot Points:</strong> 2</p>
+		  <p><mark>ROLES</mark><br>
+		  <strong>Solo</strong> d10 • <strong>Buddy</strong> d6 • <strong>Team</strong> d8</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Ruler of Limbo</strong> d8<br>
+		  <strong>Literally Went Through Hell</strong> d8<br>
+		  <strong>Darkchylde Inside</strong> d8</p>
+		  <p><mark>SOUL SWORD</mark><br>
+		  <strong>Mystic Weapon</strong> d10 • <strong>Mystic Resistance</strong> d10<br>
+		  <strong>Superhuman Durability</strong> d10 • <strong>Sorcery</strong> d8<br>
+		   &nbsp;&nbsp;• SFX: <em>Spell Augmentation.</em> Add a d6 and step up your effect die by +1 when inflicting a mystical complication on a target.<br>
+		   &nbsp;&nbsp;• SFX: <em>Absorb.</em> On a successful reaction against a mystical attack action, convert your opponents effect die into a <u>Soul Sword</u> stunt or step up a <u>Soul Sword</u> power by +1. Spend 1 PP to use the SFX if your opponent's action succeeds.<br>
+		   &nbsp;&nbsp;• Limit: <em>Dread.</em> Both 1 and 2 on your dice count as opportunities when using a <u>Soul Sword</u> power.</p>
+		  <p><mark>STEPPING DISCS</mark><br>
+		  <strong>Levitation</strong> d6 • <strong>Teleportation</strong> d8<br>
+		  <strong>Time Travel</strong> d6<br>
+		   &nbsp;&nbsp;• SFX: <em>Area Effect.</em> Add a d6 and keep an additional effect die for each additional target.<br>
+		   &nbsp;&nbsp;• Limit: <em>Mutant.</em> Earn 1 PP when affected by mutant-specific Milestones and tech.<br>
+		   &nbsp;&nbsp;• Limit: <em>Uncontrollable.</em> Change any <u>Stepping Discs</u> power into a complication and gain 1 PP. Activate an opportunity or remove that complication to recover the power.</p>
+		  <p><mark>SPECIALITIES</mark><br>
+		  <strong>Cosmic Expert</strong> d8 • <strong>Combat Expert</strong> d8<br>
+		  <strong>Menace Expert</strong> d8 • <strong>Mystic Expert</strong> d8</p>
+		  <p><mark>MILESTONES</mark><br>
+		  <strong>Milestone</strong> <br>
+		   &nbsp;&nbsp;• 1 XP <br>
+		   &nbsp;&nbsp;• 3 XP <br>
+		   &nbsp;&nbsp;• 10 XP </p>
+		  <p><strong>Milestone</strong> <br>
+		   &nbsp;&nbsp;• 1 XP <br>
+		   &nbsp;&nbsp;• 3 XP <br>
+		   &nbsp;&nbsp;• 10 XP </p>
+		</blockquote>
+		<br>
+		<h2 id="rogue">Rogue</h2>
+		<p><img src="./images/rogue/rogue%20(18).jpg" alt="rogue (10)"></p>
+		<blockquote>
+		  <p><strong>Plot Points:</strong> 2</p>
+		  <p><mark>ROLES</mark><br>
+		  <strong>Solo</strong> d10 • <strong>Buddy</strong> d8 • <strong>Team</strong> d6</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Sense of Responsibility</strong> d8<br>
+		  <strong>Southern Belle</strong> d8<br>
+		  <strong>Untouchable</strong> d8</p>
+		  <p><mark>POWER ABSORPTION</mark><br>
+		  <strong>Leech</strong> d10 • <strong>Mimic</strong> d12<br>
+		   &nbsp;&nbsp;• SFX: <em>Drain Vitality.</em> When using <u>Leech</u> to create a "Power Loss" complication on a target, add a d8 and keep an extra effect die for either physical stress or a "Copied Powers" asset.<br>
+		   &nbsp;&nbsp;• SFX: <em>Memory Flash.</em> Spend 1 PP to use any SFX or Specialty belonging to a target on whom you have inflicted a "Power Loss" complication for your next roll.<br>
+		   &nbsp;&nbsp;• SFX: <em>What’s Yours is Mine.</em> On a successful reaction against an action that involves physical contact, convert your opponent’s effect die into a "Power Loss" complication. If your opponent’s action succeeds, spend 1 PP to use this SFX.<br>
+		   &nbsp;&nbsp;• Limit: <em>Mutant.</em> When affected by mutant-specific complications or tech, earn 1 PP.<br>
+		   &nbsp;&nbsp;• Limit: <em>Uncontrollable.</em> Change any <u>Power Absorption</u> power into a complication to gain 1 PP. Activate an opportunity or remove the complication to recover that power.<br>
+		   &nbsp;&nbsp;• Limit: <em>Zero Sum.</em> <u>Leech</u> requires skin-to-skin contact with the target. <u>Mimic</u> only duplicates powers of those on whom you’ve inflicted a "Power Loss" complication. <u>Mimic</u>-based assets created based on the target’s power are limited in size to the "Power Loss" complication affecting the target.</p>
+		  <p><mark>STOLEN POWERS</mark><br>
+		  <strong>Enhanced Strength</strong> d8 • <strong>Supersonic Flight</strong> d10<br>
+		  <strong>Superhuman Durability</strong> d10<br>
+		   &nbsp;&nbsp;• SFX: <em>Multipower.</em> Use two or more <u>Stolen Powers</u> powers in a single dice pool at -1 step for each additional power.<br>
+		   &nbsp;&nbsp;• SFX: <em>Invulnerability.</em> Spend 1 PP to ignore physical stress or trauma unless caused by mystical attacks.<br>
+		   &nbsp;&nbsp;• Limit: <em>Exhausted.</em> Shutdown any <u>Stolen Powers</u> power to gain 1 PP.  Activate an opportunity or participate in a Transition Scene to recover that power.</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Acrobatic Expert</strong> d8 • <strong>Combat Expert</strong> d8<br>
+		  <strong>Covert Expert</strong> d8</p>
+		  <p><mark>MILESTONES</mark><br>
+		  <strong>Sorry Shugah!</strong><br>
+		   &nbsp;&nbsp;• 1 XP when you first use <u>Leech</u> on an ally in a Scene.<br>
+		   &nbsp;&nbsp;• 3 XP when you inflict stress on an ally with a pool that includes <u>Leech</u>.<br>
+		   &nbsp;&nbsp;• 10 XP when you swap out your current set of <u>Stolen Powers</u> for a new set.</p>
+		  <p><strong>Get Outta My Head!</strong><br>
+		   &nbsp;&nbsp;• 1 XP when you first use <u>Stolen Personality</u> in a Scene.<br>
+		   &nbsp;&nbsp;• 3 XP when you are influenced by one of the personality "echoes" in your mind.<br>
+		   &nbsp;&nbsp;• 10 XP when you are either overwhelmed by one of the personalities, or find a way to get rid of them permanently.</p>
+		</blockquote>
+		<br>
+		<h2 id="wolverine">Wolverine</h2>
+		<p><img src="./images/wolverine/logan%20(0).jpg" alt="logan (0)"></p>
+		<blockquote>
+		  <p><strong>Plot Points:</strong> 2</p>
+		  <p><mark>ROLES</mark><br>
+		  <strong>Solo</strong> d10 • <strong>Buddy</strong> d6 • <strong>Team</strong> d8</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>I’m the Best There Is at What I Do</strong> d8<br>
+		  <strong>Masterless Samurai</strong> d8<br>
+		  <strong>Mysterious Past</strong> d8</p>
+		  <p><mark>FERAL MUTANT</mark><br>
+		  <strong>Enhanced Reflexes</strong> d8 • <strong>Enhanced Strength</strong> d8<br>
+		  <strong>Godlike Stamina</strong> d12 • <strong>Superhuman Senses</strong> d10<br>
+		   &nbsp;&nbsp;• SFX: <em>Berserk.</em> Borrow a die from the doom pool for an attack action. Step up the doom die by +1 and return to the doom pool.<br>
+		   &nbsp;&nbsp;• SFX: <em>Focus.</em> In a pool including a <u>Feral Mutant</u> die, replace two dice of equal steps with one die of +1 step.<br>
+		   &nbsp;&nbsp;• SFX: <em>Healing Factor.</em> Spend 1 PP to recover your physical stress and step back your physical trauma by -1.<br>
+		   &nbsp;&nbsp;• Limit: <em>Mutant.</em> Earn 1 PP when affected by mutant-specific Milestones and tech.</p>
+		  <p><mark>WEAPON X PROGRAM</mark><br>
+		  <strong>Adamantium Claws</strong> d10 • <strong>Psychic Resistance</strong> d10<br>
+		   &nbsp;&nbsp;• SFX: <em>Adamantium Skeleton.</em> On a successful reaction against an edged or blunt attack action, either convert opponent’s effect die into a <u>Weapon X Program</u> stunt or step back effect die by -1 and inflict as physical stress. Spend 1 PP to use this stunt if opponent’s action succeeded.<br>
+		   &nbsp;&nbsp;• SFX: <em>Fearsome.</em> Add d6 and step up effect die by +1 when using <u>Weapon X Program</u> powers to inflict emotional stress.<br>
+		   &nbsp;&nbsp;• SFX: <em>Immunity.</em> Spend 1 PP to ignore telepathy or mind control.<br>
+		   &nbsp;&nbsp;• Limit: <em>Heavy Metal.</em> On a magnetic attack or while swimming, change any <u>Weapon X Program</u> power into a complication and gain 1 PP. Activate an opportunity or remove the complication to recover the power.<br>
+		   &nbsp;&nbsp;• Limit: <em>Toxic Metal.</em> If <u>Godlike Stamina</u> is shutdown, take d10 physical stress at the beginning and end of every Action Scene.</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Combat Master</strong> d10 • <strong>Covert Master</strong> d10<br>
+		  <strong>Crime Expert</strong> d8 • <strong>Menace Master</strong> d10<br>
+		  <strong>Vehicle Expert</strong> d8</p>
+		  <p><mark>MILESTONES</mark><br>
+		  <strong>…And What I Do Isn't Very Nice</strong><br>
+		   &nbsp;&nbsp;• 1 XP when you first choose to inflict physical stress in a Scene.<br>
+		   &nbsp;&nbsp;• 3 XP when another hero rebukes you for your violence or you threaten another hero with violence.<br>
+		   &nbsp;&nbsp;• 10 XP when you kill someone in front of innocents or recover from your berserker rage in front of innocents without having inflicted trauma on anyone.</p>
+		  <p><strong>Old Friends, Old Enemies</strong><br>
+		   &nbsp;&nbsp;• 1 XP when you declare someone an old ally or foe.<br>
+		   &nbsp;&nbsp;• 3 XP when you aid your old ally in a buddy situation or deal trauma to your old foe.<br>
+		   &nbsp;&nbsp;• 10 XP when you declare your old ally is now an enemy or vice versa.</p>
+		</blockquote>
+		<p><br><br></p>
+	</body>
+</html>
