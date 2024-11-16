@@ -71,6 +71,12 @@
 	            margin-top: 0 !important;
 	            margin-block-end: -1em;
             }
+            
+            h6, h6 a {
+	            font-size: 11px;
+	            text-align: center;
+	            margin: 0.25em;
+            }
 
 			a {
 				color: #e1c87d;
@@ -149,8 +155,10 @@
 				margin-right: -0.5em;
 			}
 			details summary ~ ul { margin-top: 1em !important; }
-	    	details summary ~ a img { margin-top: 1em !important; }
+	    details summary ~ a img { margin-top: 1em !important; }
 			details :last-child { margin-bottom: 0; }
+			
+			blockquote small { opacity: 0.6; }
 
 			@media screen and (min-width: 500px) {
 				html { margin: 1em; }
@@ -194,12 +202,15 @@
 		</style>
 	</head>
 	<body>
+		<h1 id="style%20guide">Style Guide</h1>
 		<p><strong>Formatting</strong></p>
 		<p>Oracle questions, skill check intents, and roll interpretations are given in present tense regardless of perspective (eg. "Does the guard let me pass?").</p>
 		<p>Character sheet changes are given using the imperative (eg. "Mark progress and add Bob as a connection").</p>
-		<p>Adjustments to a roll are given in simple past tense (eg. "Swarm SFX added d6 to pool and stepped up effect").</p>
+		<p>Adjustments made before rolling, or before resolving a roll, are given in simple past tense (eg. "Swarm SFX added d6 to pool and stepped up effect").</p>
 		<p>Labels are always in bold.</p>
 		<p>References to temporary items on character sheets (threads, aspects, vows, complications, etc) are in italics.</p>
+		<p>Modifiers, probabilities, difficulties, and lists of options are written in parenthesis.</p>
+		<p>Rolls are written in square brackets </p>
 		<p>Numerical adjustments to character sheets should give the new value in parenthesis.</p>
 		<br>
 		<p><strong>Notes</strong></p>
@@ -215,13 +226,14 @@
 		<p><strong>Binary Questions</strong></p>
 		<p>The label can list the type of binary question it is (eg. "Fate Chart"), or simply be labeled as "Oracle."</p>
 		<blockquote>
-		  <p><strong>Fate Chart:</strong> Is the coroner making a phone call? (50/50) Otherwise she steals something. [3] Exceptional yes. It's more than just a business call.</p>
+		  <p><strong>Fate Chart:</strong> Is the coroner making a phone call? (50/50) Otherwise she steals something. [3][PC Negative: Delay Suffering] Exceptional yes. It's more than just a business call.</p>
 		  <hr>
 		  <p><strong>Label:</strong> Fate Chart<br>
 		  <strong>Question:</strong> Is the coroner making a phone call?<br>
 		  <strong>Likelihood:</strong> (50/50)<br>
 		  <strong>Alternative:</strong> Otherwise she steals something.<br>
 		  <strong>Roll:</strong> [3]<br>
+		  <strong>Random Event:</strong> [PC Negative: Delay Suffering] <br>
 		  <strong>Result:</strong> Exceptional yes.<br>
 		  <strong>Interpretation:</strong> It's more than just a business call.</p>
 		</blockquote>
