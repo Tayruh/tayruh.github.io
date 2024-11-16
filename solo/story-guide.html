@@ -71,6 +71,12 @@
 	            margin-top: 0 !important;
 	            margin-block-end: -1em;
             }
+            
+            h6, h6 a {
+	            font-size: 11px;
+	            text-align: center;
+	            margin: 0.25em;
+            }
 
 			a {
 				color: #e1c87d;
@@ -149,8 +155,10 @@
 				margin-right: -0.5em;
 			}
 			details summary ~ ul { margin-top: 1em !important; }
-	    	details summary ~ a img { margin-top: 1em !important; }
+	    details summary ~ a img { margin-top: 1em !important; }
 			details :last-child { margin-bottom: 0; }
+			
+			blockquote small { opacity: 0.6; }
 
 			@media screen and (min-width: 500px) {
 				html { margin: 1em; }
@@ -196,55 +204,42 @@
 	<body>
 		<h1 id="story%20setup">Story Setup</h1>
 		<p>When you begin a new story or scene, start by answering these questions to create a strong narrative backbone.</p>
-		<ul>
-		<li><p><strong>Premise:</strong> What is the initial concept and expectation of this story or scene, and what do you find engaging about it?<br>
-		<em><span style="color:darkgrey">This story or scene will change as you go, so this description only covers what you think it'll be about when you start. Be honest about the reasons for wanting to use this premise, since these reasons are why you are here. It's okay if you want things that contradict what your character wants.</span></em></p></li>
-		<li><p><strong>Motivation:</strong> What is the character's overarching mission, and how does the current goal and objective get them closer to accomplishing this?<br>
-		<em><span style="color:darkgrey">Mission, goal, and objective can loosely be mapped to story, arc, and scene. The mission refers to what the character is trying to accomplish within this story, not just this arc or scene. The current goal is what the character is attempting to achieve right now by taking action to accomplish an objective. The current goal should logically fit within their strategy to accomplish their mission, and the current objective should logically work towards that goal.</span></em></p></li>
-		<li><p><strong>Stakes:</strong> What does the character risk in striving for their goal, and what would they risk by doing nothing? <br>
-		<em><span style="color:darkgrey">It's expected that there be little to no risk for acting (low risk, high reward) when the story, arc, or scene starts, but it should increase to heights comparable to the risk of not acting (high risk, high reward) as it reaches the climax. Low stakes for not acting (low reward) are boring and deprive the character of drive.</span></em></p></li>
-		<li><p><strong>Problem:</strong> What obstacle is preventing the character from achieving their current goal or objective, and how long does the character have to overcome this?<br>
-		<em><span style="color:darkgrey">The obstacle should have a real chance of preventing the characters from succeeding, not just be a nuisance. Regardless of how high the risk for not acting is, there is no tension without an impending deadline, and the tension increases exponentially as the deadline draws nearer.</span></em></p></li>
-		</ul>
-		<h1 id="perspective">Perspective</h1>
-		<p><strong>Author Role, as GM:</strong> Determine setting lore. Describe the world. Determine or roll for NPC actions and describe them. Determine actions for GMPCs and describe them.</p>
-		<p><strong>First Person</strong></p>
-		<ul>
-		<li>Works best with a single PC as a GMPC. Could work as an NPC, as long as they're referred to in third person for questions (eg. "Does Frodo look for traps?").</li>
-		<li>Information is restricted to what the character can perceive.</li>
-		<li>World is described in an opinionated manner by the character, not the GM.</li>
-		<li>Allows for internal character dialogue.</li>
-		<li>Works best in past tense, since it's like you're retelling a story.</li>
-		</ul>
-		<p><strong>Second Person</strong></p>
-		<ul>
-		<li>Only works with a single PC as an NPC, but referring to NPC as "you" feels strange.</li>
-		<li>Information is restricted to what the character can perceive.</li>
-		<li>Works best in present tense, since its purpose is to put you (or rather, the fictional player) in the moment.</li>
-		</ul>
-		<p><strong>Third Person</strong></p>
-		<ul>
-		<li>Works well with any number of PCs as NPCs and/or GMPCs.</li>
-		<li><em>Close third person</em> is described by the GM but the narration is heavily influenced by the opinions of the character, even so far as directly injecting their thoughts into the narration. Information is restricted to what the character can perceive.</li>
-		<li><em>Limited Distant third person</em> is described by the GM following a single character, restricting information to what they can perceive. Unlike Close third person, the character does not influence the narrative, and any internal dialogue is done as thoughts quoted in italics  (eg. "<em>Dammit</em>, he thought.").</li>
-		<li><em>Omniscient Distant third person</em> is like Limited Distant third person, except that it follows more than one character and allows for relaying information beyond what any characters can perceive.</li>
-		<li>Can work in past or present tense—past follows typical fiction, but present is probably more immersive.</li>
-		</ul>
-		<h1 id="story%20tips">Story Tips</h1>
-		<ul>
-		<li><p>The main character must be the one with the most to lose.</p></li>
-		<li><p>The main character must be proactive, not reactive.</p></li>
-		<li><p>A character is driven to attain: Ability, Role, Relationship, or Status. The drive to attain this is rooted in the need for: Safety, Connection, or Empowerment. </p></li>
-		<li><p>Characters are balanced by things that make them awesome and things that make them flawed. Regardless of hardship, awesomeness can only be effectively balanced against flaws—an awesome character without flaws is a Mary Sue, no matter how many problems you throw at them. The character's awesomeness may overcome (ie. defeat or remove) their flaws during the story climax, but never before that.</p></li>
-		<li><p>To make dialogue style unique for each character, consider the following scales: Verbose vs terse. Casual vs formal. Spontaneous, planned, or rehearsed.</p></li>
-		<li><p>If a problem arises that is bigger than the story's main problem, raise the stakes of the main problem to match.</p></li>
-		<li><p>Tension is the worry that something bad may happen. Tension is released when the worry is averted or realized. If the urgency is too low or the character's ability to succeed feels inevitable, the implied tension will feel false.</p></li>
-		<li><p>Scenes are about action. They can start shortly before the action (build-up/tense), during the action (in media res/exciting), or shortly after the action (mystery/intriguing).</p></li>
-		<li><p>Dialogue has been called "conversation’s greatest hits." This means you should include only the most meaningful words and ideas, just as you give readers only the most significant physical details in a scene.</p></li>
-		<li><p>When crafting description, present the broad strokes first, details second.</p></li>
-		<li><p>"Showing" happens in real-time, involving actions that happen right now and will end in a moment. Signs of Telling rather than Showing are actions that require time to pass, and the phrases "had," "would have," and "was."</p></li>
-		<li><p>Narrated exposition happens outside of time and space, allowing the story to pause so that more context (setting, backstory, commentary) may be given in regards to the preceding action, dialogue, or description. Exposition may also be used to summarize events quickly, spanning years in a single sentence, at the cost of emotional impact. </p></li>
-		</ul>
+		<p><strong>Premise:</strong> What is the initial concept and expectation of this story or scene, and what do you find engaging about it?<br>
+		<em><span style="color:darkgrey">This story or scene will change as you go, so this description only covers what you think it'll be about when you start. Be honest about the reasons for wanting to use this premise, since these reasons are why you are here. It's okay if you want things that contradict what your character wants.</span></em></p>
+		<p><strong>Motivation:</strong> What is the character's overarching mission, and how does the current goal and objective get them closer to accomplishing this?<br>
+		<em><span style="color:darkgrey">Mission, goal, and objective can loosely be mapped to story, arc, and scene. The mission refers to what the character is trying to accomplish within this story, not just this arc or scene. The current goal is what the character is attempting to achieve right now by taking action to accomplish an objective. The current goal should logically fit within their strategy to accomplish their mission, and the current objective should logically work towards that goal.</span></em></p>
+		<p><strong>Stakes:</strong> What does the character risk in striving for their goal, and what would they risk by doing nothing? <br>
+		<em><span style="color:darkgrey">It's expected that there be little to no risk for acting (low risk, high reward) when the story, arc, or scene starts, but it should increase to heights comparable to the risk of not acting (high risk, high reward) as it reaches the climax. Low stakes for not acting (low reward) are boring and deprive the character of drive.</span></em></p>
+		<p><strong>Problem:</strong> What obstacle is preventing the character from achieving their current goal or objective, and how long does the character have to overcome this?<br>
+		<em><span style="color:darkgrey">The obstacle should have a real chance of preventing the characters from succeeding, not just be a nuisance. Regardless of how high the risk for not acting is, there is no tension without an impending deadline, and the tension increases exponentially as the deadline draws nearer.</span></em></p>
+		<br>
+		<h1 id="story%20stages">Story Stages</h1>
+		<p><strong>Opening</strong><br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; Establish the opening shot of your story. Unlike the proceeding story stages, this stage requires multiple questions to be answered. Some may have already been answered before you begin your story and that is okay; just answer for the ones that haven't been answered yet.<br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; Who …is this about?  <br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; What …is happening?  <br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; Where …are you?  <br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; Why …are you there?</p>
+		<p><strong>Conflict</strong><br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; Establish how the Hero or their environment deviates from the norm to create a looming threat that promises to disrupt the Hero's life if left neglected.</p>
+		<p><strong>Catalyst</strong><br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; Define a surprising event related to the Conflict, whether by cause or effect, that prevents the Hero from returning to life as usual and forces them to respond. Examples are: entering a new world, a mystery, a desire for personal growth, or disruption by outside forces.  <br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; If the Hero does not yet have a concrete Goal, you must give them one now.</p>
+		<p><strong>Antagonist</strong><br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; Define a person or thing that prevents the Hero from obtaining their Goal. <br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; An ideal Antagonist is after the same Goal as the Hero, but for a different reason, and/or is uniquely qualified to strike hardest at the Hero's weaknesses.</p>
+		<p><strong>Revelation</strong><br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; After the Hero has spent a generous amount of time making progress toward their Goal, define an event or information that reveals to the character just how out of their depth that they really are and how they are not yet ready to face the Antagonist on even footing.<br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; The Revelation should be so disruptive to the Hero's Goal that the only way forward is to modify or replace the existing Goal.</p>
+		<p><strong>Resolve</strong><br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; After the Hero has taken a series of beatings, define an event which causes the Hero to hit rock bottom and nearly die or become broken, or perhaps someone important to them does die or becomes broken.</p>
+		<p><strong>Confrontation</strong><br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; Once the Hero has placed themselves in position to face off against the Antagonist to clear the path to their Goal, define an event, action, or stake that describes how the Hero's is taking the battle to them.<br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; In this situation, Twists and events are to the detriment of the Antagonist, not the Hero. Likewise, a generated topic is considered to be what is at stake for the Antagonist, or both the Hero and the Antagonist, and is what forces them to take the Hero seriously.</p>
+		<p><strong>Resolution</strong><br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; Having overcome the Antagonist, the path to your Goal is clear and you obtain it easily. What the Hero gets is never exactly as expected, so define how an event, information, or thing alters the results of the Goal in a positive or negative way, depending on the context of the story.<br>
+		 &nbsp;&nbsp;&nbsp;&nbsp; However, story resolutions work on a karmic basis. If the Hero was the direct cause of physical or emotional harm to allies through the actions taken to overcome the Antagonist, the story should end negatively for the Hero.</p>
+		<br>
 		<h1 id="complications">Complications</h1>
 		<table>
 		<thead>
@@ -336,6 +331,45 @@
 		</tr>
 		</tbody>
 		</table>
+		<br>
+		<h1 id="perspective">Perspective</h1>
+		<p><strong>Author Role, as GM:</strong> Determine setting lore. Describe the world. Determine or roll for NPC actions and describe them. Determine actions for GMPCs and describe them.</p>
+		<p><strong>First Person</strong></p>
+		<ul>
+		<li>Works best with a single PC as a GMPC. Could work as an NPC, as long as they're referred to in third person for questions (eg. "Does Frodo look for traps?").</li>
+		<li>Information is restricted to what the character can perceive.</li>
+		<li>World is described in an opinionated manner by the character, not the GM.</li>
+		<li>Allows for internal character dialogue.</li>
+		<li>Works best in past tense, since it's like you're retelling a story.</li>
+		</ul>
+		<p><strong>Second Person</strong></p>
+		<ul>
+		<li>Only works with a single PC as an NPC, but referring to NPC as "you" feels strange.</li>
+		<li>Information is restricted to what the character can perceive.</li>
+		<li>Works best in present tense, since its purpose is to put you (or rather, the fictional player) in the moment.</li>
+		</ul>
+		<p><strong>Third Person</strong></p>
+		<ul>
+		<li>Works well with any number of PCs as NPCs and/or GMPCs.</li>
+		<li><em>Close third person</em> is described by the GM but the narration is heavily influenced by the opinions of the character, even so far as directly injecting their thoughts into the narration. Information is restricted to what the character can perceive.</li>
+		<li><em>Limited Distant third person</em> is described by the GM following a single character, restricting information to what they can perceive. Unlike Close third person, the character does not influence the narrative, and any internal dialogue is done as thoughts quoted in italics  (eg. "<em>Dammit</em>, he thought.").</li>
+		<li><em>Omniscient Distant third person</em> is like Limited Distant third person, except that it follows more than one character and allows for relaying information beyond what any characters can perceive.</li>
+		<li>Can work in past or present tense—past follows typical fiction, but present is probably more immersive.</li>
+		</ul>
+		<br>
+		<h1 id="story%20tips">Story Tips</h1>
+		<p>The main character must be the one with the most to lose.</p>
+		<p>The main character must be proactive, not reactive.</p>
+		<p>A character is driven to attain: Ability, Role, Relationship, or Status. The drive to attain this is rooted in the need for: Safety, Connection, or Empowerment. </p>
+		<p>Characters are balanced by things that make them awesome and things that make them flawed. Regardless of hardship, awesomeness can only be effectively balanced against flaws—an awesome character without flaws is a Mary Sue, no matter how many problems you throw at them. The character's awesomeness may overcome (ie. defeat or remove) their flaws during the story climax, but never before that.</p>
+		<p>To make dialogue style unique for each character, consider the following scales: Verbose vs terse. Casual vs formal. Spontaneous, planned, or rehearsed.</p>
+		<p>If a problem arises that is bigger than the story's main problem, raise the stakes of the main problem to match.</p>
+		<p>Tension is the worry that something bad may happen. Tension is released when the worry is averted or realized. If the urgency is too low or the character's ability to succeed feels inevitable, the implied tension will feel false.</p>
+		<p>Scenes are about action. They can start shortly before the action (build-up/tense), during the action (in media res/exciting), or shortly after the action (mystery/intriguing).</p>
+		<p>Dialogue has been called "conversation’s greatest hits." This means you should include only the most meaningful words and ideas, just as you give readers only the most significant physical details in a scene.</p>
+		<p>When crafting description, present the broad strokes first, details second.</p>
+		<p>"Showing" happens in real-time, involving actions that happen right now and will end in a moment. Signs of Telling rather than Showing are actions that require time to pass, and the phrases "had," "would have," and "was."</p>
+		<p>Narrated exposition happens outside of time and space, allowing the story to pause so that more context (setting, backstory, commentary) may be given in regards to the preceding action, dialogue, or description. Exposition may also be used to summarize events quickly, spanning years in a single sentence, at the cost of emotional impact. </p>
 		<p><br><br></p>
 	</body>
 </html>
