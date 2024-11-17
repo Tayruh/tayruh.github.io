@@ -1,5 +1,5 @@
 /*
-obsidian 1.6. 7
+obsidian 1.7.5
 
 div.view-content
     div.markdown-reading-view
@@ -92,6 +92,14 @@ div.view-content
 	margin-block-end: -1em;
 }
 
+.markdown-preview-section h6, 
+.markdown-preview-section h6 a, 
+.HyperMD-header-6, h6 {
+	font-size: 11px;
+	text-align: center;
+	margin: 0.25em;
+}
+
 .markdown-preview-section a, .cm-link {
 	color: #E1C87D !important;
 	font-weight: bold;
@@ -138,8 +146,10 @@ div.view-content
 	border-top: 1px dashed #606060;
 }
 
+/*
 .markdown-preview-section ul, ul,
-.markdown-preview-section ol, ol { padding-inline-start: 24px; }
+.markdown-preview-section ol, ol { padding-inline-start: 24px !important; }
+*/
 
 .markdown-preview-section blockquote i, .HyperMD-quote i, blockquote i,
 .markdown-preview-section blockquote em, .HyperMD-quote .cm-em, blockquote em,
