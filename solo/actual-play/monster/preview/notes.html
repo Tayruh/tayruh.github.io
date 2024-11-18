@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+			
+			h5 a, h5 {
+				color: #ffbb55;
+	            font-size: 1em;
+	            font-weight: bold;
+	            margin-top: 0 !important;
+	            margin-block-end: -1em;
+            }
+            
+            h6, h6 a {
+	            font-size: 11px;
+	            text-align: center;
+	            margin: 0.25em;
+            }
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+				border-radius: 6px;
+				border: solid 1px #000000;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+			
+			blockquote small { opacity: 0.6; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h2 id="questions">Questions</h2>
+		<p>The following are questions that the reader may expect to be answered due to events and information revealed in the fiction: </p>
+		<h5 id="definites">Definites</h5>
+		<ul>
+		<li>What does the mansion look like?</li>
+		<li>What is the name of the boarding house?</li>
+		</ul>
+		<h5 id="maybes">Maybes</h5>
+		<hr>
+		<h2 id="wishes">Wishes</h2>
+		<p>The following are interesting story ideas that may or not may get added to the fiction at some point:</p>
+		<h5 id="definites">Definites</h5>
+		<ul>
+		<li>bleh</li>
+		</ul>
+		<h5 id="maybes">Maybes</h5>
+		<ul>
+		<li>The mansion has a cavernous basement, like something Batman would have.</li>
+		<li>Potential mythogical beings: Frankenstein monster (Jannik?), hellhound, lich, living doll, nightmare, wendigo, doppelganger.</li>
+		<li>Potential mythogical weapons: Gram, Durandal, Vorpal Blade.</li>
+		</ul>
+		<hr>
+		<h2 id="envisioned">Envisioned</h2>
+		<p>The following are essentially facts for persons, places, and things in the story but haven't been established in the fiction yet, thus may change:</p>
+		<h5 id="finola">Finola</h5>
+		<ul>
+		<li>She has taken a liking to Seth and considers him her pet.</li>
+		</ul>
+		<h5 id="hitomi">Hitomi</h5>
+		<ul>
+		<li>Long black hair, usually covering her face.</li>
+		<li>Doesn't really sleep or have the need for sleep, but politely dissappears while others sleep.</li>
+		<li>Has a habit of appearing out of nowhere. Either by appearing when no one is looking, or by crawling out of a TV or mirror or something.</li>
+		</ul>
+		<h5 id="seoyun">Seoyun</h5>
+		<ul>
+		<li>She is technically the main love interest.</li>
+		<li>She gives upset when someone calls her a dog.</li>
+		<li>She has the yeowoo guseul (여우구슬), the fox marble, which she keeps in the back of her throat. She can absorb the spirit energy of a human with a kiss.</li>
+		</ul>
+		<h5 id="sera">Sera</h5>
+		<ul>
+		<li>Her birth name is made up of clicks and chirps on arachne language, so she had her friends give her a name.</li>
+		<li>She can cling to surfaces, can make webs, can sense vibrations, and such.</li>
+		<li>Rather than actually cling, she more like <em>runs</em> on the ceiling. She has to be gentle to not damage the surface, and if she doesn't sprint, usually her weight will pull part of the ceiling down with her.</li>
+		</ul>
+		<h5 id="seth">Seth</h5>
+		<ul>
+		<li>His personal vehicle is a Subaru Imprezza WRX. The mansion has a Jeep Wagoneer for hauling big things, like carting around poor Sera.</li>
+		</ul>
+		<h5 id="town%20of%20forest%20glen">Town of Forest Glen</h5>
+		<ul>
+		<li>The town is small, and reminiscent of the ones from Smallville, Gremlins, or Once Upon a Time. It's surrounded by forest, and getting to the next town requires a decent amount of travel on lonely roads through the forest in either direction.</li>
+		</ul>
+		<h5 id="vanessa">Vanessa</h5>
+		<ul>
+		<li>Her  name is unpronounceable in human tongue, so she picked a name that she thought sounded pretty.</li>
+		</ul>
+		<hr>
+		<h2 id="established">Established</h2>
+		<p>The following are facts about persons, places, and things in the story that have already been established in the fiction:</p>
+		<!--
+		###### [Cami](#cami) • [Erin](#erin) • [Finola](#finola) • [Gray](#gray) • [Hitomi](#hitomi) • [Jess](#jess) • [Myths](#myths)  
+		###### [Seoyun](#seoyun) • [Seth](#seth) • [Town of Forest Glen](#town%20of%20forest%20glen) • [Vanessa](#vanessa)
+		
+		<br>
+		-->
+		<h5 id="cami">Cami</h5>
+		<ul>
+		<li>Princess Camellia Alexandrescu. Romanian.</li>
+		<li>Elegant. Haughty. Entitled. Tsundere.</li>
+		<li>Appears to be 20 at the most. Waist-length cascading raven-black hair. Glowing green eyes. Porcelain skin.</li>
+		<li>Once upon a time, Cami was a princess. Her kingdom has fallen long ago but she still clings to her royal status, believing that one day her kingdom will rise again.</li>
+		</ul>
+		<h5 id="erin">Erin</h5>
+		<ul>
+		<li>Erin Kingsley. English American.</li>
+		<li>Spunky. Cheerful and energetic</li>
+		<li>17 years old. Shoulder-length mousy brown hair. Honey brown eyes. Short statured.</li>
+		<li>While her attitude is endearing to most, she often finds that people won't take her seriously.</li>
+		<li>She is the daughter of Walter's second wife, Eileen. She spent the majority of her childhood by her mother's side, and aside from Seth, Eileen is the most important person in her life.</li>
+		</ul>
+		<h5 id="finola">Finola</h5>
+		<ul>
+		<li>Fionnuala Moonspun. Irish.</li>
+		<li>Mischievous.</li>
+		<li>Looks about 15 years old. Short messy golden hair. Black eyes. Pointed ears. Insect-like wings. Small enough to fit in the palm of a hand.</li>
+		<li>Her body exudes magic with a constant faint golden glow.</li>
+		<li>Ornate green and white dress.</li>
+		<li>She is a solitary faerie aligning with the autumn side of the Unseelie Court. The Unseelie are considered the dark or chaotic side of the faerie.</li>
+		</ul>
+		<h5 id="gray">Gray</h5>
+		<ul>
+		<li>His last name is unknown.</li>
+		<li>He uses his fearmongering abilities to scare children, feeding off their fear—and occasionally feeding on the children themselves.</li>
+		<li>No one is sure what brought Gray to the mansion or why he continues to reside there.</li>
+		</ul>
+		<h5 id="hitomi">Hitomi</h5>
+		<ul>
+		<li>Nakamura Hitomi (中村ひとみ). Japanese.</li>
+		<li>Shy. Polite. Unstable.</li>
+		<li>16 or 17 years old. Waist-length straight silky black hair. Dark brown eyes.</li>
+		<li>Always wears Japanese school uniform of navy blue plaid skirt, a similarly colored blazer over a white dress shirt, and a large red bow at her collar. Uniform changes from pristine to ragged, muddy, and bloody, depending on mood.</li>
+		<li>She is a classic Japanese ghost of vengeance. She can disappear and reappear in an instant, pass through walls, and instill cardiac-arresting levels of fear.</li>
+		<li>Hitomi was a shy high school girl that managed to catch the eye of her crush. When she and the boy snuck off to a secluded spot, rather than fulfilling her fantasies, he murdered her for sport and dumped her in a ditch. She was so full of rage at the betrayal that her spirit refused to rest.</li>
+		<li>She has issues with big changes or lots of activity.</li>
+		</ul>
+		<h5 id="jess">Jess</h5>
+		<ul>
+		<li>Jessamine Verlaine. French.</li>
+		<li>Temperamental. Yandere.</li>
+		<li>Appears to be in her early 20s. Chin-length fiery red hair in a bob cut. Sapphire blue eyes that glow when angry.</li>
+		<li>She is enthralled to Cami. At least once a week Cami lets her drink of her blood, granting her supernatural abilities, preventing aging, and reinforcing their bond.</li>
+		<li>When Cami found her, she had been shunned by everyone that she loved and was attempting to take her own life. She had nearly succeeded, but Cami discovered her just in time to pull her back from the clutches of death.</li>
+		<li>Although Jess is close friends with Erin, she still puts Cami before their friendship.</li>
+		</ul>
+		<h5 id="myths">Myths</h5>
+		<ul>
+		<li>Myths, or the slang term "monsters," are mythological beings.</li>
+		<li>No one is sure which came first, the mythological beings themselves, or the myths describing them, but it was a safe bet that if many people believed in a myth associated with a being that inspired fear, that being is walking the earth somewhere.</li>
+		<li>Only by a handful of the world's population are aware that myths exist. Seth's family provided a place for the myths to live away from humans.</li>
+		</ul>
+		<h5 id="seoyun">Seoyun</h5>
+		<ul>
+		<li>Min Seo-yun (민서윤). Korean.</li>
+		<li>Charming and seductive. Enigmatic. Cunning.</li>
+		<li>Prefers to appear as woman in her early 20s, but can appear to be any age or gender. Auburn hair. Amber eyes. Typically maintains human form with fox ears and two large, fluffy fox tails.</li>
+		<li>She is a fabled Korean nine-tailed fox spirit. Kumiho are foxes in their natural form and transform into beautiful women to lure men, whom they kill by consuming their spirit energy.</li>
+		<li>Although she has never been forthcoming about her past, it's apparent that something nasty went down in Korea, and she is trying to hide as far away from there as she can.</li>
+		</ul>
+		<h5 id="sera">Sera</h5>
+		<ul>
+		<li>Her birth name is made up of clicks and chirps.</li>
+		<li>Ditzy.</li>
+		<li>She is an arachne. Her upper body is that of a young girl, and conjoins with the body of a large spider starting at her waist. Her body takes up an extraordinary amount of space, but possesses all of the advantages of a spider.</li>
+		<li>She's not necessarily dumb, she is easily distracted or confused.</li>
+		<li>She was born into a high class family. While she hasn't divulged the reasons, it seems that her parents have disowned and disinherited her.</li>
+		</ul>
+		<h5 id="seth">Seth</h5>
+		<ul>
+		<li>Seth Kingsley. English American.</li>
+		<li>Serious. Driven.</li>
+		<li>Short black hair. Steel blue eyes. Clean cut. Athletic build.</li>
+		<li>He takes his position seriously. He does whatever it takes to provide a good life for those in his care.</li>
+		<li>He is overprotective of his little sister, Erin, and how his lodgers.</li>
+		<li>No matter how hard he tries, he is never good enough for his father.</li>
+		<li>It has been a year since he and his sister, Erin, took over the boarding house from his father, Walter.</li>
+		</ul>
+		<h5 id="vanessa">Vanessa</h5>
+		<ul>
+		<li>Her true name is unpronounceable in human tongue.</li>
+		<li>Prim and proper. Subservient.</li>
+		<li>Normally maintains the shape of a demure woman of a woman in her mid-30s. Black hair made of tentacles. Glowing, pupil-less yellow eyes. Pale blue complexion. Slimy skin. Tentacles from waist down.</li>
+		<li>Maid uniform of a black dress beneath a white ruffled apron with a matching headdress.</li>
+		<li>She is a shoggoth—an amorphous shapeshifting blob of sentient flesh created by the Elder Things to serve as its protector. She can grow into a mass of eyes, teeth, and tentacles larger than a house.</li>
+		<li>She has sworn to serve the Kingsley family since Seth's great-grandfather. She serves as both a maid and a protector.</li>
+		<li>Because she can't pass for human, she unfortunately always needs Seth or Erin to make grocery trips for her.</li>
+		</ul>
+		<hr>
+		<h2 id="references">References</h2>
+		<h5 id="finola">Finola</h5>
+		<ul>
+		<li><a href="./gallery.html#finola">gallery</a> 📷</li>
+		<li><a href="https://mythology.net/mythical-creatures/fairy/">fairy</a> • mythology.net</li>
+		<li><a href="https://en.wikipedia.org/wiki/Fairy">fairy</a> • wikipedia.org</li>
+		<li><a href="https://mythus.fandom.com/wiki/Fairy">fairy</a> • mythus.fandom.com</li>
+		<li><a href="https://villains.fandom.com/wiki/Fairies_(folklore)">fairies (folklore)</a> • villains.fandom.com</li>
+		<li><a href="https://en.wikipedia.org/wiki/Classifications_of_fairies">classificationa of fairies</a> • wikipedia.org</li>
+		</ul>
+		<h5 id="gray">Gray</h5>
+		<ol>
+		<li><a href="https://en.wikipedia.org/wiki/Bogeyman">bogeyman</a> • wikipedia.org</li>
+		</ol>
+		<h5 id="hellhound">Hellhound</h5>
+		<ol>
+		<li><a href="https://mythus.fandom.com/wiki/Hellhound">hellhound</a> • mythus.fandom.com</li>
+		</ol>
+		<h5 id="seoyun">Seoyun</h5>
+		<ul>
+		<li><a href="./gallery.html#seoyun">gallery</a> 📷</li>
+		<li><a href="https://mythus.fandom.com/wiki/Kumiho">kumiho</a> • mythus.fandom.com</li>
+		<li><a href="https://en.wikipedia.org/wiki/Kumiho">kumiho</a> • wikipedia.org</li>
+		<li><a href="https://pantheon.org/articles/k/kumiho.html">kumiho</a> • pantheon.org</li>
+		<li><a href="https://mythlok.com/kumiho/">kumiho</a> • mythlok.com</li>
+		</ul>
+		<h5 id="sera">Sera</h5>
+		<ul>
+		<li><a href="./gallery.html#sera">📷 gallery</a></li>
+		</ul>
+		<h5 id="vanessa">Vanessa</h5>
+		<ul>
+		<li><a href="./gallery.html#vanessa">gallery</a> 📷</li>
+		<li><a href="https://en.wikipedia.org/wiki/Shoggoth">shoggoth</a> • wikipedia.org</li>
+		<li><a href="https://lovecraft.fandom.com/wiki/Shoggoth">shoggoth</a> • lovecraft.fandom.com</li>
+		<li><a href="https://monstergirlencyclopedia.miraheze.org/wiki/Shoggoth">shoggoth</a> • monstergirlencyclopedia.miraheze.org (NSFW)</li>
+		</ul>
+		<p><br><br></p>
+	</body>
+</html>
