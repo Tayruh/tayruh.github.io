@@ -3109,6 +3109,8 @@
 	}
 
 	function showMythicScene(adjust) {
+		var adj_link = "<span class='pointer' onclick='solo.showPage(\"mythic-scene:adjust\")'>";
+	
 		if (adjust) {
 			var roll, num;
 			var count = 1;
@@ -3142,8 +3144,15 @@
 				}
 			}
 			while (count);
-
-			fadeIn("scene-adjust", 0, "<ul><li>" + result.join("</li><li>") + "</li></ul>");
+				
+			var output = adj_link + result.join("</span><br>" + adj_link) + "</span>";
+			
+			if ($("#adjustments")) fadeIn("adjustments", 0, output);
+			else {
+				$("#scene-adjust").remove();
+				$("#scene").innerHTML += "<tr id='scene-adjust'></tr>";
+				fadeIn("scene-adjust", 0, "<td><b>Adjustments</b></td><td></td><td id='adjustments'>" + output + "</td>");
+			}
 			return;
 		};
 
@@ -3151,7 +3160,7 @@
 		var scene = [];
 		var adjustment = "";
 		var roll = random(1, 10);
-		var output = "<div class='data-table'><table>";
+		var output = "<div class='data-table'><table id='scene'>";
 		
 		if (roll > chaos) return display(getDataTable(["Scene", roll, "Expected Scene"])  + getBackLink());
 		
@@ -3160,11 +3169,11 @@
 		
 		if (scene_type === "Altered Scene") {
 			output += "<tr id='focus'><td><b>Scene</b></td><td><pre>" + roll + "</pre></td><td>" + scene_type + "</td></tr></table></div>" + getEventMeaningLinks(true) +
-				getDataFooter("<div id='scene-adjust' class='answer' onclick='solo.showPage(\"mythic-scene:adjust\")'><a>Adjust Scene</a></div>");
+				"<div id='scene-adjust' class='data-footer'><p>" + adj_link + "<a>Scene Adjustment</a></span></p></div>";
 		}
 		else {
 			output += "<tr><td><b>Scene</b></td><td><pre>" + roll + "</pre></td><td>" + scene_type + "</td></tr>" + 
-				"<tr id='focus'><td><b>Focus</b></td><td></td><td>" + getRolledItem(random(1, 100), muse.mythic.fate.focus[focus]) + "</td></tr>" +
+				"<tr id='focus'><td><b>Event Focus</b></td><td></td><td>" + getRolledItem(random(1, 100), muse.mythic.fate.focus[focus]) + "</td></tr>" +
 				"</table></div>" + getEventMeaningLinks(true);
 		}
 
@@ -3213,8 +3222,9 @@
 	}
 	
 	function showEventMeaning(type, extra) {
-		$("#focus").outerHTML += "<tr><td><b>" + upperCase(type) + "</b></td>" + (extra ? "<td></td>" : "") + "<td>" + getCyclingMeaning("mythic", type) + "</td></tr>";
+		$("#focus").outerHTML += "<tr id='event-meaning'></tr>";
 		$("#event-links").remove();
+		fadeIn("event-meaning", 0, "<td><b>" + upperCase(type) + "</b></td>" + (extra ? "<td></td>" : "") + "<td>" + getCyclingMeaning("mythic", type) + "</td>");
 	}
 
 	function getEventMeaningLinks(extra) {
@@ -3858,7 +3868,6 @@
 		return display(output + getBackLink(false));
 	}
 
-
 	solo.showPage = showPage;
 	solo.showAnswer = showAnswer;
 	solo.showNewMeaning = showNewMeaning;
@@ -3994,11 +4003,13 @@
 
 	.exceptional { text-decoration: underline; }
 
-	a,.move-table td.label, .prevent-select {
+	a, .move-table td.label, .prevent-select {
 		-webkit-user-select: none; /* Safari */
 		-ms-user-select: none; /* IE 10 and IE 11 */
 		user-select: none; /* Standard syntax */
 	}
+
+	.pointer:hover { cursor: pointer; }
 	
 	.link-list li:not(:first-of-type) p { margin-top: 1em !important; }
 
