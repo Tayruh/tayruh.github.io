@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+			
+			h5 a, h5 {
+				color: #ffbb55;
+	            font-size: 1em;
+	            font-weight: bold;
+	            margin-top: 0 !important;
+	            margin-block-end: -1em;
+            }
+            
+            h6, h6 a {
+	            font-size: 11px;
+	            text-align: center;
+	            margin: 0.25em;
+            }
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+				border-radius: 6px;
+				border: solid 1px #000000;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+			
+			blockquote small { opacity: 0.6; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h2>Solo Structure</h2>
+		<br>
+		<ol>
+		<li>Make an oracle or skill check every three paragraphs at most. Two short lines of dialogue may be counted together as a single paragraph. First paragraph is setting the scene or summarizing the results of the previous roll, second paragraph expands on the first if needed, and third paragraph describes the character action leading into the next roll.<p><br></p></li>
+		<li>Overcome writer's block by writing out a paragraph or two of simple and plain action summaries (eg. "He did this. They did that."), and then converting that line-by-line into detailed description and dialogue. The detailed text should still adhere to the "three paragraphs and then roll" rule, so try not to plan too far ahead, expecting deviation due to rolling.<p><br></p></li>
+		<li>Dialogue, exposition, and description may be expanded upon later, such as when the scene is complete, allowing it to expand beyond its initial three paragraph constraint.<p><br></p></li>
+		<li>Oracle and skill checks should be phrased in such a way that they can be resolved immediately, within a paragraph or two of text following the question. Do not ask questions not immediately relevant.<p><br></p></li>
+		<li>Characters should be pushed into making choices in the narrative, even if you're not making an oracle roll for them.<p><br></p></li>
+		<li>Always know what both the yes and no answers mean before you ask the oracle. It's okay if the no would lead into an additional set of questions, but do this no more than twice so that you're essentially choosing between three options.<p><br></p></li>
+		<li>Be sure to drop random bits of foreshadow and subtext into the story without knowing what they mean. This opens up threads and revelations for the future.<p><br></p></li>
+		<li>The game should make you feel like you need to know what happens next. If you've lost the incentive to keep going, become the author/GM for a moment and inject a new mystery, obstacle, or twist into the story. If that feels too heavy handed, roll on a table or pick between multiple options using an oracle.</li>
+		</ol>
+		<br><br>
+	</body>
+</html>
