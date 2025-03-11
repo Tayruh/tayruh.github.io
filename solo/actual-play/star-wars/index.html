@@ -1,1 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
 
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+			
+			h5 a, h5 {
+				color: #ffbb55;
+	            font-size: 1em;
+	            font-weight: bold;
+	            margin-top: 0 !important;
+	            margin-block-end: -1em;
+            }
+            
+            h6, h6 a {
+	            font-size: 11px;
+	            text-align: center;
+	            margin: 0.25em;
+            }
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+				border-radius: 6px;
+				border: solid 1px #000000;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+			
+			blockquote small { opacity: 0.6; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<blockquote>
+		  <p><strong>Thread:</strong> Find sister.<br>
+		  <strong>Scene:</strong> Stuck on dead ship.<br>
+		  <strong>Goal:</strong> Repair ship. </p>
+		</blockquote>
+		<p>Syran sits in the engine room of his ship, attending to the hyperdrive. The hyperdrive engine of Syran's ship burnt out after a mad dash to save his sister Aleon.</p>
+		<p>Syran attempts to repair the engine.</p>
+		<blockquote>
+		  <p><strong>Space Transports Repair</strong> Check (11): [12] Success</p>
+		</blockquote>
+		<p>Syran manages to repair the engine and it hums to life. He abandons his tools and sprints toward the cockpit. There isn't any time to lose.</p>
+		<blockquote>
+		  <p><strong>Goal:</strong> Locate battlecruiser.</p>
+		</blockquote>
+		<p>Syran enters the assumed coordinates of the battleship into his navigation computer and punches it. The ship leaps into hyperspace.</p>
+		<blockquote>
+		  <p><strong>Astrogation</strong> Check (21): [16] Failure</p>
+		  <p><strong>Astrogaition Mishap</strong>: [8] Off Course</p>
+		</blockquote>
+		<p>When the ship exits hyperspace, Syran immediately realizes that this is not the right location. He analyzes the entered coordinates and swears to himself when he spots the typo.</p>
+		<blockquote>
+		  <p><strong>Q:</strong> Did he arrive by a planet?<br>
+		  <strong>A:</strong> No, but there is something nearby.</p>
+		  <p><strong>Q:</strong> Is it a ship?<br>
+		  <strong>A:</strong> Yes, but…</p>
+		  <ul>
+		  <li><strong>it's unfriendly. (Probably): [10] Yes</strong></li>
+		  <li>it's derelict. (Maybe): [16] No</li>
+		  <li>it's actually a space bar. (Probably Not): [11] No</li>
+		  </ul>
+		  <p><strong>Q:</strong> Is it a battleship?<br>
+		  <strong>A:</strong> No, but it's a decent sized ship (YT-2400).</p>
+		</blockquote>
+		<p>Syran looks up and sees a ship about the size of his own through the cockpit windows. He somehow managed to land right below it in their blindspot. He immediately kills the engines and sensors.</p>
+		<blockquote>
+		  <p>Enemy <strong>Sensor (Passive)</strong> Check (21): [13] Failure</p>
+		</blockquote>
+		<p>The ship doesn't seem to notice him.</p>
+		<blockquote>
+		  <p><strong>Q: **Can he tell whether the ship is unfriendly? 
+		**A:</strong> No, and he doesn't care. He doesn't trust them.</p>
+		</blockquote>
+		<blockquote>
+		  <p>What does Syran do?</p>
+		  <ul>
+		  <li>Tries to hyperjump out. (Impatient and running out of time: 2)</li>
+		  <li><em>* Attacks them from behind. (Impatient, concerned about a tail, and has advantage: 3) [3]*</em></li>
+		  </ul>
+		</blockquote>
+		<p>Frustrated about the situation, Syran decides that he can't allow the ship to follow him in hyperspace as his mission is too important. As soon as there is a bit of distance between the two of them, he opens fire.</p>
+		<blockquote>
+		  <p><strong>Starship Gunnery</strong> Check (12): [12] Success<br>
+		  <strong>Damage:</strong> (7): [17] Heavily damaged<br>
+		  <strong>Heavy Damage</strong> Check: [1] -1 Maneuverability</p>
+		</blockquote>
+		<p>Syran catches the ship unawares and lands a critical hit that damages their drive. </p>
+		<p>The freighter is spun sideways in the blast. It immediately raises its shields in defense. Unfortunately for them, Syran's surprise attack gives him another shot before they can get into position.</p>
+		<blockquote>
+		  <p><strong>Starship Gunnery</strong> Check (12): [18] Success<br>
+		  <strong>Damage:</strong> (19) [9] No damage</p>
+		</blockquote>
+		<p>The laser fire bounces off the freighter's shields. The ship performs a high speed maneuver to get its front mounted cannons in a position to fire.</p>
+		<blockquote>
+		  <p><strong>Starship Movement</strong> Check (15) :[10] Failure<br>
+		  <strong>Movement Failure:</strong> [5] Slip; -3D to actions this round and -1D next round</p>
+		  <p><strong>Starship Gunnery</strong> Check (12): [4] Failure</p>
+		</blockquote>
+		<p>The freighter is still off-balance from the initial shot and is unable to slip into position like it wants. The shot goes wide. Syran doesn't let up.</p>
+		<blockquote>
+		  <p><strong>Starship Gunnery</strong> Check (12): [18] Success<br>
+		  <strong>Damage</strong> (22):  [11] No damage</p>
+		</blockquote>
+		<p>The shield deflects the laser blasts once again. The freighter lines up its shot and fires.</p>
+		<blockquote>
+		  <p><strong>Starship Gunnery</strong> Check (12): [7] Failure</p>
+		</blockquote>
+		<p>The shot doesn't land. Committed, Syran fires once more.</p>
+		<blockquote>
+		  <p><strong>Starship Gunnery</strong> Check (12): [18] Success<br>
+		  <strong>Damage</strong> (14): [19] Lightly damaged<br>
+		  <strong>Light Damage</strong> Check: [5] Weapon failure due to power surge.</p>
+		</blockquote>
+		<p>The freighter's solitary weapon lights up with a blue surge of energy and becomes inoperative. The freighter immediately breaks off from the fight and attempts to flee. </p>
+		<p>Having successfully secured a safe exit, Syran is not interested in chasing the freighter. Instead he reinputs the jump coordinates into his navigation computer once more. This time he scrutinizes them carefully to ensure the proper input of the codes.</p>
+		<blockquote>
+		  <p><strong>Astrogation</strong> Check (10): [15] Success</p>
+		</blockquote>
+		<p>Syran is happy to see that this time around he landed exactly where he intended. Before him looms a large stardestroyer. His sister is being held on that ship. Now he just needs to find her and get her out of there.</p>
+		<blockquote>
+		  <p><strong>Goal:</strong> Locate sister.</p>
+		</blockquote>
+		<p><br><br></p>
+	</body>
+</html>
