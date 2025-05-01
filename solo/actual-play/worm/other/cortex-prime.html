@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+			
+			h5 a, h5 {
+				color: #ffbb55;
+	            font-size: 1em;
+	            font-weight: bold;
+	            margin-top: 0 !important;
+	            margin-block-end: -1em;
+            }
+            
+            h6, h6 a {
+	            font-size: 11px;
+	            text-align: center;
+	            margin: 0.25em;
+            }
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+				border-radius: 6px;
+				border: solid 1px #000000;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+	    details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+			
+			blockquote small { opacity: 0.6; }
+			
+			.no-color { color: unset !important; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<blockquote>
+		  <p><em class="no-color">This is a combat playtest using Tales of Xadia set in the Wormverse. It's not a perfect fit for the setting, and customized Cortex Prime characters would have probably worked better (notably, I wouldn't have used values, since Justice fits too well for every action during this), but it works well enough for a playtest.</em></p>
+		</blockquote>
+		<br>
+		<!--
+		[ Roll Template ]
+		> **PLAYER:** INTENT. (TRAITS) \[ROLLS] = EFFORT (EFFECT). RESULT.
+		
+		[ Contest ]
+		> Begin contest.
+		
+		[ Before the Roll ]
+		> Gained a PP (REMAIN) for hindering distinction.
+		> Gained a PP (REMAIN) for including d4 complication/stress.
+		> Spent a PP (REMAIN) to create *ASSET* temporary asset.
+		> Spent a PP (REMAIN) to activate *SFX* SFX to double TRAIT die and keep an extra effort/effect die.
+		> Spent a PP (REMAIN) to activate *SFX* SFX to add d6 and step up effect die.
+		
+		[ Before the Resolution ]
+		> Spent a PP (REMAIN) to keep an extra effort die.
+		> Spent a PP (REMAIN) to activate *SFX* SFX to reroll.
+		
+		[ Results ]
+		> Success.
+		> Heroic success.
+		> Failure.
+		> Failure. End contest.
+		> Gain a PP (REMAIN) for giving in. End contest.
+		
+		[ Take Complications ]
+		> Stressed/Taken out.
+		> Take *COMPLICATION* complication/stress.
+		> Take *COMPLICATION* complication/stress, stepped up by heroic success.
+		> Take *COMPLICATION* complication/stress, stepped down by effect die.
+		> Take *COMPLICATION* complication/stress, stepped up by heroic success and stepped down and stepped down by effect die.
+		> No stress taken, after stepped down by effect die.
+		> Step up complication/stress to *COMPLICATION*.
+		> Spend a PP (REMAIN) to activate *SFX* SFX to ignore *COMPLICATION* complication/stress.
+		
+		[ Hitches and Opportunities ]
+		> Take *COMPLICATION* complication from hitch/COUNT hitches and gain a PP (REMAIN).
+		> Step up complication/stress to *COMPLICATION* from hitch/COUNT hitches and gain a PP (REMAIN).
+		> Spend a/COUNT PP (REMAIN) and NCs gain a PP (REMAIN) to activate opportunity/COUNT opportunities and step down complication/stress to  *COMPLICATION*.
+		> Spend a/COUNT PP (REMAIN) and NCs gain a PP (REMAIN) to activate opportunity/COUNT opportunities and remove *COMPLICATION* complication/stress. 
+		
+		[ Create or Remove Assets and Complications ]
+		> Create *ASSET* temporary asset.
+		> Create *ASSET* temporary asset and spend a PP (REMAIN) to keep it for the session.
+		> Remove *ASSET* temporary asset.
+		> Step down complication/stress to *COMPLICATION*.
+		> Remove *COMPLICATION* complication/stress.
+		
+		[ GM Tools ]
+		> Create as minor GMC with *TRAITS* traits.
+		> Create extra with *TRAIT* trait.
+		> Set *GOAL* goal based on CHARACTER relationship.
+		-->
+		<h2 id="skitter">Skitter</h2>
+		<blockquote>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Bug Controller</strong> d8<br>
+		  &nbsp;&nbsp;&nbsp;• <em>Prescience:</em> Spend a PP to reroll when using bugs to observe and track your surroundings.<br>
+		  &nbsp;&nbsp;&nbsp;• <em>Swarm:</em> Add a d6 and step up your effect die by one when using your bugs to create assets.</p>
+		  <p><strong>Guilty Anti-Hero</strong> d8<br>
+		  <strong>Doing the Wrong Thing for the Right Reasons</strong> d8</p>
+		  <p><mark>VALUES</mark><br>
+		  <strong>Devotion</strong> d8 • <strong>Glory</strong> d4 • <strong>Justice</strong> d10<br>
+		  <strong>Liberty</strong> d8 • <strong>Mastery</strong> d6 • <strong>Truth</strong> d6</p>
+		  <p><mark>ATTRIBUTES</mark><br>
+		  <strong>Agility</strong> d6 • <strong>Awareness</strong> d10 • <strong>Influence</strong> d6<br>
+		  <strong>Intellect</strong> d8 • <strong>Spirit</strong> d8 • <strong>Strength</strong> d4</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>ASSETS</mark><br>
+		  <strong>Spidersilk Armor</strong> d8 • <strong>Atlas</strong> d6<br>
+		  <strong>Bug Decoys</strong> d10 (session)</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Bug Swarm</strong> d8<br>
+		  &nbsp;&nbsp;&nbsp;• Bug Decoys<br>
+		  &nbsp;&nbsp;&nbsp;• Web Nets<br>
+		  &nbsp;&nbsp;&nbsp;• Swarm Sense</p>
+		</blockquote>
+		<blockquote>
+		  <p><strong>Plot Points:</strong> 1</p>
+		  <p><mark>STRESS</mark><br>
+		  <strong>Afraid</strong> d8 • <strong><del>Angry</del></strong> • <strong>Insecure</strong> d6<br>
+		  <strong><del>Corrupted</del></strong> • <strong>Exhausted</strong> d10 • <strong>Injured</strong> d6</p>
+		  <p><mark>GOALS</mark><br>
+		  <strong>Save Dinah</strong> d10 (Justice)<br>
+		  <strong>Remove the Slaughterhouse Nine</strong> d8 (Liberty)</p>
+		</blockquote>
+		<br>
+		<h2 id="mannequin">Mannequin</h2>
+		<blockquote>
+		  <p><strong>Catalyst</strong> d8</p>
+		  <p><mark>DISTINCTIONS</mark><br>
+		  <strong>Self-Modified Tinker</strong> d8<br>
+		  &nbsp;&nbsp;&nbsp;• <em>Impervious:</em> Spend a PP to ignore Injured stress or trauma from blunt or piercing physical attacks.</p>
+		  <p><strong>Slaughterhouse Nine</strong> d8<br>
+		  <strong>On a Mission</strong> d8</p>
+		  <p><mark>VALUES</mark><br>
+		  <strong>Devotion</strong> d6 • <strong>Glory</strong> d6 • <strong>Justice</strong> d10<br>
+		  <strong>Liberty</strong> d8 • <strong>Mastery</strong> d8 • <strong>Truth</strong> d4</p>
+		</blockquote>
+		<blockquote>
+		  <p><mark>ASSETS</mark><br>
+		  <strong>Gas Breath</strong> d6</p>
+		  <p><mark>SPECIALTIES</mark><br>
+		  <strong>Modular Limbs</strong> d10</p>
+		</blockquote>
+		<blockquote>
+		  <p><strong>Plot Points:</strong> 0</p>
+		  <p><mark>STRESS</mark> <br>
+		  <strong><del>Afraid</del></strong>  • <strong>Angry d10</strong> • <strong><del>Insecure</del></strong><br>
+		  <strong><del>Corrupted</del></strong> • <strong><del>Exhausted</del></strong> • <strong><del>Injured</del></strong></p>
+		</blockquote>
+		<br>
+		<h1 id="scene">Scene</h1>
+		<p>Charlotte bursts in through the door to my base and slams it shut behind her. Seconds later, blades stab through the door from the opposite side. Charlotte screams that it's Mannequin and disappears into the kitchen to hide. I ready my baton and knife.</p>
+		<p>The hinges to the door are sheared off and the door collapses to the ground. Mannequin steps inside. I immediately gather my swarm into decoys.</p>
+		<blockquote>
+		  <p><strong>Difficulty:</strong> (2d6): [4, 6] = 10</p>
+		  <p><strong>Skitter:</strong> I try to form bug decoys. (Bug Controller d8, Devotion d8, Intellect d8, Bug Swarm d8, SFX d6): [1, 7, 1, 2, 5] = 12 (d10). Activated <em>Swarm</em> SFX to add d6 and step up effect die. Success. Create <em>Bug Decoys d10</em> temporary asset and spend a PP (0) to keep it for the session. Take <em>Afraid d8</em> stress from 2 hitches and gain a PP (1).</p>
+		  <p><em class="no-color">When you roll a 1 (called a hitch), the GM may give you stress in exchange for a plot point. PP are useful to keeping extra dice for your total, activating SFX, creating assets, or even stepping down your stress when an NPC rolls a 1. Stress received from a hitch starts at d6 and then steps up by one for each additional hitch received. Stress that you recover (roll to remove) can also be used in your growth pool for trying to improve traits, so taking stress isn't all bad. All stress steps down by one automatically when you have a scene that doesn't involve fighting.</em></p>
+		</blockquote>
+		<p>Mannequin completely ignores me and takes off after Charlotte. I panic and dash toward him. I surround myself in bugs to imitate my decoys and lash out at him with my combat knife.</p>
+		<blockquote>
+		  <p><strong>Skitter:</strong> Begin contest. I attempt to draw his attention from Charlotte. (Guilty Anti-Hero d8, Devotion d8, Influence d6, Bug Swarm d8, Bug Decoys d10): [8, 2, 4, 6, 3] = 14 (d10)</p>
+		  <p><em class="no-color">A contest starts with someone setting a total. Then anyone attempting to oppose them rolls to see if they can beat that total. If they do, it goes back to the first person then they try to beat the new total set by the second person. And repeat, until someone loses or gives in. Before a person rolls, they have the option of giving in, if they don't think that they can beat the total. Losing always results in taking stress. Giving in avoids taking stress, now matter how many back-and-forths you've had already, and you gain a PP. It IS still a loss, though, but you get to decide how you lose.</em></p>
+		</blockquote>
+		<p>Without even looking, Mannequin raises his arm in an attempt to deflect the attack.</p>
+		<blockquote>
+		  <p><strong>Mannequin:</strong> He tries to counter. (Catalyst d8, On a Mission d8, Justice d10, Modular Limbs d10): [8, 3, 5, 3] = 13 (d10). Failure. End contest. Spend a PP (0) to activate <em>Impervious</em> SFX to ignore <em>Injured d10</em> stress.</p>
+		</blockquote>
+		<p>I duck under his arm and jam the knife into one of his joints. It doesn't do as much damage as I'd like, but it does nearly dislodge his arm from its socket. More importantly, it draws his attention away from Charlotte, as I wanted.</p>
+		<p>I back away from him. He cocks his head as my bug clones surround him. His sensors seem to be unable to discern which is the real me.</p>
+		<p>While his attention is focused on me, I instruct the spiders along the ceiling to create a massive web.</p>
+		<blockquote>
+		  <p><strong>Difficulty:</strong> (2d6, Mannequin d8) [5, 6, 1] = 11 (d8)<br>
+		  <strong>Skitter:</strong> Spend a PP (0) and NCs gain a PP  (1) to activate opportunity and step down stress to <em>Afraid d6</em>.</p>
+		  <p><strong>Skitter:</strong> I try to create a web net. (Bug Controller d8, Justice d10, Intellect d8, Bug Swarm d8) [8, 4, 1, 5] = 13 (d10). Success. Create <em>Web Net d10</em> temporary asset. Take <em>Insecure d6</em> stress from hitch and gain a PP (1).</p>
+		</blockquote>
+		<p>Mannequin swipes his blade in a wide arc at the swarm clones. It goes right through a few of them, narrowing his selection down to me and two other assembled bodies.</p>
+		<p>He lunges for us.</p>
+		<blockquote>
+		  <p><strong>Mannequin:</strong> Begin contest. He swipes his blade at me. (Catalyst d8, Slaughterhouse Nine d8, Mastery d8, Modular Limbs d10) [5, 3, 2, 1] = 8 (d8)</p>
+		</blockquote>
+		<p>My clones and I roll out of the way as I drop the webbing on him.</p>
+		<blockquote>
+		  <p><strong>Skitter:</strong> Trying to drop a net on him. (Bug Controller d8, Justice d10, Agility d6, Bug Decoys d10, Web Net d10, Bug Swarm d8) [6, 9, 4, 1, 1, 2] = 15 (d10). Success. Take <em>Exhausted d8</em> stress from 2 hitches and gain a PP (2).</p>
+		  <p><em class="no-color">You're typically only allowed to use one trait from each trait set in Cortex. However, you are allowed to use as many assets as apply to your action, whether created or part of a trait set, which is how Skitter can use both Bug Decoys and Web Net here. But as you can see, every die added has a chance of rolling a 1, so bigger pools aren't always to your benefit.</em></p><em class="no-color">
+		</em></blockquote><em class="no-color">
+		<p>As we roll safety out of the way, Mannequin catches sight of the net descending on him and opens his mouth to release his gas.</p>
+		<blockquote>
+		  <p><strong>Mannequin:</strong> He attempts to blow it away with his gas breath. (Catalyst d8, Self-Modified Tinker d8, Justice d10, Gas Breath d6) [3, 8, 8, 2] = 16 (d8). Success.</p>
+		</blockquote>
+		<p>The exhaust of gas blows the net away and it falls harmlessly to the ground. The area we're in is quite small and it quickly begins to fill with his poisonous gas. I fear for Charlotte.</p>
+		<blockquote>
+		  <p><strong>Skitter:</strong> Remove <em>Web Net</em> temporary asset.</p>
+		  <p><em class="no-color">Per Tales of Xadia temporary asset rules, unless a plot point is spent when creating an asset, it is removed at the end of the test or contest once it's used, or when no longer narratively appropriate.</em></p>
+		</blockquote>
+		<blockquote>
+		  <p><strong>Skitter:</strong> I try to urge Charlotte out of the building using my decoys. (Guilty Anti-Hero d8, Devotion d8, Influence d6, Bug Swarm d8, Bug Decoys d10) [8, 7, 5, 4, 7] = 20 (d10). Spent a PP (1) to keep an extra effort die. Success.</p>
+		  <p><em class="no-color">Spending a plot point to keep an extra die for your total is usually the most effective method to beat a roll, especially since you make this decision after you've rolled. However, you're still only able to choose from the remaining dice which haven't rolled a 1, so sometimes you can't win a roll no matter how many PP you've hoarded.</em></p>
+		</blockquote>
+		<p>I send one of my decoys into the kitchen. Through my swarm I instruct Charlotte to make a break for the exit while I cover her. She comes running out of the kitchen and I stand between her and Mannequin.</p>
+		<p>Predictably, Mannequin lunges for the both of us with his blades.</p>
+		<blockquote>
+		  <p><strong>Mannequin:</strong> He attacks Charlotte and me. (Catalyst d8, On a Mission d8, Justice d10, Modular Limbs d10) [5, 5, 3, 10] = 20 (d10). Spent a PP (0) to keep an extra effort die. Failure. End contest. Take <em>Angry d10</em> stress.</p>
+		</blockquote>
+		<p>I somehow manage to deflect his blade using my baton, knocking him off balance. It's a damn miracle. He can't scream in anger without a face, but as he rights himself, his body posture says enough.</p>
+		<p>Charlotte bolts out the door, and I quickly hurry after her.</p>
+		<p>As I exit the lair, I pull my gun from its holster and I fire into the room full of explosive gas.</p>
+		<blockquote>
+		  <p><strong>Skitter:</strong> Begin contest. I try to ignite the gas. (Doing the Wrong Thing for the Right Reasons d8, Justice d10, Agility d6, Handgun d6) [4, 6, 5, 5] = 11 (d8). Spent a PP (0) to create <em>Handgun d6</em> temporary asset.</p>
+		  <p><em class="no-color">You really want to roll with more than 3 dice, if you can, since two will be reserved for the total and one for the effect. You can't use any that roll a 1 for your total or effect. So, Skitter spent a PP to add a d6 to cover her butt a little.</em></p>
+		</blockquote>
+		<p>As the room explodes behind him, Mannequin charges toward me.</p>
+		<blockquote>
+		  <p><strong>Mannequin:</strong> He tries to escape the explosion and tackle me. (Catalyst d8, Slaughterhouse Nine d8, Justice d10, Afraid d6) [2, 7, 6, 4] = 13 (d8). Success.</p>
+		  <p><em class="no-color">When rolling against someone, you can add their stress to your pool, if it applies. You are only allowed one.</em></p>
+		</blockquote>
+		<p>I jump out of the way to avoid both the explosion and the bull rushing Slaughterhouse Nine member.</p>
+		<blockquote>
+		  <p><strong>Skitter:</strong> I try to dodge. (Doing the Wrong Thing for the Right Reasons d8, Justice d10, Agility d6, Spidersilk Armor d8, Angry d10) [3, 4, 3, 3, 3] = 7 (d10). Failure. End contest. Take <em>Injured d8</em> stress, stepped up by heroic success and stepped down by effect die. Remove <em>Handgun d6</em> temporary asset.</p>
+		  <p><em class="no-color">Because the Handgun is a temporary asset, it was only good for this one contest. That doesn't mean the gun itself disappears in the fiction, just that it's not important to the scene anymore. Characters in Cortex fuel their ability to succeed by things that are important to them (such as values, relationships, or their connections to things), not because they are physically powerful. Thus, the gun had its moment in the spotlight, and then it loses its importance to Skitter and no longer fuels her drive to succeed.</em></p>
+		</blockquote>
+		<p>I don't quite clear the doorway in time and Mannequin shoulder checks me, sending me skidding on my back just as a large blast of flame explodes from the doorway. I barely escape the area of the blast, but Mannequin does not. He stands firmly rooted in the doorway while the flames engulf him.</p>
+		<p>After a moment, the flames dissipate, and even from my prone position lying on my back, I can see that Mannequin is completely unharmed. He turns his eyeless face to me.</p>
+		<p>I fire a bullet between where his eyes would be, and it ricochets off his face with a metallic twang.</p>
+		<p>"What's the matter?" I ask in a mocking tone. "Is the big, scary machine man not even capable of killing a little girl?"</p>
+		<blockquote>
+		  <p><strong>Skitter:</strong> Begin contest. I'm trying to piss him off. (Guilty Anti-Hero d8, Justice d10, Influence d6, Angry d10) [3, 5, 4, 1] = 9 (d8). Step up stress to <em>Afraid d8</em> from hitch and gain a PP (1).</p>
+		</blockquote>
+		<p>Mannequin thrusts his arm at me. It telescopes to at least four times its length, with its blade rocketing toward me.</p>
+		<blockquote>
+		  <p><strong>Mannequin:</strong> He's trying to skewer me. (Catalyst d8, Self-Modified Tinker d8, Justice d10, Modular Limbs d10, Exhausted d8) [1, 3, 3, 9, 7] = 16 (d8). Heroic success.</p>
+		</blockquote>
+		<p>I roll out of the way while sending my swarm decoys to distract him.</p>
+		<blockquote>
+		  <p><strong>Skitter:</strong> I try to dodge. (Bug Controller d8, Justice d10, Agility d6, Spidersilk Armor d8, Bug Decoys d10, Bug Swarm d8, Angry d10) [7, 9, 1, 3, 9, 2, 6] = 25 (d10). Spent a PP (0) to keep an extra effort die. Success. Step up stress to <em>Exhausted d10</em> from hitch and gain a PP (1).</p>
+		  <p><strong>Mannequin:</strong> Gain a PP (1) for giving in. End contest.</p>
+		  <p><em class="no-color">With no PP to spend, the highest Mannequin could roll would be an 18, which is at least one heroic success since it's 7 below Skitter's total. The winner of a test or contest gains a heroic success for every 5 points over the loser's total, and each steps up the effect die that they would give by one. Skitter's d10 effect die would step up Mannequin's Angry d10 stress to d12, and the heroic success would step it up again, which would stress him out completely. It's not possible for Mannequin to win, so he gives in, earning him a plot point and avoiding stress. He still has to give Skitter what she wants because he gave in, though, which is for him to leave.</em></p>
+		</blockquote>
+		<p>I barely manage to dodge the blade as it jams into the ground where I had been lying. My swarm descends on Mannequin, covering him from head to toe in insects and creepy crawlies.</p>
+		<p>Mannequin retracts him arm and swats at the bugs but it does nothing. They crawl into his joints, which are sealed, but their sacrifices seem to gum up the works a bit and his arms move in a slower, jerkier manner.</p>
+		<p>Eventually, he gives up and just stands there with his arms at his side, glaring at me as the swarm crawls across his body. Or at least I assume that he would be glaring, if he had a face to glare with. Then, he turns and stomps off.</p>
+		<p>I collapse on my back in exhaustion.</p>
+		<blockquote>
+		  <p><em class="no-color">And, that's it. Skitter wins, though she is injured, exhausted, scared, and insecure… which about lines up with how her fights go in the original stories. With all of this stress, hopefully she'll be able to recover some of it with the help her friends, and then use it grow stronger as a character. What doesn't kill you makes you stronger, after all.</em></p>
+		</blockquote>
+		<p><br><br></p></em>
+	</body>
+</html>
