@@ -159,6 +159,8 @@
 			details :last-child { margin-bottom: 0; }
 			
 			blockquote small { opacity: 0.6; }
+			
+			.no-color { color: unset !important; }
 
 			@media screen and (min-width: 500px) {
 				html { margin: 1em; }
@@ -204,18 +206,24 @@
 	<body>
 		<p><a href="./index.html">Back to Index</a></p>
 		<hr>
+		<h6><a href="#mythic">Mythic</a> • <a href="#characters">Characters</a> • <a href="#npcs">NPCs</a> • <a href="#cortex%20prime">Cortex Prime</a></h6>
+		<br>
 		<h1 id="mythic">Mythic</h1>
 		<!--
+		[ Characters ]
 		> **Characters List:** Add *CHARACTER* character.
 		> **Characters List:** Add *EVENT* as thematic random event.
 		
+		[ Threads ]
 		> **Threads List:** Add *THREAD* as focus thread with progress track of COUNT points.
 		> **Focus Thread:** Mark COUNT progress on *THREAD* track (COUNT).
 		
+		[ Scenes ]
 		> **Chaos Factor:** Set/Increase/Decrease CF to COUNT.
 		> **Expected Scene:** INTENT. \[ROLL] Scene is as expected.
 		> **Expected Scene:** INTENT. \[ROLL] Interrupt/Altered Scene. \[Event Focus: FOCUS]\[Actions: PROMPT] INTERPRETATION.
 		
+		[ Fate Chart and Meaning Table ]
 		> **Fate Chart:** QUESTION? (CHANCE) Otherwise DEFAULT. \[ROLL] RESULT.
 		> **Fate Chart:** QUESTION? (CHANCE) Otherwise DEFAULT. \[ROLL]\[FOCUS]\[LIST]\[PROMPT] RESULT.
 		> **Meaning:** QUESTION? \[PROMPT] INTERPRETATION.
@@ -601,38 +609,53 @@
 		<br>
 		<h1 id="cortex%20prime">Cortex Prime</h1>
 		<!--
+		[ Roll Template ]
 		> **PLAYER:** INTENT. (TRAITS) \[ROLLS] = EFFORT (EFFECT). RESULT.
 		
+		[ Contest ]
 		> Begin contest.
 		
+		[ Before the Roll ]
 		> Gained a PP (REMAIN) for hindering distinction.
 		> Gained a PP (REMAIN) for including d4 complication/stress.
-		> Spent a PP (REMAIN) to keep an extra effort die.
 		> Spent a PP (REMAIN) to create *ASSET* temporary asset.
-		
 		> Spent a PP (REMAIN) to activate *SFX* SFX to double TRAIT die and keep an extra effort/effect die.
+		> Spent a PP (REMAIN) to activate *SFX* SFX to add d6 and step up effect die.
 		
+		[ Before the Resolution ]
+		> Spent a PP (REMAIN) to keep an extra effort die.
+		> Spent a PP (REMAIN) to activate *SFX* SFX to reroll.
+		
+		[ Results ]
 		> Success.
 		> Heroic success.
 		> Failure.
-		> Failure. End contest.
+		> Failure. <u>End contest.</u>
 		> Gain a PP (REMAIN) for giving in. End contest.
 		
+		[ Take Complications ]
 		> Stressed/Taken out.
-		> Gain a PP (REMAIN) for giving in. End contest.
 		> Take *COMPLICATION* complication/stress.
 		> Take *COMPLICATION* complication/stress, stepped up by heroic success.
 		> Take *COMPLICATION* complication/stress, stepped down by effect die.
 		> No stress taken, after stepped down by effect die.
 		> Step up complication/stress to *COMPLICATION*.
+		> Spend a PP (REMAIN) to activate *SFX* SFX to ignore *COMPLICATION* complication/stress.
+		
+		[ Hitches and Opportunities ]
 		> Take *COMPLICATION* complication from hitch/COUNT hitches and gain a PP (REMAIN).
 		> Step up complication/stress to *COMPLICATION* from hitch/COUNT hitches and gain a PP (REMAIN).
+		> Spend a/COUNT PP (REMAIN) and NCs gain a PP (REMAIN) to activate opportunity/COUNT opportunities and step down complication/stress to  *COMPLICATION*.
+		> Spend a/COUNT PP (REMAIN) and NCs gain a PP (REMAIN) to activate opportunity/COUNT opportunities and remove *COMPLICATION* complication/stress. 
 		
+		[ Create or Remove Assets and Complications ]
+		> Create *ASSET* temporary asset.
+		> Create *ASSET* temporary asset and spend a PP (REMAIN) to keep it for the session.
+		> Remove *ASSET* temporary asset.
 		> Step down complication/stress to *COMPLICATION*.
 		> Remove *COMPLICATION* complication/stress.
-		> Spend a PP (REMAIN) to activate opportunity/COUNT opportunities and step down complication/stress to *COMPLICATION*.
-		> Spend a PP (REMAIN) to activate opportunity/COUNT opportunities and remove *COMPLICATION* complication/stress.
 		
+		[ GM Tools ]
 		> Create as minor GMC with *TRAITS* traits.
 		> Create extra with *TRAIT* trait.
 		> Set *GOAL* goal based on CHARACTER relationship.
