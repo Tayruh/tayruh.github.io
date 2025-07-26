@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+
+			h5 a, h5 {
+				color: #ffbb55;
+				font-size: 1em;
+				font-weight: bold;
+				margin-top: 0 !important;
+				margin-block-end: -1em;
+			}
+
+			h6, h6 a {
+				font-size: 11px;
+				text-align: center;
+				margin: 0.25em;
+			}
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+				border-radius: 6px;
+				border: solid 1px #000000;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+			details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+			
+			blockquote small { opacity: 0.6; }
+			
+			.no-color { color: unset !important; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h1 id="chapter%205">Chapter 5</h1>
+		<p><small id="note-1"><a href="#1">*1</a></small> Having appeased Gray like he were a damn bridge troll, he finally granted us passage, allowing us to continue on our way. Finola chose to stay behind with the bogeyman, saying that he would be more fun than watching us do work. I wasn't sure whether that meant he'd be her pranking victim or accomplice, but Seoyun and I left her to it.</p>
+		<p>The two of us arrived at the kitchen at long last, completing our quest for my dear sister, who appeared to be bustling away at assembling a large snack platter.</p>
+		<p>Seoyun and I drop off the supplies.</p>
+		<p><strong>Erin:</strong> "Great. You're back." <em>She grinned at me.</em> "Any trouble getting the stuff?"<br>
+		<strong>Seoyun:</strong> "Only that boogerman asshat getting in our faces, like usual."<br>
+		<strong>Erin:</strong> "Ugh. I hate that guy." <em>Her shoulders drooped and she sighed.</em> "I actually really love this job, except for him."<br>
+		<strong>Seoyun:</strong> "He harasses you because you and Seth are the only humans around, and Seth is nearly impossible to scare."<br>
+		<strong>Me:</strong> "What do you think about maybe having Melody come visit?" <em>It wasn't my smoothest segue, but I wanted to know.</em><br>
+		<small id="note-2"><a href="#2">*2</a></small>  <strong>Erin:</strong> <em>She blinked.</em> "That's a horrible idea."<br>
+		<strong>Seoyun:</strong> <em>She laughed.</em> "Oh, Gray isn't going to like that answer."<br>
+		<strong>Me:</strong> <em>I glared at Seoyun, then turned back to Erin.</em> "Are you sure? Wouldn't it be nice to have a human friend around, though?"</p>
+		<p><small id="note-3"><a href="#3">*3</a></small> Jess overhears this, having entered the kitchen to grab something for Cami.</p>
+		<p><strong>Jess:</strong> "Are you serious?" <em>I turned to look at her, and saw that she was glaring straight at me.</em> "It's not enough for you to replace me as my mistress's thrall, you need to replace me as Erin's friend too?"</p>
+		<p><small id="note-4"><a href="#4">*4</a></small> Jess launches herself at me. <small id="note-5"><a href="#5">*5</a></small> I grab her as she leaps on me, and I use her momentum to flip her behind me. She crashes into the cupboards, shattering plates. <small id="note-6"><a href="#6">*6</a></small> She doesn't waste a second before she rebounds off the ruined cupboard and throws a punch at me.</p>
+		<p><strong>Jess:</strong> "Die, you bastard!"<br>
+		<strong>Erin:</strong> "Jess, stop!"</p>
+		<p><small id="note-7"><a href="#7">*7</a></small> Seoyun grapples Jess from behind before she can land the hit, and I take advantage of their struggle to snag a frying pan off the counter and swing it at Jess's head.</p>
+		<p><strong>Erin:</strong> "Seth!"</p>
+		<p><small id="note-8"><a href="#8">*8</a></small> Jess is unable to free herself in time and I get a clean hit. The pan smashes into her skull hard enough to put a dent in the pan's surface. Jess would have dropped to her knees, were she not still in Seoyun's hold.</p>
+		<p><small id="note-9"><a href="#9">*9</a></small> <strong>Erin:</strong> "Please, just stop! You're being stupid. I can have more than one friend. Being friends with Melody doesn't take away from our friendship."<br>
+		<small id="note-10"><a href="#10">*10</a></small> <strong>Jess:</strong> "But I've seen the way my mistress looks at him." <em>She was practically growling.</em> "Camellia is <em>mine</em>. I won't let anyone have her!"<br>
+		<strong>Me:</strong> "Jess, I don't even plan on dating Cami. I definitely don't have any desire to be her servant for an eternity. That position is all yours."<br>
+		<strong>Seoyun:</strong> "Besides, Seth only has eyes for me. Don't you, sweetie?"</p>
+		<p>I don't waste my breathe responding.</p>
+		<p><small id="note-11"><a href="#11">*11</a></small> <strong>Jess:</strong> <em>The fight had gone out of her, but she muttered to me,</em> "I don't believe you."<br>
+		<strong>Me:</strong> <em>I groaned.</em> "This is why I wanted Erin to have human friends. Your supernatural bond to Cami makes you unstable and dangerous."<br>
+		<strong>Jess:</strong> "I <em>am</em> human!" <em>Then in a quieter voice, she said,</em> "I'm not unstable."</p>
+		<p><small id="note-12"><a href="#12">*12</a></small> I dismissed Jess's comment. I knew that she was taking Cami's blood to prevent aging, so that she could stay by her side throughout the centuries. The enhanced abilities that it gave her were just a side effect, as was her obsessed devotion to the vampire princess, I suspected. It still felt like splitting hairs to me though.</p>
+		<p><strong>Me:</strong> "Just forget it." <em>I sighed.</em> "Erin's right. Bringing Melody here is a bad idea."</p>
+		<p>And she was right. Not just because Melody would be in danger, but because I was choosing to put her in danger so that Erin wouldn't be. That kind of action was not me. I was angry at myself for having buckled under the weight of Gray's threat. There had to be another way to protect my sister.</p>
+		<p>Seoyun was frowning at me. I think she was as concerned as I was at how Gray would take my change of heart. I guess we would find out soon enough. <small id="note-13"><a href="#13">*13</a></small></p>
+		<br>
+		<hr>
+		<h5 id="1">1</h5>
+		<blockquote>
+		  <p><strong>Cami:</strong> Step down stress to <em>Insecure d6</em>.</p>
+		  <p><strong>Expected Scene:</strong> I drop off the goods with Erin. [6] Random Event. [Event Focus: NPC Action][Characters List: Jess][Actions: Fail Interior] Jess becomes jealous.<br>
+		  <strong>Fate Chart:</strong> Is Erin alone? (50/50) [14] Yes.<br>
+		  <strong>Fate Chart:</strong> Is she in the kitchen? (50/50) [8] Exceptional yes. She's in the middle of preparing the food.<br>
+		  <strong>Fate Chart:</strong> Does Finola take off? (50/50) [47] Yes.</p>
+		  <ul>
+		  <li><small><a href="#note-1">back</a></small></li>
+		  </ul>
+		</blockquote>
+		<h5 id="2">2</h5>
+		<blockquote>
+		  <p><strong>Fate Chart:</strong> Is she excited by the prospect? (Very Likely) Otherwise she also thinks that it's a bad idea. [93] No.</p>
+		  <ul>
+		  <li><small><a href="#note-2">back</a></small></li>
+		  </ul>
+		</blockquote>
+		<h5 id="3">3</h5>
+		<blockquote>
+		  <p><strong>Meaning:</strong> What was Jess grabbing for Cami? [Descriptions: Fully Colorful] She came to grab Erin, probably because they need clean towels now.</p>
+		  <ul>
+		  <li><small><a href="#note-3">back</a></small> </li>
+		  </ul>
+		</blockquote>
+		<h5 id="4">4</h5>
+		<blockquote>
+		  <p><strong>Jess:</strong> Gained a PP (2) for activating <em>Some Regrets</em> SFX.</p>
+		  <p><strong>Jess:</strong> Begin contest. She leaps at me. (<small><em>Yandere d8</em>, <em>Seth d8</em>, <em>Agility d8</em>, <em>Supernatural Speed d8</em></small>) [1, 3, 1, 3] = 4 (d4)<br>
+		  <strong>Meaning:</strong> What is the complication? [Actions: Trust Elements] She is focused entirely on me, trusting that no one will interfere.<br>
+		  <strong>Jess:</strong> Take <em>Tunnel Vision d8</em> complication from 2 hitches and gain a PP (3).</p>
+		  <ul>
+		  <li><small><a href="#note-4">back</a></small></li>
+		  </ul>
+		</blockquote>
+		<h5 id="5">5</h5>
+		<blockquote>
+		  <p><strong>Seth:</strong> I try to use her momentum to flip her. (<small><em>Never Enough for Father d8</em>, <em>Jess d4</em>, <em>Agility d8</em>, <em>Fight d6</em></small>) [7, 1, 6, 1] = 7 (d8). Take <em>Trashed Kitchen d8</em> complication from 2 hitches and gain a PP (5).</p>
+		  <ul>
+		  <li><small><a href="#note-5">back</a></small></li>
+		  </ul>
+		</blockquote>
+		<h5 id="6">6</h5>
+		<blockquote>
+		  <p><strong>Jess:</strong> She tries to rebound and punch me. (<small><em>Yandere d8</em>, <em>Seth d8</em>, <em>Agility d8</em>, <em>Supernatural Speed d8</em></small>) [5, 2, 6, 4] = 15 (d8). Spent a PP (2) to keep an extra effort die.</p>
+		  <ul>
+		  <li><small><a href="#note-6">back</a></small></li>
+		  </ul>
+		</blockquote>
+		<h5 id="7">7</h5>
+		<blockquote>
+		  <p><small>Seoyun teams up by adding her Seth relationship die to the pool.</small> <br>
+		  <strong>Seth:</strong> I try to dodge her punch and hit her with a frying pan, and Seoyun tries to help by holding her. (<small><em>Never Enough for Father d8</em>, <em>Jess d4</em>, <em>Agility d8</em>, <em>Fight d6</em>, <em>Frying Pan d6</em>, <em>Seth d10</em>, <em>Tunnel Vision d8</em></small>) [7, 4, 5, 3, 2, 4, 2] = 19 (d10). Spent a PP (4) to create <em>Frying Pan d6</em> temporary asset. Spent 2 PP (2) to keep two extra effort dice.</p>
+		  <ul>
+		  <li><small><a href="#note-7">back</a></small></li>
+		  </ul>
+		</blockquote>
+		<h5 id="8">8</h5>
+		<blockquote>
+		  <p><strong>Jess:</strong> She tries to throw Seoyun into me. (<small><em>Yandere d8</em>, <em>Seth d8</em>, <em>Strength d8</em>, <em>Supernatural Strength d6</em></small>) [5, 6, 1, 6] = 12 (d8). Failure. End contest. Take <em>Injured d10</em> stress, stepped up by heroic success. Take <em>Unfavored d6</em> complication from hitch and gain a PP (3).</p>
+		  <p><strong>Seth:</strong> Remove <em>Frying Pan d6</em> temporary asset.</p>
+		  <ul>
+		  <li><small><a href="#note-8">back</a></small></li>
+		  </ul>
+		</blockquote>
+		<h5 id="9">9</h5>
+		<blockquote>
+		  <p><strong>Erin:</strong> Begin contest. She tries to convince Jess to chill out. (<small><em>Spunky d8</em>, <em>Jess d8</em>, <em>Presence d8</em>, <em>Influence d10</em>, <em>Unfavored d6</em>, <em>Injured d10</em></small>) [6, 8, 8, 8, 5, 4] = 16 (d10)</p>
+		  <ul>
+		  <li><small><a href="#note-9">back</a></small></li>
+		  </ul>
+		</blockquote>
+		<h5 id="10">10</h5>
+		<blockquote>
+		  <p><strong>Jess:</strong> She argues back, stating once again that I'm trying to get between her and Cami. (<small><em>Yandere d8</em>, <em>Cami d10</em>, <em>Spirit 2d10</em></small>) [1, 6, 1, 4] = 10 (d4). Spent a PP (2) to activate <em>I Believe in Us</em> SFX to double Spirit attribute die. Failure. End contest. Take <em>Insecure d12</em> stress, stepped up by heroic success. Step up complication to <em>Unfavored d10</em> from 2 hitches and gain a PP (3).</p>
+		  <ul>
+		  <li><small><a href="#note-10">back</a></small></li>
+		  </ul>
+		</blockquote>
+		<h5 id="11">11</h5>
+		<blockquote>
+		  <p><strong>Fate Chart:</strong> Does Cami overhear any of this? (50/50) [95] Exceptional no. She's still upstairs changing.</p>
+		  <ul>
+		  <li><small><a href="#note-11">back</a></small></li>
+		  </ul>
+		</blockquote>
+		<h5 id="12">12</h5>
+		<blockquote>
+		  <p><strong>Fate Chart:</strong> Does Erin double down on refusing Melody? (Likely) [91] No. She doesn't speak up.</p>
+		  <ul>
+		  <li><small><a href="#note-12">back</a></small></li>
+		  </ul>
+		</blockquote>
+		<h5 id="13">13</h5>
+		<blockquote>
+		  <p><strong>Focus Thread:</strong> Mark 2 progress on <em>Powerless</em> track (8).</p>
+		  <ul>
+		  <li><small><a href="#note-13">back</a></small></li>
+		  </ul>
+		</blockquote>
+		<p><br><br></p>
+	</body>
+</html>
