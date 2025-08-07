@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+
+			h5 a, h5 {
+				color: #ffbb55;
+				font-size: 1em;
+				font-weight: bold;
+				margin-top: 0 !important;
+				margin-block-end: -1em;
+			}
+
+			h6, h6 a {
+				font-size: 11px;
+				text-align: center;
+				margin: 0.25em;
+			}
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+				border-radius: 6px;
+				border: solid 1px #000000;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+			details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+			
+			blockquote small { opacity: 0.6; }
+			
+			.no-color { color: unset !important; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<p>Things to consider about Cortex Prime dice and results:</p>
+		<ol>
+		<li>Whoever sets the total to beat in a test or contest has about a 10% increased chance to win, since the total must be beaten, not tied.</li>
+		<li>Because you can only keep two dice for your total, the first three dice added to the pool have the largest impact. There are diminishing returns for dice added beyond that.</li>
+		<li>The size of the trait dice have a much stronger impact on the size of your effect die than on your effort total. Unless your largest die rolls higher than any of the others, or it rolls a 1, that is going to be your effect die.</li>
+		<li>It is sometimes optimal to choose the largest effect die even when it would result in a smaller total. One such case is when the smaller total would still beat the difficulty on a test for creating an asset (the effect die becomes the asset die) or removing a complication (an effect larger than the complication removes it completely). The other is when you can't beat the total, but you can choose an effect die larger than the opposing one, which would step down the complication that you will take.</li>
+		<li>Unless you have a d10 or d12 effect die, the chances are slim that you'll be able to step down an incoming complication. Without heroic successes, a d10 can only be stepped down by a d12, and a d12 can't be stepped down.</li>
+		<li>A d4 has a 25% chance of rolling a 1, which decreases as the size increases, with a d12 having just over an 8% chance. Large pools of dice mean more hitches, especially with smaller-sized dice.</li>
+		<li>Hindering your distinction die effectively renders it useless, since it will most likely not contribute to your effort total nor raise your effect above the bare minimum, but you will earn a PP for doing so. The d4 also has a much higher chance of rolling a 1, which will earn you a second PP at the cost of receiving a complication or adding the die to the doom pool.</li>
+		<li>PP earned before rolling (such as by hindering) can be used during the resolution of the roll (such as to keep an extra die or activate an SFX), but PP earned from rolling (such as by rolling a hitch) cannot be spent to affect the roll for this action, since they are earned only once the effort total and effect die have been finalized.</li>
+		<li>Stepping up a die is always more effective than doubling, but only marginally in some cases. Doubling may be a better choice when your dice pool is small, to guard against hitches leaving you with less than three usable dice.</li>
+		<li>Keeping an extra die is hands down the best way to beat a total. However, if all remaining dice rolled low, it still may not save you.</li>
+		<li>The next best method of winning a roll is to use a resource, if you have one. This lets you spend a number of dice from your finite resource pool to add the sum of their rolls directly to your total, after you've selected your effort dice. The can be costly, since resources are finite and they're spent even if adding the roll doesn't help.</li>
+		<li>Some SFX let you add another trait from the same set at the cost of stepping them down by 1 for each additional trait added. There is a point at which this is actually worse than sticking with just the one trait die, sometimes when stepped down to d8s, and significantly worse as d6s.</li>
+		<li>When facing mobs, crisis pools, or challenge pools, the difficulty decreases as you remove dice from the pool, creating a bit of a death spiral for them. The GM can offset this by the padding the pools with d6s or spending from the doom pool, or you can just let the pool be defeated quickly at the end.</li>
+		<li>Characters that have scale add a die to their pool and then keep an extra die. This has a significant impact on their chance of success. A pool of 2d8,2d6 versus the same pool is a 55% chance of success. Adding a d6 and keeping 3 bumps it to a 88% chance of success, a d8 is 90%, a d10 is 93%, and a d12 is 94%. Add 2d8 and keep 4 is 98%. The opposition can offset this by spending a PP to keep an extra die also, but this requires finite resources and they will still be less one die.</li>
+		</ol>
+		<br><br>
+	</body>
+</html>
