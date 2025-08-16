@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+
+			h5 a, h5 {
+				color: #ffbb55;
+				font-size: 1em;
+				font-weight: bold;
+				margin-top: 0 !important;
+				margin-block-end: -1em;
+			}
+
+			h6, h6 a {
+				font-size: 11px;
+				text-align: center;
+				margin: 0.25em;
+			}
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+				border-radius: 6px;
+				border: solid 1px #000000;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+			details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+			
+			blockquote small { opacity: 0.6; }
+			
+			.no-color { color: unset !important; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<p><a href="../index.html">Back to Index</a> | <a href="../sheets.html">Character Sheets</a> | <a href="./04.html">Previous Chapter</a></p>
+		<hr>
+		<h1 id="chapter%205">Chapter 5</h1>
+		<blockquote>
+		  <p><small>For those that are paying attention to the mechanics, there will be slight changes to the rules starting with this chapter. The intent of these changes is to alleviate some of the stress that the systems have been giving me. My hope is that this will allow me to play more and have more fun.</small></p><small>
+		  </small><p><small>The changes are as follows:<br>
+		   &nbsp;&nbsp;• Chaos factor in Mythic will now be fixed at 5.<br>
+		   &nbsp;&nbsp;• Focus threads in Mythic will no longer used. <br>
+		   &nbsp;&nbsp;• Characters in Cortex Prime will now keep an additional effort or effect die for each powers trait set that has at least one trait die in the pool. This essentially turns powers into a scale die that varies in size according to which power they're using.</small></p>
+		</blockquote>
+		<blockquote>
+		  <p><strong>Chaos Factor:</strong> Fixed at 5, starting now.<br>
+		  <strong>Focus Thread:</strong> <em>Anniversary Celebration</em> thread is now just a normal thread, not focused.<br>
+		  <strong>Threads List:</strong> Add <em>Human Guests</em> thread.</p>
+		  <p><strong>Cami:</strong> Step down stress to <em>Insecure d4</em>.</p>
+		  <p><strong>Expected Scene:</strong> I drop off the goods with Erin. [4] Altered Event. [Event Focus: NPC Action][Characters List: Jess][Actions: Fail Interior] Jess becomes jealous.<br>
+		  <strong>Fate Chart:</strong> Is Erin alone? (50/50) [14] Yes.<br>
+		  <strong>Fate Chart:</strong> Is she in the kitchen? (50/50) [8] Exceptional yes. She's in the middle of preparing the food.<br>
+		  <strong>Fate Chart:</strong> Does Finola take off? (50/50) [47] Yes.</p>
+		  <p><strong>Seth:</strong> Complete <em>Distract Finola d6</em> goal.</p>
+		</blockquote>
+		<p>Having appeased Gray like he were a freaking bridge troll, he finally granted us passage, allowing us to continue on our way. Finola had chosen to stay behind with the bogeyman, saying that he would be more fun than watching us do work. I wasn't sure whether that meant he'd be her pranking victim or accomplice, but Seoyun and I left her to it.</p>
+		<p>Moments later, the two of us arrived at the door to kitchen at long last. We stepped inside and were greeted with the sight of my dear sister bustling away in an animated fashion. Erin was in the process of assembling a large snack platter on the island in the middle of the kitchen. Her hair was a mess, like she had just run a marathon. You would think by how frazzled she looked that we were hosting a party for a hundred guests, not just the six tenants that lived with us.</p>
+		<blockquote>
+		  <p><strong>Seth:</strong> Complete <em>Snack Run d8</em> goal.</p>
+		</blockquote>
+		<p>I tried not to disrupt her workspace as I placed my bags on the far end of the island. Erin looked up, and seeing me standing there, she smiled wide.</p>
+		<p>"Great. You're back." She blew an annoying strand of hair out of her face. "Any trouble getting the stuff?"</p>
+		<p>Seoyun placed her bag next to mine. "Only that boogerman asshat getting in our faces, like usual."</p>
+		<p>"Ugh. I hate that guy." Erin's shoulders drooped and she sighed. "I actually really love this job, except for him."</p>
+		<p>Seoyun wrinkled her brow. "He harasses you because you and Seth are the only humans around, and Seth is nearly impossible to scare."</p>
+		<p>She actually sounded like she was concerned for Erin. That seemed odd to me. If she really did consider humans to just be food, she wouldn't have had any qualms about Gray feeding off of Erin. I wondered whether the kumiho cared for Erin as more than just a friendly rival and emergency food. And if that were the case, how did she actually feel about Melody?</p>
+		<p>Going with that line of thought, I asked Erin, "What do you think about maybe having Melody come visit?"</p>
+		<blockquote>
+		  <p><strong>Fate Chart:</strong> Is she excited by the prospect? (Very Likely) Otherwise she also thinks that it's a bad idea. [93] No.</p>
+		</blockquote>
+		<p>My sister stared at me and did a slow blink, like she couldn't comprehend what I had just said.</p>
+		<p>"That's .&nbsp;.&nbsp;. a horrible idea."</p>
+		<p>Seoyun burst out laughing. "Oh, Gray isn't going to like that answer."</p>
+		<p>I scowled at Seoyun, then turned back to Erin. "Are you sure? Wouldn't it be nice to have a human friend around, though?"</p>
+		<blockquote>
+		  <p><strong>Meaning:</strong> What was Jess grabbing for Cami? [Descriptions: Fully Colorful] She came to grab Erin, probably because they need clean towels now.</p>
+		</blockquote>
+		<p>There was a loud bang on the counter behind us, making the three of us jump.</p>
+		<p>"Are you serious?" Jess snarled. I turned to see her standing by the kitchen door, glaring straight at me. "It's not enough for you to replace me as my mistress's thrall, you need to replace me as Erin's friend too?"</p>
+		<p>I was stunned. I'm not sure that it occurred to anyone that Jess would assume we were intending to replace her in anything, least of all as Erin's friend. I had honestly expected the three of them to become a trio of friends. I was beginning to suspect that Jess was incapable of sharing anyone.</p>
+		<p>My thoughts were interrupted by Jess leaping at me like a damned cat. Except this cat could rend steel with her claws, and I was far less less durable than that.</p>
+		<blockquote>
+		  <p><strong>Jess:</strong> Gain a PP (2) for activating <em>Some Regrets</em> SFX.</p>
+		  <p><strong>Jess:</strong> Begin contest. She leaps at me. <small>(<em>Yandere d8</em>, <em>Seth d8</em>, <em>Agility d8</em>, <em>Supernatural Speed d8</em>)</small> [1, 3, 1, 3] = 6 (d4)<br>
+		  <strong>Meaning:</strong> What is the complication? [Actions: Trust Elements] She is focused entirely on me, trusting that no one will interfere.<br>
+		  <strong>Jess:</strong> Take <em>Tunnel Vision d8</em> complication from 2 hitches and gain a PP (3).</p>
+		</blockquote>
+		<p>I braced myself, with my feet planted firmly and my hands held in front of me, ready to grab her. This woman could toss cars around, so I wasn't going to try wrestling her, but with some luck, I could use her momentum against her.</p>
+		<blockquote>
+		  <p><strong>Seth:</strong> I try to toss her. <small>(<em>Never Enough for Father d8</em>, <em>Jess d4</em>, <em>Agility d8</em>, <em>Fight d6</em>)</small> [7, 1, 6, 1] = 13 (d8). Take <em>Trashed Kitchen d8</em> complication from 2 hitches and gain a PP (5). Success.</p>
+		</blockquote>
+		<p>As she was about to make contact, I grabbed Jess by her arm, brought it over my shoulder as I turned, matching her forward movement, and flung her across the kitchen with a shoulder throw executed by pure muscle memory.</p>
+		<p>She smashed into the wooden cupboards with the sounds of splintered wood and shattered glass, which didn't bode well for the plates and glassware stored inside. Vanessa would probably have words with me over it, but I'd worry about that later.</p>
+		<p>Jess pulled herself from the ruined woodwork, and clung to the intact portions of the cupboards with her hands and feet laid flat against it. She was facing me with her back to the cupboards, suspended halfway up the wall, like she had adhesive on her palms and the soles of her shoes. Before I could ponder the physics of that, she launched herself at me again with a fist reared back.</p>
+		<p>"Die, you bastard!"</p>
+		<p>Erin screamed, "Jess, stop!"</p>
+		<blockquote>
+		  <p><strong>Jess:</strong> She tries to rebound and punch me. <small>(<em>Yandere d8</em>, <em>Seth d8</em>, <em>Agility d8</em>, <em>Supernatural Speed d8</em>)</small> [5, 2, 6, 4] = 15 (d8). Success.</p>
+		</blockquote>
+		<p>I desperately fumbled around behind me for something to use as an equalizer. Just as my hand fell upon a frying pan resting atop the stove, Seoyun reached out to Jess, attempting intercept the crazy woman as she rocketed toward me with death in her eyes.</p>
+		<blockquote>
+		  <p><small>Seoyun teams up by adding her Seth relationship die to the pool.</small> <br>
+		  <strong>Seth:</strong> I try to dodge her punch and hit her with a frying pan, and Seoyun tries to help by holding her. <small>(<em>Never Enough for Father d8</em>, <em>Jess d4</em>, <em>Agility d8</em>, <em>Fight d6</em>, <em>Frying Pan d6</em>, <em>Seth d10</em>, <em>Tunnel Vision d8</em>)</small> [7, 4, 5, 3, 2, 4, 2] = 20 (d8). Spent a PP (4) to create <em>Frying Pan d6</em> temporary asset. Spent 2 PP (2) to keep two extra effort dice. Success.</p>
+		</blockquote>
+		<p>Seoyun wrapped her arms around Jess's shoulders, causing the thrall to nearly fall backward against her as Jess's legs tried to keep moving forward. Seoyun couldn't possibly hold Jess using just her strength, but the lunatic was made vulnerable for the moment and I was going to take full advantage of that.</p>
+		<p>With one long stride forward, I swung the frying pan at Jess's head like a baseball bat.</p>
+		<p>"Seth!" Erin shouted in horror and disbelief.</p>
+		<blockquote>
+		  <p><strong>Jess:</strong> She tries to throw Seoyun into me. <small>(<em>Yandere d8</em>, <em>Seth d8</em>, <em>Strength d8</em>, <em>Supernatural Strength d6</em>)</small> [5, 6, 1, 6] = 17 (d4). Failure. End contest. Take <em>Injured d10</em> stress, stepped up by heroic success. Take <em>Unfavored d6</em> complication from hitch and gain a PP (3).</p>
+		  <p><strong>Seth:</strong> Remove <em>Frying Pan d6</em> temporary asset.</p>
+		</blockquote>
+		<p>Jess had just enough time to look up at me with a look of absolute hate in her eyes, before the pan connected with her skull. The impact rocked her head back and sent vibrations through my hand and up my arm. Jess fell limp in Seoyun's grasp, forcing the kumiho to tighten her hold to prevent the yandere from collapsing to the floor.</p>
+		<p>I wasn't concerned, though. From the level of physical harm that I'd seen Jess shrug off in the past, this wouldn't do anything more than knock some sense into her. And I wasn't even counting on that.</p>
+		<p>As if to prove me right, Jess got her legs back under her and stood up straight, and in doing so, she shrugged off Seoyun like she were nothing. Seoyun hadn't fought to hold her, though, and wisely took a few steps back.</p>
+		<p>Before Jess could resume her attack on me, Erin stepped between the two of us.</p>
+		<p>"Please, just stop!" Erin pleaded with Jess, sounding both concerned and exasperated. "You're being stupid. I can have more than one friend. Being friends with Melody doesn't take away from our friendship."</p>
+		<blockquote>
+		  <p><small>Adding Jess's injured stress die to the pool because it's likely to make her reconsider continuing to fight.</small> <br>
+		  <strong>Erin:</strong> Begin contest. She tries to convince Jess to chill out. <small>(<em>Spunky d8</em>, <em>Jess d8</em>, <em>Presence d8</em>, <em>Influence d10</em>, <em>Unfavored d6</em>, <em>Injured d10</em>)</small> [6, 8, 8, 8, 5, 4] = 16 (d10)</p>
+		</blockquote>
+		<p>"But what about my mistress? I've seen the way she looks at him." Jess was tense, as if she were fighting not to pounce, and her voice came out in a growl. "Camellia is <em>mine</em>. I won't let anyone have her!"</p>
+		<blockquote>
+		  <p><strong>Jess:</strong> She argues that I'm trying to get between her and Cami. <small>(<em>Yandere d8</em>, <em>Cami d10</em>, <em>Spirit 2d10</em>)</small> [1, 6, 1, 4] = 10 (d4). Spent a PP (2) to activate <em>I Believe in Us</em> SFX to double Spirit attribute die. Failure. End contest. Take <em>Insecure d12</em> stress, stepped up by heroic success. Step up complication to <em>Unfavored d10</em> from 2 hitches and gain a PP (3).</p>
+		</blockquote>
+		<p>I groaned loudly in frustration at how stupid this was.</p>
+		<p>"I'm not going to date Cami. I'm sure as hell not going to be her servant for an eternity. That position is all yours."</p>
+		<p>I felt arms slither around my waist from behind, and Seoyun's voice came from just beside my ear. "Besides, Seth only has eyes for me. Don't you, sweetie?"</p>
+		<p>Seoyun had slinked around behind me and was now pressing her front firmly against my back, reminiscent of what she had done earlier with Melody. I was beginning to think the act was less about teasing and more about staking her claim when she felt threatened.</p>
+		<p>Erin gave me a look that read something like "Are kidding me right now?" as if any of this was my fault. I gave her an unhappy look in return, but didn't make a move to extricate myself from the affectionate kumiho. </p>
+		<blockquote>
+		  <p><strong>Fate Chart:</strong> Does Cami overhear any of this? (50/50) [95] Exceptional no. She's still upstairs changing.</p>
+		</blockquote>
+		<br>
+		<hr>
+		<p><em>[ That's it for now. This chapter is still ongoing. Thanks for reading the story so far! ]</em></p>
+		<p><br><br></p>
+	</body>
+</html>
