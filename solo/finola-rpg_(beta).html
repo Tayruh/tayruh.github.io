@@ -6,7 +6,7 @@
 (function(solo) {
 	"use strict";
 
-	var version = "v20241209b";
+	var version = "v20250818b";
 
 	var current_page, current_section, current_menu, color_theme, localStorage;
 	var toc = [];
@@ -54,6 +54,12 @@
 		mythic: {
 			fate: {
 				odds: ["Certain", "Nearly Certain", "Very Likely", "Likely", "50/50", "Unlikely", "Very Unlikely", "Nearly Impossible", "Impossible"],
+				chaos_flavor: {
+					regular: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+					"mid-chaos": [3, 4, 4, 5, 5, 5, 6, 6, 7],
+					"low-chaos": [4, 4, 5, 5, 5, 5, 5, 6, 6],
+					"no-chaos": [5, 5, 5, 5, 5, 5, 5, 5, 5]
+				},
 				chart: [
 					[[10, 50, 91], [7, 35, 88], [5, 25, 86], [3, 15, 84], [2, 10, 83], [1, 5, 82], [-100, 1, 81], [-100, 1, 81], [-100, 1, 81]],
 					[[13, 65, 94], [10, 50, 91], [7, 35, 88], [5, 25, 86], [3, 15, 84], [2, 10, 83], [1, 5, 82], [-100, 1, 81], [-100, 1, 81]],
@@ -1654,7 +1660,7 @@
 	var playing_cards, drawn_card;
 	
 	// mythic
-	var chaos, focus, progress;
+	var chaos, chaos_flavor, focus, progress;
 
 	// pbta
 	var pbta_menu = "";
@@ -2353,7 +2359,8 @@
 		
 		if (current_menu === "mythic 2e") {
 			output = getDataHeader(
-				"Chaos Factor&nbsp;&nbsp;" + getOptions(null, "chaos", [1,2,3,4,5,6,7,8,9], chaos),
+				"Chaos Factor&nbsp;&nbsp;" + getOptions(null, "chaos", [1,2,3,4,5,6,7,8,9], chaos) +
+				"&nbsp;&nbsp;&nbsp;" + getOptions(null, "chaos-flavor", Object.keys(muse.mythic.fate.chaos_flavor), chaos_flavor),
 				"Event Focus&nbsp;&nbsp;" + getOptions(null, "focus", Object.keys(muse.mythic.fate.focus), focus)
 			) + output;
 	 	}
@@ -2372,6 +2379,12 @@
 				chaos = parseInt(this.value); 
 				saveSettings(soloData.chaos = chaos);
 			});
+			
+			$("#chaos-flavor").addEventListener("change", function() { 
+				chaos_flavor = this.value;
+				saveSettings(soloData.chaos_flavor = chaos_flavor);
+			});
+			
 			$("#focus").addEventListener("change", function() {
 				focus = this.value;
 				saveSettings(soloData.focus = focus);
@@ -2454,6 +2467,7 @@
 			parseQuickRolls();
 			// mythic
 			chaos = (soloData.chaos || 5);
+			chaos_flavor = (soloData.chaos_flavor || "regular");
 			focus = (soloData.focus || "random event");
 			progress = (soloData.progress || 0);
 			// pbta
@@ -2830,6 +2844,9 @@
 		var vamp_total = {};
 		var is_genesys, is_vampire, pad_length;
 		var has_num = false;
+		var collected = [];
+		var roll_list;
+		
 		for (a = 0; a < results.length; ++a) {
 			is_genesys = /G[ABCDFPS]/.test(results[a].size);
 			is_vampire = /VH?/.test(results[a].size);
@@ -2878,7 +2895,9 @@
 
 			pad_length = longest + (results[a].html.length - results[a].name.length);
 
-			output.push([results[a].html, results[a].rolls.join(",") + mod, roll]);
+			roll_list = results[a].rolls.join(",");
+			output.push([results[a].html, roll_list + mod, roll]);
+			collected.push(roll_list);
 		}
 
 		var totals = [];
@@ -2945,10 +2964,16 @@
 		else if (!types.length) types.unshift(["Total", "None"]);
 
 		$("#dice-rolls").innerHTML = "";
+		
+		if (collected.length > 1) {
+			collected = 
+				"<div id='dice-pool' class='data-table'><table><tr><td><pre>" + 
+				collected.join(",") + "</pre></td></tr></table></div>";
+		}
+		else collected = "";b
 
 		fadeIn("#dice-rolls", 0,
-			getDataTable(output) +
-			getDataTable(types) +
+			getDataTable(output) + collected + getDataTable(types) +
 			((showing_quick_rolls) ? "<blockquote id='quick-rolls'><ul><li>" + quick_rolls.join("</li><li>") + "</li></ul></blockquote>" : "")
 		);
 	}
@@ -3091,7 +3116,8 @@
 		}
 		
 		var roll = random(1, 100);
-		var chance = muse.mythic.fate.chart[chaos - 1][odds];
+		var column = muse.mythic.fate.chaos_flavor[chaos_flavor][chaos - 1];
+		var chance = muse.mythic.fate.chart[column - 1][odds];
 
 		var success = (roll > chance[1]) ? "no" : "yes";
 		var exceptional = (roll <= chance[0] || roll >= chance[2]) ? "exceptional " : "";
@@ -4129,6 +4155,12 @@
 		width: 100%;
 		max-width: 100vw;
 		text-align: center;
+	}
+	
+	#dice-pool { margin-top: -1.5em !important; }
+	#dice-pool td {
+		border: 1px dashed #444444;
+		padding: 0.25em 0.5em 0.25em 0.5em !important;
 	}
 	
 	#dice-buttons a:not(:first-of-type), 
