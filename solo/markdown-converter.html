@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- last updated: 06/07/2025 -->
+<!-- last updated: 08/23/2025 -->
 
 <html lang="en">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
@@ -329,7 +329,8 @@
 					// mark tag
 					{
 						type: 'lang',
-						regex: /==(\S((?!==).)+(?<!\s))==/g,
+						// regex: /==(\S((?!==).)+(?<!\s))==/g,
+						regex: /==((?:(?!==).)+)==/g, 
 						replace: '<mark>$1</mark>'
 					}, 
 					
@@ -368,8 +369,8 @@
 					disableForced4SpacesIndentedSublists: true,
 					requireSpaceBeforeHeadingText: true,
 					omitExtraWLInCodeBlocks: true,
-					literalMidWordUnderscores: true,
-					literalMidWordAsterisks: true,
+					// literalMidWordUnderscores: true,
+					// literalMidWordAsterisks: true,
 					splitAdjacentBlockquotes: true,
 					openLinksInNewWindow: false,
 					noHeaderId: true, 
