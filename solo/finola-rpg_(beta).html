@@ -6,7 +6,7 @@
 (function(solo) {
 	"use strict";
 
-	var version = "v20250818b";
+	var version = "v20260426b";
 
 	var current_page, current_section, current_menu, color_theme, localStorage;
 	var toc = [];
@@ -33,6 +33,7 @@
 			>roll thrice                              roll three items on the table
 			>category:oracle                          roll on another oracle
 			>categoryA:oracleA + categoryB:oracleB    combine two or more oracles
+			>>                                        same as the above > markup (eg. >>roll twice) but separates by line breaks
 			{list}                                    create a link to a different oracle list
 			{list|name}                               create a link to a different oracle list but with a different name
 			{>display:oracle|name}                    create a link that rolls directly on another oracle
@@ -1350,6 +1351,7 @@
 				"MC": ["Intrusions", "Soft Moves", "Hard Moves"]
 			},
 			moves: {
+				"Standard Roll": "This is a standard roll for checks not covered by the moves.((pbta))",
 				"Change the Game": "When you use your abilities [to give yourself or your allies an advantage], roll+Power.((pbta))On a hit, you get Juice=Power. Spend your Juice to gain the following effects, one-to-one:<<Create a story tag|Burn a power tag or a story tag|Give or reduce a status (one tier per point of Juice)>>On a 10+, you get a minimum of 2 Juice, and you can also use your Juice to choose:<<Scale up the effect (greater area or more targets)|Prolong the effect (make it ongoing)|Hide the effect|Any other improvement you and the MC agree on>>***[Dynamite!]||If your move is [[Dynamite!]] , on a 12+, you get a minimum of 3 Juice and can choose to activate one of the following special improvements by spending 1 Juice: <<[Large-scale effect:] scale up a single effect to a large scale or make it affect a large group.|[Permanent effect:] make a single effect permanent or be able to use one of your effects to remove or reduce a permanent effect (except tier-6 statuses).|[Mist-hidden effect:] make a single effect Mist-hidden.>>",
 				"Convince": "When you use your abilities [to talk, threaten, or seduce someone into doing something], roll+Power.((pbta))On a hit, choose a relevant status with tier=Power. Your target can choose either to take the status or:<<on a 7-9, to give in a little, but protect their own agenda.|on a 10+, to change their agenda to include yours, at least for the time being.>>***[Dynamite!]||If your move is [[Dynamite!]], on a 12+, the tier of the “stick” status you give the target equals Power+2. To avoid it, target must change their agenda as in 10+, but in addition the target must take a tier-2 temporary status of your choice representing your influence, such as [[indebted-2]], [[convinced-2]], [[friendly-2]], etc. Its tag cannot be the same as that of the “stick” status.||If the target is a player character, you can trade tiers of the status (either the “stick” or the influence) for Hurt points against the target, one-for-one.",
 				"Face Danger": "When you use your abilities [to avoid an incoming hit, endure harm, resist a malign influence, or hold it together], the MC (or player) will name a status with its tag and tier. Roll+Power.((pbta))On a 10+, you fend off the effect and take no status at all. On a 7-9, you take the status, but with -1 tier. On a miss, you take the full status.***[Dynamite!]||If your move is [[Dynamite!]], on a 12+, you avoid the status completely and choose one:<<You reflect the status at your attacker or otherwise use it against them. You give your attacker an appropriate status of your choice with tier=tier of the original status.|You bolster your defenses. You take an appropriate ongoing tier-1 status of your choice describing your improved defenses.>>",
@@ -1415,6 +1417,61 @@
 				},
 				backstory: {
 					"unexpected developments": ["[[“The truth runs deeper than you know”:]] The truth you originally chose only appears to be the truth; in fact, there is someone else behind the entire case, or it’s all just a consequence of some deeper or darker event.", "[[“There’s always a middleman”:]] The actions of the Rift didn’t affect as directly as you originally planned. Instead, there were additional steps in the chain reaction that eventually alerted the crew. There’s some need that must be met: a matter of timing, skills, resources, etc., which requires someone to use someone else or go through somewhere.", "[[“Remember that other incident?”:]] The main Rift involved is not the only side to the story – there are multiple parties involved and their actions had different consequences that floated up separately but are in fact tied.||-OR-||The crimes, wrongs, or problems didn’t have only one effect, they had multiple consequences that only appeared unrelated.", "[[The Bodyguard:]] The main Rift is indeed culpable, but they’re working to protect the main culprit by either masking as the main villain, covering up for them, taking the blame, etc.", "[[The Blindside:]] A third party with motives that conflict with both the the main villain and the crew shows up", "[[The Redeemable:]] The main villain starts off as bad, but is actually doing it for a good cause, because of extreme circumstances, or has other redeeming reasons or qualities"]
+				}
+			}
+		},
+		legend_in_the_mist: {
+			moves: {
+				"Standard Roll": "This is a standard roll for checks not covered by the moves.((pbta))",
+				"Action Roll": "Invoke relevant tags and statuses of the Hero, of the target, in the environment, etc.<<+1 Power for each helpful tag| -1 Power for each hindering tag| Add the tier of the highest helpful status| Subtract the tier of the highest hindering status| +/-3 Power if Favored/Imperiled due to Might (+/-6 Power if Extremely)| Mark Improve for every invoked weakness tag>>[Trade Power:] (Detailed only) Before rolling, you may choose to trade chance for effect or vice versa: <<[[Throw caution to the wind:]] If your final Power before the roll is 2 or less, you may reduce your Power by 1, roll, and if you succeed, you may spend your original Power plus 1.| [[Hedge your risks:]] If your final Power before the roll is 2 or higher, you may add 1 to your Power, and if you succeed, spend your original Power minus 1.>>[Roll two six-sided dice (2d6) and add Power.]((pbta))<<[On 10 or more:] Success!&nbsp;✨|[On 7 to 9:] Success & Consequences ✨💀|[On 6 or less:] Consequences&nbsp;💀>>||***[Push Your Luck:] After rolling, if you rolled 10 or more, you may accept Consequences to achieve a Great Success in a Quick action (getting even more out of the Success, to the Narrator's discretion) or to gain +1 Power to spend in a Detailed action.||***Spend your Power on your action's [Effects]&nbsp;✨ (spend 1 when Power is zero or less): <<Add, scratch, or recover a tag (2 Power)| Give or reduce a status (1 Power per tier)| Discover a valuable detail (1 Power)| Extra feat in addition to other Effects (1 Power)| (Add a single-use tag with last 1 Power)>>",
+				"Reaction Roll": "Invoke relevant tags and statuses of the Hero, of the target, in the environment, etc. <<+1 Power for each helpful tag| -1 Power for each hindering tag| Add the tier of the highest helpful status| Subtract the tier of the highest hindering status| Mark Improve for every invoked weakness tag>>Because this is not your action, but merely a reaction:<<Your Hero may only invoke reactive or passive tags and statuses| Tags and statuses invoked in an action can't be invoked in the reaction that immediately follows (in the same turn)| The incoming tags or statuses don't apply| Might does not give a bonus or penalty (increase or decrease the incoming Consequences instead)| You get a minimum of 1 Power to spend>>[Roll two six-sided dice (2d6) and add Power.]((pbta))<<[On 10 or more:] Spend your Power plus 1, on any Effect ✨|[On 7 to 9:] Spend your Power, only to lessen the Consequences&nbsp;💀|[On 6 or less:] Suffer the Consequences as-is&nbsp;💀>>||***Lessening the negative Effects of [Consequences]&nbsp;💀 costs the same as creating these Effects: <<Prevent a story tag from being added – 2 Power| Prevent the loss of a power or story tag – 2 Power| Avoid incoming status – 1 Power per tier| Avoid losing existing status – 1 Power per tier>>||***On a roll of 10 or more, you may spend your Power on your reaction's [Effects]&nbsp;✨: <<Add, scratch, or recover a tag (2 Power)| Give or reduce a status (1 Power per tier)| Discover a valuable detail (1 Power)| Extra feat in addition to other Effects (1 Power)| (Add a single-use tag with last 1 Power)>>",
+				"Making a Sacrifice": "Making a sacrifice is a type of Quick outcome where you accept certain severe Consequences to achieve something extraordinary. However, unlike a normal Quick outcome, you do not add any Power to your roll.||[Describe your action] and [choose your level of Sacrifice]: Painful, Scarring, Grave.||[The Narrator will say what you can achieve] with a Success at this level of sacrifice. You may still amend your Sacrifice or walk away.||At the Narrator's option, they may allow the Hero to add the tier of their Secret Grace status to their roll. After the roll, reset the status.((pbta))<<[If you rolled 10 or more, it is a Miracle.] You Succeed and your Sacrifice is lessened by one level.|[If you rolled 7-9, it is Fate.] You Succeed but pay in full the Consequences of your Sacrifice.|[If you rolled 6 or less, it is In Vain.] You pay in full the Consequence of your Sacrifice, but nothing comes out of it, or things go terribly wrong. The Narrator may add further Consequences (especially <u>Ill Tidings</u>).>>||***||{{sacrifice}}",
+				"Question Oracle": "Whenever you run into a question in your story to which you do not know the answer, you can roll two six-sided dice (as you would for a Hero action) and interpret the result as below.||Roll two six-sided dice and add Power. Power in this case treats any tags and statuses that could sway the answer to Yes as positive and any tags and statuses that could sway the answer to No as negative.||((pbta))If the sum of both dice is:<<[Double ones] are always an [[Extreme No]], regardless of Power.|[6 or less:] The answer is [[No]].|[7-9:] [[It’s complicated]] – a Yes with a caveat, or a No with an exception.|[10 or more:] The answer is [[Yes]].|[Double sixes] are always an [[Extreme Yes]], regardless of Power.>>"
+			},
+			move_tables: {
+				sacrifice: {
+					header: ["Sacrifice", "Consequences", "Examples of Success"],
+					rows: [
+						["Painful", "Scratch all tags in a relevant theme (only one tag if lessened)", "Achieve something unlikely or that would normally take much longer or require much more resources.<br><br><small>Match the Might of a Challenge one level higher or lower than you have in this situation for the duration of a scene.</small>"],
+						["Scarring", "Replace a relevant theme", "Achieve something extraordinary.<br><br><small>Match the Might of a Challenge two levels higher or lower than you have in this situation for the duration of a scene.</small>"],
+						["Grave", "Take a tier-6 status without lessening", "Achieve something impossible.<br><br><small>Save someone from certain death or bring them back from the dead (if the moment allows for it).</small>"]
+					]
+				}
+			},
+			oracle_lists: {
+				interpretive: [
+					"Symbol:Symbol:interpretive:symbols",
+					"Attitude:Attitude:interpretive:attitudes",
+					"Magical Being:Magical Being:interpretive:magical beings",
+					"Terrain Feature:Terrain Feature:interpretive:terrain features",
+					"Everyday Item:Everyday Item:interpretive:everyday items"
+				],
+				conflict: [
+					"Central Challenge:Challenge:conflict:central challenges",
+					"Challenge Role, Threats & Consequences:Role or Threat:conflict:challenge roles",
+					"Target of the Challenge:Target:conflict:challenge targets", "<spacer>",
+					"Location:Location:conflict:locations",
+					"Unfolding of the Challenge:Unfolding:conflict:unfoldings",
+					"Secondary Challenge (Role):Challenge:conflict:secondary challenges",
+					"Story Tags:Tags:conflict:story tags"
+				]
+			},
+			oracles: {
+				interpretive: {
+					symbols: ["[[The Peasant:]] Hard work. Yearning for more. Cycles and repetition. An innocent bystander.", "[[The Merchant:]] Polite conflict. Bargains. Contracts and promises. A worldly person.", "[[The Elder:]] Contentment. Wisdom of age. Introspection. Someone wise with experience.", "[[The Marshal:]] Pride. Skill at arms. Organized and orderly. A soldier or law enforcer.", "[[The Witch:]] Ugliness. Intuition. Vengeance. An outcast.", "[[The Thaumaturge:]] Preparation. Studied knowledge. Tradition. A magic user.", "[[The Lost Sheep:]] Getting lost. Wandering. Seeking a direction. Someone in distress.", "[[The Foolish Goose:]] Uncertainty. Wasting time. Blissful ignorance. A fool or drunkard.", "[[The Black Hound:]] Ill portents. Bad luck. Untrustworthy people. A rogue, thief, or brigand.", "[[The Spying Falcon:]] Seeking information. Going beyond limits. Flying. A hunter.", "[[The Powerful Steed:]] Journeying fast. Reliability and moderation. Overcoming hardship. A mount or transport.", "[[The Hungry Wolf:]] Seeking opportunity. Desperation. Hunger. A lone monster or beast.", "[[The Hammer & Chisel:]] Making a mark. Boldness. Duality and dilemmas. A set of useful tools.", "[[The Scythe:]] Reaping what you have sown. Sudden death or loss. Harvest season. A dangerous situation.", "[[The Pitchfork:]] Taking up arms. Threats and fears. Physical strength. Someone threatening.", "[[The Lantern:]] Hope. Learning. Being seen or discovered. A source of knowledge.", "[[The Loom:]] Weaving together. Combining forces. Complex interplay. Two threats combined against you.", "[[The Forge:]] Making something new. Breaking down the old. Skill at a craft. A workshop or place of business.", "[[The Shrine:]] Ceremony. Mourning. Beauty. A priest or shaman.", "[[The Crossroads:]] Choices. Offers of help. Changes in life. A chance meeting.", "[[The Village Fair:]] Harmony. Diversions and entertainment. Optimism. An ally or old friend.", "[[The Well:]] Temptation. Taint or despoilment. Dangerous locations. A mysterious stranger.", "[[The Winding River:]] Complications. Witnessing beauty and splendor. A set or fated path. An unavoidable journey.", "[[The Mountain:]] Increasing difficulty. Lofty goals or ideals. Treacherous landscape. An obstacle.", "[[The Great Spider:]] Detailed plans. Webs of power. The center of something sprawling. A trap.", "[[The Faerie Prince:]] Petty tyrants. Alluring people. Silly or decadent games. A noble.", "[[The Dead Knight:]] Returning. Old promises or oaths. Undying love. A ghost of the past.", "[[The Sorceress:]] Power for its own sake. Great feats. Loss of control. Someone power hungry.", "[[The Kraken:]] Profound, unseen, or spiritual forces. Surprise. Mystery. An ambush.", "[[The Dragon:]] Greed. Luck. Regal bearing. Someone wealthy.", "[[The Herald:]] Social engagements. Formality. Oracular portents. A new person.", "[[The Tyrant’s Road:]] Many guards or soldiers. Destruction. The offers of power. A dangerous path.", "[[The Drawbridge:]] Putting up defenses. Withdrawing. Hiding. Something blocking your path.", "[[The High Lord:]] Judgement. Hard choices. Authority. A leader or ruler.", "[[The Bloody Crown:]] Violence. War. Politics. Two forces clash with each other.", "[[The Empty Throne:]] Abdication of duties. Failure of leadership. Crisis. An opportunity."],
+					attitudes: ["Joyful", "Content", "Affectionate", "Curious", "Smug", "Proud", "Playful", "Compassionate", "Determined", "Patient", "Appreciative", "Angry", "Jealous", "Afraid", "Despairing", "Distrustful", "Insecure", "Irritable", "Lonely", "Overwhelmed", "Vindictive", "Weary", "Conflicted", "Wistful", "Apathetic", "Skeptical", "Restless", "Mocking", "Cooperative", "Defensive", "Manipulative", "Rebellious", "Obedient", "Stern", "Judgemental", "Bored"],
+					"magical beings": ["Shapeshifting trickster", "Malicious or helpful household spirit", "Birds with strange agendas", "Sneaky underground faerie", "Lake or river spirit", "Sapient goat or sheep", "Guardian of a bridge or door", "Waterfall serpent", "Gaggle of pixies", "Fae duelist", "Tree spirit or talking tree", "Protective hearth spirit", "Drunken wine guardian", "Food-stealing magic cat", "Snake-bodied wise sage", "Wandering golem", "Dream-invading sprite", "Horse-headed forest spirit", "Cursed angler", "Light-haunting ghost", "Human-faced talking worm", "Intelligent wildfire", "Mud that remembers", "Someone trapped in a mirror", "Favor-trading imp", "Doppelganger", "Screaming cave", "Talkative giant insect", "Blue-skinned storyteller", "Animated skeleton", "Singing gust of wind", "Face in a wall or tree", "Ghost of a child", "Floating book", "Demon bound into a gemstone", "Pair of glowing eyes in the darkness"],
+					"terrain features": ["Ridgeline", "Valley", "Plateau", "Cliff", "Slope or hill", "Sinkhole", "Mountain pass", "River or brook", "Waterfall", "Pond or lake", "Spring or geyser", "Marsh or flooded area", "Cove and/or sea cave", "Dunes or beach", "Ruins", "Tree stumps", "Forest or grove", "Thicket", "Clearing", "Cave or tunnel", "Prairie", "Boulder field", "Desert or oasis", "Dry riverbed", "Snowfield", "Keep, watchtower, or castle", "Henge or cairn", "Quarry", "Mine", "Crossroads", "Village", "Bridge", "Farm, farmhouse, or barn", "Inn or tavern", "Trench or canal", "Temple or burial grounds"],
+					"everyday items": ["Comb or hairpin", "Locket", "Signet ring", "Belt or buckle", "Gloves or scarf", "Hat", "Boots", "Coin pouch", "Socks", "Waterskin", "Tinderbox", "Toothpick", "Sewing needle and thread", "Wooden bowl", "Clay mug", "Pot or kettle", "Oil flask", "Rolling pin", "Eating knife", "Cup and saucer", "Hammer", "Shovel", "Tongs", "Rope", "Barrel", "Anvil", "Map or scroll", "Candlestick", "Bedroll", "Compass", "Chest", "Dice or playing cards", "Musical instrument", "Puzzle box", "Child’s toy", "Prayer beads"]
+				},
+				conflict: {
+					"central challenges": ["A monster...", "A natural disaster or hazard...", "An animal or beast...", "A person... ", "The terrain...<br><small>(use a Landscape Journey, location Challenge, or Vignette)</small>", "A natural condition...<br><small>(disease, hunger, weather)</small>", "An event, occurrence, or coincidence...<br><small>(use an Occasion Journey, event Challenge, or Vignette)</small>", "A community or organization...", "An unseen force...<br><small>(enchantment, curse, spirit)</small>", "An underling of the main villain or major vexation...", "The main villain or major vexation...", ">>roll twice"],
+					"challenge roles": ["...physically endangers...<br><small>([Aggressor] or [Pursuer]&nbsp;💀 cause bodily harm or death - <u>Ill Tidings</u>, or negative physical statuses)</small>", "...socially or emotionally endangers...<br><small>([Aggressor] or [Influence]&nbsp;💀 ruin reputation or harm psyche - negative social or emotional statuses)</small>", "...presents a dilemma...<br><small>([Influence]&nbsp;💀 threatens two things, only one can be prevented; roll twice on Target of the Challenge)</small>", "...drains, despoils, or corrupts...<br><small>([Sapper]&nbsp;💀 deplete resources or tags, [[despoiled]], [[corrupted]])</small>", "...stands as a major obstacle for...<br><small>([Obstacle] or ]Mystery]&nbsp;💀 <u>Blocked</u>)</small>", "...disrupts the peace or stability of...<br><small>([Influence] or [Sapper]&nbsp;💀 <u>Complication</u> or mental and emotional statuses)</small>", "...is manipulating or influencing...<br><small>([Influence]&nbsp;💀 [[swayed]])</small>", "...is spying on, searching for, inquiring, or researching...<br><small>([Watcher]&nbsp;💀 <u>Exposure</u>, [[alert]], gains tags)</small>", "...is tricking, fooling, infiltrating, or entrancing...<br><small>([Influence] or [Sapper]&nbsp;💀 loss of a resource, [[beguiled]])</small>", "...is progressing towards a crescendo to...<br><small>([Countdown]&nbsp;💀 use a progress Limit; roll again to determine its endgame, treating the result as especially dangerous or powerful)</small>", "...is hunting down / has stolen...<br><small>([Pursuer] or [Quarry]&nbsp;💀 seeks to capture, imprison, orpossess -or- escape)</small>", ">>roll twice"],
+					"challenge targets": ["...one or all of the Heroes.", "...a Quest-related person or group.", "...a Quest-related object or magic.", "...a Quest-related ideal or goal.", "...a Quest-related location or region.", "...an ally or innocent bystander.", "...a community or organization.", "...an important resource.", "...a nearby location or your camp.", "...the Hero's current goal.", "...something taken for granted, or the status quo.", ">roll twice"],
+					"locations": ["At home, in a village, or in a small building<br><small>(Homestead & Village)</small>", "A liminal or bucolic area, beyond the towns<br><small>(Outskirts & Fields)</small>", "On the roadway, highway, or major trails<br><small>(On the Trail)</small>", "Off the beaten path or somewhere truly wild<br><small>(In the Wilds)</small>", "At a port, out at sea, or along river<br><small>(Open Water)</small>", "Somewhere forgotten, dark, or dismal<br><small>(Forsaken Places)</small>", "In a bustling area, with many people<br><small>(Town & City)</small>", "In a castle, court, or other place of political power<br><small>(The Castle)</small>", "Near a violent conflict<br><small>(On the Battlefield)</small>", "Out in the wastelands, desert, or another desolate area<br><small>(Blighted Badlands)</small>", "Down in a ruins, dungeon, or magical laboratory<br><small>(Vaults of Darkness)</small>", ">>roll twice"],
+					"unfoldings": ["Overt action or aggression", "Pleas or cries for help", "Mysterious, requires investigation", "An offer, contract, inquiry, or temptation", "A Hero is affected first", "An ambush or surprise", "Slowly and gradually", "One Hero learns of it while alone or isolated", "Sudden reveal upon entering or arriving", "Only revealed near the end", "Hidden or removed, requires finding", ">roll twice"],
+					"secondary challenges": ["A bystander, or a group of them<br><small>([Charge])</small> ", "The Heroes' vulnerable allies<br><small>([Charge])</small>", "An unrelated monster<br><small>([Aggressor])</small>", "An unrelated animal or beast<br><small>([Aggressor], [Charge], [Quarry])</small>", "Terrain<br><small>(location Challenge or Landscape Journey)</small>", "An event taking place<br><small>(Occasion Journey)</small>", "The weather, a hazard, or a trap<br><small>(in a Journey, use a Vignette)</small>", "The Heroes are separated or isolated<br><small>(<u>Complication</u>, <u>Blocked</u>, or an [Obstacle] Challenge)</small>", "A pervasive negative emotion<br><small>(jealousy, anger, hopelessness, etc.)</small><br><small>([Sapper])</small>", "A group of the Central Challenge<br><small>(Increase Might)</small>", "Allies, minions, or offspring of the Central Challenge<br><small>(same role as Central Challenge, or [Support])</small>", ">>roll twice"],
+					"story tags": ["No tag-worthy features", "Notable landscape features<br><small>([[sharp rocks]], [[dense woods]], [[spooky marshes]], [[tall barley stalks]])</small>", "Dangerous or useful objects<br><small>([[roaring bonfire]], [[alchemy supplies]], [[stashed weapons, crates]])</small>", "People<br><small>([[town elder]], [[gathering crowd]], [[children at play]])</small>", "Condition<br><small>([[cold winds]], [[bright sunlight]], [[obscuring fog]], [[eldritch glow]])</small>", "Mood<br><small>([[partying]], [[somber mourning]], [[eerie silence]], [[desperate struggle]])</small>", "Enchantments<br><small>([[warded-(against-magic]], [[wall of flames]], [[supernatural gloom]])</small>", "Notable structural features<br><small>([[battlements]], [[rickety bridge]], [[balcony, window]])</small>", "Animal or beast<br><small>([[bleating calf]], [[climbing goat]], [[barking dog]])</small>", "Something out of place<br><small>([[ancient statue]], [[foreign flora]], [[oddly-colored tile]])</small>", "Sensory effects<br><small>([[loud noise]], [[creepy vibes]], [[putrid smell]], [[blinding sunlight]])</small>", ">>roll twice"]
 				}
 			}
 		},
@@ -2166,7 +2223,7 @@
 			return false;
 		};
 
-		var pbta_games = new RegExp("^((?:ironsworn|starforged|sundered_isles|city_of_mist|masks|dungeon_world|monster_of_the_week|monsterhearts|urban_shadows)(?:_\\d+e)?).+");
+		var pbta_games = new RegExp("^((?:ironsworn|starforged|sundered_isles|city_of_mist|legend_in_the_mist|masks|dungeon_world|monster_of_the_week|monsterhearts|urban_shadows)(?:_\\d+e)?).+");
 
 		if (section) current_section = section;
 		if (page) current_page = page;
@@ -2285,7 +2342,7 @@
 			],
 			"city of mist": [
 				["Rolls", [
-					["Standard", "masks-move:Standard Roll"],
+				["Standard", "city_of_mist-move:Standard Roll"],
 					["Custom", "city_of_mist-custom-move-list"]
 				]],
 				["Moves", getPbtAMoveTypes("city_of_mist")],
@@ -2293,6 +2350,22 @@
 				["Generators", [
 					["Rift NPC", "city_of_mist-generator:npc"],
 					["Case Concept", "city_of_mist-generator-list:case"]
+				]]
+			],
+			"legend in the mist": [
+				["Rolls", [
+					["Standard", "legend_in_the_mist-move:Standard Roll"],
+					["Custom", "legend_in_the_mist-custom-move-list"]
+				]],
+				["Actions", [
+					["Action Roll", "legend_in_the_mist-move:Action Roll"],
+					["Reaction Roll", "legend_in_the_mist-move:Reaction Roll"],
+					["Making a Sacrifice", "legend_in_the_mist-move:Making a Sacrifice"]
+				]],
+				["Oracles", [
+					["Question", "legend_in_the_mist-move:Question Oracle"],
+					["Interpretive Question", "legend_in_the_mist-oracle-list:interpretive"],
+					["Conflict", "legend_in_the_mist-oracle-list:conflict"]
 				]]
 			],
 			masks: [
@@ -3712,15 +3785,17 @@
 			if (!(type in muse[game].oracles) || !(oracle in muse[game].oracles[type])) return "<s>" + name + "</s>";
 
 			var list = muse[game].oracles[type][oracle];
+			var spacer = "; ";
 			
 			for (a = 0; a < loop; ++a) {
 				roll_count = 0;
 				do {
 					roll = getRandomItem(list);
+					if (/^>>/.test(roll)) spacer = "<br><br>";
 
 					// reroll    example: > reroll twice
 					if (/^>/.test(roll)) {
-						if ((/^>\s*roll\s+(twice|thrice)\b/.test(roll))) {
+						if ((/^>+\s*roll\s+(twice|thrice)\b/.test(roll))) {
 							// only do multiple rerolls if on outer layer
 							if (depth > 1 || reroll > 1) continue;
 
@@ -3737,8 +3812,10 @@
 								roll[b] = getRolls(roll[b].trim(), true);
 							}
 							roll = roll.join(" ");
+							continue;
 						}
-						else roll = getRolls(roll.substring(1).trim());
+						
+						roll = getRolls(roll.substring(1).trim());
 					}
 					
 					if (rolls.indexOf(roll) !== -1) continue;
@@ -3749,7 +3826,7 @@
 			}
 
 			depth -= 1;
-			return rolls.join("; ");
+			return rolls.join(spacer);
 		};
 
 		var a, roll;
@@ -4004,6 +4081,8 @@
 		margin-right: -0.5em;
 		border-radius: 3px;
 	}
+
+	del, sup, small { opacity: 0.6 !important; }
 	
 	input {
 		font-family: 'Courier New', Courier, monospace;
