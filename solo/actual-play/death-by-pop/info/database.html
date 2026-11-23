@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+	<head>
+		<style>
+			html { margin: 0.5em; }
+
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				color:#ffffff;
+				background-color: #1e1e1e;
+				line-height: 1.5em;
+				margin: auto;
+				max-width: 820px;
+			}
+
+			body :first-child {
+				margin-top: 0;
+				margin-inline-start: 0;
+			}
+			body :last-child {
+				margin-bottom: 0;
+				margin-inline-end: 0;
+			}
+
+			blockquote {
+				color: #cccccc;
+				background-color: #00000040;
+				margin-inline-start: 0;
+				margin-inline-end: 0;
+				padding: 0.75em;
+				border-radius: 6px;
+				border: solid 1px #333333;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			blockquote > :first-child { margin-top: 0; }
+			blockquote > :last-child { margin-bottom: 0; }
+
+			h1 {
+				padding: 0.5em;
+				text-align: center;
+				font-size: 1.35em;
+				text-decoration: underline;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h2 { 
+				text-align: center;
+				font-size: 1.25em;
+				text-shadow: 0 0 3px #0000ff;
+			}
+
+			h3 a, h3 {
+				color: #ff6666;
+				font-size: 1.15em;
+				text-shadow: 0 0 3px #ff0000;
+			}
+
+			h4 a, h4 {
+				color: #ddddbb;
+				font-size: 1em;
+				text-shadow: 0 0 3px #ff8800;
+			}
+
+			h5 a, h5 {
+				color: #ffbb55;
+				font-size: 1em;
+				font-weight: bold;
+				margin-top: 0 !important;
+				margin-block-end: -1em;
+			}
+
+			h6, h6 a {
+				font-size: 11px;
+				text-align: center;
+				margin: 0.25em;
+			}
+
+			a {
+				color: #e1c87d;
+				font-weight: bold;
+				text-decoration: underline;
+				cursor: pointer;
+			}
+
+			img {
+				display: block;
+				height: auto;
+				margin-right: auto !important;
+				margin-left: auto !important;
+				width: 325px;
+				border-radius: 6px;
+				border: solid 1px #000000;
+				box-shadow: -3px 3px 3px #00000040;
+			}
+
+			pre {
+				max-width: 100%;
+				overflow: auto;
+			}
+
+			table, th, td {
+				border: 1px dashed #444444;
+				border-collapse: collapse;
+				border-spacing: 0;
+				padding: 6px;
+			}
+
+			table { line-height: 1em; }
+
+			td, th { padding: 0.5em; }
+
+			hr {
+				border: none;
+				border-top: 1px dashed #606060;
+				margin: 2em 0;
+			}
+
+			ul, ol { padding-inline-start: 24px; }
+			ul, ul, ol, ol { margin-left: -0.5em; }
+
+			blockquote i, blockquote em, blockquote em strong, blockquote i b
+			{ color: #ffff88 !important; }
+
+			blockquote b, blockquote strong, blockquote strong em, blockquote b i
+			{ color: #ffbb55 !important; }
+
+			code, pre
+			{
+				color: #dddddd;
+				background-color: #000000;
+				white-space: pre;
+			}
+
+			mark {
+				color: #ff6666 !important;
+				background-color: unset !important;
+				font-weight: bold;
+			}
+
+			code { font-size: 0.9em;}
+
+			del { opacity: 0.5  !important; }
+
+			blockquote, ul { text-align: left; }
+
+			li p:last-of-type+ul { margin-top: -1em; }
+
+			details {
+				background: #00000040;
+				padding: 0.5em;
+				margin-left: -0.5em;
+				margin-right: -0.5em;
+			}
+			details summary ~ ul { margin-top: 1em !important; }
+			details summary ~ a img { margin-top: 1em !important; }
+			details :last-child { margin-bottom: 0; }
+			
+			blockquote small { opacity: 0.6; }
+			
+			.no-color { color: unset !important; }
+
+			@media screen and (min-width: 500px) {
+				html { margin: 1em; }
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 600px) {
+				body { font-size: 14px; }
+			}
+
+			@media screen and (min-width: 640px) {
+				body { font-size: 15px; }
+			}
+
+			@media screen and (min-width: 850px) {
+				body > :not(blockquote):not(h1):not(h2) { text-align: justify; }
+			}
+
+			@media print {
+				body { 
+					width: 100%;
+					color: #000000;
+					background-color: #ffffff;
+					text-align: justify;
+				}
+
+				h1, h2, h3, h4, h5, 
+				b, strong,
+				i, em { color: inherit !important; }
+
+				h1, h2, h3, h4, h5 { text-shadow: none; }
+
+				h3, h4, mark { color: #666666 !important; }
+
+				blockquote { 
+					border-color: #888888;
+					color: #333333; 
+					box-shadow: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h1 id="database">Database</h1>
+		<h3 id="concept">Concept</h3>
+		<p><strong>Genre:</strong> Contemporary / Demons / Derivative<br>
+		<strong>Tone:</strong> Aggressive / Lethal<br>
+		<strong>Context Rules:</strong><br>
+		• Despite the overall premise being a little silly and somewhat of a parody, I would like the story to take itself seriously. This is all very real and horrible for the characters, not humorous at all to them.<br>
+		• I want the action in this to be really grim, violent, and bloody. Maybe even gory and nasty.</p>
+		<h3 id="scenario">Scenario</h3>
+		<p>• Pop idols versus demons/monsters, like BABYMETAL's lore or K-Pop Demon Hunters. I'm thinking that there is a trio group of American, Korean, and Japanese pop idols, each representing the style of their nationality.</p>
+		<p>• Each of the idols had discovered on their own how other famous groups (not just pop, but also rock, country, metal, etc) have literally sold their souls for their fame, not realizing that they lose their souls once the contract is fulfilled (ie. when they become famous), not after they die, and once your soul leaves your body, a demon takes its place. So now there are a bunch of demons in the music industry that need removing. This is difficult because, for one, they're demons, and two, they're super famous and in the public eye. Also, they're just a symptom of the illness, not the cause—the real goal of the demon-slaying idols is to find and take out the ones who are writing up all these damned contracts.</p>
+		<p>• The Japanese girl fights with a sword and daggers, because of course she does. The American uses guns and fists, again, because of course like she does. The Korean uses martial arts and dual batons similar to the SK police (and DC's Nightwing).</p>
+		<p>• Somewhat atypical to my games, none of the main characters have powers or magic in any form; they are just absolute badasses that feel compelled to fight the forces of evil, like Cassie Hack from Hack/Slash. Though, since demons exist, it makes sense that angels also exist. I could say that the three girls are actually angels, but I think it's more interesting that they're just normal people, albeit with a combat skillset in addition to talent as a musical performer.</p>
+		<p>• The group members are loosely based off of Yui Mizuno from BABYMETAL, Kelly Rowland from Destiny's Child, and Yezi (Lee Ye-ji) from FIESTAR. I'd like the dynamic to be a main vocalist/leader (Kelly), main rapper/visual (Yezi), and sub vocalist/sub rapper/main dancer/maknae (Yui). The music itself isn't a big plot point, unlike something like Symphogear, Macross, K-Pop Demon Hunters, etc. Instead it's just their public career, which they exploit to get into venues in order to hunt down these demons. It's kind of like Sakura Taisen in that way—it's part of the story, but it's not magic-related or anything.</p>
+		<p>• "Yui's" backstory is that she was a member of a gimmicky J-Pop metal group whose lore was that they were out to defeat the other Japanese idol groups that were destroying the music industry. She thought it was just a funny theme, until her group was attacked by demons. Yui managed to escape, but their manager was killed and her two bandmates were taken over by demons. Those bandmates have since filled Yui's spot with a new member, and continue to have collabs and joint tours across the globe with famous bands of all genres, though mostly metal, spreading their demonic influence. Yui feels responsible for abandoning them and would really love to save her best friend of the three, if possible.</p>
+		<p>• "Kelly's" backstory is that her closest friend, one of the three singers in her American pop group, was so hungry for fame that she willingly sought out a demon and signed the contract without Kelly's or her other bandmate's knowledge. After selling her soul, her friend began acting more diva-like than usual, turning the group from an equal partnership into a lead singer with two backups, even going so far as to cut the other two girls out of variety shows. Kelly didn't discover the truth behind her sudden change in character until years after her friend had broken up the group to have a solo career. Her friend is still incredibly famous and is now considered untouchable Hollywood royalty along with her equally famous rap star husband. Kelly still bumps into her friend during media events, where she openly taunts Kelly with thinly veiled threats, alluding to possible reasons why their other bandmember disappeared without a trace.</p>
+		<p>• "Yezi's" backstory is that after her original K-Pop group disbanded, she has signed with an agency as a solo rap artist. Unlike her previous agency, this one was horrible—overworking her, treating her like dirt, and paying her next to nothing. It turned out that her manager had already sold his soul before he signed her as an artist, which is how he managed to land such a popular pop star. Her manager eventually tried to coerce her into signing a contract as well, since he had hand-picked her due to reports of alleged bullying in her previous group. A fight ensued and she killed her manager during the struggle. To save face, the agency announced that Yezi did not renew her contract, but in fact Yezi disappeared after the incident, and the agency had instructed all members to kill her on sight for the sake of keeping their secret hidden.</p>
+		<p>• How the three members met isn't all that important. It was just a lucky happenstance (or perhaps divine intervention) where Yui was attending one of Kelly's solo concerts in Japan while Yezi had been attempting to hide from her agency in Japan, but they apparently had members there, too. The details don't matter, but they eventually joined up and defeated the demons together. Then they decided to pool their talents and resources to form a three-member pop band for the purpose of touring the globe to fight demons. This bit of backstory isn't that important, since the story begins a year or more later when their new group has been established in the music industry and is quite popular.</p>
+		<p>• Kelly is warm and friendly, but she's also self-assured and won't let herself be pushed around. Yui is quiet and polite, usually keeping to the background with a smile, but she also very serious and quick to dole out necessary punishment. Yezi is cocky and brash, quick to violence, though there's a gentle person inside there somewhere.</p>
+		<p>• The name of the group is Death by Pop (DBP). Thanks to Kelly's sizable bank account, they have their own record label, LUV+WAR Records. Because she is funding everything, Death by Pop is based in the US near Kelly's home, which she now shares with the other two members. Safety in numbers, and all that.</p>
+		<p>• <strong>Summer Langley</strong> (Kelly, 29) vs <strong>Celeste Hargrave</strong> (Beyoncé) of <strong>Fabulosity</strong> (Destiny's Child).<br>
+		• <strong>Miho Ishikawa</strong> (Yui, 25) vs <strong>Satomi</strong> (Suzuka), <strong>Haruka</strong> (Moa), and <strong>Chizaru</strong> (Momoko) of <strong>Kinzoku no Aidoru</strong> (金属のアイドル) aka Kindoru (BABYMETAL).<br>
+		• <strong>Eunbi Song</strong> (Yezi, 28) vs <strong>Moonlit Halo Entertainment</strong> (JG Star Entertainment).</p>
+		<p>• The girls have a manager who knows what they're all about but doesn't do violence. I picture him as similar to Bobby from K-Pop Demon Hunters or Leo Getz from Lethal Weapon, both who are kinda short, chubby comic relief but are also great at their job. His name will be <strong>Marty Haynes</strong>.</p>
+		<h3 id="questions">Questions</h3>
+		<p>• K-Pop name ideas: Luminade, VelvetNova, Prismatic, MoonLily, Sirenix, Eclipsea, Koraine. (Adjust capitalization as desired.)</p>
+		<p><br><br></p>
+	</body>
+</html>
